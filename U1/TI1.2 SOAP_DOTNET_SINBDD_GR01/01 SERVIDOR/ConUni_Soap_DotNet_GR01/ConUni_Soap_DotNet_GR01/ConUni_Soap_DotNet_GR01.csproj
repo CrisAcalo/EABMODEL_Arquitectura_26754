@@ -95,9 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
-    <Content Include="EJEMPLOS_PRECISION.md" />
-    <Content Include="MANEJO_ERRORES_SOAP.md" />
-    <Content Include="NUEVAS_CONVERSIONES_MATRIZ.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

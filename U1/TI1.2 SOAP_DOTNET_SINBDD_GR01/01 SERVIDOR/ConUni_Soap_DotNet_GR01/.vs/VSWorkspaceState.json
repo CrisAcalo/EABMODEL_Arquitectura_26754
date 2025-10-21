@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\ConUni_Soap_DotNet_GR01",
+    "\\ConUni_Soap_DotNet_GR01\\ec",
+    "\\ConUni_Soap_DotNet_GR01\\ec\\edu",
+    "\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster",
+    "\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants",
+    "\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models",
+    "\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws",
+    "\\Pruebas"
+  ],
+  "SelectedNode": "\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\TemperaturaService.svc.cs",
+  "PreviewInSolutionExplorer": false
+}
