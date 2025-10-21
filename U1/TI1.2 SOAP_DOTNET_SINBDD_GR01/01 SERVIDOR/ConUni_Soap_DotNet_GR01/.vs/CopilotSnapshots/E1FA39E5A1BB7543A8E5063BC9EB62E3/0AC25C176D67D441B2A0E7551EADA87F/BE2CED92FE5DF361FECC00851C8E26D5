@@ -1,0 +1,240 @@
+﻿using ConUni_Soap_DotNet_GR01.ec.edu.monster.constants;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.models;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.validators;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.services
+{
+    /// <summary>
+    /// Servicio de negocio para conversiones de longitud
+    /// </summary>
+    public class LongitudBusinessService
+    {
+        /// <summary>
+        /// Convierte kilómetros a millas y retorna resultado con manejo de errores
+        /// </summary>
+        public ConversionResult ConvertirKilometroAMilla(string kilometrosString)
+        {
+            // Validar y convertir string a double
+            var error = BaseValidator.ValidarStringPositivo(kilometrosString, LongitudConstants.KILOMETRO, out double kilometros);
+            if (error != null)
+                return ConversionResult.Fallo(error);
+
+            try
+            {
+                double resultadoExacto = kilometros * LongitudConstants.KILOMETRO_A_MILLA;
+                
+                var conversion = new UnidadConversion(
+                    kilometros, 
+                    resultadoExacto, 
+                    LongitudConstants.KILOMETRO, 
+                    LongitudConstants.MILLA, 
+                    LongitudConstants.KILOMETRO_A_MILLA
+                );
+
+                return ConversionResult.Exito(conversion);
+            }
+            catch (System.Exception ex)
+            {
+                var errorInterno = new ConversionError(
+                    ErrorConstants.ERROR_CONVERSION_LONGITUD,
+                    "Error en la conversión de kilómetros a millas",
+                    ErrorConstants.TIPO_CONVERSION,
+                    kilometros,
+                    LongitudConstants.KILOMETRO,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(errorInterno);
+            }
+        }
+
+        /// <summary>
+        /// Convierte millas a kilómetros y retorna resultado con manejo de errores
+        /// </summary>
+        public ConversionResult ConvertirMillaAKilometro(string millasString)
+        {
+            // Validar y convertir string a double
+            var error = BaseValidator.ValidarStringPositivo(millasString, LongitudConstants.MILLA, out double millas);
+            if (error != null)
+                return ConversionResult.Fallo(error);
+
+            try
+            {
+                double resultadoExacto = millas * LongitudConstants.MILLA_A_KILOMETRO;
+                
+                var conversion = new UnidadConversion(
+                    millas, 
+                    resultadoExacto, 
+                    LongitudConstants.MILLA, 
+                    LongitudConstants.KILOMETRO, 
+                    LongitudConstants.MILLA_A_KILOMETRO
+                );
+
+                return ConversionResult.Exito(conversion);
+            }
+            catch (System.Exception ex)
+            {
+                var errorInterno = new ConversionError(
+                    ErrorConstants.ERROR_CONVERSION_LONGITUD,
+                    "Error en la conversión de millas a kilómetros",
+                    ErrorConstants.TIPO_CONVERSION,
+                    millas,
+                    LongitudConstants.MILLA,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(errorInterno);
+            }
+        }
+
+        /// <summary>
+        /// Convierte metros a pies y retorna resultado con manejo de errores
+        /// </summary>
+        public ConversionResult ConvertirMetroAPie(string metrosString)
+        {
+            // Validar y convertir string a double
+            var error = BaseValidator.ValidarStringPositivo(metrosString, LongitudConstants.METRO, out double metros);
+            if (error != null)
+                return ConversionResult.Fallo(error);
+
+            try
+            {
+                double resultadoExacto = metros * LongitudConstants.METRO_A_PIE;
+                
+                var conversion = new UnidadConversion(
+                    metros, 
+                    resultadoExacto, 
+                    LongitudConstants.METRO, 
+                    LongitudConstants.PIE, 
+                    LongitudConstants.METRO_A_PIE
+                );
+
+                return ConversionResult.Exito(conversion);
+            }
+            catch (System.Exception ex)
+            {
+                var errorInterno = new ConversionError(
+                    ErrorConstants.ERROR_CONVERSION_LONGITUD,
+                    "Error en la conversión de metros a pies",
+                    ErrorConstants.TIPO_CONVERSION,
+                    metros,
+                    LongitudConstants.METRO,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(errorInterno);
+            }
+        }
+
+        /// <summary>
+        /// Convierte pies a metros y retorna resultado con manejo de errores
+        /// </summary>
+        public ConversionResult ConvertirPieAMetro(string piesString)
+        {
+            // Validar y convertir string a double
+            var error = BaseValidator.ValidarStringPositivo(piesString, LongitudConstants.PIE, out double pies);
+            if (error != null)
+                return ConversionResult.Fallo(error);
+
+            try
+            {
+                double resultadoExacto = pies * LongitudConstants.PIE_A_METRO;
+                
+                var conversion = new UnidadConversion(
+                    pies, 
+                    resultadoExacto, 
+                    LongitudConstants.PIE, 
+                    LongitudConstants.METRO, 
+                    LongitudConstants.PIE_A_METRO
+                );
+
+                return ConversionResult.Exito(conversion);
+            }
+            catch (System.Exception ex)
+            {
+                var errorInterno = new ConversionError(
+                    ErrorConstants.ERROR_CONVERSION_LONGITUD,
+                    "Error en la conversión de pies a metros",
+                    ErrorConstants.TIPO_CONVERSION,
+                    pies,
+                    LongitudConstants.PIE,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(errorInterno);
+            }
+        }
+
+        /// <summary>
+        /// Convierte centímetros a pulgadas y retorna resultado con manejo de errores
+        /// </summary>
+        public ConversionResult ConvertirCentimetroAPulgada(string centimetrosString)
+        {
+            // Validar y convertir string a double
+            var error = BaseValidator.ValidarStringPositivo(centimetrosString, LongitudConstants.CENTIMETRO, out double centimetros);
+            if (error != null)
+                return ConversionResult.Fallo(error);
+
+            try
+            {
+                double resultadoExacto = centimetros * LongitudConstants.CENTIMETRO_A_PULGADA;
+                
+                var conversion = new UnidadConversion(
+                    centimetros, 
+                    resultadoExacto, 
+                    LongitudConstants.CENTIMETRO, 
+                    LongitudConstants.PULGADA, 
+                    LongitudConstants.CENTIMETRO_A_PULGADA
+                );
+
+                return ConversionResult.Exito(conversion);
+            }
+            catch (System.Exception ex)
+            {
+                var errorInterno = new ConversionError(
+                    ErrorConstants.ERROR_CONVERSION_LONGITUD,
+                    "Error en la conversión de centímetros a pulgadas",
+                    ErrorConstants.TIPO_CONVERSION,
+                    centimetros,
+                    LongitudConstants.CENTIMETRO,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(errorInterno);
+            }
+        }
+
+        /// <summary>
+        /// Convierte pulgadas a centímetros y retorna resultado con manejo de errores
+        /// </summary>
+        public ConversionResult ConvertirPulgadaACentimetro(string pulgadasString)
+        {
+            // Validar y convertir string a double
+            var error = BaseValidator.ValidarStringPositivo(pulgadasString, LongitudConstants.PULGADA, out double pulgadas);
+            if (error != null)
+                return ConversionResult.Fallo(error);
+
+            try
+            {
+                double resultadoExacto = pulgadas * LongitudConstants.PULGADA_A_CENTIMETRO;
+                
+                var conversion = new UnidadConversion(
+                    pulgadas, 
+                    resultadoExacto, 
+                    LongitudConstants.PULGADA, 
+                    LongitudConstants.CENTIMETRO, 
+                    LongitudConstants.PULGADA_A_CENTIMETRO
+                );
+
+                return ConversionResult.Exito(conversion);
+            }
+            catch (System.Exception ex)
+            {
+                var errorInterno = new ConversionError(
+                    ErrorConstants.ERROR_CONVERSION_LONGITUD,
+                    "Error en la conversión de pulgadas a centímetros",
+                    ErrorConstants.TIPO_CONVERSION,
+                    pulgadas,
+                    LongitudConstants.PULGADA,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(errorInterno);
+            }
+        }
+    }
+}

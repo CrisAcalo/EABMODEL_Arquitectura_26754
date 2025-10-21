@@ -1,0 +1,166 @@
+﻿using System;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.constants;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.models;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.validators
+{
+    /// <summary>
+    /// Clase base para validaciones comunes
+    /// </summary>
+    public static class BaseValidator
+    {
+        /// <summary>
+        /// Valida que el número sea válido (no NaN ni infinito)
+        /// </summary>
+        /// <param name="valor">Valor a validar</param>
+        /// <param name="unidad">Nombre de la unidad para el mensaje de error</param>
+        /// <returns>ConversionError si hay error, null si es válido</returns>
+        public static ConversionError ValidarNumeroValido(double valor, string unidad)
+        {
+            if (double.IsNaN(valor))
+            {
+                return new ConversionError(
+                    ErrorConstants.VALOR_NAN,
+                    $"{ErrorConstants.MSG_VALOR_NAN} en {unidad}",
+                    ErrorConstants.TIPO_VALIDACION,
+                    valor,
+                    unidad,
+                    "El valor proporcionado no representa un número válido."
+                );
+            }
+
+            if (double.IsInfinity(valor))
+            {
+                return new ConversionError(
+                    ErrorConstants.VALOR_INFINITO,
+                    $"{ErrorConstants.MSG_VALOR_INFINITO} en {unidad}",
+                    ErrorConstants.TIPO_VALIDACION,
+                    valor,
+                    unidad,
+                    "El valor proporcionado es infinito, lo cual no es permitido."
+                );
+            }
+
+            return null; // Sin errores
+        }
+
+        /// <summary>
+        /// Valida que el valor sea positivo o cero
+        /// </summary>
+        /// <param name="valor">Valor a validar</param>
+        /// <param name="unidad">Nombre de la unidad para el mensaje de error</param>
+        /// <returns>ConversionError si hay error, null si es válido</returns>
+        public static ConversionError ValidarValorPositivo(double valor, string unidad)
+        {
+            // Primero validar que sea un número válido
+            var errorNumero = ValidarNumeroValido(valor, unidad);
+            if (errorNumero != null)
+                return errorNumero;
+
+            // Luego validar que sea positivo
+            if (valor < 0)
+            {
+                return new ConversionError(
+                    ErrorConstants.VALOR_NEGATIVO,
+                    $"{ErrorConstants.MSG_VALOR_NEGATIVO} en {unidad}",
+                    ErrorConstants.TIPO_VALIDACION,
+                    valor,
+                    unidad,
+                    $"Las medidas de {unidad.ToLower()} deben ser valores positivos o cero."
+                );
+            }
+
+            return null; // Sin errores
+        }
+    }
+
+    /// <summary>
+    /// Validador específico para temperaturas
+    /// </summary>
+    public static class TemperaturaValidator
+    {
+        /// <summary>
+        /// Valida que la temperatura en Celsius sea válida
+        /// </summary>
+        /// <param name="celsius">Temperatura en Celsius</param>
+        /// <returns>ConversionError si hay error, null si es válido</returns>
+        public static ConversionError ValidarTemperaturaCelsius(double celsius)
+        {
+            // Primero validar que sea un número válido
+            var errorNumero = BaseValidator.ValidarNumeroValido(celsius, TemperaturaConstants.CELSIUS);
+            if (errorNumero != null)
+                return errorNumero;
+
+            // Validar límite del cero absoluto
+            if (celsius < TemperaturaConstants.CERO_ABSOLUTO_CELSIUS)
+            {
+                return new ConversionError(
+                    ErrorConstants.TEMPERATURA_BAJO_CERO_ABSOLUTO,
+                    $"{ErrorConstants.MSG_TEMPERATURA_INVALIDA} para Celsius",
+                    ErrorConstants.TIPO_VALIDACION,
+                    celsius,
+                    TemperaturaConstants.CELSIUS,
+                    $"La temperatura mínima posible es {TemperaturaConstants.CERO_ABSOLUTO_CELSIUS}°C (cero absoluto)."
+                );
+            }
+
+            return null; // Sin errores
+        }
+
+        /// <summary>
+        /// Valida que la temperatura en Fahrenheit sea válida
+        /// </summary>
+        /// <param name="fahrenheit">Temperatura en Fahrenheit</param>
+        /// <returns>ConversionError si hay error, null si es válido</returns>
+        public static ConversionError ValidarTemperaturaFahrenheit(double fahrenheit)
+        {
+            // Primero validar que sea un número válido
+            var errorNumero = BaseValidator.ValidarNumeroValido(fahrenheit, TemperaturaConstants.FAHRENHEIT);
+            if (errorNumero != null)
+                return errorNumero;
+
+            // Validar límite del cero absoluto
+            if (fahrenheit < TemperaturaConstants.CERO_ABSOLUTO_FAHRENHEIT)
+            {
+                return new ConversionError(
+                    ErrorConstants.TEMPERATURA_BAJO_CERO_ABSOLUTO,
+                    $"{ErrorConstants.MSG_TEMPERATURA_INVALIDA} para Fahrenheit",
+                    ErrorConstants.TIPO_VALIDACION,
+                    fahrenheit,
+                    TemperaturaConstants.FAHRENHEIT,
+                    $"La temperatura mínima posible es {TemperaturaConstants.CERO_ABSOLUTO_FAHRENHEIT}°F (cero absoluto)."
+                );
+            }
+
+            return null; // Sin errores
+        }
+
+        /// <summary>
+        /// Valida que la temperatura en Kelvin sea válida
+        /// </summary>
+        /// <param name="kelvin">Temperatura en Kelvin</param>
+        /// <returns>ConversionError si hay error, null si es válido</returns>
+        public static ConversionError ValidarTemperaturaKelvin(double kelvin)
+        {
+            // Primero validar que sea un número válido
+            var errorNumero = BaseValidator.ValidarNumeroValido(kelvin, TemperaturaConstants.KELVIN);
+            if (errorNumero != null)
+                return errorNumero;
+
+            // Validar límite del cero absoluto
+            if (kelvin < TemperaturaConstants.CERO_ABSOLUTO_KELVIN)
+            {
+                return new ConversionError(
+                    ErrorConstants.TEMPERATURA_BAJO_CERO_ABSOLUTO,
+                    $"{ErrorConstants.MSG_TEMPERATURA_INVALIDA} para Kelvin",
+                    ErrorConstants.TIPO_VALIDACION,
+                    kelvin,
+                    TemperaturaConstants.KELVIN,
+                    $"La temperatura mínima posible es {TemperaturaConstants.CERO_ABSOLUTO_KELVIN}K (cero absoluto)."
+                );
+            }
+
+            return null; // Sin errores
+        }
+    }
+}

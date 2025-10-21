@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.models;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.ws
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IMasaService" in both code and config file together.
+    [ServiceContract]
+    public interface IMasaService
+    {
+        // Conversiones Gramo <-> Onza
+        [OperationContract]
+        UnidadConversion GramoAOnza(double gramos);
+
+        [OperationContract]
+        UnidadConversion OnzaAGramo(double onzas);
+
+        // Conversiones Gramo <-> Libra
+        [OperationContract]
+        UnidadConversion GramoALibra(double gramos);
+
+        [OperationContract]
+        UnidadConversion LibraAGramo(double libras);
+
+        // Conversiones Kilogramo <-> Quintal
+        [OperationContract]
+        UnidadConversion KilogramoAQuintal(double kilogramos);
+
+        [OperationContract]
+        UnidadConversion QuintalAKilogramo(double quintales);
+    }
+}

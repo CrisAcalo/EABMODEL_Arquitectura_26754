@@ -1,0 +1,120 @@
+﻿using ConUni_Soap_DotNet_GR01.ec.edu.monster.constants;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.models;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.validators;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.services
+{
+    /// <summary>
+    /// Servicio de negocio para conversiones de masa
+    /// </summary>
+    public class MasaBusinessService
+    {
+        /// <summary>
+        /// Convierte gramos a onzas y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirGramoAOnza(double gramos)
+        {
+            BaseValidator.ValidarValorPositivo(gramos, MasaConstants.GRAMO);
+            
+            double resultadoExacto = gramos * MasaConstants.GRAMO_A_ONZA;
+            
+            return new UnidadConversion(
+                gramos, 
+                resultadoExacto, 
+                MasaConstants.GRAMO, 
+                MasaConstants.ONZA, 
+                MasaConstants.GRAMO_A_ONZA
+            );
+        }
+
+        /// <summary>
+        /// Convierte onzas a gramos y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirOnzaAGramo(double onzas)
+        {
+            BaseValidator.ValidarValorPositivo(onzas, MasaConstants.ONZA);
+            
+            double resultadoExacto = onzas * MasaConstants.ONZA_A_GRAMO;
+            
+            return new UnidadConversion(
+                onzas, 
+                resultadoExacto, 
+                MasaConstants.ONZA, 
+                MasaConstants.GRAMO, 
+                MasaConstants.ONZA_A_GRAMO
+            );
+        }
+
+        /// <summary>
+        /// Convierte gramos a libras y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirGramoALibra(double gramos)
+        {
+            BaseValidator.ValidarValorPositivo(gramos, MasaConstants.GRAMO);
+            
+            double resultadoExacto = gramos * MasaConstants.GRAMO_A_LIBRA;
+            
+            return new UnidadConversion(
+                gramos, 
+                resultadoExacto, 
+                MasaConstants.GRAMO, 
+                MasaConstants.LIBRA, 
+                MasaConstants.GRAMO_A_LIBRA
+            );
+        }
+
+        /// <summary>
+        /// Convierte libras a gramos y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirLibraAGramo(double libras)
+        {
+            BaseValidator.ValidarValorPositivo(libras, MasaConstants.LIBRA);
+            
+            double resultadoExacto = libras * MasaConstants.LIBRA_A_GRAMO;
+            
+            return new UnidadConversion(
+                libras, 
+                resultadoExacto, 
+                MasaConstants.LIBRA, 
+                MasaConstants.GRAMO, 
+                MasaConstants.LIBRA_A_GRAMO
+            );
+        }
+
+        /// <summary>
+        /// Convierte kilogramos a quintales y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirKilogramoAQuintal(double kilogramos)
+        {
+            BaseValidator.ValidarValorPositivo(kilogramos, MasaConstants.KILOGRAMO);
+            
+            double resultadoExacto = kilogramos * MasaConstants.KILOGRAMO_A_QUINTAL;
+            
+            return new UnidadConversion(
+                kilogramos, 
+                resultadoExacto, 
+                MasaConstants.KILOGRAMO, 
+                MasaConstants.QUINTAL, 
+                MasaConstants.KILOGRAMO_A_QUINTAL
+            );
+        }
+
+        /// <summary>
+        /// Convierte quintales a kilogramos y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirQuintalAKilogramo(double quintales)
+        {
+            BaseValidator.ValidarValorPositivo(quintales, MasaConstants.QUINTAL);
+            
+            double resultadoExacto = quintales * MasaConstants.QUINTAL_A_KILOGRAMO;
+            
+            return new UnidadConversion(
+                quintales, 
+                resultadoExacto, 
+                MasaConstants.QUINTAL, 
+                MasaConstants.KILOGRAMO, 
+                MasaConstants.QUINTAL_A_KILOGRAMO
+            );
+        }
+    }
+}

@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.ws
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "LongitudService" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select LongitudService.svc or LongitudService.svc.cs at the Solution Explorer and start debugging.
+    public class LongitudService : ILongitudService
+    {
+        /// <summary>
+        /// Convierte kilómetros a millas
+        /// </summary>
+        /// <param name="kilometros">Valor en kilómetros</param>
+        /// <returns>Valor convertido en millas</returns>
+        public double KilometroAMilla(double kilometros)
+        {
+            // 1 kilómetro = 0.621371 millas
+            return kilometros * 0.621371;
+        }
+
+        /// <summary>
+        /// Convierte metros a pies
+        /// </summary>
+        /// <param name="metros">Valor en metros</param>
+        /// <returns>Valor convertido en pies</returns>
+        public double MetroAPie(double metros)
+        {
+            // 1 metro = 3.28084 pies
+            return metros * 3.28084;
+        }
+
+        /// <summary>
+        /// Convierte centímetros a pulgadas
+        /// </summary>
+        /// <param name="centimetros">Valor en centímetros</param>
+        /// <returns>Valor convertido en pulgadas</returns>
+        public double CentimetroAPulgada(double centimetros)
+        {
+            // 1 centímetro = 0.393701 pulgadas
+            return centimetros * 0.393701;
+        }
+    }
+}

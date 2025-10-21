@@ -1,0 +1,123 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|ConUni_Soap_DotNet_GR01||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|c:\\users\\crist\\onedrive\\escritorio\\uni\\viii\\arquitectura\\u1\\ti1.2 soap_dotnet_sinbdd_gr01\\01 servidor\\conuni_soap_dotnet_gr01\\conuni_soap_dotnet_gr01\\pruebas\\testrunner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\pruebas\\testrunner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|c:\\users\\crist\\onedrive\\escritorio\\uni\\viii\\arquitectura\\u1\\ti1.2 soap_dotnet_sinbdd_gr01\\01 servidor\\conuni_soap_dotnet_gr01\\conuni_soap_dotnet_gr01\\pruebas\\masaservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\pruebas\\masaservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|c:\\users\\crist\\onedrive\\escritorio\\uni\\viii\\arquitectura\\u1\\ti1.2 soap_dotnet_sinbdd_gr01\\01 servidor\\conuni_soap_dotnet_gr01\\conuni_soap_dotnet_gr01\\pruebas\\quicktest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\pruebas\\quicktest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|c:\\users\\crist\\onedrive\\escritorio\\uni\\viii\\arquitectura\\u1\\ti1.2 soap_dotnet_sinbdd_gr01\\01 servidor\\conuni_soap_dotnet_gr01\\conuni_soap_dotnet_gr01\\ejecutarpruebas.bat||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\ejecutarpruebas.bat||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|c:\\users\\crist\\onedrive\\escritorio\\uni\\viii\\arquitectura\\u1\\ti1.2 soap_dotnet_sinbdd_gr01\\01 servidor\\conuni_soap_dotnet_gr01\\conuni_soap_dotnet_gr01\\pruebas\\integrationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\pruebas\\integrationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|c:\\users\\crist\\onedrive\\escritorio\\uni\\viii\\arquitectura\\u1\\ti1.2 soap_dotnet_sinbdd_gr01\\01 servidor\\conuni_soap_dotnet_gr01\\conuni_soap_dotnet_gr01\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ConUni_Soap_DotNet_GR01",
+              "DocumentMoniker": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj",
+              "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj",
+              "ToolTip": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj",
+              "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-20T00:19:31.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MasaServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\pruebas\\MasaServiceTests.cs",
+              "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\pruebas\\MasaServiceTests.cs",
+              "ToolTip": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\pruebas\\MasaServiceTests.cs",
+              "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\pruebas\\MasaServiceTests.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T23:56:13.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "QuickTest.cs",
+              "DocumentMoniker": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\pruebas\\QuickTest.cs",
+              "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\pruebas\\QuickTest.cs",
+              "ToolTip": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\pruebas\\QuickTest.cs",
+              "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\pruebas\\QuickTest.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T23:56:05.863Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "EjecutarPruebas.bat",
+              "DocumentMoniker": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\EjecutarPruebas.bat",
+              "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\EjecutarPruebas.bat",
+              "ToolTip": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\EjecutarPruebas.bat",
+              "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\EjecutarPruebas.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-10-19T23:56:00.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TestRunner.cs",
+              "DocumentMoniker": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\pruebas\\TestRunner.cs",
+              "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\pruebas\\TestRunner.cs",
+              "ToolTip": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\pruebas\\TestRunner.cs",
+              "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\pruebas\\TestRunner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T23:55:49.757Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IntegrationTests.cs",
+              "DocumentMoniker": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\pruebas\\IntegrationTests.cs",
+              "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\pruebas\\IntegrationTests.cs",
+              "ToolTip": "C:\\Users\\crist\\OneDrive\\Escritorio\\Uni\\VIII\\ARQUITECTURA\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\pruebas\\IntegrationTests.cs",
+              "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\pruebas\\IntegrationTests.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T23:55:41.03Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

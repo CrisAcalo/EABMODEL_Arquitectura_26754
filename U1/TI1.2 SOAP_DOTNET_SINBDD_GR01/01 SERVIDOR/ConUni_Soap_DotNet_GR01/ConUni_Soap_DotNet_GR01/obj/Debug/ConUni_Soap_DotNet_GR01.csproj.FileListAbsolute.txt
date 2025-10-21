@@ -1,0 +1,7 @@
+C:\Users\crist\OneDrive\Escritorio\Uni\VIII\ARQUITECTURA\U1\TI1.2 SOAP_DOTNET_SINBDD_GR01\01 SERVIDOR\ConUni_Soap_DotNet_GR01\ConUni_Soap_DotNet_GR01\bin\ConUni_Soap_DotNet_GR01.dll.config
+C:\Users\crist\OneDrive\Escritorio\Uni\VIII\ARQUITECTURA\U1\TI1.2 SOAP_DOTNET_SINBDD_GR01\01 SERVIDOR\ConUni_Soap_DotNet_GR01\ConUni_Soap_DotNet_GR01\bin\ConUni_Soap_DotNet_GR01.dll
+C:\Users\crist\OneDrive\Escritorio\Uni\VIII\ARQUITECTURA\U1\TI1.2 SOAP_DOTNET_SINBDD_GR01\01 SERVIDOR\ConUni_Soap_DotNet_GR01\ConUni_Soap_DotNet_GR01\bin\ConUni_Soap_DotNet_GR01.pdb
+C:\Users\crist\OneDrive\Escritorio\Uni\VIII\ARQUITECTURA\U1\TI1.2 SOAP_DOTNET_SINBDD_GR01\01 SERVIDOR\ConUni_Soap_DotNet_GR01\ConUni_Soap_DotNet_GR01\obj\Debug\ConUni_Soap_DotNet_GR01.csproj.AssemblyReference.cache
+C:\Users\crist\OneDrive\Escritorio\Uni\VIII\ARQUITECTURA\U1\TI1.2 SOAP_DOTNET_SINBDD_GR01\01 SERVIDOR\ConUni_Soap_DotNet_GR01\ConUni_Soap_DotNet_GR01\obj\Debug\ConUni_Soap_DotNet_GR01.csproj.CoreCompileInputs.cache
+C:\Users\crist\OneDrive\Escritorio\Uni\VIII\ARQUITECTURA\U1\TI1.2 SOAP_DOTNET_SINBDD_GR01\01 SERVIDOR\ConUni_Soap_DotNet_GR01\ConUni_Soap_DotNet_GR01\obj\Debug\ConUni_Soap_DotNet_GR01.dll
+C:\Users\crist\OneDrive\Escritorio\Uni\VIII\ARQUITECTURA\U1\TI1.2 SOAP_DOTNET_SINBDD_GR01\01 SERVIDOR\ConUni_Soap_DotNet_GR01\ConUni_Soap_DotNet_GR01\obj\Debug\ConUni_Soap_DotNet_GR01.pdb

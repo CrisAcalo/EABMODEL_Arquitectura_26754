@@ -1,0 +1,132 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.ws
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "LongitudService" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select LongitudService.svc or LongitudService.svc.cs at the Solution Explorer and start debugging.
+    public class LongitudService : ILongitudService
+    {
+        #region Conversiones Kilómetro <-> Milla
+
+        /// <summary>
+        /// Convierte kilómetros a millas
+        /// </summary>
+        /// <param name="kilometros">Valor en kilómetros</param>
+        /// <returns>Valor convertido en millas</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double KilometroAMilla(double kilometros)
+        {
+            ValidarValorPositivo(kilometros, "kilómetros");
+            // 1 kilómetro = 0.621371 millas
+            return kilometros * 0.621371;
+        }
+
+        /// <summary>
+        /// Convierte millas a kilómetros
+        /// </summary>
+        /// <param name="millas">Valor en millas</param>
+        /// <returns>Valor convertido en kilómetros</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double MillaAKilometro(double millas)
+        {
+            ValidarValorPositivo(millas, "millas");
+            // 1 milla = 1.60934 kilómetros
+            return millas * 1.60934;
+        }
+
+        #endregion
+
+        #region Conversiones Metro <-> Pie
+
+        /// <summary>
+        /// Convierte metros a pies
+        /// </summary>
+        /// <param name="metros">Valor en metros</param>
+        /// <returns>Valor convertido en pies</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double MetroAPie(double metros)
+        {
+            ValidarValorPositivo(metros, "metros");
+            // 1 metro = 3.28084 pies
+            return metros * 3.28084;
+        }
+
+        /// <summary>
+        /// Convierte pies a metros
+        /// </summary>
+        /// <param name="pies">Valor en pies</param>
+        /// <returns>Valor convertido en metros</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double PieAMetro(double pies)
+        {
+            ValidarValorPositivo(pies, "pies");
+            // 1 pie = 0.3048 metros
+            return pies * 0.3048;
+        }
+
+        #endregion
+
+        #region Conversiones Centímetro <-> Pulgada
+
+        /// <summary>
+        /// Convierte centímetros a pulgadas
+        /// </summary>
+        /// <param name="centimetros">Valor en centímetros</param>
+        /// <returns>Valor convertido en pulgadas</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double CentimetroAPulgada(double centimetros)
+        {
+            ValidarValorPositivo(centimetros, "centímetros");
+            // 1 centímetro = 0.393701 pulgadas
+            return centimetros * 0.393701;
+        }
+
+        /// <summary>
+        /// Convierte pulgadas a centímetros
+        /// </summary>
+        /// <param name="pulgadas">Valor en pulgadas</param>
+        /// <returns>Valor convertido en centímetros</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double PulgadaACentimetro(double pulgadas)
+        {
+            ValidarValorPositivo(pulgadas, "pulgadas");
+            // 1 pulgada = 2.54 centímetros
+            return pulgadas * 2.54;
+        }
+
+        #endregion
+
+        #region Métodos de Validación
+
+        /// <summary>
+        /// Valida que el valor sea positivo o cero
+        /// </summary>
+        /// <param name="valor">Valor a validar</param>
+        /// <param name="unidad">Nombre de la unidad para el mensaje de error</param>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        private void ValidarValorPositivo(double valor, string unidad)
+        {
+            if (valor < 0)
+            {
+                throw new ArgumentException($"El valor en {unidad} no puede ser negativo. Valor recibido: {valor}");
+            }
+
+            if (double.IsNaN(valor))
+            {
+                throw new ArgumentException($"El valor en {unidad} no es un número válido.");
+            }
+
+            if (double.IsInfinity(valor))
+            {
+                throw new ArgumentException($"El valor en {unidad} no puede ser infinito.");
+            }
+        }
+
+        #endregion
+    }
+}

@@ -1,0 +1,186 @@
+﻿using System;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.models;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.services;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.constants;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.ws
+{
+    /// <summary>
+    /// Servicio WCF para conversiones de longitud
+    /// Actúa como capa de presentación delegando la lógica de negocio
+    /// </summary>
+    public class LongitudService : ILongitudService
+    {
+        private readonly LongitudBusinessService _longitudBusinessService;
+
+        /// <summary>
+        /// Constructor que inicializa el servicio de negocio
+        /// </summary>
+        public LongitudService()
+        {
+            _longitudBusinessService = new LongitudBusinessService();
+        }
+
+        #region Conversiones Kilómetro <-> Milla
+
+        /// <summary>
+        /// Convierte kilómetros a millas
+        /// </summary>
+        /// <param name="kilometros">Valor en kilómetros como string</param>
+        /// <returns>ConversionResult con el resultado o error</returns>
+        public ConversionResult KilometroAMilla(string kilometros)
+        {
+            try
+            {
+                return _longitudBusinessService.ConvertirKilometroAMilla(kilometros);
+            }
+            catch (Exception ex)
+            {
+                var error = new ConversionError(
+                    ErrorConstants.ERROR_INTERNO,
+                    ErrorConstants.MSG_ERROR_INTERNO,
+                    ErrorConstants.TIPO_SISTEMA,
+                    null,
+                    LongitudConstants.KILOMETRO,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(error);
+            }
+        }
+
+        /// <summary>
+        /// Convierte millas a kilómetros
+        /// </summary>
+        /// <param name="millas">Valor en millas como string</param>
+        /// <returns>ConversionResult con el resultado o error</returns>
+        public ConversionResult MillaAKilometro(string millas)
+        {
+            try
+            {
+                return _longitudBusinessService.ConvertirMillaAKilometro(millas);
+            }
+            catch (Exception ex)
+            {
+                var error = new ConversionError(
+                    ErrorConstants.ERROR_INTERNO,
+                    ErrorConstants.MSG_ERROR_INTERNO,
+                    ErrorConstants.TIPO_SISTEMA,
+                    null,
+                    LongitudConstants.MILLA,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(error);
+            }
+        }
+
+        #endregion
+
+        #region Conversiones Metro <-> Pie
+
+        /// <summary>
+        /// Convierte metros a pies
+        /// </summary>
+        /// <param name="metros">Valor en metros como string</param>
+        /// <returns>ConversionResult con el resultado o error</returns>
+        public ConversionResult MetroAPie(string metros)
+        {
+            try
+            {
+                return _longitudBusinessService.ConvertirMetroAPie(metros);
+            }
+            catch (Exception ex)
+            {
+                var error = new ConversionError(
+                    ErrorConstants.ERROR_INTERNO,
+                    ErrorConstants.MSG_ERROR_INTERNO,
+                    ErrorConstants.TIPO_SISTEMA,
+                    null,
+                    LongitudConstants.METRO,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(error);
+            }
+        }
+
+        /// <summary>
+        /// Convierte pies a metros
+        /// </summary>
+        /// <param name="pies">Valor en pies como string</param>
+        /// <returns>ConversionResult con el resultado o error</returns>
+        public ConversionResult PieAMetro(string pies)
+        {
+            try
+            {
+                return _longitudBusinessService.ConvertirPieAMetro(pies);
+            }
+            catch (Exception ex)
+            {
+                var error = new ConversionError(
+                    ErrorConstants.ERROR_INTERNO,
+                    ErrorConstants.MSG_ERROR_INTERNO,
+                    ErrorConstants.TIPO_SISTEMA,
+                    null,
+                    LongitudConstants.PIE,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(error);
+            }
+        }
+
+        #endregion
+
+        #region Conversiones Centímetro <-> Pulgada
+
+        /// <summary>
+        /// Convierte centímetros a pulgadas
+        /// </summary>
+        /// <param name="centimetros">Valor en centímetros como string</param>
+        /// <returns>ConversionResult con el resultado o error</returns>
+        public ConversionResult CentimetroAPulgada(string centimetros)
+        {
+            try
+            {
+                return _longitudBusinessService.ConvertirCentimetroAPulgada(centimetros);
+            }
+            catch (Exception ex)
+            {
+                var error = new ConversionError(
+                    ErrorConstants.ERROR_INTERNO,
+                    ErrorConstants.MSG_ERROR_INTERNO,
+                    ErrorConstants.TIPO_SISTEMA,
+                    null,
+                    LongitudConstants.CENTIMETRO,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(error);
+            }
+        }
+
+        /// <summary>
+        /// Convierte pulgadas a centímetros
+        /// </summary>
+        /// <param name="pulgadas">Valor en pulgadas como string</param>
+        /// <returns>ConversionResult con el resultado o error</returns>
+        public ConversionResult PulgadaACentimetro(string pulgadas)
+        {
+            try
+            {
+                return _longitudBusinessService.ConvertirPulgadaACentimetro(pulgadas);
+            }
+            catch (Exception ex)
+            {
+                var error = new ConversionError(
+                    ErrorConstants.ERROR_INTERNO,
+                    ErrorConstants.MSG_ERROR_INTERNO,
+                    ErrorConstants.TIPO_SISTEMA,
+                    null,
+                    LongitudConstants.PULGADA,
+                    ex.Message
+                );
+                return ConversionResult.Fallo(error);
+            }
+        }
+
+        #endregion
+    }
+}

@@ -1,0 +1,172 @@
+﻿using System;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.services;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.ws
+{
+    /// <summary>
+    /// Servicio WCF para conversiones de temperatura
+    /// Actúa como capa de presentación delegando la lógica de negocio
+    /// </summary>
+    public class TemperaturaService : ITemperaturaService
+    {
+        private readonly TemperaturaBusinessService _temperaturaBusinessService;
+
+        /// <summary>
+        /// Constructor que inicializa el servicio de negocio
+        /// </summary>
+        public TemperaturaService()
+        {
+            _temperaturaBusinessService = new TemperaturaBusinessService();
+        }
+
+        #region Conversiones Celsius <-> Fahrenheit
+
+        /// <summary>
+        /// Convierte grados Celsius a Fahrenheit (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="celsius">Valor en grados Celsius</param>
+        /// <returns>Valor convertido en grados Fahrenheit (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es inválido</exception>
+        public double CelsiusAFahrenheit(double celsius)
+        {
+            try
+            {
+                var resultado = _temperaturaBusinessService.ConvertirCelsiusAFahrenheit(celsius);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de Celsius a Fahrenheit: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Convierte grados Fahrenheit a Celsius (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="fahrenheit">Valor en grados Fahrenheit</param>
+        /// <returns>Valor convertido en grados Celsius (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es inválido</exception>
+        public double FahrenheitACelsius(double fahrenheit)
+        {
+            try
+            {
+                var resultado = _temperaturaBusinessService.ConvertirFahrenheitACelsius(fahrenheit);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de Fahrenheit a Celsius: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+
+        #region Conversiones Fahrenheit <-> Kelvin
+
+        /// <summary>
+        /// Convierte grados Fahrenheit a Kelvin (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="fahrenheit">Valor en grados Fahrenheit</param>
+        /// <returns>Valor convertido en Kelvin (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es inválido</exception>
+        public double FahrenheitAKelvin(double fahrenheit)
+        {
+            try
+            {
+                var resultado = _temperaturaBusinessService.ConvertirFahrenheitAKelvin(fahrenheit);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de Fahrenheit a Kelvin: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Convierte Kelvin a grados Fahrenheit (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="kelvin">Valor en Kelvin</param>
+        /// <returns>Valor convertido en grados Fahrenheit (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es inválido</exception>
+        public double KelvinAFahrenheit(double kelvin)
+        {
+            try
+            {
+                var resultado = _temperaturaBusinessService.ConvertirKelvinAFahrenheit(kelvin);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de Kelvin a Fahrenheit: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+
+        #region Conversiones Kelvin <-> Celsius
+
+        /// <summary>
+        /// Convierte Kelvin a grados Celsius (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="kelvin">Valor en Kelvin</param>
+        /// <returns>Valor convertido en grados Celsius (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es inválido</exception>
+        public double KelvinACelsius(double kelvin)
+        {
+            try
+            {
+                var resultado = _temperaturaBusinessService.ConvertirKelvinACelsius(kelvin);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de Kelvin a Celsius: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Convierte grados Celsius a Kelvin (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="celsius">Valor en grados Celsius</param>
+        /// <returns>Valor convertido en Kelvin (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es inválido</exception>
+        public double CelsiusAKelvin(double celsius)
+        {
+            try
+            {
+                var resultado = _temperaturaBusinessService.ConvertirCelsiusAKelvin(celsius);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de Celsius a Kelvin: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+    }
+}

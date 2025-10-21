@@ -1,0 +1,172 @@
+﻿using System;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.services;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.ws
+{
+    /// <summary>
+    /// Servicio WCF para conversiones de masa
+    /// Actúa como capa de presentación delegando la lógica de negocio
+    /// </summary>
+    public class MasaService : IMasaService
+    {
+        private readonly MasaBusinessService _masaBusinessService;
+
+        /// <summary>
+        /// Constructor que inicializa el servicio de negocio
+        /// </summary>
+        public MasaService()
+        {
+            _masaBusinessService = new MasaBusinessService();
+        }
+
+        #region Conversiones Gramo <-> Onza
+
+        /// <summary>
+        /// Convierte gramos a onzas (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="gramos">Valor en gramos</param>
+        /// <returns>Valor convertido en onzas (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double GramoAOnza(double gramos)
+        {
+            try
+            {
+                var resultado = _masaBusinessService.ConvertirGramoAOnza(gramos);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de gramos a onzas: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Convierte onzas a gramos (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="onzas">Valor en onzas</param>
+        /// <returns>Valor convertido en gramos (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double OnzaAGramo(double onzas)
+        {
+            try
+            {
+                var resultado = _masaBusinessService.ConvertirOnzaAGramo(onzas);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de onzas a gramos: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+
+        #region Conversiones Gramo <-> Libra
+
+        /// <summary>
+        /// Convierte gramos a libras (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="gramos">Valor en gramos</param>
+        /// <returns>Valor convertido en libras (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double GramoALibra(double gramos)
+        {
+            try
+            {
+                var resultado = _masaBusinessService.ConvertirGramoALibra(gramos);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de gramos a libras: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Convierte libras a gramos (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="libras">Valor en libras</param>
+        /// <returns>Valor convertido en gramos (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double LibraAGramo(double libras)
+        {
+            try
+            {
+                var resultado = _masaBusinessService.ConvertirLibraAGramo(libras);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de libras a gramos: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+
+        #region Conversiones Kilogramo <-> Quintal
+
+        /// <summary>
+        /// Convierte kilogramos a quintales (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="kilogramos">Valor en kilogramos</param>
+        /// <returns>Valor convertido en quintales (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double KilogramoAQuintal(double kilogramos)
+        {
+            try
+            {
+                var resultado = _masaBusinessService.ConvertirKilogramoAQuintal(kilogramos);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de kilogramos a quintales: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Convierte quintales a kilogramos (resultado redondeado a 2 decimales)
+        /// </summary>
+        /// <param name="quintales">Valor en quintales</param>
+        /// <returns>Valor convertido en kilogramos (redondeado a 2 decimales)</returns>
+        /// <exception cref="ArgumentException">Cuando el valor es negativo</exception>
+        public double QuintalAKilogramo(double quintales)
+        {
+            try
+            {
+                var resultado = _masaBusinessService.ConvertirQuintalAKilogramo(quintales);
+                return resultado.ValorConvertidoRedondeado;
+            }
+            catch (ArgumentException)
+            {
+                throw; // Re-lanzar excepciones de validación
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error interno en la conversión de quintales a kilogramos: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+    }
+}

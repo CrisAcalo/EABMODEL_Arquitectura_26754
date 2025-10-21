@@ -1,0 +1,126 @@
+﻿using ConUni_Soap_DotNet_GR01.ec.edu.monster.constants;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.models;
+using ConUni_Soap_DotNet_GR01.ec.edu.monster.validators;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.services
+{
+    /// <summary>
+    /// Servicio de negocio para conversiones de temperatura
+    /// </summary>
+    public class TemperaturaBusinessService
+    {
+        /// <summary>
+        /// Convierte Celsius a Fahrenheit y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirCelsiusAFahrenheit(double celsius)
+        {
+            TemperaturaValidator.ValidarTemperaturaCelsius(celsius);
+            
+            // °F = (°C × 9/5) + 32
+            double resultadoExacto = (celsius * TemperaturaConstants.CELSIUS_FAHRENHEIT_FACTOR) + TemperaturaConstants.FAHRENHEIT_CELSIUS_OFFSET;
+            
+            return new UnidadConversion(
+                celsius, 
+                resultadoExacto, 
+                TemperaturaConstants.CELSIUS, 
+                TemperaturaConstants.FAHRENHEIT, 
+                TemperaturaConstants.CELSIUS_FAHRENHEIT_FACTOR
+            );
+        }
+
+        /// <summary>
+        /// Convierte Fahrenheit a Celsius y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirFahrenheitACelsius(double fahrenheit)
+        {
+            TemperaturaValidator.ValidarTemperaturaFahrenheit(fahrenheit);
+            
+            // °C = (°F - 32) × 5/9
+            double resultadoExacto = (fahrenheit - TemperaturaConstants.FAHRENHEIT_CELSIUS_OFFSET) * TemperaturaConstants.FAHRENHEIT_CELSIUS_FACTOR;
+            
+            return new UnidadConversion(
+                fahrenheit, 
+                resultadoExacto, 
+                TemperaturaConstants.FAHRENHEIT, 
+                TemperaturaConstants.CELSIUS, 
+                TemperaturaConstants.FAHRENHEIT_CELSIUS_FACTOR
+            );
+        }
+
+        /// <summary>
+        /// Convierte Fahrenheit a Kelvin y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirFahrenheitAKelvin(double fahrenheit)
+        {
+            TemperaturaValidator.ValidarTemperaturaFahrenheit(fahrenheit);
+            
+            // K = (°F - 32) × 5/9 + 273.15
+            double resultadoExacto = (fahrenheit - TemperaturaConstants.FAHRENHEIT_CELSIUS_OFFSET) * TemperaturaConstants.FAHRENHEIT_CELSIUS_FACTOR + TemperaturaConstants.CELSIUS_KELVIN_OFFSET;
+            
+            return new UnidadConversion(
+                fahrenheit, 
+                resultadoExacto, 
+                TemperaturaConstants.FAHRENHEIT, 
+                TemperaturaConstants.KELVIN, 
+                TemperaturaConstants.FAHRENHEIT_CELSIUS_FACTOR
+            );
+        }
+
+        /// <summary>
+        /// Convierte Kelvin a Fahrenheit y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirKelvinAFahrenheit(double kelvin)
+        {
+            TemperaturaValidator.ValidarTemperaturaKelvin(kelvin);
+            
+            // °F = (K - 273.15) × 9/5 + 32
+            double resultadoExacto = (kelvin - TemperaturaConstants.CELSIUS_KELVIN_OFFSET) * TemperaturaConstants.CELSIUS_FAHRENHEIT_FACTOR + TemperaturaConstants.FAHRENHEIT_CELSIUS_OFFSET;
+            
+            return new UnidadConversion(
+                kelvin, 
+                resultadoExacto, 
+                TemperaturaConstants.KELVIN, 
+                TemperaturaConstants.FAHRENHEIT, 
+                TemperaturaConstants.CELSIUS_FAHRENHEIT_FACTOR
+            );
+        }
+
+        /// <summary>
+        /// Convierte Kelvin a Celsius y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirKelvinACelsius(double kelvin)
+        {
+            TemperaturaValidator.ValidarTemperaturaKelvin(kelvin);
+            
+            // °C = K - 273.15
+            double resultadoExacto = kelvin - TemperaturaConstants.CELSIUS_KELVIN_OFFSET;
+            
+            return new UnidadConversion(
+                kelvin, 
+                resultadoExacto, 
+                TemperaturaConstants.KELVIN, 
+                TemperaturaConstants.CELSIUS, 
+                1.0
+            );
+        }
+
+        /// <summary>
+        /// Convierte Celsius a Kelvin y retorna información detallada
+        /// </summary>
+        public UnidadConversion ConvertirCelsiusAKelvin(double celsius)
+        {
+            TemperaturaValidator.ValidarTemperaturaCelsius(celsius);
+            
+            // K = °C + 273.15
+            double resultadoExacto = celsius + TemperaturaConstants.CELSIUS_KELVIN_OFFSET;
+            
+            return new UnidadConversion(
+                celsius, 
+                resultadoExacto, 
+                TemperaturaConstants.CELSIUS, 
+                TemperaturaConstants.KELVIN, 
+                1.0
+            );
+        }
+    }
+}

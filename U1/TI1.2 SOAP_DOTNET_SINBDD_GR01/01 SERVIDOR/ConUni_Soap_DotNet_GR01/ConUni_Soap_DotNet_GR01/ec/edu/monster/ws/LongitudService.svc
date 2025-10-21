@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="ConUni_Soap_DotNet_GR01.ec.edu.monster.ws.LongitudService" CodeBehind="LongitudService.svc.cs" %>

@@ -1,0 +1,76 @@
+﻿using System;
+
+namespace ConUni_Soap_DotNet_GR01.ec.edu.monster.models
+{
+    /// <summary>
+    /// Clase base para representar una conversión de unidades
+    /// </summary>
+    public class UnidadConversion
+    {
+        /// <summary>
+        /// Valor original antes de la conversión
+        /// </summary>
+        public double ValorOriginal { get; set; }
+
+        /// <summary>
+        /// Valor convertido exacto después de la conversión (sin redondeo)
+        /// </summary>
+        public double ValorConvertidoExacto { get; set; }
+
+        /// <summary>
+        /// Valor convertido redondeado a 2 decimales
+        /// </summary>
+        public double ValorConvertidoRedondeado { get; set; }
+
+        /// <summary>
+        /// Unidad de origen
+        /// </summary>
+        public string UnidadOrigen { get; set; }
+
+        /// <summary>
+        /// Unidad de destino
+        /// </summary>
+        public string UnidadDestino { get; set; }
+
+        /// <summary>
+        /// Factor de conversión utilizado
+        /// </summary>
+        public double FactorConversion { get; set; }
+
+        /// <summary>
+        /// Timestamp de cuándo se realizó la conversión
+        /// </summary>
+        public DateTime FechaConversion { get; set; }
+
+        /// <summary>
+        /// Constructor por defecto
+        /// </summary>
+        public UnidadConversion()
+        {
+            FechaConversion = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Constructor con parámetros
+        /// </summary>
+        public UnidadConversion(double valorOriginal, double valorConvertidoExacto, string unidadOrigen, string unidadDestino, double factorConversion)
+        {
+            ValorOriginal = valorOriginal;
+            ValorConvertidoExacto = valorConvertidoExacto;
+            ValorConvertidoRedondeado = Math.Round(valorConvertidoExacto, 2);
+            UnidadOrigen = unidadOrigen;
+            UnidadDestino = unidadDestino;
+            FactorConversion = factorConversion;
+            FechaConversion = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Obtiene una representación en texto de la conversión
+        /// </summary>
+        /// <returns>String con la información de la conversión</returns>
+        public override string ToString()
+        {
+            return $"{ValorOriginal} {UnidadOrigen} = {ValorConvertidoRedondeado} {UnidadDestino} (Exacto: {ValorConvertidoExacto})";
+        }
+    }
+}
