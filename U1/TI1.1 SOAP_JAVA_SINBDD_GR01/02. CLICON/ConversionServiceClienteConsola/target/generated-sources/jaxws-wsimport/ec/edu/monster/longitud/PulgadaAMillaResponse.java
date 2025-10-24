@@ -1,0 +1,62 @@
+
+package ec.edu.monster.longitud;
+
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Clase Java para PulgadaAMillaResponse complex type.
+ * 
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * 
+ * <pre>
+ * &lt;complexType name="PulgadaAMillaResponse"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="return" type="{http://ws.monster.edu.ec/}conversionResult" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "PulgadaAMillaResponse", propOrder = {
+    "_return"
+})
+public class PulgadaAMillaResponse {
+
+    @XmlElement(name = "return")
+    protected ConversionResult _return;
+
+    /**
+     * Obtiene el valor de la propiedad return.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ConversionResult }
+     *     
+     */
+    public ConversionResult getReturn() {
+        return _return;
+    }
+
+    /**
+     * Define el valor de la propiedad return.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ConversionResult }
+     *     
+     */
+    public void setReturn(ConversionResult value) {
+        this._return = value;
+    }
+
+}

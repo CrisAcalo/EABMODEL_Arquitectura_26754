@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="LongitudService">
+      <implementation-class>ec.edu.monster.ws.LongitudService</implementation-class>
+    </service>
+    <service name="MasaService">
+      <implementation-class>ec.edu.monster.ws.MasaService</implementation-class>
+    </service>
+    <service name="TemperaturaService">
+      <implementation-class>ec.edu.monster.ws.TemperaturaService</implementation-class>
+    </service>
+  </services>
+  <clients/>
+</jax-ws>
