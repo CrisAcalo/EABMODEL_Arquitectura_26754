@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/ConUni_Soap_Java_GR01/LongitudService?wsdl" uri="wsdl/localhost_8080/ConUni_Soap_Java_GR01/LongitudService.wsdl"/>
+    <system systemId="http://localhost:8080/ConUni_Soap_Java_GR01/LongitudService?xsd=1" uri="wsdl/localhost_8080/ConUni_Soap_Java_GR01/LongitudService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/ConUni_Soap_Java_GR01/MasaService?wsdl" uri="wsdl/localhost_8080/ConUni_Soap_Java_GR01/MasaService.wsdl"/>
+    <system systemId="http://localhost:8080/ConUni_Soap_Java_GR01/MasaService?xsd=1" uri="wsdl/localhost_8080/ConUni_Soap_Java_GR01/MasaService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/ConUni_Soap_Java_GR01/TemperaturaService?wsdl" uri="wsdl/localhost_8080/ConUni_Soap_Java_GR01/TemperaturaService.wsdl"/>
+    <system systemId="http://localhost:8080/ConUni_Soap_Java_GR01/TemperaturaService?xsd=1" uri="wsdl/localhost_8080/ConUni_Soap_Java_GR01/TemperaturaService.xsd_1.xsd"/>
+</catalog>
