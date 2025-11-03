@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "dgSpecHash": "LojG9OfY05k=",
+  "success": true,
+  "projectFilePath": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\02 CLIESC\\ConUni_CliEsc_GR01\\ConUni_CliEsc_GR01\\ConUni_CliEsc_GR01.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jeffe\\.nuget\\packages\\materialdesigncolors\\5.3.0\\materialdesigncolors.5.3.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\materialdesignthemes\\5.3.0\\materialdesignthemes.5.3.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\8.0.0\\microsoft.extensions.configuration.fileextensions.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.extensions.configuration.json\\8.0.0\\microsoft.extensions.configuration.json.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\8.0.0\\microsoft.extensions.fileproviders.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\8.0.0\\microsoft.extensions.fileproviders.physical.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\8.0.0\\microsoft.extensions.filesystemglobbing.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.77\\microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\system.net.http.json\\8.0.0\\system.net.http.json.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\jeffe\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
