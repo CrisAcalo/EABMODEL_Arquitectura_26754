@@ -21,26 +21,33 @@
     </properties>
     
     <dependencies>
-        <!-- Jakarta EE API -->
+        <!-- Jakarta EE API - CONSISTENTE -->
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>${jakartaee}</version>
-            <scope>provided</scope>
+            <version>10.0.0</version> <!-- CAMBIO IMPORTANTE -->
+            <type>jar</type>
+        </dependency>
+        
+        <!-- JSTL para JSP -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
         
         <!-- Jakarta XML Web Services -->
         <dependency>
             <groupId>jakarta.xml.ws</groupId>
             <artifactId>jakarta.xml.ws-api</artifactId>
-            <version>4.0.0</version>
+            <version>3.0.1</version> <!-- Cambio de versión -->
         </dependency>
         
         <!-- JAX-WS Runtime -->
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
-            <version>4.0.0</version>
+            <version>3.0.2</version> <!-- Cambio de versión -->
             <scope>runtime</scope>
         </dependency>
         
@@ -48,14 +55,14 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.0</version>
+            <version>3.0.1</version> <!-- Cambio de versión -->
         </dependency>
         
         <!-- JAXB Runtime -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>4.0.0</version>
+            <version>3.0.2</version> <!-- Cambio de versión -->
             <scope>runtime</scope>
         </dependency>
     </dependencies>
@@ -90,7 +97,7 @@
             <plugin>
                 <groupId>com.sun.xml.ws</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
-                <version>4.0.0</version>
+                <version>3.0.2</version> <!-- Cambio de versión -->
                 <executions>
                     
                     <!-- LongitudService -->
@@ -162,7 +169,7 @@
                                 <artifactItem>
                                     <groupId>jakarta.platform</groupId>
                                     <artifactId>jakarta.jakartaee-api</artifactId>
-                                    <version>${jakartaee}</version>
+                                    <version>8.0.0</version>
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>

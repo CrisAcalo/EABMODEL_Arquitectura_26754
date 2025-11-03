@@ -17,14 +17,33 @@ public class Main {
     private static Properties config;
     private static String servidorURL;
     
+    // Credenciales hardcodeadas
+    private static final String USUARIO_VALIDO = "Monster";
+    private static final String CONTRASENA_VALIDA = "Monster9";
+    private static final int MAX_INTENTOS = 3;
+    
     public static void main(String[] args) {
+        
+        try {
+            System.setOut(new java.io.PrintStream(System.out, true, "UTF-8"));
+        } catch (java.io.UnsupportedEncodingException e) {
+            System.err.println("Error al configurar UTF-8: " + e.getMessage());
+        }
         // Cargar configuración al iniciar
         cargarConfiguracion();
         
-        System.out.println("==============================================");
+        // Sistema de Login
+        if (!realizarLogin()) {
+            System.out.println("\nAcceso denegado. Número máximo de intentos alcanzado.");
+            System.out.println("El sistema se cerrará por seguridad.\n");
+            scanner.close();
+            return; // Terminar el programa
+        }
+        
+        System.out.println("\n==============================================");
         System.out.println("  CLIENTE CONSOLA - SERVICIOS DE CONVERSION  ");
         System.out.println("==============================================");
-        System.out.println("🌐 Servidor: " + servidorURL);
+        System.out.println("Servidor: " + servidorURL);
         System.out.println();
         
         boolean continuar = true;
@@ -48,11 +67,69 @@ public class Main {
                     System.out.println("\n¡Hasta luego!");
                     break;
                 default:
-                    System.out.println("\n❌ Opción inválida. Intente nuevamente.\n");
+                    System.out.println("\nOpción inválida. Intente nuevamente.\n");
             }
         }
         
         scanner.close();
+    }
+    
+    /**
+     * Sistema de autenticación con credenciales hardcodeadas
+     * @return true si el login es exitoso, false si se superan los intentos máximos
+     */
+    private static boolean realizarLogin() {
+        System.out.println("\n╔════════════════════════════════════════════╗");
+        System.out.println("║     SISTEMA DE AUTENTICACIÓN              ║");
+        System.out.println("║     SERVICIOS DE CONVERSIÓN               ║");
+        System.out.println("╚════════════════════════════════════════════╝\n");
+        
+        int intentos = 0;
+        
+        while (intentos < MAX_INTENTOS) {
+            System.out.println("Intento " + (intentos + 1) + " de " + MAX_INTENTOS);
+            System.out.println("─────────────────────────────────────────────");
+            
+            String usuario = leerTexto("Usuario: ");
+            String contrasena = leerTexto("Contraseña: ");
+            
+            if (validarCredenciales(usuario, contrasena)) {
+                System.out.println("\n¡Autenticación exitosa!");
+                System.out.println("Bienvenido, " + usuario + "\n");
+                pausa(1000); // Pequeña pausa para mejor UX
+                return true;
+            } else {
+                intentos++;
+                int intentosRestantes = MAX_INTENTOS - intentos;
+                
+                if (intentosRestantes > 0) {
+                    System.out.println("\nUsuario o contraseña incorrectos.");
+                    System.out.println("Te quedan " + intentosRestantes + " intento(s).\n");
+                } else {
+                    System.out.println("\nUsuario o contraseña incorrectos.");
+                }
+            }
+        }
+        
+        return false; // Se superaron los intentos máximos
+    }
+    
+    /**
+     * Valida las credenciales ingresadas contra las hardcodeadas
+     */
+    private static boolean validarCredenciales(String usuario, String contrasena) {
+        return USUARIO_VALIDO.equals(usuario) && CONTRASENA_VALIDA.equals(contrasena);
+    }
+    
+    /**
+     * Pausa la ejecución por los milisegundos especificados
+     */
+    private static void pausa(int milisegundos) {
+        try {
+            Thread.sleep(milisegundos);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
     
     /**
@@ -62,13 +139,13 @@ public class Main {
         config = new Properties();
         try (InputStream input = Main.class.getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
-                System.out.println("⚠️  No se encontró config.properties, usando valores por defecto");
+                System.out.println("No se encontró config.properties, usando valores por defecto");
                 config.setProperty("servidor.ip", "localhost");
                 config.setProperty("servidor.puerto", "8080");
                 config.setProperty("servidor.contexto", "ConUni_Soap_Java_GR01");
             } else {
                 config.load(input);
-                System.out.println("✅ Configuración cargada desde config.properties");
+                System.out.println("Configuración cargada desde config.properties");
             }
             
             // Construir URL base del servidor
@@ -78,7 +155,7 @@ public class Main {
             servidorURL = "http://" + ip + ":" + puerto + "/" + contexto;
             
         } catch (IOException ex) {
-            System.out.println("❌ Error al cargar configuración: " + ex.getMessage());
+            System.out.println("Error al cargar configuración: " + ex.getMessage());
             servidorURL = "http://localhost:8080/ConUni_Soap_Java_GR01";
         }
     }
@@ -132,14 +209,14 @@ public class Main {
                 case 5: resultado = port.metroAPulgada(valor); break;
                 case 6: resultado = port.pulgadaAMetro(valor); break;
                 default:
-                    System.out.println("\n❌ Opción inválida.\n");
+                    System.out.println("\nOpción inválida.\n");
                     return;
             }
             
             mostrarResultadoLongitud(resultado);
             
         } catch (Exception e) {
-            System.out.println("\n❌ Error al conectar con el servicio: " + e.getMessage());
+            System.out.println("\nError al conectar con el servicio: " + e.getMessage());
             System.out.println("   Verifica que el servidor esté corriendo en: " + servidorURL + "\n");
         }
     }
@@ -188,7 +265,7 @@ public class Main {
             mostrarResultadoMasa(resultado);
             
         } catch (Exception e) {
-            System.out.println("\n❌ Error al conectar con el servicio: " + e.getMessage());
+            System.out.println("\nError al conectar con el servicio: " + e.getMessage());
             System.out.println("   Verifica que el servidor esté corriendo en: " + servidorURL + "\n");
         }
     }
@@ -230,14 +307,14 @@ public class Main {
                 case 5: resultado = port.kelvinACelsius(valor); break;
                 case 6: resultado = port.kelvinAFahrenheit(valor); break;
                 default:
-                    System.out.println("\n❌ Opción inválida.\n");
+                    System.out.println("\nOpción inválida.\n");
                     return;
             }
             
             mostrarResultadoTemperatura(resultado);
             
         } catch (Exception e) {
-            System.out.println("\n❌ Error al conectar con el servicio: " + e.getMessage());
+            System.out.println("\nError al conectar con el servicio: " + e.getMessage());
             System.out.println("   Verifica que el servidor esté corriendo en: " + servidorURL + "\n");
         }
     }
@@ -247,7 +324,7 @@ public class Main {
         
         if (resultado.isExitoso()) {
             ec.edu.monster.longitud.UnidadConversion conv = resultado.getResultado();
-            System.out.println("✅ CONVERSIÓN EXITOSA");
+            System.out.println("CONVERSIÓN EXITOSA");
             System.out.println("=".repeat(50));
             System.out.println("Valor Original:    " + conv.getValorOriginal() + " " + conv.getUnidadOrigen());
             System.out.println("Valor Convertido:  " + conv.getValorConvertidoRedondeado() + " " + conv.getUnidadDestino());
@@ -255,7 +332,7 @@ public class Main {
             System.out.println("Factor:            " + conv.getFactorConversion());
         } else {
             ec.edu.monster.longitud.ConversionError err = resultado.getError();
-            System.out.println("❌ ERROR EN LA CONVERSIÓN");
+            System.out.println("ERROR EN LA CONVERSIÓN");
             System.out.println("=".repeat(50));
             System.out.println("Código:   " + err.getCodigoError());
             System.out.println("Tipo:     " + err.getTipoError());
@@ -272,7 +349,7 @@ public class Main {
         
         if (resultado.isExitoso()) {
             ec.edu.monster.masa.UnidadConversion conv = resultado.getResultado();
-            System.out.println("✅ CONVERSIÓN EXITOSA");
+            System.out.println("CONVERSIÓN EXITOSA");
             System.out.println("=".repeat(50));
             System.out.println("Valor Original:    " + conv.getValorOriginal() + " " + conv.getUnidadOrigen());
             System.out.println("Valor Convertido:  " + conv.getValorConvertidoRedondeado() + " " + conv.getUnidadDestino());
@@ -280,7 +357,7 @@ public class Main {
             System.out.println("Factor:            " + conv.getFactorConversion());
         } else {
             ec.edu.monster.masa.ConversionError err = resultado.getError();
-            System.out.println("❌ ERROR EN LA CONVERSIÓN");
+            System.out.println("ERROR EN LA CONVERSIÓN");
             System.out.println("=".repeat(50));
             System.out.println("Código:   " + err.getCodigoError());
             System.out.println("Tipo:     " + err.getTipoError());
@@ -297,7 +374,7 @@ public class Main {
         
         if (resultado.isExitoso()) {
             ec.edu.monster.temperatura.UnidadConversion conv = resultado.getResultado();
-            System.out.println("✅ CONVERSIÓN EXITOSA");
+            System.out.println("CONVERSIÓN EXITOSA");
             System.out.println("=".repeat(50));
             System.out.println("Valor Original:    " + conv.getValorOriginal() + " " + conv.getUnidadOrigen());
             System.out.println("Valor Convertido:  " + conv.getValorConvertidoRedondeado() + " " + conv.getUnidadDestino());
@@ -305,7 +382,7 @@ public class Main {
             System.out.println("Factor:            " + conv.getFactorConversion());
         } else {
             ec.edu.monster.temperatura.ConversionError err = resultado.getError();
-            System.out.println("❌ ERROR EN LA CONVERSIÓN");
+            System.out.println("ERROR EN LA CONVERSIÓN");
             System.out.println("=".repeat(50));
             System.out.println("Código:   " + err.getCodigoError());
             System.out.println("Tipo:     " + err.getTipoError());
@@ -320,7 +397,7 @@ public class Main {
     private static int leerEntero(String mensaje) {
         System.out.print(mensaje);
         while (!scanner.hasNextInt()) {
-            System.out.print("❌ Debe ingresar un número entero. Intente nuevamente: ");
+            System.out.print("Debe ingresar un número entero. Intente nuevamente: ");
             scanner.next();
         }
         int valor = scanner.nextInt();

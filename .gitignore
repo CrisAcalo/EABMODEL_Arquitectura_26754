@@ -1,2 +1,80 @@
 /U1/TI1.3 RESTFULL_JAVA_SINBDD_GR01/01 SERVIDOR/ConUni_Restfull_Java_GR01/nbproject/private/
 /U1/TI1.3 RESTFULL_JAVA_SINBDD_GR01/01 SERVIDOR/ConUni_Restfull_Java_GR01/build/
+
+# ===================================
+# NetBeans 21
+# ===================================
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nbactions.xml
+nb-configuration.xml
+
+# ===================================
+# Maven
+# ===================================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ===================================
+# Java
+# ===================================
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+
+# ===================================
+# Visual Studio / .NET
+# ===================================
+.vs/
+bin/
+obj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vsidx
+*.editorconfig
+.dtbcache.v2
+.futdcache.v2
+
+# ===================================
+# IDEs
+# ===================================
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+
+# ===================================
+# Sistema Operativo
+# ===================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===================================
+# Logs y Temporales
+# ===================================
+*.log
+*.tmp
+*.bak
+*.swp
+*~
