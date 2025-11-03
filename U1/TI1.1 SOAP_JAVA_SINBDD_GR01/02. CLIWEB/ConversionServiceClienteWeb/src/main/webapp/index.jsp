@@ -5,6 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    // Verificar si el usuario está autenticado
+    String usuarioAutenticado = (String) session.getAttribute("usuarioAutenticado");
+    if (usuarioAutenticado == null) {
+        // No hay sesión activa, redirigir al login
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,10 +24,23 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
+        <!-- Header con información de usuario y logout -->
         <div class="header">
-            <h1>Servicios de Conversión de Unidades</h1>
-            <p>Cliente Web para conversiones de unidades</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1>Servicios de Conversión de Unidades</h1>
+                    <p>Cliente Web para conversiones de unidades</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="margin: 0; color: #27ae60;">
+                        👤 Bienvenido, <strong><%= usuarioAutenticado %></strong>
+                    </p>
+                    <a href="logout.jsp" class="btn btn-danger" 
+                       style="font-size: 14px; padding: 8px 16px; margin-top: 10px; display: inline-block;">
+                        🚪 Cerrar Sesión
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Grid de Servicios -->

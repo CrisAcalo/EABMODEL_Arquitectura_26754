@@ -119,7 +119,8 @@ body {
 
 .form-group select,
 .form-group input[type="text"],
-.form-group input[type="number"] {
+.form-group input[type="number"],
+.form-group input[type="password"] {
     width: 100%;
     padding: 12px 15px;
     border: 2px solid var(--color-light);
@@ -255,4 +256,19 @@ body {
     .service-card {
         padding: 20px;
     }
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
 }
