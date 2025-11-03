@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConUni_Restfull_Dotnet_GR01")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b5e42beb3e8b429c4a45ee2f2e3bbf14d650341")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+930881c312a728a1dbf3e281ac33fe4d98c894b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConUni_Restfull_Dotnet_GR01")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConUni_Restfull_Dotnet_GR01")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
