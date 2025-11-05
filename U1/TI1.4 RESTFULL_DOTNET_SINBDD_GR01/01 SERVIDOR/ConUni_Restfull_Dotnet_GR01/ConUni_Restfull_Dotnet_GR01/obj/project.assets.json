@@ -447,23 +447,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jeffe\\.nuget\\packages\\": {},
+    "C:\\Users\\crist\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj",
+      "projectUniqueName": "C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj",
       "projectName": "ConUni_Restfull_Dotnet_GR01",
-      "projectPath": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj",
-      "packagesPath": "C:\\Users\\jeffe\\.nuget\\packages\\",
-      "outputPath": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\obj\\",
+      "projectPath": "C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj",
+      "packagesPath": "C:\\Users\\crist\\.nuget\\packages\\",
+      "outputPath": "C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\jeffe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\crist\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -472,6 +472,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

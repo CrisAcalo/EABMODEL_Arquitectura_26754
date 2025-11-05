@@ -196,8 +196,8 @@
         "type": "object",
         "properties": {
           "valor": {
-            "type": "number",
-            "format": "double"
+            "type": "string",
+            "nullable": true
           },
           "unidadOrigen": {
             "type": "string",

@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="61300d31-1d33-482e-bc30-a9821fae88d2" activeEnvironment="Default" name="DotNet" resourceRoot="" soapui-version="5.7.2" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="eb50a113-377e-43b1-969c-1a06a1785f4c" wsaVersion="NONE" name="BasicHttpBinding_ILongitudService" type="wsdl" bindingName="{http://tempuri.org/}BasicHttpBinding_ILongitudService" soapVersion="1_1" anonymous="optional" definition="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?wsdl"><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="LongitudService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd0" namespace="http://tempuri.org/"/>
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILongitudService_MillaAMetro_InputMessage">
+    <wsdl:part name="parameters" element="tns:MillaAMetro"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MillaAMetro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MillaAMetroResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MetroAMilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:MetroAMilla"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MetroAMilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MetroAMillaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MillaAPulgada_InputMessage">
+    <wsdl:part name="parameters" element="tns:MillaAPulgada"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MillaAPulgada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MillaAPulgadaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_PulgadaAMilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:PulgadaAMilla"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_PulgadaAMilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PulgadaAMillaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MetroAPulgada_InputMessage">
+    <wsdl:part name="parameters" element="tns:MetroAPulgada"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MetroAPulgada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MetroAPulgadaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_PulgadaAMetro_InputMessage">
+    <wsdl:part name="parameters" element="tns:PulgadaAMetro"/>
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_PulgadaAMetro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PulgadaAMetroResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ILongitudService">
+    <wsdl:operation name="MillaAMetro">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/MillaAMetro" message="tns:ILongitudService_MillaAMetro_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/MillaAMetroResponse" message="tns:ILongitudService_MillaAMetro_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="MetroAMilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/MetroAMilla" message="tns:ILongitudService_MetroAMilla_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/MetroAMillaResponse" message="tns:ILongitudService_MetroAMilla_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="MillaAPulgada">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/MillaAPulgada" message="tns:ILongitudService_MillaAPulgada_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/MillaAPulgadaResponse" message="tns:ILongitudService_MillaAPulgada_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="PulgadaAMilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/PulgadaAMilla" message="tns:ILongitudService_PulgadaAMilla_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/PulgadaAMillaResponse" message="tns:ILongitudService_PulgadaAMilla_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="MetroAPulgada">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/MetroAPulgada" message="tns:ILongitudService_MetroAPulgada_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/MetroAPulgadaResponse" message="tns:ILongitudService_MetroAPulgada_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="PulgadaAMetro">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/PulgadaAMetro" message="tns:ILongitudService_PulgadaAMetro_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/PulgadaAMetroResponse" message="tns:ILongitudService_PulgadaAMetro_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ILongitudService" type="tns:ILongitudService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="MillaAMetro">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/MillaAMetro" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MetroAMilla">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/MetroAMilla" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MillaAPulgada">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/MillaAPulgada" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PulgadaAMilla">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/PulgadaAMilla" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MetroAPulgada">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/MetroAPulgada" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PulgadaAMetro">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/PulgadaAMetro" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LongitudService">
+    <wsdl:port name="BasicHttpBinding_ILongitudService" binding="tns:BasicHttpBinding_ILongitudService">
+      <soap:address location="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd0</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+  <xs:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+  <xs:element name="MillaAMetro">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="millas" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MillaAMetroResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MillaAMetroResult" nillable="true" type="q1:ConversionResult" xmlns:q1="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MetroAMilla">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="metros" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MetroAMillaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MetroAMillaResult" nillable="true" type="q2:ConversionResult" xmlns:q2="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MillaAPulgada">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="millas" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MillaAPulgadaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MillaAPulgadaResult" nillable="true" type="q3:ConversionResult" xmlns:q3="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PulgadaAMilla">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pulgadas" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PulgadaAMillaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PulgadaAMillaResult" nillable="true" type="q4:ConversionResult" xmlns:q4="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MetroAPulgada">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="metros" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MetroAPulgadaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MetroAPulgadaResult" nillable="true" type="q5:ConversionResult" xmlns:q5="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PulgadaAMetro">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pulgadas" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PulgadaAMetroResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PulgadaAMetroResult" nillable="true" type="q6:ConversionResult" xmlns:q6="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd2</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models">
+  <xs:complexType name="ConversionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Error" nillable="true" type="tns:ConversionError"/>
+      <xs:element minOccurs="0" name="Exitoso" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Resultado" nillable="true" type="tns:UnidadConversion"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConversionResult" nillable="true" type="tns:ConversionResult"/>
+  <xs:complexType name="ConversionError">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoError" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Detalles" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="FechaError" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Mensaje" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="TipoError" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Unidad" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ValorProblematico" nillable="true" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConversionError" nillable="true" type="tns:ConversionError"/>
+  <xs:complexType name="UnidadConversion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FactorConversion" type="xs:double"/>
+      <xs:element minOccurs="0" name="FechaConversion" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="UnidadDestino" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="UnidadOrigen" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ValorConvertidoExacto" type="xs:double"/>
+      <xs:element minOccurs="0" name="ValorConvertidoRedondeado" type="xs:double"/>
+      <xs:element minOccurs="0" name="ValorOriginal" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadConversion" nillable="true" type="tns:UnidadConversion"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd1</con:url><con:content><![CDATA[<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+  <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+  <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+  <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+  <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+  <xs:element name="byte" nillable="true" type="xs:byte"/>
+  <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+  <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+  <xs:element name="double" nillable="true" type="xs:double"/>
+  <xs:element name="float" nillable="true" type="xs:float"/>
+  <xs:element name="int" nillable="true" type="xs:int"/>
+  <xs:element name="long" nillable="true" type="xs:long"/>
+  <xs:element name="QName" nillable="true" type="xs:QName"/>
+  <xs:element name="short" nillable="true" type="xs:short"/>
+  <xs:element name="string" nillable="true" type="xs:string"/>
+  <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+  <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+  <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+  <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+  <xs:element name="char" nillable="true" type="tns:char"/>
+  <xs:simpleType name="char">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:element name="duration" nillable="true" type="tns:duration"/>
+  <xs:simpleType name="duration">
+    <xs:restriction base="xs:duration">
+      <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+      <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+      <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="guid" nillable="true" type="tns:guid"/>
+  <xs:simpleType name="guid">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attribute name="FactoryType" type="xs:QName"/>
+  <xs:attribute name="Id" type="xs:ID"/>
+  <xs:attribute name="Ref" type="xs:IDREF"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc</con:endpoint></con:endpoints><con:operation id="5fb55765-3d23-450f-8850-c37b8841ab5b" isOneWay="false" action="http://tempuri.org/ILongitudService/MetroAMilla" name="MetroAMilla" bindingOperationName="MetroAMilla" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="75bf79b4-08d4-4559-b17f-18bbb224bdf6" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:MetroAMilla>\r
+         <!--Optional:-->\r
+         <tem:metros>2</tem:metros>\r
+      </tem:MetroAMilla>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ILongitudService/MetroAMilla"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="e78b5c97-ad65-435a-9f8e-1b35fccb80bd" isOneWay="false" action="http://tempuri.org/ILongitudService/MetroAPulgada" name="MetroAPulgada" bindingOperationName="MetroAPulgada" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="27363644-b1a2-49b2-8377-957e22b64768" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:MetroAPulgada>\r
+         <!--Optional:-->\r
+         <tem:metros>?</tem:metros>\r
+      </tem:MetroAPulgada>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ILongitudService/MetroAPulgada"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="6d58bc52-ac13-4568-afe4-73996266541d" isOneWay="false" action="http://tempuri.org/ILongitudService/MillaAMetro" name="MillaAMetro" bindingOperationName="MillaAMetro" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="5611a8fa-e64d-45d7-a66b-6edb29b7bb05" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:MillaAMetro>\r
+         <!--Optional:-->\r
+         <tem:millas>?</tem:millas>\r
+      </tem:MillaAMetro>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ILongitudService/MillaAMetro"/></con:call></con:operation><con:operation id="dc8fb3f2-3898-4ac6-9875-c4e5c7fe493d" isOneWay="false" action="http://tempuri.org/ILongitudService/MillaAPulgada" name="MillaAPulgada" bindingOperationName="MillaAPulgada" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b549b64a-47f3-4703-bd14-069fa8095c98" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:MillaAPulgada>\r
+         <!--Optional:-->\r
+         <tem:millas>?</tem:millas>\r
+      </tem:MillaAPulgada>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ILongitudService/MillaAPulgada"/></con:call></con:operation><con:operation id="d4627c0c-2655-4993-b412-424bb8bd667d" isOneWay="false" action="http://tempuri.org/ILongitudService/PulgadaAMetro" name="PulgadaAMetro" bindingOperationName="PulgadaAMetro" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c57ff44c-7392-4dcc-936f-f2cc918497f0" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:PulgadaAMetro>\r
+         <!--Optional:-->\r
+         <tem:pulgadas>?</tem:pulgadas>\r
+      </tem:PulgadaAMetro>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ILongitudService/PulgadaAMetro"/></con:call></con:operation><con:operation id="fce2839f-4784-48dd-ab00-096af2bfbf62" isOneWay="false" action="http://tempuri.org/ILongitudService/PulgadaAMilla" name="PulgadaAMilla" bindingOperationName="PulgadaAMilla" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9ae490f9-977b-4d97-93ec-33eda762ec51" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/LongitudService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:PulgadaAMilla>\r
+         <!--Optional:-->\r
+         <tem:pulgadas>?</tem:pulgadas>\r
+      </tem:PulgadaAMilla>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ILongitudService/PulgadaAMilla"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="6d926c9f-4ad3-40e8-8233-2f7b8209e024" wsaVersion="NONE" name="BasicHttpBinding_IMasaService" type="wsdl" bindingName="{http://tempuri.org/}BasicHttpBinding_IMasaService" soapVersion="1_1" anonymous="optional" definition="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?wsdl"><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/MasaService.svc?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="MasaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd0" namespace="http://tempuri.org/"/>
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMasaService_KilogramoAQuintal_InputMessage">
+    <wsdl:part name="parameters" element="tns:KilogramoAQuintal"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_KilogramoAQuintal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KilogramoAQuintalResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_QuintalAKilogramo_InputMessage">
+    <wsdl:part name="parameters" element="tns:QuintalAKilogramo"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_QuintalAKilogramo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QuintalAKilogramoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_KilogramoALibra_InputMessage">
+    <wsdl:part name="parameters" element="tns:KilogramoALibra"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_KilogramoALibra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KilogramoALibraResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_LibraAKilogramo_InputMessage">
+    <wsdl:part name="parameters" element="tns:LibraAKilogramo"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_LibraAKilogramo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LibraAKilogramoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_QuintalALibra_InputMessage">
+    <wsdl:part name="parameters" element="tns:QuintalALibra"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_QuintalALibra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QuintalALibraResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_LibraAQuintal_InputMessage">
+    <wsdl:part name="parameters" element="tns:LibraAQuintal"/>
+  </wsdl:message>
+  <wsdl:message name="IMasaService_LibraAQuintal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LibraAQuintalResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="IMasaService">
+    <wsdl:operation name="KilogramoAQuintal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/KilogramoAQuintal" message="tns:IMasaService_KilogramoAQuintal_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/KilogramoAQuintalResponse" message="tns:IMasaService_KilogramoAQuintal_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="QuintalAKilogramo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/QuintalAKilogramo" message="tns:IMasaService_QuintalAKilogramo_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/QuintalAKilogramoResponse" message="tns:IMasaService_QuintalAKilogramo_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="KilogramoALibra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/KilogramoALibra" message="tns:IMasaService_KilogramoALibra_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/KilogramoALibraResponse" message="tns:IMasaService_KilogramoALibra_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="LibraAKilogramo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/LibraAKilogramo" message="tns:IMasaService_LibraAKilogramo_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/LibraAKilogramoResponse" message="tns:IMasaService_LibraAKilogramo_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="QuintalALibra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/QuintalALibra" message="tns:IMasaService_QuintalALibra_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/QuintalALibraResponse" message="tns:IMasaService_QuintalALibra_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="LibraAQuintal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/LibraAQuintal" message="tns:IMasaService_LibraAQuintal_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/LibraAQuintalResponse" message="tns:IMasaService_LibraAQuintal_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IMasaService" type="tns:IMasaService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="KilogramoAQuintal">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/KilogramoAQuintal" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuintalAKilogramo">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/QuintalAKilogramo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KilogramoALibra">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/KilogramoALibra" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LibraAKilogramo">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/LibraAKilogramo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuintalALibra">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/QuintalALibra" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LibraAQuintal">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/LibraAQuintal" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MasaService">
+    <wsdl:port name="BasicHttpBinding_IMasaService" binding="tns:BasicHttpBinding_IMasaService">
+      <soap:address location="http://localhost:56686/ec/edu/monster/ws/MasaService.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd0</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+  <xs:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+  <xs:element name="KilogramoAQuintal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kilogramos" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KilogramoAQuintalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="KilogramoAQuintalResult" nillable="true" type="q1:ConversionResult" xmlns:q1="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuintalAKilogramo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="quintales" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuintalAKilogramoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="QuintalAKilogramoResult" nillable="true" type="q2:ConversionResult" xmlns:q2="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KilogramoALibra">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kilogramos" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KilogramoALibraResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="KilogramoALibraResult" nillable="true" type="q3:ConversionResult" xmlns:q3="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LibraAKilogramo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="libras" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LibraAKilogramoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LibraAKilogramoResult" nillable="true" type="q4:ConversionResult" xmlns:q4="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuintalALibra">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="quintales" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuintalALibraResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="QuintalALibraResult" nillable="true" type="q5:ConversionResult" xmlns:q5="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LibraAQuintal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="libras" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LibraAQuintalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LibraAQuintalResult" nillable="true" type="q6:ConversionResult" xmlns:q6="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd2</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models">
+  <xs:complexType name="ConversionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Error" nillable="true" type="tns:ConversionError"/>
+      <xs:element minOccurs="0" name="Exitoso" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Resultado" nillable="true" type="tns:UnidadConversion"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConversionResult" nillable="true" type="tns:ConversionResult"/>
+  <xs:complexType name="ConversionError">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoError" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Detalles" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="FechaError" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Mensaje" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="TipoError" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Unidad" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ValorProblematico" nillable="true" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConversionError" nillable="true" type="tns:ConversionError"/>
+  <xs:complexType name="UnidadConversion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FactorConversion" type="xs:double"/>
+      <xs:element minOccurs="0" name="FechaConversion" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="UnidadDestino" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="UnidadOrigen" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ValorConvertidoExacto" type="xs:double"/>
+      <xs:element minOccurs="0" name="ValorConvertidoRedondeado" type="xs:double"/>
+      <xs:element minOccurs="0" name="ValorOriginal" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadConversion" nillable="true" type="tns:UnidadConversion"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd1</con:url><con:content><![CDATA[<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+  <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+  <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+  <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+  <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+  <xs:element name="byte" nillable="true" type="xs:byte"/>
+  <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+  <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+  <xs:element name="double" nillable="true" type="xs:double"/>
+  <xs:element name="float" nillable="true" type="xs:float"/>
+  <xs:element name="int" nillable="true" type="xs:int"/>
+  <xs:element name="long" nillable="true" type="xs:long"/>
+  <xs:element name="QName" nillable="true" type="xs:QName"/>
+  <xs:element name="short" nillable="true" type="xs:short"/>
+  <xs:element name="string" nillable="true" type="xs:string"/>
+  <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+  <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+  <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+  <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+  <xs:element name="char" nillable="true" type="tns:char"/>
+  <xs:simpleType name="char">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:element name="duration" nillable="true" type="tns:duration"/>
+  <xs:simpleType name="duration">
+    <xs:restriction base="xs:duration">
+      <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+      <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+      <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="guid" nillable="true" type="tns:guid"/>
+  <xs:simpleType name="guid">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attribute name="FactoryType" type="xs:QName"/>
+  <xs:attribute name="Id" type="xs:ID"/>
+  <xs:attribute name="Ref" type="xs:IDREF"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:56686/ec/edu/monster/ws/MasaService.svc</con:endpoint></con:endpoints><con:operation id="abd314d0-9a4f-4ce2-8824-0a18ab650c85" isOneWay="false" action="http://tempuri.org/IMasaService/KilogramoALibra" name="KilogramoALibra" bindingOperationName="KilogramoALibra" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8291dcb2-97c2-4fe0-a1ec-e8a9c16cad23" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/MasaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:KilogramoALibra>\r
+         <!--Optional:-->\r
+         <tem:kilogramos>?</tem:kilogramos>\r
+      </tem:KilogramoALibra>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IMasaService/KilogramoALibra"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="67d0817d-7765-4e47-b792-d306cf6d847e" isOneWay="false" action="http://tempuri.org/IMasaService/KilogramoAQuintal" name="KilogramoAQuintal" bindingOperationName="KilogramoAQuintal" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9b46dbd8-2d43-4c60-b711-47a0af490e6f" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/MasaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:KilogramoAQuintal>\r
+         <!--Optional:-->\r
+         <tem:kilogramos>?</tem:kilogramos>\r
+      </tem:KilogramoAQuintal>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IMasaService/KilogramoAQuintal"/></con:call></con:operation><con:operation id="413cf014-842a-4dc1-99d7-a556520c65b1" isOneWay="false" action="http://tempuri.org/IMasaService/LibraAKilogramo" name="LibraAKilogramo" bindingOperationName="LibraAKilogramo" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="f2925589-c407-4100-8ec8-71c630f38fd4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/MasaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:LibraAKilogramo>\r
+         <!--Optional:-->\r
+         <tem:libras>?</tem:libras>\r
+      </tem:LibraAKilogramo>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IMasaService/LibraAKilogramo"/></con:call></con:operation><con:operation id="c9a11b82-a584-4252-8a3f-2254f4d64a19" isOneWay="false" action="http://tempuri.org/IMasaService/LibraAQuintal" name="LibraAQuintal" bindingOperationName="LibraAQuintal" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="4fa29ce5-e84b-465d-8a75-c75ab2f82d49" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/MasaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:LibraAQuintal>\r
+         <!--Optional:-->\r
+         <tem:libras>?</tem:libras>\r
+      </tem:LibraAQuintal>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IMasaService/LibraAQuintal"/></con:call></con:operation><con:operation id="5730305a-cda8-4f43-9682-943ee2e39614" isOneWay="false" action="http://tempuri.org/IMasaService/QuintalAKilogramo" name="QuintalAKilogramo" bindingOperationName="QuintalAKilogramo" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d213c4d4-3d61-4b55-a5cb-4912fe686279" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/MasaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:QuintalAKilogramo>\r
+         <!--Optional:-->\r
+         <tem:quintales>?</tem:quintales>\r
+      </tem:QuintalAKilogramo>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IMasaService/QuintalAKilogramo"/></con:call></con:operation><con:operation id="1f106164-7621-444e-b2a5-37d1811fda96" isOneWay="false" action="http://tempuri.org/IMasaService/QuintalALibra" name="QuintalALibra" bindingOperationName="QuintalALibra" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="4888316a-e83c-4ab4-a7ce-7c736cb2f3e2" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/MasaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:QuintalALibra>\r
+         <!--Optional:-->\r
+         <tem:quintales>?</tem:quintales>\r
+      </tem:QuintalALibra>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/IMasaService/QuintalALibra"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="f0fe10e3-ff23-423b-b385-01431427bc8c" wsaVersion="NONE" name="BasicHttpBinding_ITemperaturaService" type="wsdl" bindingName="{http://tempuri.org/}BasicHttpBinding_ITemperaturaService" soapVersion="1_1" anonymous="optional" definition="http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?wsdl"><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="TemperaturaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?xsd=xsd0" namespace="http://tempuri.org/"/>
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ITemperaturaService_CelsiusAFahrenheit_InputMessage">
+    <wsdl:part name="parameters" element="tns:CelsiusAFahrenheit"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_CelsiusAFahrenheit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CelsiusAFahrenheitResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_FahrenheitACelsius_InputMessage">
+    <wsdl:part name="parameters" element="tns:FahrenheitACelsius"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_FahrenheitACelsius_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FahrenheitACelsiusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_FahrenheitAKelvin_InputMessage">
+    <wsdl:part name="parameters" element="tns:FahrenheitAKelvin"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_FahrenheitAKelvin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FahrenheitAKelvinResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_KelvinAFahrenheit_InputMessage">
+    <wsdl:part name="parameters" element="tns:KelvinAFahrenheit"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_KelvinAFahrenheit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KelvinAFahrenheitResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_KelvinACelsius_InputMessage">
+    <wsdl:part name="parameters" element="tns:KelvinACelsius"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_KelvinACelsius_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KelvinACelsiusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_CelsiusAKelvin_InputMessage">
+    <wsdl:part name="parameters" element="tns:CelsiusAKelvin"/>
+  </wsdl:message>
+  <wsdl:message name="ITemperaturaService_CelsiusAKelvin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CelsiusAKelvinResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ITemperaturaService">
+    <wsdl:operation name="CelsiusAFahrenheit">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITemperaturaService/CelsiusAFahrenheit" message="tns:ITemperaturaService_CelsiusAFahrenheit_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ITemperaturaService/CelsiusAFahrenheitResponse" message="tns:ITemperaturaService_CelsiusAFahrenheit_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="FahrenheitACelsius">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITemperaturaService/FahrenheitACelsius" message="tns:ITemperaturaService_FahrenheitACelsius_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ITemperaturaService/FahrenheitACelsiusResponse" message="tns:ITemperaturaService_FahrenheitACelsius_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="FahrenheitAKelvin">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITemperaturaService/FahrenheitAKelvin" message="tns:ITemperaturaService_FahrenheitAKelvin_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ITemperaturaService/FahrenheitAKelvinResponse" message="tns:ITemperaturaService_FahrenheitAKelvin_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="KelvinAFahrenheit">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITemperaturaService/KelvinAFahrenheit" message="tns:ITemperaturaService_KelvinAFahrenheit_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ITemperaturaService/KelvinAFahrenheitResponse" message="tns:ITemperaturaService_KelvinAFahrenheit_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="KelvinACelsius">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITemperaturaService/KelvinACelsius" message="tns:ITemperaturaService_KelvinACelsius_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ITemperaturaService/KelvinACelsiusResponse" message="tns:ITemperaturaService_KelvinACelsius_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CelsiusAKelvin">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITemperaturaService/CelsiusAKelvin" message="tns:ITemperaturaService_CelsiusAKelvin_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/ITemperaturaService/CelsiusAKelvinResponse" message="tns:ITemperaturaService_CelsiusAKelvin_OutputMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ITemperaturaService" type="tns:ITemperaturaService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CelsiusAFahrenheit">
+      <soap:operation soapAction="http://tempuri.org/ITemperaturaService/CelsiusAFahrenheit" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FahrenheitACelsius">
+      <soap:operation soapAction="http://tempuri.org/ITemperaturaService/FahrenheitACelsius" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FahrenheitAKelvin">
+      <soap:operation soapAction="http://tempuri.org/ITemperaturaService/FahrenheitAKelvin" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KelvinAFahrenheit">
+      <soap:operation soapAction="http://tempuri.org/ITemperaturaService/KelvinAFahrenheit" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KelvinACelsius">
+      <soap:operation soapAction="http://tempuri.org/ITemperaturaService/KelvinACelsius" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CelsiusAKelvin">
+      <soap:operation soapAction="http://tempuri.org/ITemperaturaService/CelsiusAKelvin" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TemperaturaService">
+    <wsdl:port name="BasicHttpBinding_ITemperaturaService" binding="tns:BasicHttpBinding_ITemperaturaService">
+      <soap:address location="http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?xsd=xsd0</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+  <xs:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+  <xs:element name="CelsiusAFahrenheit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="celsius" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CelsiusAFahrenheitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CelsiusAFahrenheitResult" nillable="true" type="q1:ConversionResult" xmlns:q1="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FahrenheitACelsius">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fahrenheit" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FahrenheitACelsiusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FahrenheitACelsiusResult" nillable="true" type="q2:ConversionResult" xmlns:q2="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FahrenheitAKelvin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fahrenheit" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FahrenheitAKelvinResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FahrenheitAKelvinResult" nillable="true" type="q3:ConversionResult" xmlns:q3="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KelvinAFahrenheit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kelvin" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KelvinAFahrenheitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="KelvinAFahrenheitResult" nillable="true" type="q4:ConversionResult" xmlns:q4="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KelvinACelsius">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kelvin" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KelvinACelsiusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="KelvinACelsiusResult" nillable="true" type="q5:ConversionResult" xmlns:q5="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CelsiusAKelvin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="celsius" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CelsiusAKelvinResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CelsiusAKelvinResult" nillable="true" type="q6:ConversionResult" xmlns:q6="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?xsd=xsd2</con:url><con:content><![CDATA[<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models">
+  <xs:complexType name="ConversionResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Error" nillable="true" type="tns:ConversionError"/>
+      <xs:element minOccurs="0" name="Exitoso" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Resultado" nillable="true" type="tns:UnidadConversion"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConversionResult" nillable="true" type="tns:ConversionResult"/>
+  <xs:complexType name="ConversionError">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoError" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Detalles" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="FechaError" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Mensaje" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="TipoError" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Unidad" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ValorProblematico" nillable="true" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConversionError" nillable="true" type="tns:ConversionError"/>
+  <xs:complexType name="UnidadConversion">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FactorConversion" type="xs:double"/>
+      <xs:element minOccurs="0" name="FechaConversion" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="UnidadDestino" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="UnidadOrigen" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ValorConvertidoExacto" type="xs:double"/>
+      <xs:element minOccurs="0" name="ValorConvertidoRedondeado" type="xs:double"/>
+      <xs:element minOccurs="0" name="ValorOriginal" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadConversion" nillable="true" type="tns:UnidadConversion"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?xsd=xsd1</con:url><con:content><![CDATA[<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+  <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+  <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+  <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+  <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+  <xs:element name="byte" nillable="true" type="xs:byte"/>
+  <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+  <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+  <xs:element name="double" nillable="true" type="xs:double"/>
+  <xs:element name="float" nillable="true" type="xs:float"/>
+  <xs:element name="int" nillable="true" type="xs:int"/>
+  <xs:element name="long" nillable="true" type="xs:long"/>
+  <xs:element name="QName" nillable="true" type="xs:QName"/>
+  <xs:element name="short" nillable="true" type="xs:short"/>
+  <xs:element name="string" nillable="true" type="xs:string"/>
+  <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+  <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+  <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+  <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+  <xs:element name="char" nillable="true" type="tns:char"/>
+  <xs:simpleType name="char">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:element name="duration" nillable="true" type="tns:duration"/>
+  <xs:simpleType name="duration">
+    <xs:restriction base="xs:duration">
+      <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+      <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+      <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="guid" nillable="true" type="tns:guid"/>
+  <xs:simpleType name="guid">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attribute name="FactoryType" type="xs:QName"/>
+  <xs:attribute name="Id" type="xs:ID"/>
+  <xs:attribute name="Ref" type="xs:IDREF"/>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc</con:endpoint></con:endpoints><con:operation id="b2e6161b-d6ea-4687-ab35-3d96e01ea54a" isOneWay="false" action="http://tempuri.org/ITemperaturaService/CelsiusAFahrenheit" name="CelsiusAFahrenheit" bindingOperationName="CelsiusAFahrenheit" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="7f3b9f9c-2c99-4c34-990b-59261263e5ec" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:CelsiusAFahrenheit>\r
+         <!--Optional:-->\r
+         <tem:celsius>200</tem:celsius>\r
+      </tem:CelsiusAFahrenheit>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ITemperaturaService/CelsiusAFahrenheit"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="54fbd032-79b4-4a1b-8f0c-f1573567a899" isOneWay="false" action="http://tempuri.org/ITemperaturaService/CelsiusAKelvin" name="CelsiusAKelvin" bindingOperationName="CelsiusAKelvin" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="150c1b67-674c-421f-8a7b-1f232398e19a" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:CelsiusAKelvin>\r
+         <!--Optional:-->\r
+         <tem:celsius>?</tem:celsius>\r
+      </tem:CelsiusAKelvin>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ITemperaturaService/CelsiusAKelvin"/></con:call></con:operation><con:operation id="625bc40c-035d-45a0-be1c-211daef6cc02" isOneWay="false" action="http://tempuri.org/ITemperaturaService/FahrenheitACelsius" name="FahrenheitACelsius" bindingOperationName="FahrenheitACelsius" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b6e52a6a-eb8b-4d49-bb79-8495d807b953" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:FahrenheitACelsius>\r
+         <!--Optional:-->\r
+         <tem:fahrenheit>?</tem:fahrenheit>\r
+      </tem:FahrenheitACelsius>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ITemperaturaService/FahrenheitACelsius"/></con:call></con:operation><con:operation id="f39bac80-619e-41f9-aa43-05add201ff4c" isOneWay="false" action="http://tempuri.org/ITemperaturaService/FahrenheitAKelvin" name="FahrenheitAKelvin" bindingOperationName="FahrenheitAKelvin" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="461dc6bb-ad70-4443-a1df-162df284fd97" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:FahrenheitAKelvin>\r
+         <!--Optional:-->\r
+         <tem:fahrenheit>?</tem:fahrenheit>\r
+      </tem:FahrenheitAKelvin>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ITemperaturaService/FahrenheitAKelvin"/></con:call></con:operation><con:operation id="5fdbee53-da2b-4b34-a76d-6eabc10055db" isOneWay="false" action="http://tempuri.org/ITemperaturaService/KelvinACelsius" name="KelvinACelsius" bindingOperationName="KelvinACelsius" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="39e16816-f073-463d-b187-7034f3d3bb08" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:KelvinACelsius>\r
+         <!--Optional:-->\r
+         <tem:kelvin>?</tem:kelvin>\r
+      </tem:KelvinACelsius>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ITemperaturaService/KelvinACelsius"/></con:call></con:operation><con:operation id="508138d8-93eb-4f85-b1a2-226cb4b4feba" isOneWay="false" action="http://tempuri.org/ITemperaturaService/KelvinAFahrenheit" name="KelvinAFahrenheit" bindingOperationName="KelvinAFahrenheit" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="203b5ecf-edf9-4520-b4ff-89a444cbfce9" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tem:KelvinAFahrenheit>\r
+         <!--Optional:-->\r
+         <tem:kelvin>?</tem:kelvin>\r
+      </tem:KelvinAFahrenheit>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ITemperaturaService/KelvinAFahrenheit"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

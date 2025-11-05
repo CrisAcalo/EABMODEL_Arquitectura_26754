@@ -10,10 +10,88 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
     /// </summary>
     public class MasaService
     {
+        #region Métodos con validación de string
+
+        /// <summary>
+        /// Convierte de Kilogramo a Quintal (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirKilogramoAQuintal(string kilogramosString)
+        {
+            var error = BaseValidator.ValidarStringPositivo(kilogramosString, MasaConstants.KILOGRAMO, out double kilogramos);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirKilogramoAQuintal(kilogramos);
+        }
+
+        /// <summary>
+        /// Convierte de Quintal a Kilogramo (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirQuintalAKilogramo(string quintalesString)
+        {
+            var error = BaseValidator.ValidarStringPositivo(quintalesString, MasaConstants.QUINTAL, out double quintales);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirQuintalAKilogramo(quintales);
+        }
+
+        /// <summary>
+        /// Convierte de Kilogramo a Libra (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirKilogramoALibra(string kilogramosString)
+        {
+            var error = BaseValidator.ValidarStringPositivo(kilogramosString, MasaConstants.KILOGRAMO, out double kilogramos);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirKilogramoALibra(kilogramos);
+        }
+
+        /// <summary>
+        /// Convierte de Libra a Kilogramo (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirLibraAKilogramo(string librasString)
+        {
+            var error = BaseValidator.ValidarStringPositivo(librasString, MasaConstants.LIBRA, out double libras);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirLibraAKilogramo(libras);
+        }
+
+        /// <summary>
+        /// Convierte de Quintal a Libra (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirQuintalALibra(string quintalesString)
+        {
+            var error = BaseValidator.ValidarStringPositivo(quintalesString, MasaConstants.QUINTAL, out double quintales);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirQuintalALibra(quintales);
+        }
+
+        /// <summary>
+        /// Convierte de Libra a Quintal (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirLibraAQuintal(string librasString)
+        {
+            var error = BaseValidator.ValidarStringPositivo(librasString, MasaConstants.LIBRA, out double libras);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirLibraAQuintal(libras);
+        }
+
+        #endregion
+
+        #region Métodos internos con double (para reutilización)
+
         /// <summary>
         /// Convierte de Kilogramo a Quintal
         /// </summary>
-        public ConversionResultModel ConvertirKilogramoAQuintal(double kilogramos)
+        private ConversionResultModel ConvertirKilogramoAQuintal(double kilogramos)
         {
             var error = BaseValidator.ValidarValorPositivo(kilogramos, MasaConstants.KILOGRAMO);
             if (error != null)
@@ -36,7 +114,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Quintal a Kilogramo
         /// </summary>
-        public ConversionResultModel ConvertirQuintalAKilogramo(double quintales)
+        private ConversionResultModel ConvertirQuintalAKilogramo(double quintales)
         {
             var error = BaseValidator.ValidarValorPositivo(quintales, MasaConstants.QUINTAL);
             if (error != null)
@@ -59,7 +137,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Kilogramo a Libra
         /// </summary>
-        public ConversionResultModel ConvertirKilogramoALibra(double kilogramos)
+        private ConversionResultModel ConvertirKilogramoALibra(double kilogramos)
         {
             var error = BaseValidator.ValidarValorPositivo(kilogramos, MasaConstants.KILOGRAMO);
             if (error != null)
@@ -82,7 +160,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Libra a Kilogramo
         /// </summary>
-        public ConversionResultModel ConvertirLibraAKilogramo(double libras)
+        private ConversionResultModel ConvertirLibraAKilogramo(double libras)
         {
             var error = BaseValidator.ValidarValorPositivo(libras, MasaConstants.LIBRA);
             if (error != null)
@@ -105,7 +183,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Quintal a Libra
         /// </summary>
-        public ConversionResultModel ConvertirQuintalALibra(double quintales)
+        private ConversionResultModel ConvertirQuintalALibra(double quintales)
         {
             var error = BaseValidator.ValidarValorPositivo(quintales, MasaConstants.QUINTAL);
             if (error != null)
@@ -128,7 +206,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Libra a Quintal
         /// </summary>
-        public ConversionResultModel ConvertirLibraAQuintal(double libras)
+        private ConversionResultModel ConvertirLibraAQuintal(double libras)
         {
             var error = BaseValidator.ValidarValorPositivo(libras, MasaConstants.LIBRA);
             if (error != null)
@@ -147,5 +225,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
 
             return ConversionResultModel.Exito(resultado);
         }
+
+        #endregion
     }
 }

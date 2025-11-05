@@ -10,10 +10,88 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
     /// </summary>
     public class TemperaturaService
     {
+        #region Métodos con validación de string
+
+        /// <summary>
+        /// Convierte de Celsius a Fahrenheit (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirCelsiusAFahrenheit(string celsiusString)
+        {
+            var error = TemperaturaValidator.ValidarStringTemperaturaCelsius(celsiusString, out double celsius);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirCelsiusAFahrenheit(celsius);
+        }
+
+        /// <summary>
+        /// Convierte de Fahrenheit a Celsius (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirFahrenheitACelsius(string fahrenheitString)
+        {
+            var error = TemperaturaValidator.ValidarStringTemperaturaFahrenheit(fahrenheitString, out double fahrenheit);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirFahrenheitACelsius(fahrenheit);
+        }
+
+        /// <summary>
+        /// Convierte de Celsius a Kelvin (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirCelsiusAKelvin(string celsiusString)
+        {
+            var error = TemperaturaValidator.ValidarStringTemperaturaCelsius(celsiusString, out double celsius);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirCelsiusAKelvin(celsius);
+        }
+
+        /// <summary>
+        /// Convierte de Kelvin a Celsius (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirKelvinACelsius(string kelvinString)
+        {
+            var error = TemperaturaValidator.ValidarStringTemperaturaKelvin(kelvinString, out double kelvin);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirKelvinACelsius(kelvin);
+        }
+
+        /// <summary>
+        /// Convierte de Fahrenheit a Kelvin (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirFahrenheitAKelvin(string fahrenheitString)
+        {
+            var error = TemperaturaValidator.ValidarStringTemperaturaFahrenheit(fahrenheitString, out double fahrenheit);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirFahrenheitAKelvin(fahrenheit);
+        }
+
+        /// <summary>
+        /// Convierte de Kelvin a Fahrenheit (con validación de string)
+        /// </summary>
+        public ConversionResultModel ConvertirKelvinAFahrenheit(string kelvinString)
+        {
+            var error = TemperaturaValidator.ValidarStringTemperaturaKelvin(kelvinString, out double kelvin);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            return ConvertirKelvinAFahrenheit(kelvin);
+        }
+
+        #endregion
+
+        #region Métodos internos con double (para reutilización)
+
         /// <summary>
         /// Convierte de Celsius a Fahrenheit
         /// </summary>
-        public ConversionResultModel ConvertirCelsiusAFahrenheit(double celsius)
+        private ConversionResultModel ConvertirCelsiusAFahrenheit(double celsius)
         {
             var error = TemperaturaValidator.ValidarTemperaturaCelsius(celsius);
             if (error != null)
@@ -37,7 +115,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Fahrenheit a Celsius
         /// </summary>
-        public ConversionResultModel ConvertirFahrenheitACelsius(double fahrenheit)
+        private ConversionResultModel ConvertirFahrenheitACelsius(double fahrenheit)
         {
             var error = TemperaturaValidator.ValidarTemperaturaFahrenheit(fahrenheit);
             if (error != null)
@@ -61,7 +139,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Celsius a Kelvin
         /// </summary>
-        public ConversionResultModel ConvertirCelsiusAKelvin(double celsius)
+        private ConversionResultModel ConvertirCelsiusAKelvin(double celsius)
         {
             var error = TemperaturaValidator.ValidarTemperaturaCelsius(celsius);
             if (error != null)
@@ -85,7 +163,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Kelvin a Celsius
         /// </summary>
-        public ConversionResultModel ConvertirKelvinACelsius(double kelvin)
+        private ConversionResultModel ConvertirKelvinACelsius(double kelvin)
         {
             var error = TemperaturaValidator.ValidarTemperaturaKelvin(kelvin);
             if (error != null)
@@ -109,7 +187,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Fahrenheit a Kelvin
         /// </summary>
-        public ConversionResultModel ConvertirFahrenheitAKelvin(double fahrenheit)
+        private ConversionResultModel ConvertirFahrenheitAKelvin(double fahrenheit)
         {
             var error = TemperaturaValidator.ValidarTemperaturaFahrenheit(fahrenheit);
             if (error != null)
@@ -134,7 +212,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
         /// <summary>
         /// Convierte de Kelvin a Fahrenheit
         /// </summary>
-        public ConversionResultModel ConvertirKelvinAFahrenheit(double kelvin)
+        private ConversionResultModel ConvertirKelvinAFahrenheit(double kelvin)
         {
             var error = TemperaturaValidator.ValidarTemperaturaKelvin(kelvin);
             if (error != null)
@@ -155,5 +233,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services
 
             return ConversionResultModel.Exito(resultado);
         }
+
+        #endregion
     }
 }

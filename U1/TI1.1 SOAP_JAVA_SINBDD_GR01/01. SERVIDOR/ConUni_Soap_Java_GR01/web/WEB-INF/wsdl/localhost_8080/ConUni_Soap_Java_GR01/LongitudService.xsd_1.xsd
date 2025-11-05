@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.3.payara-p6 (FISH-5811-df8dba8; 2021-12-02T15:42:59+0000) JAXWS-RI/2.3.2.payara-p4 JAXWS-API/2.3.2 JAXB-RI/2.3.2 JAXB-API/2.3.2 git-revision#unknown. --><xs:schema xmlns:tns="http://ws.monster.edu.ec/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.monster.edu.ec/">
+
+<xs:element name="ConversionError" type="tns:conversionError"/>
+
+<xs:element name="ConversionResult" type="tns:conversionResult"/>
+
+<xs:element name="MetroAMilla" type="tns:MetroAMilla"/>
+
+<xs:element name="MetroAMillaResponse" type="tns:MetroAMillaResponse"/>
+
+<xs:element name="MetroAPulgada" type="tns:MetroAPulgada"/>
+
+<xs:element name="MetroAPulgadaResponse" type="tns:MetroAPulgadaResponse"/>
+
+<xs:element name="MillaAMetro" type="tns:MillaAMetro"/>
+
+<xs:element name="MillaAMetroResponse" type="tns:MillaAMetroResponse"/>
+
+<xs:element name="MillaAPulgada" type="tns:MillaAPulgada"/>
+
+<xs:element name="MillaAPulgadaResponse" type="tns:MillaAPulgadaResponse"/>
+
+<xs:element name="PulgadaAMetro" type="tns:PulgadaAMetro"/>
+
+<xs:element name="PulgadaAMetroResponse" type="tns:PulgadaAMetroResponse"/>
+
+<xs:element name="PulgadaAMilla" type="tns:PulgadaAMilla"/>
+
+<xs:element name="PulgadaAMillaResponse" type="tns:PulgadaAMillaResponse"/>
+
+<xs:element name="UnidadConversion" type="tns:unidadConversion"/>
+
+<xs:complexType name="MetroAMilla">
+<xs:sequence>
+<xs:element name="metros" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MetroAMillaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:conversionResult" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="conversionResult">
+<xs:sequence>
+<xs:element name="Exitoso" type="xs:boolean"/>
+<xs:element name="Resultado" type="tns:unidadConversion" minOccurs="0"/>
+<xs:element name="Error" type="tns:conversionError" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="unidadConversion">
+<xs:sequence>
+<xs:element name="valorOriginal" type="xs:double"/>
+<xs:element name="valorConvertidoExacto" type="xs:double"/>
+<xs:element name="valorConvertidoRedondeado" type="xs:double"/>
+<xs:element name="unidadOrigen" type="xs:string" minOccurs="0"/>
+<xs:element name="unidadDestino" type="xs:string" minOccurs="0"/>
+<xs:element name="factorConversion" type="xs:double"/>
+<xs:element name="fechaConversion" type="tns:localDateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="localDateTime" final="extension restriction">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="conversionError">
+<xs:sequence>
+<xs:element name="CodigoError" type="xs:string" minOccurs="0"/>
+<xs:element name="Mensaje" type="xs:string" minOccurs="0"/>
+<xs:element name="TipoError" type="xs:string" minOccurs="0"/>
+<xs:element name="ValorProblematico" type="xs:double" minOccurs="0"/>
+<xs:element name="Unidad" type="xs:string" minOccurs="0"/>
+<xs:element name="FechaError" type="tns:localDateTime" minOccurs="0"/>
+<xs:element name="Detalles" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MillaAPulgada">
+<xs:sequence>
+<xs:element name="millas" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MillaAPulgadaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:conversionResult" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PulgadaAMilla">
+<xs:sequence>
+<xs:element name="pulgadas" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PulgadaAMillaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:conversionResult" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PulgadaAMetro">
+<xs:sequence>
+<xs:element name="pulgadas" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="PulgadaAMetroResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:conversionResult" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MetroAPulgada">
+<xs:sequence>
+<xs:element name="metros" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MetroAPulgadaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:conversionResult" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MillaAMetro">
+<xs:sequence>
+<xs:element name="millas" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MillaAMetroResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:conversionResult" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
