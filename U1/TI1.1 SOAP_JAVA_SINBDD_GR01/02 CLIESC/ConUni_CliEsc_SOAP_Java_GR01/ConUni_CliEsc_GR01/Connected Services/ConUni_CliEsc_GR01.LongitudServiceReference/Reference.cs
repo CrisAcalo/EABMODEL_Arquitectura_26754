@@ -9,320 +9,618 @@
 
 namespace ConUni_CliEsc_GR01.LongitudServiceReference
 {
-    using System.Runtime.Serialization;
     
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConversionResult", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class ConversionResult : object
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.monster.edu.ec/", ConfigurationName="ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService")]
+    public interface LongitudService
     {
         
-        private ConUni_CliEsc_GR01.LongitudServiceReference.ConversionError ErrorField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/LongitudService/MetroAMillaRequest", ReplyAction="http://ws.monster.edu.ec/LongitudService/MetroAMillaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MetroAMillaResponse> MetroAMillaAsync(ConUni_CliEsc_GR01.LongitudServiceReference.MetroAMillaRequest request);
         
-        private bool ExitosoField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/LongitudService/MillaAMetroRequest", ReplyAction="http://ws.monster.edu.ec/LongitudService/MillaAMetroResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MillaAMetroResponse> MillaAMetroAsync(ConUni_CliEsc_GR01.LongitudServiceReference.MillaAMetroRequest request);
         
-        private ConUni_CliEsc_GR01.LongitudServiceReference.UnidadConversion ResultadoField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/LongitudService/PulgadaAMetroRequest", ReplyAction="http://ws.monster.edu.ec/LongitudService/PulgadaAMetroResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMetroResponse> PulgadaAMetroAsync(ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMetroRequest request);
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ConUni_CliEsc_GR01.LongitudServiceReference.ConversionError Error
-        {
-            get
-            {
-                return this.ErrorField;
-            }
-            set
-            {
-                this.ErrorField = value;
-            }
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/LongitudService/PulgadaAMillaRequest", ReplyAction="http://ws.monster.edu.ec/LongitudService/PulgadaAMillaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMillaResponse> PulgadaAMillaAsync(ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMillaRequest request);
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/LongitudService/MetroAPulgadaRequest", ReplyAction="http://ws.monster.edu.ec/LongitudService/MetroAPulgadaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MetroAPulgadaResponse> MetroAPulgadaAsync(ConUni_CliEsc_GR01.LongitudServiceReference.MetroAPulgadaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/LongitudService/MillaAPulgadaRequest", ReplyAction="http://ws.monster.edu.ec/LongitudService/MillaAPulgadaResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MillaAPulgadaResponse> MillaAPulgadaAsync(ConUni_CliEsc_GR01.LongitudServiceReference.MillaAPulgadaRequest request);
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class conversionResult
+    {
+        
+        private bool exitosoField;
+        
+        private unidadConversion resultadoField;
+        
+        private conversionError errorField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public bool Exitoso
         {
             get
             {
-                return this.ExitosoField;
+                return this.exitosoField;
             }
             set
             {
-                this.ExitosoField = value;
+                this.exitosoField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ConUni_CliEsc_GR01.LongitudServiceReference.UnidadConversion Resultado
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public unidadConversion Resultado
         {
             get
             {
-                return this.ResultadoField;
+                return this.resultadoField;
             }
             set
             {
-                this.ResultadoField = value;
+                this.resultadoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public conversionError Error
+        {
+            get
+            {
+                return this.errorField;
+            }
+            set
+            {
+                this.errorField = value;
             }
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConversionError", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class ConversionError : object
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class unidadConversion
     {
         
-        private string CodigoErrorField;
+        private double valorOriginalField;
         
-        private string DetallesField;
+        private double valorConvertidoExactoField;
         
-        private System.DateTime FechaErrorField;
+        private double valorConvertidoRedondeadoField;
         
-        private string MensajeField;
+        private string unidadOrigenField;
         
-        private string TipoErrorField;
+        private string unidadDestinoField;
         
-        private string UnidadField;
+        private double factorConversionField;
         
-        private System.Nullable<double> ValorProblematicoField;
+        private localDateTime fechaConversionField;
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public double valorOriginal
+        {
+            get
+            {
+                return this.valorOriginalField;
+            }
+            set
+            {
+                this.valorOriginalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public double valorConvertidoExacto
+        {
+            get
+            {
+                return this.valorConvertidoExactoField;
+            }
+            set
+            {
+                this.valorConvertidoExactoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public double valorConvertidoRedondeado
+        {
+            get
+            {
+                return this.valorConvertidoRedondeadoField;
+            }
+            set
+            {
+                this.valorConvertidoRedondeadoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public string unidadOrigen
+        {
+            get
+            {
+                return this.unidadOrigenField;
+            }
+            set
+            {
+                this.unidadOrigenField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public string unidadDestino
+        {
+            get
+            {
+                return this.unidadDestinoField;
+            }
+            set
+            {
+                this.unidadDestinoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public double factorConversion
+        {
+            get
+            {
+                return this.factorConversionField;
+            }
+            set
+            {
+                this.factorConversionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public localDateTime fechaConversion
+        {
+            get
+            {
+                return this.fechaConversionField;
+            }
+            set
+            {
+                this.fechaConversionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class localDateTime
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class conversionError
+    {
+        
+        private string codigoErrorField;
+        
+        private string mensajeField;
+        
+        private string tipoErrorField;
+        
+        private double valorProblematicoField;
+        
+        private bool valorProblematicoFieldSpecified;
+        
+        private string unidadField;
+        
+        private localDateTime fechaErrorField;
+        
+        private string detallesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string CodigoError
         {
             get
             {
-                return this.CodigoErrorField;
+                return this.codigoErrorField;
             }
             set
             {
-                this.CodigoErrorField = value;
+                this.codigoErrorField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Detalles
-        {
-            get
-            {
-                return this.DetallesField;
-            }
-            set
-            {
-                this.DetallesField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FechaError
-        {
-            get
-            {
-                return this.FechaErrorField;
-            }
-            set
-            {
-                this.FechaErrorField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public string Mensaje
         {
             get
             {
-                return this.MensajeField;
+                return this.mensajeField;
             }
             set
             {
-                this.MensajeField = value;
+                this.mensajeField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public string TipoError
         {
             get
             {
-                return this.TipoErrorField;
+                return this.tipoErrorField;
             }
             set
             {
-                this.TipoErrorField = value;
+                this.tipoErrorField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public double ValorProblematico
+        {
+            get
+            {
+                return this.valorProblematicoField;
+            }
+            set
+            {
+                this.valorProblematicoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ValorProblematicoSpecified
+        {
+            get
+            {
+                return this.valorProblematicoFieldSpecified;
+            }
+            set
+            {
+                this.valorProblematicoFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public string Unidad
         {
             get
             {
-                return this.UnidadField;
+                return this.unidadField;
             }
             set
             {
-                this.UnidadField = value;
+                this.unidadField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> ValorProblematico
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public localDateTime FechaError
         {
             get
             {
-                return this.ValorProblematicoField;
+                return this.fechaErrorField;
             }
             set
             {
-                this.ValorProblematicoField = value;
+                this.fechaErrorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public string Detalles
+        {
+            get
+            {
+                return this.detallesField;
+            }
+            set
+            {
+                this.detallesField = value;
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UnidadConversion", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class UnidadConversion : object
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="MetroAMilla", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class MetroAMillaRequest
     {
         
-        private double FactorConversionField;
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string metros;
         
-        private System.DateTime FechaConversionField;
-        
-        private string UnidadDestinoField;
-        
-        private string UnidadOrigenField;
-        
-        private double ValorConvertidoExactoField;
-        
-        private double ValorConvertidoRedondeadoField;
-        
-        private double ValorOriginalField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FactorConversion
+        public MetroAMillaRequest()
         {
-            get
-            {
-                return this.FactorConversionField;
-            }
-            set
-            {
-                this.FactorConversionField = value;
-            }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FechaConversion
+        public MetroAMillaRequest(string metros)
         {
-            get
-            {
-                return this.FechaConversionField;
-            }
-            set
-            {
-                this.FechaConversionField = value;
-            }
+            this.metros = metros;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="MetroAMillaResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class MetroAMillaResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return;
+        
+        public MetroAMillaResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UnidadDestino
+        public MetroAMillaResponse(ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.UnidadDestinoField;
-            }
-            set
-            {
-                this.UnidadDestinoField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="MillaAMetro", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class MillaAMetroRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string millas;
+        
+        public MillaAMetroRequest()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UnidadOrigen
+        public MillaAMetroRequest(string millas)
         {
-            get
-            {
-                return this.UnidadOrigenField;
-            }
-            set
-            {
-                this.UnidadOrigenField = value;
-            }
+            this.millas = millas;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="MillaAMetroResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class MillaAMetroResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return;
+        
+        public MillaAMetroResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorConvertidoExacto
+        public MillaAMetroResponse(ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.ValorConvertidoExactoField;
-            }
-            set
-            {
-                this.ValorConvertidoExactoField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PulgadaAMetro", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class PulgadaAMetroRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string pulgadas;
+        
+        public PulgadaAMetroRequest()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorConvertidoRedondeado
+        public PulgadaAMetroRequest(string pulgadas)
         {
-            get
-            {
-                return this.ValorConvertidoRedondeadoField;
-            }
-            set
-            {
-                this.ValorConvertidoRedondeadoField = value;
-            }
+            this.pulgadas = pulgadas;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PulgadaAMetroResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class PulgadaAMetroResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return;
+        
+        public PulgadaAMetroResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorOriginal
+        public PulgadaAMetroResponse(ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.ValorOriginalField;
-            }
-            set
-            {
-                this.ValorOriginalField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PulgadaAMilla", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class PulgadaAMillaRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string pulgadas;
+        
+        public PulgadaAMillaRequest()
+        {
+        }
+        
+        public PulgadaAMillaRequest(string pulgadas)
+        {
+            this.pulgadas = pulgadas;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PulgadaAMillaResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class PulgadaAMillaResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return;
+        
+        public PulgadaAMillaResponse()
+        {
+        }
+        
+        public PulgadaAMillaResponse(ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="MetroAPulgada", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class MetroAPulgadaRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string metros;
+        
+        public MetroAPulgadaRequest()
+        {
+        }
+        
+        public MetroAPulgadaRequest(string metros)
+        {
+            this.metros = metros;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="MetroAPulgadaResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class MetroAPulgadaResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return;
+        
+        public MetroAPulgadaResponse()
+        {
+        }
+        
+        public MetroAPulgadaResponse(ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="MillaAPulgada", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class MillaAPulgadaRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string millas;
+        
+        public MillaAPulgadaRequest()
+        {
+        }
+        
+        public MillaAPulgadaRequest(string millas)
+        {
+            this.millas = millas;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="MillaAPulgadaResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class MillaAPulgadaResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return;
+        
+        public MillaAPulgadaResponse()
+        {
+        }
+        
+        public MillaAPulgadaResponse(ConUni_CliEsc_GR01.LongitudServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ConUni_CliEsc_GR01.LongitudServiceReference.ILongitudService")]
-    public interface ILongitudService
-    {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILongitudService/MillaAMetro", ReplyAction="http://tempuri.org/ILongitudService/MillaAMetroResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> MillaAMetroAsync(string millas);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILongitudService/MetroAMilla", ReplyAction="http://tempuri.org/ILongitudService/MetroAMillaResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> MetroAMillaAsync(string metros);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILongitudService/MillaAPulgada", ReplyAction="http://tempuri.org/ILongitudService/MillaAPulgadaResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> MillaAPulgadaAsync(string millas);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILongitudService/PulgadaAMilla", ReplyAction="http://tempuri.org/ILongitudService/PulgadaAMillaResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> PulgadaAMillaAsync(string pulgadas);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILongitudService/MetroAPulgada", ReplyAction="http://tempuri.org/ILongitudService/MetroAPulgadaResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> MetroAPulgadaAsync(string metros);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILongitudService/PulgadaAMetro", ReplyAction="http://tempuri.org/ILongitudService/PulgadaAMetroResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> PulgadaAMetroAsync(string pulgadas);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public interface ILongitudServiceChannel : ConUni_CliEsc_GR01.LongitudServiceReference.ILongitudService, System.ServiceModel.IClientChannel
+    public interface LongitudServiceChannel : ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public partial class LongitudServiceClient : System.ServiceModel.ClientBase<ConUni_CliEsc_GR01.LongitudServiceReference.ILongitudService>, ConUni_CliEsc_GR01.LongitudServiceReference.ILongitudService
+    public partial class LongitudServiceClient : System.ServiceModel.ClientBase<ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService>, ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService
     {
         
         /// <summary>
@@ -335,7 +633,7 @@ namespace ConUni_CliEsc_GR01.LongitudServiceReference
         public LongitudServiceClient() : 
                 base(LongitudServiceClient.GetDefaultBinding(), LongitudServiceClient.GetDefaultEndpointAddress())
         {
-            this.Endpoint.Name = EndpointConfiguration.BasicHttpBinding_ILongitudService.ToString();
+            this.Endpoint.Name = EndpointConfiguration.LongitudServicePort.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
@@ -365,34 +663,82 @@ namespace ConUni_CliEsc_GR01.LongitudServiceReference
         {
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> MillaAMetroAsync(string millas)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MetroAMillaResponse> ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService.MetroAMillaAsync(ConUni_CliEsc_GR01.LongitudServiceReference.MetroAMillaRequest request)
         {
-            return base.Channel.MillaAMetroAsync(millas);
+            return base.Channel.MetroAMillaAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> MetroAMillaAsync(string metros)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MetroAMillaResponse> MetroAMillaAsync(string metros)
         {
-            return base.Channel.MetroAMillaAsync(metros);
+            ConUni_CliEsc_GR01.LongitudServiceReference.MetroAMillaRequest inValue = new ConUni_CliEsc_GR01.LongitudServiceReference.MetroAMillaRequest();
+            inValue.metros = metros;
+            return ((ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService)(this)).MetroAMillaAsync(inValue);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> MillaAPulgadaAsync(string millas)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MillaAMetroResponse> ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService.MillaAMetroAsync(ConUni_CliEsc_GR01.LongitudServiceReference.MillaAMetroRequest request)
         {
-            return base.Channel.MillaAPulgadaAsync(millas);
+            return base.Channel.MillaAMetroAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> PulgadaAMillaAsync(string pulgadas)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MillaAMetroResponse> MillaAMetroAsync(string millas)
         {
-            return base.Channel.PulgadaAMillaAsync(pulgadas);
+            ConUni_CliEsc_GR01.LongitudServiceReference.MillaAMetroRequest inValue = new ConUni_CliEsc_GR01.LongitudServiceReference.MillaAMetroRequest();
+            inValue.millas = millas;
+            return ((ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService)(this)).MillaAMetroAsync(inValue);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> MetroAPulgadaAsync(string metros)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMetroResponse> ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService.PulgadaAMetroAsync(ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMetroRequest request)
         {
-            return base.Channel.MetroAPulgadaAsync(metros);
+            return base.Channel.PulgadaAMetroAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.ConversionResult> PulgadaAMetroAsync(string pulgadas)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMetroResponse> PulgadaAMetroAsync(string pulgadas)
         {
-            return base.Channel.PulgadaAMetroAsync(pulgadas);
+            ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMetroRequest inValue = new ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMetroRequest();
+            inValue.pulgadas = pulgadas;
+            return ((ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService)(this)).PulgadaAMetroAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMillaResponse> ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService.PulgadaAMillaAsync(ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMillaRequest request)
+        {
+            return base.Channel.PulgadaAMillaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMillaResponse> PulgadaAMillaAsync(string pulgadas)
+        {
+            ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMillaRequest inValue = new ConUni_CliEsc_GR01.LongitudServiceReference.PulgadaAMillaRequest();
+            inValue.pulgadas = pulgadas;
+            return ((ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService)(this)).PulgadaAMillaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MetroAPulgadaResponse> ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService.MetroAPulgadaAsync(ConUni_CliEsc_GR01.LongitudServiceReference.MetroAPulgadaRequest request)
+        {
+            return base.Channel.MetroAPulgadaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MetroAPulgadaResponse> MetroAPulgadaAsync(string metros)
+        {
+            ConUni_CliEsc_GR01.LongitudServiceReference.MetroAPulgadaRequest inValue = new ConUni_CliEsc_GR01.LongitudServiceReference.MetroAPulgadaRequest();
+            inValue.metros = metros;
+            return ((ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService)(this)).MetroAPulgadaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MillaAPulgadaResponse> ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService.MillaAPulgadaAsync(ConUni_CliEsc_GR01.LongitudServiceReference.MillaAPulgadaRequest request)
+        {
+            return base.Channel.MillaAPulgadaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.LongitudServiceReference.MillaAPulgadaResponse> MillaAPulgadaAsync(string millas)
+        {
+            ConUni_CliEsc_GR01.LongitudServiceReference.MillaAPulgadaRequest inValue = new ConUni_CliEsc_GR01.LongitudServiceReference.MillaAPulgadaRequest();
+            inValue.millas = millas;
+            return ((ConUni_CliEsc_GR01.LongitudServiceReference.LongitudService)(this)).MillaAPulgadaAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
@@ -409,7 +755,7 @@ namespace ConUni_CliEsc_GR01.LongitudServiceReference
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_ILongitudService))
+            if ((endpointConfiguration == EndpointConfiguration.LongitudServicePort))
             {
                 System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
                 result.MaxBufferSize = int.MaxValue;
@@ -423,27 +769,27 @@ namespace ConUni_CliEsc_GR01.LongitudServiceReference
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_ILongitudService))
+            if ((endpointConfiguration == EndpointConfiguration.LongitudServicePort))
             {
-                return new System.ServiceModel.EndpointAddress("http://localhost:56686/ec/edu/monster/ws/LongitudService.svc");
+                return new System.ServiceModel.EndpointAddress("http://localhost:8080/ConUni_Soap_Java_GR01/LongitudService");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
         
         private static System.ServiceModel.Channels.Binding GetDefaultBinding()
         {
-            return LongitudServiceClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_ILongitudService);
+            return LongitudServiceClient.GetBindingForEndpoint(EndpointConfiguration.LongitudServicePort);
         }
         
         private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress()
         {
-            return LongitudServiceClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_ILongitudService);
+            return LongitudServiceClient.GetEndpointAddress(EndpointConfiguration.LongitudServicePort);
         }
         
         public enum EndpointConfiguration
         {
             
-            BasicHttpBinding_ILongitudService,
+            LongitudServicePort,
         }
     }
 }

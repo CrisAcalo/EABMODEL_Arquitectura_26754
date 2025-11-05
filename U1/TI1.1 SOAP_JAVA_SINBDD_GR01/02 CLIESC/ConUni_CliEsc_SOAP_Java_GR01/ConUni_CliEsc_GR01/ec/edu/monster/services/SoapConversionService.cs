@@ -29,24 +29,35 @@ public class SoapConversionService : IConversionService
         try
         {
             using var client = new MasaServiceClient(
-                MasaServiceClient.EndpointConfiguration.BasicHttpBinding_IMasaService,
+                MasaServiceClient.EndpointConfiguration.MasaServicePort,
                 _masaServiceUrl
             );
 
-            MasaServiceReference.ConversionResult? result = null;
+            MasaServiceReference.conversionResult? result = null;
 
             // Mapear unidades a método SOAP específico
             var key = $"{request.UnidadOrigen}-{request.UnidadDestino}";
-            result = key switch
+            switch (key)
             {
-                "Kilogramo-Quintal" => await client.KilogramoAQuintalAsync(request.Valor),
-                "Quintal-Kilogramo" => await client.QuintalAKilogramoAsync(request.Valor),
-                "Kilogramo-Libra" => await client.KilogramoALibraAsync(request.Valor),
-                "Libra-Kilogramo" => await client.LibraAKilogramoAsync(request.Valor),
-                "Quintal-Libra" => await client.QuintalALibraAsync(request.Valor),
-                "Libra-Quintal" => await client.LibraAQuintalAsync(request.Valor),
-                _ => null
-            };
+                case "Kilogramo-Quintal":
+                    result = (await client.KilogramoAQuintalAsync(request.Valor))?.@return;
+                    break;
+                case "Quintal-Kilogramo":
+                    result = (await client.QuintalAKilogramoAsync(request.Valor))?.@return;
+                    break;
+                case "Kilogramo-Libra":
+                    result = (await client.KilogramoALibraAsync(request.Valor))?.@return;
+                    break;
+                case "Libra-Kilogramo":
+                    result = (await client.LibraAKilogramoAsync(request.Valor))?.@return;
+                    break;
+                case "Quintal-Libra":
+                    result = (await client.QuintalALibraAsync(request.Valor))?.@return;
+                    break;
+                case "Libra-Quintal":
+                    result = (await client.LibraAQuintalAsync(request.Valor))?.@return;
+                    break;
+            }
 
             if (result == null)
             {
@@ -66,24 +77,35 @@ public class SoapConversionService : IConversionService
         try
         {
             using var client = new LongitudServiceClient(
-                LongitudServiceClient.EndpointConfiguration.BasicHttpBinding_ILongitudService,
+                LongitudServiceClient.EndpointConfiguration.LongitudServicePort,
                 _longitudServiceUrl
             );
 
-            LongitudServiceReference.ConversionResult? result = null;
+            LongitudServiceReference.conversionResult? result = null;
 
             // Mapear unidades a método SOAP específico
             var key = $"{request.UnidadOrigen}-{request.UnidadDestino}";
-            result = key switch
+            switch (key)
             {
-                "Milla-Metro" => await client.MillaAMetroAsync(request.Valor),
-                "Metro-Milla" => await client.MetroAMillaAsync(request.Valor),
-                "Milla-Pulgada" => await client.MillaAPulgadaAsync(request.Valor),
-                "Pulgada-Milla" => await client.PulgadaAMillaAsync(request.Valor),
-                "Metro-Pulgada" => await client.MetroAPulgadaAsync(request.Valor),
-                "Pulgada-Metro" => await client.PulgadaAMetroAsync(request.Valor),
-                _ => null
-            };
+                case "Milla-Metro":
+                    result = (await client.MillaAMetroAsync(request.Valor))?.@return;
+                    break;
+                case "Metro-Milla":
+                    result = (await client.MetroAMillaAsync(request.Valor))?.@return;
+                    break;
+                case "Milla-Pulgada":
+                    result = (await client.MillaAPulgadaAsync(request.Valor))?.@return;
+                    break;
+                case "Pulgada-Milla":
+                    result = (await client.PulgadaAMillaAsync(request.Valor))?.@return;
+                    break;
+                case "Metro-Pulgada":
+                    result = (await client.MetroAPulgadaAsync(request.Valor))?.@return;
+                    break;
+                case "Pulgada-Metro":
+                    result = (await client.PulgadaAMetroAsync(request.Valor))?.@return;
+                    break;
+            }
 
             if (result == null)
             {
@@ -103,24 +125,35 @@ public class SoapConversionService : IConversionService
         try
         {
             using var client = new TemperaturaServiceClient(
-                TemperaturaServiceClient.EndpointConfiguration.BasicHttpBinding_ITemperaturaService,
+                TemperaturaServiceClient.EndpointConfiguration.TemperaturaServicePort,
                 _temperaturaServiceUrl
             );
 
-            TemperaturaServiceReference.ConversionResult? result = null;
+            TemperaturaServiceReference.conversionResult? result = null;
 
             // Mapear unidades a método SOAP específico
             var key = $"{request.UnidadOrigen}-{request.UnidadDestino}";
-            result = key switch
+            switch (key)
             {
-                "Celsius-Fahrenheit" => await client.CelsiusAFahrenheitAsync(request.Valor),
-                "Fahrenheit-Celsius" => await client.FahrenheitACelsiusAsync(request.Valor),
-                "Fahrenheit-Kelvin" => await client.FahrenheitAKelvinAsync(request.Valor),
-                "Kelvin-Fahrenheit" => await client.KelvinAFahrenheitAsync(request.Valor),
-                "Kelvin-Celsius" => await client.KelvinACelsiusAsync(request.Valor),
-                "Celsius-Kelvin" => await client.CelsiusAKelvinAsync(request.Valor),
-                _ => null
-            };
+                case "Celsius-Fahrenheit":
+                    result = (await client.CelsiusAFahrenheitAsync(request.Valor))?.@return;
+                    break;
+                case "Fahrenheit-Celsius":
+                    result = (await client.FahrenheitACelsiusAsync(request.Valor))?.@return;
+                    break;
+                case "Fahrenheit-Kelvin":
+                    result = (await client.FahrenheitAKelvinAsync(request.Valor))?.@return;
+                    break;
+                case "Kelvin-Fahrenheit":
+                    result = (await client.KelvinAFahrenheitAsync(request.Valor))?.@return;
+                    break;
+                case "Kelvin-Celsius":
+                    result = (await client.KelvinACelsiusAsync(request.Valor))?.@return;
+                    break;
+                case "Celsius-Kelvin":
+                    result = (await client.CelsiusAKelvinAsync(request.Valor))?.@return;
+                    break;
+            }
 
             if (result == null)
             {
@@ -138,7 +171,7 @@ public class SoapConversionService : IConversionService
     /// <summary>
     /// Convierte el resultado SOAP de Masa a modelo del cliente
     /// </summary>
-    private ConversionResultModel ConvertMasaToClientModel(MasaServiceReference.ConversionResult soapResult)
+    private ConversionResultModel ConvertMasaToClientModel(MasaServiceReference.conversionResult soapResult)
     {
         if (soapResult == null)
         {
@@ -154,13 +187,13 @@ public class SoapConversionService : IConversionService
         {
             clientResult.Resultado = new UnidadConversionModel
             {
-                ValorOriginal = soapResult.Resultado.ValorOriginal,
-                ValorConvertidoExacto = soapResult.Resultado.ValorConvertidoExacto,
-                ValorConvertidoRedondeado = soapResult.Resultado.ValorConvertidoRedondeado,
-                UnidadOrigen = soapResult.Resultado.UnidadOrigen ?? string.Empty,
-                UnidadDestino = soapResult.Resultado.UnidadDestino ?? string.Empty,
-                FactorConversion = soapResult.Resultado.FactorConversion,
-                FechaConversion = soapResult.Resultado.FechaConversion
+                ValorOriginal = soapResult.Resultado.valorOriginal,
+                ValorConvertidoExacto = soapResult.Resultado.valorConvertidoExacto,
+                ValorConvertidoRedondeado = soapResult.Resultado.valorConvertidoRedondeado,
+                UnidadOrigen = soapResult.Resultado.unidadOrigen ?? string.Empty,
+                UnidadDestino = soapResult.Resultado.unidadDestino ?? string.Empty,
+                FactorConversion = soapResult.Resultado.factorConversion,
+                FechaConversion = DateTime.Now // localDateTime es una clase vacía en Java WSDL
             };
         }
         else if (soapResult.Error != null)
@@ -174,7 +207,7 @@ public class SoapConversionService : IConversionService
     /// <summary>
     /// Convierte el resultado SOAP de Longitud a modelo del cliente
     /// </summary>
-    private ConversionResultModel ConvertLongitudToClientModel(LongitudServiceReference.ConversionResult soapResult)
+    private ConversionResultModel ConvertLongitudToClientModel(LongitudServiceReference.conversionResult soapResult)
     {
         if (soapResult == null)
         {
@@ -190,13 +223,13 @@ public class SoapConversionService : IConversionService
         {
             clientResult.Resultado = new UnidadConversionModel
             {
-                ValorOriginal = soapResult.Resultado.ValorOriginal,
-                ValorConvertidoExacto = soapResult.Resultado.ValorConvertidoExacto,
-                ValorConvertidoRedondeado = soapResult.Resultado.ValorConvertidoRedondeado,
-                UnidadOrigen = soapResult.Resultado.UnidadOrigen ?? string.Empty,
-                UnidadDestino = soapResult.Resultado.UnidadDestino ?? string.Empty,
-                FactorConversion = soapResult.Resultado.FactorConversion,
-                FechaConversion = soapResult.Resultado.FechaConversion
+                ValorOriginal = soapResult.Resultado.valorOriginal,
+                ValorConvertidoExacto = soapResult.Resultado.valorConvertidoExacto,
+                ValorConvertidoRedondeado = soapResult.Resultado.valorConvertidoRedondeado,
+                UnidadOrigen = soapResult.Resultado.unidadOrigen ?? string.Empty,
+                UnidadDestino = soapResult.Resultado.unidadDestino ?? string.Empty,
+                FactorConversion = soapResult.Resultado.factorConversion,
+                FechaConversion = DateTime.Now // localDateTime es una clase vacía en Java WSDL
             };
         }
         else if (soapResult.Error != null)
@@ -210,7 +243,7 @@ public class SoapConversionService : IConversionService
     /// <summary>
     /// Convierte el resultado SOAP de Temperatura a modelo del cliente
     /// </summary>
-    private ConversionResultModel ConvertTemperaturaToClientModel(TemperaturaServiceReference.ConversionResult soapResult)
+    private ConversionResultModel ConvertTemperaturaToClientModel(TemperaturaServiceReference.conversionResult soapResult)
     {
         if (soapResult == null)
         {
@@ -226,13 +259,13 @@ public class SoapConversionService : IConversionService
         {
             clientResult.Resultado = new UnidadConversionModel
             {
-                ValorOriginal = soapResult.Resultado.ValorOriginal,
-                ValorConvertidoExacto = soapResult.Resultado.ValorConvertidoExacto,
-                ValorConvertidoRedondeado = soapResult.Resultado.ValorConvertidoRedondeado,
-                UnidadOrigen = soapResult.Resultado.UnidadOrigen ?? string.Empty,
-                UnidadDestino = soapResult.Resultado.UnidadDestino ?? string.Empty,
-                FactorConversion = soapResult.Resultado.FactorConversion,
-                FechaConversion = soapResult.Resultado.FechaConversion
+                ValorOriginal = soapResult.Resultado.valorOriginal,
+                ValorConvertidoExacto = soapResult.Resultado.valorConvertidoExacto,
+                ValorConvertidoRedondeado = soapResult.Resultado.valorConvertidoRedondeado,
+                UnidadOrigen = soapResult.Resultado.unidadOrigen ?? string.Empty,
+                UnidadDestino = soapResult.Resultado.unidadDestino ?? string.Empty,
+                FactorConversion = soapResult.Resultado.factorConversion,
+                FechaConversion = DateTime.Now // localDateTime es una clase vacía en Java WSDL
             };
         }
         else if (soapResult.Error != null)
@@ -246,7 +279,7 @@ public class SoapConversionService : IConversionService
     /// <summary>
     /// Convierte el error SOAP a modelo del cliente (sobrecarga para MasaServiceReference)
     /// </summary>
-    private ConversionErrorModel ConvertErrorToClientModel(MasaServiceReference.ConversionError soapError)
+    private ConversionErrorModel ConvertErrorToClientModel(MasaServiceReference.conversionError soapError)
     {
         return new ConversionErrorModel
         {
@@ -255,7 +288,7 @@ public class SoapConversionService : IConversionService
             TipoError = soapError.TipoError ?? "Sistema",
             ValorProblematico = soapError.ValorProblematico,
             Unidad = soapError.Unidad,
-            FechaError = soapError.FechaError,
+            FechaError = DateTime.Now, // localDateTime es una clase vacía en Java WSDL
             Detalles = soapError.Detalles
         };
     }
@@ -263,7 +296,7 @@ public class SoapConversionService : IConversionService
     /// <summary>
     /// Convierte el error SOAP a modelo del cliente (sobrecarga para LongitudServiceReference)
     /// </summary>
-    private ConversionErrorModel ConvertErrorToClientModel(LongitudServiceReference.ConversionError soapError)
+    private ConversionErrorModel ConvertErrorToClientModel(LongitudServiceReference.conversionError soapError)
     {
         return new ConversionErrorModel
         {
@@ -272,7 +305,7 @@ public class SoapConversionService : IConversionService
             TipoError = soapError.TipoError ?? "Sistema",
             ValorProblematico = soapError.ValorProblematico,
             Unidad = soapError.Unidad,
-            FechaError = soapError.FechaError,
+            FechaError = DateTime.Now, // localDateTime es una clase vacía en Java WSDL
             Detalles = soapError.Detalles
         };
     }
@@ -280,7 +313,7 @@ public class SoapConversionService : IConversionService
     /// <summary>
     /// Convierte el error SOAP a modelo del cliente (sobrecarga para TemperaturaServiceReference)
     /// </summary>
-    private ConversionErrorModel ConvertErrorToClientModel(TemperaturaServiceReference.ConversionError soapError)
+    private ConversionErrorModel ConvertErrorToClientModel(TemperaturaServiceReference.conversionError soapError)
     {
         return new ConversionErrorModel
         {
@@ -289,7 +322,7 @@ public class SoapConversionService : IConversionService
             TipoError = soapError.TipoError ?? "Sistema",
             ValorProblematico = soapError.ValorProblematico,
             Unidad = soapError.Unidad,
-            FechaError = soapError.FechaError,
+            FechaError = DateTime.Now, // localDateTime es una clase vacía en Java WSDL
             Detalles = soapError.Detalles
         };
     }

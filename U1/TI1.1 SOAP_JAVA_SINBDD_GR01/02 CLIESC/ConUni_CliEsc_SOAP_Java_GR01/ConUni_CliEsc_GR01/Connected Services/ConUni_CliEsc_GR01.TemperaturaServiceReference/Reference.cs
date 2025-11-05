@@ -9,320 +9,618 @@
 
 namespace ConUni_CliEsc_GR01.TemperaturaServiceReference
 {
-    using System.Runtime.Serialization;
     
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConversionResult", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class ConversionResult : object
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.monster.edu.ec/", ConfigurationName="ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService")]
+    public interface TemperaturaService
     {
         
-        private ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionError ErrorField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/TemperaturaService/CelsiusAFahrenheitRequest", ReplyAction="http://ws.monster.edu.ec/TemperaturaService/CelsiusAFahrenheitResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAFahrenheitResponse> CelsiusAFahrenheitAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAFahrenheitRequest request);
         
-        private bool ExitosoField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/TemperaturaService/CelsiusAKelvinRequest", ReplyAction="http://ws.monster.edu.ec/TemperaturaService/CelsiusAKelvinResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAKelvinResponse> CelsiusAKelvinAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAKelvinRequest request);
         
-        private ConUni_CliEsc_GR01.TemperaturaServiceReference.UnidadConversion ResultadoField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/TemperaturaService/FahrenheitACelsiusRequest", ReplyAction="http://ws.monster.edu.ec/TemperaturaService/FahrenheitACelsiusResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitACelsiusResponse> FahrenheitACelsiusAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitACelsiusRequest request);
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionError Error
-        {
-            get
-            {
-                return this.ErrorField;
-            }
-            set
-            {
-                this.ErrorField = value;
-            }
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/TemperaturaService/KelvinAFahrenheitRequest", ReplyAction="http://ws.monster.edu.ec/TemperaturaService/KelvinAFahrenheitResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinAFahrenheitResponse> KelvinAFahrenheitAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinAFahrenheitRequest request);
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/TemperaturaService/KelvinACelsiusRequest", ReplyAction="http://ws.monster.edu.ec/TemperaturaService/KelvinACelsiusResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinACelsiusResponse> KelvinACelsiusAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinACelsiusRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/TemperaturaService/FahrenheitAKelvinRequest", ReplyAction="http://ws.monster.edu.ec/TemperaturaService/FahrenheitAKelvinResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitAKelvinResponse> FahrenheitAKelvinAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitAKelvinRequest request);
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class conversionResult
+    {
+        
+        private bool exitosoField;
+        
+        private unidadConversion resultadoField;
+        
+        private conversionError errorField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public bool Exitoso
         {
             get
             {
-                return this.ExitosoField;
+                return this.exitosoField;
             }
             set
             {
-                this.ExitosoField = value;
+                this.exitosoField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ConUni_CliEsc_GR01.TemperaturaServiceReference.UnidadConversion Resultado
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public unidadConversion Resultado
         {
             get
             {
-                return this.ResultadoField;
+                return this.resultadoField;
             }
             set
             {
-                this.ResultadoField = value;
+                this.resultadoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public conversionError Error
+        {
+            get
+            {
+                return this.errorField;
+            }
+            set
+            {
+                this.errorField = value;
             }
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConversionError", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class ConversionError : object
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class unidadConversion
     {
         
-        private string CodigoErrorField;
+        private double valorOriginalField;
         
-        private string DetallesField;
+        private double valorConvertidoExactoField;
         
-        private System.DateTime FechaErrorField;
+        private double valorConvertidoRedondeadoField;
         
-        private string MensajeField;
+        private string unidadOrigenField;
         
-        private string TipoErrorField;
+        private string unidadDestinoField;
         
-        private string UnidadField;
+        private double factorConversionField;
         
-        private System.Nullable<double> ValorProblematicoField;
+        private localDateTime fechaConversionField;
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public double valorOriginal
+        {
+            get
+            {
+                return this.valorOriginalField;
+            }
+            set
+            {
+                this.valorOriginalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public double valorConvertidoExacto
+        {
+            get
+            {
+                return this.valorConvertidoExactoField;
+            }
+            set
+            {
+                this.valorConvertidoExactoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public double valorConvertidoRedondeado
+        {
+            get
+            {
+                return this.valorConvertidoRedondeadoField;
+            }
+            set
+            {
+                this.valorConvertidoRedondeadoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public string unidadOrigen
+        {
+            get
+            {
+                return this.unidadOrigenField;
+            }
+            set
+            {
+                this.unidadOrigenField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public string unidadDestino
+        {
+            get
+            {
+                return this.unidadDestinoField;
+            }
+            set
+            {
+                this.unidadDestinoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public double factorConversion
+        {
+            get
+            {
+                return this.factorConversionField;
+            }
+            set
+            {
+                this.factorConversionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public localDateTime fechaConversion
+        {
+            get
+            {
+                return this.fechaConversionField;
+            }
+            set
+            {
+                this.fechaConversionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class localDateTime
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class conversionError
+    {
+        
+        private string codigoErrorField;
+        
+        private string mensajeField;
+        
+        private string tipoErrorField;
+        
+        private double valorProblematicoField;
+        
+        private bool valorProblematicoFieldSpecified;
+        
+        private string unidadField;
+        
+        private localDateTime fechaErrorField;
+        
+        private string detallesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string CodigoError
         {
             get
             {
-                return this.CodigoErrorField;
+                return this.codigoErrorField;
             }
             set
             {
-                this.CodigoErrorField = value;
+                this.codigoErrorField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Detalles
-        {
-            get
-            {
-                return this.DetallesField;
-            }
-            set
-            {
-                this.DetallesField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FechaError
-        {
-            get
-            {
-                return this.FechaErrorField;
-            }
-            set
-            {
-                this.FechaErrorField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public string Mensaje
         {
             get
             {
-                return this.MensajeField;
+                return this.mensajeField;
             }
             set
             {
-                this.MensajeField = value;
+                this.mensajeField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public string TipoError
         {
             get
             {
-                return this.TipoErrorField;
+                return this.tipoErrorField;
             }
             set
             {
-                this.TipoErrorField = value;
+                this.tipoErrorField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public double ValorProblematico
+        {
+            get
+            {
+                return this.valorProblematicoField;
+            }
+            set
+            {
+                this.valorProblematicoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ValorProblematicoSpecified
+        {
+            get
+            {
+                return this.valorProblematicoFieldSpecified;
+            }
+            set
+            {
+                this.valorProblematicoFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public string Unidad
         {
             get
             {
-                return this.UnidadField;
+                return this.unidadField;
             }
             set
             {
-                this.UnidadField = value;
+                this.unidadField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> ValorProblematico
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public localDateTime FechaError
         {
             get
             {
-                return this.ValorProblematicoField;
+                return this.fechaErrorField;
             }
             set
             {
-                this.ValorProblematicoField = value;
+                this.fechaErrorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public string Detalles
+        {
+            get
+            {
+                return this.detallesField;
+            }
+            set
+            {
+                this.detallesField = value;
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UnidadConversion", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class UnidadConversion : object
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CelsiusAFahrenheit", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class CelsiusAFahrenheitRequest
     {
         
-        private double FactorConversionField;
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string celsius;
         
-        private System.DateTime FechaConversionField;
-        
-        private string UnidadDestinoField;
-        
-        private string UnidadOrigenField;
-        
-        private double ValorConvertidoExactoField;
-        
-        private double ValorConvertidoRedondeadoField;
-        
-        private double ValorOriginalField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FactorConversion
+        public CelsiusAFahrenheitRequest()
         {
-            get
-            {
-                return this.FactorConversionField;
-            }
-            set
-            {
-                this.FactorConversionField = value;
-            }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FechaConversion
+        public CelsiusAFahrenheitRequest(string celsius)
         {
-            get
-            {
-                return this.FechaConversionField;
-            }
-            set
-            {
-                this.FechaConversionField = value;
-            }
+            this.celsius = celsius;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CelsiusAFahrenheitResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class CelsiusAFahrenheitResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return;
+        
+        public CelsiusAFahrenheitResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UnidadDestino
+        public CelsiusAFahrenheitResponse(ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.UnidadDestinoField;
-            }
-            set
-            {
-                this.UnidadDestinoField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CelsiusAKelvin", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class CelsiusAKelvinRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string celsius;
+        
+        public CelsiusAKelvinRequest()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UnidadOrigen
+        public CelsiusAKelvinRequest(string celsius)
         {
-            get
-            {
-                return this.UnidadOrigenField;
-            }
-            set
-            {
-                this.UnidadOrigenField = value;
-            }
+            this.celsius = celsius;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="CelsiusAKelvinResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class CelsiusAKelvinResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return;
+        
+        public CelsiusAKelvinResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorConvertidoExacto
+        public CelsiusAKelvinResponse(ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.ValorConvertidoExactoField;
-            }
-            set
-            {
-                this.ValorConvertidoExactoField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="FahrenheitACelsius", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class FahrenheitACelsiusRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string fahrenheit;
+        
+        public FahrenheitACelsiusRequest()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorConvertidoRedondeado
+        public FahrenheitACelsiusRequest(string fahrenheit)
         {
-            get
-            {
-                return this.ValorConvertidoRedondeadoField;
-            }
-            set
-            {
-                this.ValorConvertidoRedondeadoField = value;
-            }
+            this.fahrenheit = fahrenheit;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="FahrenheitACelsiusResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class FahrenheitACelsiusResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return;
+        
+        public FahrenheitACelsiusResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorOriginal
+        public FahrenheitACelsiusResponse(ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.ValorOriginalField;
-            }
-            set
-            {
-                this.ValorOriginalField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="KelvinAFahrenheit", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class KelvinAFahrenheitRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string kelvin;
+        
+        public KelvinAFahrenheitRequest()
+        {
+        }
+        
+        public KelvinAFahrenheitRequest(string kelvin)
+        {
+            this.kelvin = kelvin;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="KelvinAFahrenheitResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class KelvinAFahrenheitResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return;
+        
+        public KelvinAFahrenheitResponse()
+        {
+        }
+        
+        public KelvinAFahrenheitResponse(ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="KelvinACelsius", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class KelvinACelsiusRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string kelvin;
+        
+        public KelvinACelsiusRequest()
+        {
+        }
+        
+        public KelvinACelsiusRequest(string kelvin)
+        {
+            this.kelvin = kelvin;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="KelvinACelsiusResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class KelvinACelsiusResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return;
+        
+        public KelvinACelsiusResponse()
+        {
+        }
+        
+        public KelvinACelsiusResponse(ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="FahrenheitAKelvin", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class FahrenheitAKelvinRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string fahrenheit;
+        
+        public FahrenheitAKelvinRequest()
+        {
+        }
+        
+        public FahrenheitAKelvinRequest(string fahrenheit)
+        {
+            this.fahrenheit = fahrenheit;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="FahrenheitAKelvinResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class FahrenheitAKelvinResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return;
+        
+        public FahrenheitAKelvinResponse()
+        {
+        }
+        
+        public FahrenheitAKelvinResponse(ConUni_CliEsc_GR01.TemperaturaServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ConUni_CliEsc_GR01.TemperaturaServiceReference.ITemperaturaService")]
-    public interface ITemperaturaService
-    {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITemperaturaService/CelsiusAFahrenheit", ReplyAction="http://tempuri.org/ITemperaturaService/CelsiusAFahrenheitResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> CelsiusAFahrenheitAsync(string celsius);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITemperaturaService/FahrenheitACelsius", ReplyAction="http://tempuri.org/ITemperaturaService/FahrenheitACelsiusResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> FahrenheitACelsiusAsync(string fahrenheit);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITemperaturaService/FahrenheitAKelvin", ReplyAction="http://tempuri.org/ITemperaturaService/FahrenheitAKelvinResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> FahrenheitAKelvinAsync(string fahrenheit);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITemperaturaService/KelvinAFahrenheit", ReplyAction="http://tempuri.org/ITemperaturaService/KelvinAFahrenheitResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> KelvinAFahrenheitAsync(string kelvin);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITemperaturaService/KelvinACelsius", ReplyAction="http://tempuri.org/ITemperaturaService/KelvinACelsiusResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> KelvinACelsiusAsync(string kelvin);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITemperaturaService/CelsiusAKelvin", ReplyAction="http://tempuri.org/ITemperaturaService/CelsiusAKelvinResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> CelsiusAKelvinAsync(string celsius);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public interface ITemperaturaServiceChannel : ConUni_CliEsc_GR01.TemperaturaServiceReference.ITemperaturaService, System.ServiceModel.IClientChannel
+    public interface TemperaturaServiceChannel : ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public partial class TemperaturaServiceClient : System.ServiceModel.ClientBase<ConUni_CliEsc_GR01.TemperaturaServiceReference.ITemperaturaService>, ConUni_CliEsc_GR01.TemperaturaServiceReference.ITemperaturaService
+    public partial class TemperaturaServiceClient : System.ServiceModel.ClientBase<ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService>, ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService
     {
         
         /// <summary>
@@ -335,7 +633,7 @@ namespace ConUni_CliEsc_GR01.TemperaturaServiceReference
         public TemperaturaServiceClient() : 
                 base(TemperaturaServiceClient.GetDefaultBinding(), TemperaturaServiceClient.GetDefaultEndpointAddress())
         {
-            this.Endpoint.Name = EndpointConfiguration.BasicHttpBinding_ITemperaturaService.ToString();
+            this.Endpoint.Name = EndpointConfiguration.TemperaturaServicePort.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
@@ -365,34 +663,82 @@ namespace ConUni_CliEsc_GR01.TemperaturaServiceReference
         {
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> CelsiusAFahrenheitAsync(string celsius)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAFahrenheitResponse> ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService.CelsiusAFahrenheitAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAFahrenheitRequest request)
         {
-            return base.Channel.CelsiusAFahrenheitAsync(celsius);
+            return base.Channel.CelsiusAFahrenheitAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> FahrenheitACelsiusAsync(string fahrenheit)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAFahrenheitResponse> CelsiusAFahrenheitAsync(string celsius)
         {
-            return base.Channel.FahrenheitACelsiusAsync(fahrenheit);
+            ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAFahrenheitRequest inValue = new ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAFahrenheitRequest();
+            inValue.celsius = celsius;
+            return ((ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService)(this)).CelsiusAFahrenheitAsync(inValue);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> FahrenheitAKelvinAsync(string fahrenheit)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAKelvinResponse> ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService.CelsiusAKelvinAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAKelvinRequest request)
         {
-            return base.Channel.FahrenheitAKelvinAsync(fahrenheit);
+            return base.Channel.CelsiusAKelvinAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> KelvinAFahrenheitAsync(string kelvin)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAKelvinResponse> CelsiusAKelvinAsync(string celsius)
         {
-            return base.Channel.KelvinAFahrenheitAsync(kelvin);
+            ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAKelvinRequest inValue = new ConUni_CliEsc_GR01.TemperaturaServiceReference.CelsiusAKelvinRequest();
+            inValue.celsius = celsius;
+            return ((ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService)(this)).CelsiusAKelvinAsync(inValue);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> KelvinACelsiusAsync(string kelvin)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitACelsiusResponse> ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService.FahrenheitACelsiusAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitACelsiusRequest request)
         {
-            return base.Channel.KelvinACelsiusAsync(kelvin);
+            return base.Channel.FahrenheitACelsiusAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.ConversionResult> CelsiusAKelvinAsync(string celsius)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitACelsiusResponse> FahrenheitACelsiusAsync(string fahrenheit)
         {
-            return base.Channel.CelsiusAKelvinAsync(celsius);
+            ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitACelsiusRequest inValue = new ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitACelsiusRequest();
+            inValue.fahrenheit = fahrenheit;
+            return ((ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService)(this)).FahrenheitACelsiusAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinAFahrenheitResponse> ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService.KelvinAFahrenheitAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinAFahrenheitRequest request)
+        {
+            return base.Channel.KelvinAFahrenheitAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinAFahrenheitResponse> KelvinAFahrenheitAsync(string kelvin)
+        {
+            ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinAFahrenheitRequest inValue = new ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinAFahrenheitRequest();
+            inValue.kelvin = kelvin;
+            return ((ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService)(this)).KelvinAFahrenheitAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinACelsiusResponse> ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService.KelvinACelsiusAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinACelsiusRequest request)
+        {
+            return base.Channel.KelvinACelsiusAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinACelsiusResponse> KelvinACelsiusAsync(string kelvin)
+        {
+            ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinACelsiusRequest inValue = new ConUni_CliEsc_GR01.TemperaturaServiceReference.KelvinACelsiusRequest();
+            inValue.kelvin = kelvin;
+            return ((ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService)(this)).KelvinACelsiusAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitAKelvinResponse> ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService.FahrenheitAKelvinAsync(ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitAKelvinRequest request)
+        {
+            return base.Channel.FahrenheitAKelvinAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitAKelvinResponse> FahrenheitAKelvinAsync(string fahrenheit)
+        {
+            ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitAKelvinRequest inValue = new ConUni_CliEsc_GR01.TemperaturaServiceReference.FahrenheitAKelvinRequest();
+            inValue.fahrenheit = fahrenheit;
+            return ((ConUni_CliEsc_GR01.TemperaturaServiceReference.TemperaturaService)(this)).FahrenheitAKelvinAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
@@ -409,7 +755,7 @@ namespace ConUni_CliEsc_GR01.TemperaturaServiceReference
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_ITemperaturaService))
+            if ((endpointConfiguration == EndpointConfiguration.TemperaturaServicePort))
             {
                 System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
                 result.MaxBufferSize = int.MaxValue;
@@ -423,27 +769,27 @@ namespace ConUni_CliEsc_GR01.TemperaturaServiceReference
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_ITemperaturaService))
+            if ((endpointConfiguration == EndpointConfiguration.TemperaturaServicePort))
             {
-                return new System.ServiceModel.EndpointAddress("http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc");
+                return new System.ServiceModel.EndpointAddress("http://localhost:8080/ConUni_Soap_Java_GR01/TemperaturaService");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
         
         private static System.ServiceModel.Channels.Binding GetDefaultBinding()
         {
-            return TemperaturaServiceClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_ITemperaturaService);
+            return TemperaturaServiceClient.GetBindingForEndpoint(EndpointConfiguration.TemperaturaServicePort);
         }
         
         private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress()
         {
-            return TemperaturaServiceClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_ITemperaturaService);
+            return TemperaturaServiceClient.GetEndpointAddress(EndpointConfiguration.TemperaturaServicePort);
         }
         
         public enum EndpointConfiguration
         {
             
-            BasicHttpBinding_ITemperaturaService,
+            TemperaturaServicePort,
         }
     }
 }

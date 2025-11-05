@@ -1,7 +1,7 @@
 {
   "ExtendedData": {
     "inputs": [
-      "http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?wsdl"
+      "http://localhost:8080/ConUni_Soap_Java_GR01/LongitudService?wsdl"
     ],
     "collectionTypes": [
       "System.Array",

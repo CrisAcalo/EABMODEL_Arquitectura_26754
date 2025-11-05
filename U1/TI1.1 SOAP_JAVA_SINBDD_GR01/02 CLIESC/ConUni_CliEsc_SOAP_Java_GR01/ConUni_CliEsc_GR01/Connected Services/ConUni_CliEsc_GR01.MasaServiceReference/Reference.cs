@@ -9,320 +9,618 @@
 
 namespace ConUni_CliEsc_GR01.MasaServiceReference
 {
-    using System.Runtime.Serialization;
     
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConversionResult", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class ConversionResult : object
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://ws.monster.edu.ec/", ConfigurationName="ConUni_CliEsc_GR01.MasaServiceReference.MasaService")]
+    public interface MasaService
     {
         
-        private ConUni_CliEsc_GR01.MasaServiceReference.ConversionError ErrorField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/MasaService/QuintalAKilogramoRequest", ReplyAction="http://ws.monster.edu.ec/MasaService/QuintalAKilogramoResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.QuintalAKilogramoResponse> QuintalAKilogramoAsync(ConUni_CliEsc_GR01.MasaServiceReference.QuintalAKilogramoRequest request);
         
-        private bool ExitosoField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/MasaService/QuintalALibraRequest", ReplyAction="http://ws.monster.edu.ec/MasaService/QuintalALibraResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.QuintalALibraResponse> QuintalALibraAsync(ConUni_CliEsc_GR01.MasaServiceReference.QuintalALibraRequest request);
         
-        private ConUni_CliEsc_GR01.MasaServiceReference.UnidadConversion ResultadoField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/MasaService/LibraAQuintalRequest", ReplyAction="http://ws.monster.edu.ec/MasaService/LibraAQuintalResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.LibraAQuintalResponse> LibraAQuintalAsync(ConUni_CliEsc_GR01.MasaServiceReference.LibraAQuintalRequest request);
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ConUni_CliEsc_GR01.MasaServiceReference.ConversionError Error
-        {
-            get
-            {
-                return this.ErrorField;
-            }
-            set
-            {
-                this.ErrorField = value;
-            }
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/MasaService/KilogramoAQuintalRequest", ReplyAction="http://ws.monster.edu.ec/MasaService/KilogramoAQuintalResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.KilogramoAQuintalResponse> KilogramoAQuintalAsync(ConUni_CliEsc_GR01.MasaServiceReference.KilogramoAQuintalRequest request);
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/MasaService/KilogramoALibraRequest", ReplyAction="http://ws.monster.edu.ec/MasaService/KilogramoALibraResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.KilogramoALibraResponse> KilogramoALibraAsync(ConUni_CliEsc_GR01.MasaServiceReference.KilogramoALibraRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://ws.monster.edu.ec/MasaService/LibraAKilogramoRequest", ReplyAction="http://ws.monster.edu.ec/MasaService/LibraAKilogramoResponse")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.LibraAKilogramoResponse> LibraAKilogramoAsync(ConUni_CliEsc_GR01.MasaServiceReference.LibraAKilogramoRequest request);
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class conversionResult
+    {
+        
+        private bool exitosoField;
+        
+        private unidadConversion resultadoField;
+        
+        private conversionError errorField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public bool Exitoso
         {
             get
             {
-                return this.ExitosoField;
+                return this.exitosoField;
             }
             set
             {
-                this.ExitosoField = value;
+                this.exitosoField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public ConUni_CliEsc_GR01.MasaServiceReference.UnidadConversion Resultado
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public unidadConversion Resultado
         {
             get
             {
-                return this.ResultadoField;
+                return this.resultadoField;
             }
             set
             {
-                this.ResultadoField = value;
+                this.resultadoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public conversionError Error
+        {
+            get
+            {
+                return this.errorField;
+            }
+            set
+            {
+                this.errorField = value;
             }
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConversionError", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class ConversionError : object
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class unidadConversion
     {
         
-        private string CodigoErrorField;
+        private double valorOriginalField;
         
-        private string DetallesField;
+        private double valorConvertidoExactoField;
         
-        private System.DateTime FechaErrorField;
+        private double valorConvertidoRedondeadoField;
         
-        private string MensajeField;
+        private string unidadOrigenField;
         
-        private string TipoErrorField;
+        private string unidadDestinoField;
         
-        private string UnidadField;
+        private double factorConversionField;
         
-        private System.Nullable<double> ValorProblematicoField;
+        private localDateTime fechaConversionField;
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public double valorOriginal
+        {
+            get
+            {
+                return this.valorOriginalField;
+            }
+            set
+            {
+                this.valorOriginalField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public double valorConvertidoExacto
+        {
+            get
+            {
+                return this.valorConvertidoExactoField;
+            }
+            set
+            {
+                this.valorConvertidoExactoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public double valorConvertidoRedondeado
+        {
+            get
+            {
+                return this.valorConvertidoRedondeadoField;
+            }
+            set
+            {
+                this.valorConvertidoRedondeadoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public string unidadOrigen
+        {
+            get
+            {
+                return this.unidadOrigenField;
+            }
+            set
+            {
+                this.unidadOrigenField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        public string unidadDestino
+        {
+            get
+            {
+                return this.unidadDestinoField;
+            }
+            set
+            {
+                this.unidadDestinoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public double factorConversion
+        {
+            get
+            {
+                return this.factorConversionField;
+            }
+            set
+            {
+                this.factorConversionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public localDateTime fechaConversion
+        {
+            get
+            {
+                return this.fechaConversionField;
+            }
+            set
+            {
+                this.fechaConversionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class localDateTime
+    {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.monster.edu.ec/")]
+    public partial class conversionError
+    {
+        
+        private string codigoErrorField;
+        
+        private string mensajeField;
+        
+        private string tipoErrorField;
+        
+        private double valorProblematicoField;
+        
+        private bool valorProblematicoFieldSpecified;
+        
+        private string unidadField;
+        
+        private localDateTime fechaErrorField;
+        
+        private string detallesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string CodigoError
         {
             get
             {
-                return this.CodigoErrorField;
+                return this.codigoErrorField;
             }
             set
             {
-                this.CodigoErrorField = value;
+                this.codigoErrorField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Detalles
-        {
-            get
-            {
-                return this.DetallesField;
-            }
-            set
-            {
-                this.DetallesField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FechaError
-        {
-            get
-            {
-                return this.FechaErrorField;
-            }
-            set
-            {
-                this.FechaErrorField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public string Mensaje
         {
             get
             {
-                return this.MensajeField;
+                return this.mensajeField;
             }
             set
             {
-                this.MensajeField = value;
+                this.mensajeField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public string TipoError
         {
             get
             {
-                return this.TipoErrorField;
+                return this.tipoErrorField;
             }
             set
             {
-                this.TipoErrorField = value;
+                this.tipoErrorField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public double ValorProblematico
+        {
+            get
+            {
+                return this.valorProblematicoField;
+            }
+            set
+            {
+                this.valorProblematicoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ValorProblematicoSpecified
+        {
+            get
+            {
+                return this.valorProblematicoFieldSpecified;
+            }
+            set
+            {
+                this.valorProblematicoFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public string Unidad
         {
             get
             {
-                return this.UnidadField;
+                return this.unidadField;
             }
             set
             {
-                this.UnidadField = value;
+                this.unidadField = value;
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> ValorProblematico
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        public localDateTime FechaError
         {
             get
             {
-                return this.ValorProblematicoField;
+                return this.fechaErrorField;
             }
             set
             {
-                this.ValorProblematicoField = value;
+                this.fechaErrorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public string Detalles
+        {
+            get
+            {
+                return this.detallesField;
+            }
+            set
+            {
+                this.detallesField = value;
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UnidadConversion", Namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.mo" +
-        "dels")]
-    public partial class UnidadConversion : object
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="QuintalAKilogramo", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class QuintalAKilogramoRequest
     {
         
-        private double FactorConversionField;
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string quintales;
         
-        private System.DateTime FechaConversionField;
-        
-        private string UnidadDestinoField;
-        
-        private string UnidadOrigenField;
-        
-        private double ValorConvertidoExactoField;
-        
-        private double ValorConvertidoRedondeadoField;
-        
-        private double ValorOriginalField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FactorConversion
+        public QuintalAKilogramoRequest()
         {
-            get
-            {
-                return this.FactorConversionField;
-            }
-            set
-            {
-                this.FactorConversionField = value;
-            }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FechaConversion
+        public QuintalAKilogramoRequest(string quintales)
         {
-            get
-            {
-                return this.FechaConversionField;
-            }
-            set
-            {
-                this.FechaConversionField = value;
-            }
+            this.quintales = quintales;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="QuintalAKilogramoResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class QuintalAKilogramoResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return;
+        
+        public QuintalAKilogramoResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UnidadDestino
+        public QuintalAKilogramoResponse(ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.UnidadDestinoField;
-            }
-            set
-            {
-                this.UnidadDestinoField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="QuintalALibra", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class QuintalALibraRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string quintales;
+        
+        public QuintalALibraRequest()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UnidadOrigen
+        public QuintalALibraRequest(string quintales)
         {
-            get
-            {
-                return this.UnidadOrigenField;
-            }
-            set
-            {
-                this.UnidadOrigenField = value;
-            }
+            this.quintales = quintales;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="QuintalALibraResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class QuintalALibraResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return;
+        
+        public QuintalALibraResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorConvertidoExacto
+        public QuintalALibraResponse(ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.ValorConvertidoExactoField;
-            }
-            set
-            {
-                this.ValorConvertidoExactoField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LibraAQuintal", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class LibraAQuintalRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string libras;
+        
+        public LibraAQuintalRequest()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorConvertidoRedondeado
+        public LibraAQuintalRequest(string libras)
         {
-            get
-            {
-                return this.ValorConvertidoRedondeadoField;
-            }
-            set
-            {
-                this.ValorConvertidoRedondeadoField = value;
-            }
+            this.libras = libras;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LibraAQuintalResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class LibraAQuintalResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return;
+        
+        public LibraAQuintalResponse()
+        {
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ValorOriginal
+        public LibraAQuintalResponse(ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return)
         {
-            get
-            {
-                return this.ValorOriginalField;
-            }
-            set
-            {
-                this.ValorOriginalField = value;
-            }
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="KilogramoAQuintal", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class KilogramoAQuintalRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string kilogramos;
+        
+        public KilogramoAQuintalRequest()
+        {
+        }
+        
+        public KilogramoAQuintalRequest(string kilogramos)
+        {
+            this.kilogramos = kilogramos;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="KilogramoAQuintalResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class KilogramoAQuintalResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return;
+        
+        public KilogramoAQuintalResponse()
+        {
+        }
+        
+        public KilogramoAQuintalResponse(ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="KilogramoALibra", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class KilogramoALibraRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string kilogramos;
+        
+        public KilogramoALibraRequest()
+        {
+        }
+        
+        public KilogramoALibraRequest(string kilogramos)
+        {
+            this.kilogramos = kilogramos;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="KilogramoALibraResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class KilogramoALibraResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return;
+        
+        public KilogramoALibraResponse()
+        {
+        }
+        
+        public KilogramoALibraResponse(ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LibraAKilogramo", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class LibraAKilogramoRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string libras;
+        
+        public LibraAKilogramoRequest()
+        {
+        }
+        
+        public LibraAKilogramoRequest(string libras)
+        {
+            this.libras = libras;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="LibraAKilogramoResponse", WrapperNamespace="http://ws.monster.edu.ec/", IsWrapped=true)]
+    public partial class LibraAKilogramoResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.monster.edu.ec/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return;
+        
+        public LibraAKilogramoResponse()
+        {
+        }
+        
+        public LibraAKilogramoResponse(ConUni_CliEsc_GR01.MasaServiceReference.conversionResult @return)
+        {
+            this.@return = @return;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ConUni_CliEsc_GR01.MasaServiceReference.IMasaService")]
-    public interface IMasaService
-    {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasaService/KilogramoAQuintal", ReplyAction="http://tempuri.org/IMasaService/KilogramoAQuintalResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> KilogramoAQuintalAsync(string kilogramos);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasaService/QuintalAKilogramo", ReplyAction="http://tempuri.org/IMasaService/QuintalAKilogramoResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> QuintalAKilogramoAsync(string quintales);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasaService/KilogramoALibra", ReplyAction="http://tempuri.org/IMasaService/KilogramoALibraResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> KilogramoALibraAsync(string kilogramos);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasaService/LibraAKilogramo", ReplyAction="http://tempuri.org/IMasaService/LibraAKilogramoResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> LibraAKilogramoAsync(string libras);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasaService/QuintalALibra", ReplyAction="http://tempuri.org/IMasaService/QuintalALibraResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> QuintalALibraAsync(string quintales);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMasaService/LibraAQuintal", ReplyAction="http://tempuri.org/IMasaService/LibraAQuintalResponse")]
-        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> LibraAQuintalAsync(string libras);
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public interface IMasaServiceChannel : ConUni_CliEsc_GR01.MasaServiceReference.IMasaService, System.ServiceModel.IClientChannel
+    public interface MasaServiceChannel : ConUni_CliEsc_GR01.MasaServiceReference.MasaService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public partial class MasaServiceClient : System.ServiceModel.ClientBase<ConUni_CliEsc_GR01.MasaServiceReference.IMasaService>, ConUni_CliEsc_GR01.MasaServiceReference.IMasaService
+    public partial class MasaServiceClient : System.ServiceModel.ClientBase<ConUni_CliEsc_GR01.MasaServiceReference.MasaService>, ConUni_CliEsc_GR01.MasaServiceReference.MasaService
     {
         
         /// <summary>
@@ -335,7 +633,7 @@ namespace ConUni_CliEsc_GR01.MasaServiceReference
         public MasaServiceClient() : 
                 base(MasaServiceClient.GetDefaultBinding(), MasaServiceClient.GetDefaultEndpointAddress())
         {
-            this.Endpoint.Name = EndpointConfiguration.BasicHttpBinding_IMasaService.ToString();
+            this.Endpoint.Name = EndpointConfiguration.MasaServicePort.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
@@ -365,34 +663,82 @@ namespace ConUni_CliEsc_GR01.MasaServiceReference
         {
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> KilogramoAQuintalAsync(string kilogramos)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.QuintalAKilogramoResponse> ConUni_CliEsc_GR01.MasaServiceReference.MasaService.QuintalAKilogramoAsync(ConUni_CliEsc_GR01.MasaServiceReference.QuintalAKilogramoRequest request)
         {
-            return base.Channel.KilogramoAQuintalAsync(kilogramos);
+            return base.Channel.QuintalAKilogramoAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> QuintalAKilogramoAsync(string quintales)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.QuintalAKilogramoResponse> QuintalAKilogramoAsync(string quintales)
         {
-            return base.Channel.QuintalAKilogramoAsync(quintales);
+            ConUni_CliEsc_GR01.MasaServiceReference.QuintalAKilogramoRequest inValue = new ConUni_CliEsc_GR01.MasaServiceReference.QuintalAKilogramoRequest();
+            inValue.quintales = quintales;
+            return ((ConUni_CliEsc_GR01.MasaServiceReference.MasaService)(this)).QuintalAKilogramoAsync(inValue);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> KilogramoALibraAsync(string kilogramos)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.QuintalALibraResponse> ConUni_CliEsc_GR01.MasaServiceReference.MasaService.QuintalALibraAsync(ConUni_CliEsc_GR01.MasaServiceReference.QuintalALibraRequest request)
         {
-            return base.Channel.KilogramoALibraAsync(kilogramos);
+            return base.Channel.QuintalALibraAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> LibraAKilogramoAsync(string libras)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.QuintalALibraResponse> QuintalALibraAsync(string quintales)
         {
-            return base.Channel.LibraAKilogramoAsync(libras);
+            ConUni_CliEsc_GR01.MasaServiceReference.QuintalALibraRequest inValue = new ConUni_CliEsc_GR01.MasaServiceReference.QuintalALibraRequest();
+            inValue.quintales = quintales;
+            return ((ConUni_CliEsc_GR01.MasaServiceReference.MasaService)(this)).QuintalALibraAsync(inValue);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> QuintalALibraAsync(string quintales)
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.LibraAQuintalResponse> ConUni_CliEsc_GR01.MasaServiceReference.MasaService.LibraAQuintalAsync(ConUni_CliEsc_GR01.MasaServiceReference.LibraAQuintalRequest request)
         {
-            return base.Channel.QuintalALibraAsync(quintales);
+            return base.Channel.LibraAQuintalAsync(request);
         }
         
-        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.ConversionResult> LibraAQuintalAsync(string libras)
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.LibraAQuintalResponse> LibraAQuintalAsync(string libras)
         {
-            return base.Channel.LibraAQuintalAsync(libras);
+            ConUni_CliEsc_GR01.MasaServiceReference.LibraAQuintalRequest inValue = new ConUni_CliEsc_GR01.MasaServiceReference.LibraAQuintalRequest();
+            inValue.libras = libras;
+            return ((ConUni_CliEsc_GR01.MasaServiceReference.MasaService)(this)).LibraAQuintalAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.KilogramoAQuintalResponse> ConUni_CliEsc_GR01.MasaServiceReference.MasaService.KilogramoAQuintalAsync(ConUni_CliEsc_GR01.MasaServiceReference.KilogramoAQuintalRequest request)
+        {
+            return base.Channel.KilogramoAQuintalAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.KilogramoAQuintalResponse> KilogramoAQuintalAsync(string kilogramos)
+        {
+            ConUni_CliEsc_GR01.MasaServiceReference.KilogramoAQuintalRequest inValue = new ConUni_CliEsc_GR01.MasaServiceReference.KilogramoAQuintalRequest();
+            inValue.kilogramos = kilogramos;
+            return ((ConUni_CliEsc_GR01.MasaServiceReference.MasaService)(this)).KilogramoAQuintalAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.KilogramoALibraResponse> ConUni_CliEsc_GR01.MasaServiceReference.MasaService.KilogramoALibraAsync(ConUni_CliEsc_GR01.MasaServiceReference.KilogramoALibraRequest request)
+        {
+            return base.Channel.KilogramoALibraAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.KilogramoALibraResponse> KilogramoALibraAsync(string kilogramos)
+        {
+            ConUni_CliEsc_GR01.MasaServiceReference.KilogramoALibraRequest inValue = new ConUni_CliEsc_GR01.MasaServiceReference.KilogramoALibraRequest();
+            inValue.kilogramos = kilogramos;
+            return ((ConUni_CliEsc_GR01.MasaServiceReference.MasaService)(this)).KilogramoALibraAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.LibraAKilogramoResponse> ConUni_CliEsc_GR01.MasaServiceReference.MasaService.LibraAKilogramoAsync(ConUni_CliEsc_GR01.MasaServiceReference.LibraAKilogramoRequest request)
+        {
+            return base.Channel.LibraAKilogramoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ConUni_CliEsc_GR01.MasaServiceReference.LibraAKilogramoResponse> LibraAKilogramoAsync(string libras)
+        {
+            ConUni_CliEsc_GR01.MasaServiceReference.LibraAKilogramoRequest inValue = new ConUni_CliEsc_GR01.MasaServiceReference.LibraAKilogramoRequest();
+            inValue.libras = libras;
+            return ((ConUni_CliEsc_GR01.MasaServiceReference.MasaService)(this)).LibraAKilogramoAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
@@ -409,7 +755,7 @@ namespace ConUni_CliEsc_GR01.MasaServiceReference
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IMasaService))
+            if ((endpointConfiguration == EndpointConfiguration.MasaServicePort))
             {
                 System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
                 result.MaxBufferSize = int.MaxValue;
@@ -423,27 +769,27 @@ namespace ConUni_CliEsc_GR01.MasaServiceReference
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IMasaService))
+            if ((endpointConfiguration == EndpointConfiguration.MasaServicePort))
             {
-                return new System.ServiceModel.EndpointAddress("http://localhost:56686/ec/edu/monster/ws/MasaService.svc");
+                return new System.ServiceModel.EndpointAddress("http://localhost:8080/ConUni_Soap_Java_GR01/MasaService");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
         
         private static System.ServiceModel.Channels.Binding GetDefaultBinding()
         {
-            return MasaServiceClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_IMasaService);
+            return MasaServiceClient.GetBindingForEndpoint(EndpointConfiguration.MasaServicePort);
         }
         
         private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress()
         {
-            return MasaServiceClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_IMasaService);
+            return MasaServiceClient.GetEndpointAddress(EndpointConfiguration.MasaServicePort);
         }
         
         public enum EndpointConfiguration
         {
             
-            BasicHttpBinding_IMasaService,
+            MasaServicePort,
         }
     }
 }

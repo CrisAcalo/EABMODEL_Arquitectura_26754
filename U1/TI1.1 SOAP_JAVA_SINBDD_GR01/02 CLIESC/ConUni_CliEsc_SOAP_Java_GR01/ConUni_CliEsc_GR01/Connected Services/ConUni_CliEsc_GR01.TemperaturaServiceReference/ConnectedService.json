@@ -1,7 +1,7 @@
 {
   "ExtendedData": {
     "inputs": [
-      "http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?wsdl"
+      "http://localhost:8080/ConUni_Soap_Java_GR01/TemperaturaService"
     ],
     "collectionTypes": [
       "System.Array",
