@@ -7,18 +7,18 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.models
     public class ConversionRequest
   {
         /// <summary>
-        /// Valor numérico a convertir
+        /// Valor numérico a convertir como string (para permitir validaciones)
         /// </summary>
-  public double Valor { get; set; }
+        public string Valor { get; set; } = string.Empty;
 
         /// <summary>
         /// Unidad de origen (ej: "Milla", "Metro", "Pulgada")
      /// </summary>
-      public string UnidadOrigen { get; set; } = string.Empty;
+  public string UnidadOrigen { get; set; } = string.Empty;
 
         /// <summary>
-/// Unidad de destino (ej: "Milla", "Metro", "Pulgada")
+        /// Unidad de destino (ej: "Milla", "Metro", "Pulgada")
     /// </summary>
-      public string UnidadDestino { get; set; } = string.Empty;
+        public string UnidadDestino { get; set; } = string.Empty;
     }
 }

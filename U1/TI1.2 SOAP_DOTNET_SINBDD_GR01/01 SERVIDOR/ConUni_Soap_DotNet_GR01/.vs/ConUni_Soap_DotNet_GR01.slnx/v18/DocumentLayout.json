@@ -3,6 +3,7 @@
   "WorkspaceRootPath": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\",
   "Documents": [
     {
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.2 soap_dotnet_sinbdd_gr01\\01 servidor\\conuni_soap_dotnet_gr01\\conuni_soap_dotnet_gr01\\ec\\edu\\monster\\models\\unidadconversion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\ec\\edu\\monster\\models\\unidadconversion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,12 +14,17 @@
     {
       "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ErrorConstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ErrorConstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|c:\\uni\\eabmodel_arquitectura_26754\\u1\\ti1.2 soap_dotnet_sinbdd_gr01\\01 servidor\\conuni_soap_dotnet_gr01\\conuni_soap_dotnet_gr01\\ec\\edu\\monster\\constants\\errorconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\ec\\edu\\monster\\constants\\errorconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> 54e826f39b0b8554bd08966862944fb425ad442b
     },
     {
       "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\conuni_soap_dotnet_gr01\\ec\\edu\\monster\\constants\\conversionconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\ec\\edu\\monster\\constants\\conversionconstants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\conuni_soap_dotnet_gr01\\ec\\edu\\monster\\ws\\temperaturaservice.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\ec\\edu\\monster\\ws\\temperaturaservice.svc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -45,6 +51,18 @@
     {
       "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\ITemperaturaService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\ITemperaturaService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\conuni_soap_dotnet_gr01\\ec\\edu\\monster\\models\\unidadconversion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\ec\\edu\\monster\\models\\unidadconversion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\conuni_soap_dotnet_gr01\\ec\\edu\\monster\\models\\conversionresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\ec\\edu\\monster\\models\\conversionresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\conuni_soap_dotnet_gr01\\ec\\edu\\monster\\ws\\itemperaturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4C09D9DE-1163-4EAC-AC34-1E2F04200194}|ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01.csproj|solutionrelative:conuni_soap_dotnet_gr01\\ec\\edu\\monster\\ws\\itemperaturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> 54e826f39b0b8554bd08966862944fb425ad442b
     }
   ],
   "DocumentGroupContainers": [
@@ -54,6 +72,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 1,
           "Children": [
             {
@@ -77,13 +96,26 @@
               "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\UnidadConversion.cs",
               "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\UnidadConversion.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAAJAAAAAAAAAA==",
+=======
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ErrorConstants.cs",
+              "DocumentMoniker": "C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ErrorConstants.cs",
+              "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ErrorConstants.cs",
+              "ToolTip": "C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ErrorConstants.cs",
+              "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ErrorConstants.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4AAAAbAAAAAAAAAA==",
+>>>>>>> 54e826f39b0b8554bd08966862944fb425ad442b
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T18:20:36.54Z",
+              "WhenOpened": "2025-10-21T19:18:12.006Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "ConversionConstants.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ConversionConstants.cs",
               "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ConversionConstants.cs",
@@ -91,10 +123,11 @@
               "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ConversionConstants.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T19:09:00.558Z"
+              "WhenOpened": "2025-10-21T19:18:11.279Z"
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 4,
               "Title": "TemperaturaService.svc.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\TemperaturaService.svc.cs",
@@ -168,26 +201,41 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+=======
+              "DocumentIndex": 3,
+>>>>>>> 54e826f39b0b8554bd08966862944fb425ad442b
               "Title": "ConversionResult.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\ConversionResult.cs",
               "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\ConversionResult.cs",
               "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\ConversionResult.cs",
               "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\ConversionResult.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T18:20:39.864Z"
+              "WhenOpened": "2025-10-21T19:18:00.365Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 2,
+              "Title": "UnidadConversion.cs",
+              "DocumentMoniker": "C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\UnidadConversion.cs",
+              "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\UnidadConversion.cs",
+              "ToolTip": "C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\UnidadConversion.cs",
+              "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\UnidadConversion.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBoAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T19:17:54.612Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ITemperaturaService.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\ITemperaturaService.cs",
               "RelativeDocumentMoniker": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\ITemperaturaService.cs",
               "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\ITemperaturaService.cs",
               "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\ITemperaturaService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T00:31:21.894Z"
+              "WhenOpened": "2025-10-21T19:17:41.505Z"
             }
           ]
         }

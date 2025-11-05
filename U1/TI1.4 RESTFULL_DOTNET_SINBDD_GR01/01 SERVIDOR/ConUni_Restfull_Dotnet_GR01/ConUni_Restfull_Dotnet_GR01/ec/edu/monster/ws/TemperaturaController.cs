@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ConUni_Restfull_Dotnet_GR01.ec.edu.monster.services;
 using ConUni_Restfull_Dotnet_GR01.ec.edu.monster.models;
 using ConUni_Restfull_Dotnet_GR01.ec.edu.monster.constants;
+using ConUni_Restfull_Dotnet_GR01.ec.edu.monster.validators;
 
 namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
 {
@@ -40,7 +41,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
         /// 
         ///     POST /api/Temperatura/convertir
         ///     {
-        ///        "valor": 25,
+        ///        "valor": "25",
         ///        "unidadOrigen": "Celsius",
         ///        "unidadDestino": "Fahrenheit"
         ///     }
@@ -66,16 +67,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
                 ("kelvin", "fahrenheit") => _temperaturaService.ConvertirKelvinAFahrenheit(request.Valor),
 
                 // Conversión de una unidad a sí misma
-                _ when origen == destino => ConversionResultModel.Exito(
-                    new UnidadConversionModel(
-                        request.Valor,
-                        request.Valor,
-                        CapitalizarUnidad(request.UnidadOrigen),
-                        CapitalizarUnidad(request.UnidadDestino),
-                        "Temperatura",
-                        1.0
-                    )
-                ),
+                _ when origen == destino => HandleSameUnitConversion(request.Valor, request.UnidadOrigen, request.UnidadDestino, origen),
 
                 // Conversión no soportada
                 _ => ConversionResultModel.Fallo(
@@ -83,7 +75,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
                         ErrorConstants.ERROR_CONVERSION_TEMPERATURA,
                         $"Conversión de {request.UnidadOrigen} a {request.UnidadDestino} no está soportada",
                         ErrorConstants.TIPO_CONVERSION,
-                        request.Valor,
+                        TryParseDouble(request.Valor),
                         request.UnidadOrigen,
                         $"Las unidades soportadas son: {TemperaturaConstants.CELSIUS}, {TemperaturaConstants.FAHRENHEIT}, {TemperaturaConstants.KELVIN}"
                     )
@@ -91,6 +83,48 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
             };
 
             return Ok(resultado);
+        }
+
+        /// <summary>
+        /// Maneja conversiones donde origen y destino son la misma unidad
+        /// </summary>
+        private ConversionResultModel HandleSameUnitConversion(string valorString, string unidadOrigen, string unidadDestino, string unidadNormalizada)
+        {
+            // Validar según el tipo de temperatura
+            ConversionErrorModel? error = unidadNormalizada switch
+            {
+                "celsius" => TemperaturaValidator.ValidarStringTemperaturaCelsius(valorString, out double _),
+                "fahrenheit" => TemperaturaValidator.ValidarStringTemperaturaFahrenheit(valorString, out double _),
+                "kelvin" => TemperaturaValidator.ValidarStringTemperaturaKelvin(valorString, out double _),
+                _ => BaseValidator.ValidarStringPositivo(valorString, unidadOrigen, out double _)
+            };
+
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
+
+            // Convertir valor validado
+            double valor = double.Parse(valorString);
+
+            return ConversionResultModel.Exito(
+                new UnidadConversionModel(
+                    valor,
+                    valor,
+                    CapitalizarUnidad(unidadOrigen),
+                    CapitalizarUnidad(unidadDestino),
+                    "Temperatura",
+                    1.0
+                )
+            );
+        }
+
+        /// <summary>
+        /// Intenta convertir string a double para casos de error
+        /// </summary>
+        private double? TryParseDouble(string value)
+        {
+            if (double.TryParse(value, out double result))
+                return result;
+            return null;
         }
 
         /// <summary>
