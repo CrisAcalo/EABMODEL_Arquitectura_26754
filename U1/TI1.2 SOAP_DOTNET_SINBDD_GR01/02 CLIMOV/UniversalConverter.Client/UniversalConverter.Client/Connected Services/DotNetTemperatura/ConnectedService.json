@@ -1,0 +1,16 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?wsdl"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, DotNetTemperatura"
+    ],
+    "targetFramework": "net10.0-windows10.0.19041.0",
+    "typeReuseMode": "All"
+  }
+}
