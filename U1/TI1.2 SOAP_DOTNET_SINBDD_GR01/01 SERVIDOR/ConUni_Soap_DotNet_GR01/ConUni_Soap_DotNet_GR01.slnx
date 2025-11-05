@@ -1,6 +1,0 @@
-<Solution>
-  <Project Path="ConUni_Soap_DotNet_GR01/ConUni_Soap_DotNet_GR01.csproj" Id="4c09d9de-1163-4eac-ac34-1e2f04200194" />
-  <Project Path="Pruebas/Pruebas.csproj" Id="56f075bb-6721-4ac2-92ae-42aca5a14fc8">
-    <BuildDependency Project="ConUni_Soap_DotNet_GR01/ConUni_Soap_DotNet_GR01.csproj" />
-  </Project>
-</Solution>
