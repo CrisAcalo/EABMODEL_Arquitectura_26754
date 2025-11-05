@@ -1,0 +1,186 @@
+<UserControl x:Class="ConUni_CliEsc_GR01.LongitudView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="400">
+
+    <Border Background="White"
+            BorderBrush="#00695C"
+            BorderThickness="2"
+            CornerRadius="10"
+            Padding="20"
+            Margin="5">
+        <StackPanel>
+            <!-- Título -->
+            <TextBlock Text="Longitud"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="#00695C"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+
+            <!-- Tipo de Conversión -->
+            <TextBlock Text="Tipo de Conversión:"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,5"/>
+            <ComboBox x:Name="cmbTipoConversion"
+                      FontSize="14"
+                      Padding="10"
+                      Margin="0,0,0,15"
+                      Background="#E0F2F1"
+                      SelectionChanged="CmbTipoConversion_SelectionChanged">
+                <ComboBoxItem Content="Seleccione..." IsSelected="True"/>
+                <ComboBoxItem Content="Milla a Metro"/>
+                <ComboBoxItem Content="Metro a Milla"/>
+                <ComboBoxItem Content="Milla a Pulgada"/>
+                <ComboBoxItem Content="Pulgada a Milla"/>
+                <ComboBoxItem Content="Metro a Pulgada"/>
+                <ComboBoxItem Content="Pulgada a Metro"/>
+            </ComboBox>
+
+            <!-- Valor -->
+            <TextBlock Text="Valor:"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,5"/>
+            <TextBox x:Name="txtValor"
+                     FontSize="14"
+                     Padding="10"
+                     Margin="0,0,0,15"
+                     Background="#E0F2F1"
+                     Text="Ej: 5.5"/>
+
+            <!-- Botón Convertir -->
+            <Button x:Name="btnConvertir"
+                    Content="CONVERTIR"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Background="#00695C"
+                    Foreground="White"
+                    Padding="15"
+                    Margin="0,0,0,20"
+                    Click="BtnConvertir_Click"
+                    Cursor="Hand">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                            CornerRadius="5"
+                                            Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#004D40"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <!-- Panel de Resultados -->
+            <Border x:Name="pnlResultado"
+                    Background="#C8E6C9"
+                    BorderBrush="#66BB6A"
+                    BorderThickness="2"
+                    CornerRadius="8"
+                    Padding="15"
+                    Visibility="Collapsed">
+                <StackPanel>
+                    <TextBlock Text="Conversión Exitosa"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#2E7D32"
+                               Margin="0,0,0,10"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Text="Valor Original:"
+                                   FontWeight="SemiBold"
+                                   Margin="0,5"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                   x:Name="txtValorOriginal"
+                                   Text="55.0 Milla"
+                                   Margin="10,5"
+                                   TextAlignment="Right"
+                                   FontWeight="Bold"
+                                   Foreground="#00695C"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Text="Valor Convertido:"
+                                   FontWeight="SemiBold"
+                                   Margin="0,5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                   x:Name="txtValorConvertido"
+                                   Text="3484800.0 Pulgada"
+                                   Margin="10,5"
+                                   TextAlignment="Right"
+                                   FontWeight="Bold"
+                                   Foreground="#00695C"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Text="Valor Exacto:"
+                                   FontWeight="SemiBold"
+                                   Margin="0,5"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                   x:Name="txtValorExacto"
+                                   Text="3484800.0"
+                                   Margin="10,5"
+                                   TextAlignment="Right"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Text="Factor de Conversión:"
+                                   FontWeight="SemiBold"
+                                   Margin="0,5"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1"
+                                   x:Name="txtFactorConversion"
+                                   Text="63360.0"
+                                   Margin="10,5"
+                                   TextAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Panel de Error -->
+            <Border x:Name="pnlError"
+                    Background="#FFCDD2"
+                    BorderBrush="#EF5350"
+                    BorderThickness="2"
+                    CornerRadius="8"
+                    Padding="15"
+                    Visibility="Collapsed">
+                <StackPanel>
+                    <TextBlock Text="Error en Conversión"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#C62828"
+                               Margin="0,0,0,10"/>
+                    <TextBlock x:Name="txtMensajeError"
+                               Text=""
+                               TextWrapping="Wrap"
+                               Foreground="#C62828"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Border>
+</UserControl>
