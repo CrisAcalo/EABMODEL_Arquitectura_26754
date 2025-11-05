@@ -18,6 +18,12 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
     {
         private readonly TemperaturaService _temperaturaService;
 
+        // Unidades válidas para temperatura
+        private readonly HashSet<string> _unidadesValidas = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+  {
+            "celsius", "fahrenheit", "kelvin"
+        };
+
         public TemperaturaController(TemperaturaService temperaturaService)
         {
             _temperaturaService = temperaturaService;
@@ -41,7 +47,7 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
         /// 
         ///     POST /api/Temperatura/convertir
         ///     {
-        ///        "valor": "25",
+        /// "valor": "25",
         ///        "unidadOrigen": "Celsius",
         ///        "unidadDestino": "Fahrenheit"
         ///     }
@@ -56,6 +62,21 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
             var origen = request.UnidadOrigen.Trim().ToLower();
             var destino = request.UnidadDestino.Trim().ToLower();
 
+            // Primero validar que ambas unidades sean soportadas
+            if (!_unidadesValidas.Contains(origen) || !_unidadesValidas.Contains(destino))
+            {
+                return Ok(ConversionResultModel.Fallo(
+               new ConversionErrorModel(
+               ErrorConstants.ERROR_CONVERSION_TEMPERATURA,
+                       $"Conversión de {request.UnidadOrigen} a {request.UnidadDestino} no está soportada",
+                     ErrorConstants.TIPO_CONVERSION,
+           TryParseDouble(request.Valor),
+                request.UnidadOrigen,
+                    $"Las unidades soportadas son: {TemperaturaConstants.CELSIUS}, {TemperaturaConstants.FAHRENHEIT}, {TemperaturaConstants.KELVIN}"
+                      )
+                   ));
+            }
+
             // Determinar qué conversión realizar basándose en origen y destino
             var resultado = (origen, destino) switch
             {
@@ -66,20 +87,20 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
                 ("fahrenheit", "kelvin") => _temperaturaService.ConvertirFahrenheitAKelvin(request.Valor),
                 ("kelvin", "fahrenheit") => _temperaturaService.ConvertirKelvinAFahrenheit(request.Valor),
 
-                // Conversión de una unidad a sí misma
+                // Conversión de una unidad a sí misma (solo llega aquí si ambas unidades son válidas)
                 _ when origen == destino => HandleSameUnitConversion(request.Valor, request.UnidadOrigen, request.UnidadDestino, origen),
 
-                // Conversión no soportada
+                // Esta línea nunca debería ejecutarse debido a la validación anterior
                 _ => ConversionResultModel.Fallo(
-                    new ConversionErrorModel(
-                        ErrorConstants.ERROR_CONVERSION_TEMPERATURA,
-                        $"Conversión de {request.UnidadOrigen} a {request.UnidadDestino} no está soportada",
-                        ErrorConstants.TIPO_CONVERSION,
-                        TryParseDouble(request.Valor),
-                        request.UnidadOrigen,
-                        $"Las unidades soportadas son: {TemperaturaConstants.CELSIUS}, {TemperaturaConstants.FAHRENHEIT}, {TemperaturaConstants.KELVIN}"
-                    )
-                )
+          new ConversionErrorModel(
+                ErrorConstants.ERROR_CONVERSION_TEMPERATURA,
+             $"Conversión de {request.UnidadOrigen} a {request.UnidadDestino} no está soportada",
+        ErrorConstants.TIPO_CONVERSION,
+      TryParseDouble(request.Valor),
+     request.UnidadOrigen,
+                $"Las unidades soportadas son: {TemperaturaConstants.CELSIUS}, {TemperaturaConstants.FAHRENHEIT}, {TemperaturaConstants.KELVIN}"
+        )
+      )
             };
 
             return Ok(resultado);
@@ -106,15 +127,15 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
             double valor = double.Parse(valorString);
 
             return ConversionResultModel.Exito(
-                new UnidadConversionModel(
-                    valor,
-                    valor,
-                    CapitalizarUnidad(unidadOrigen),
-                    CapitalizarUnidad(unidadDestino),
-                    "Temperatura",
-                    1.0
-                )
-            );
+                  new UnidadConversionModel(
+            valor,
+              valor,
+             CapitalizarUnidad(unidadOrigen),
+                   CapitalizarUnidad(unidadDestino),
+              "Temperatura",
+              1.0
+                 )
+                  );
         }
 
         /// <summary>
