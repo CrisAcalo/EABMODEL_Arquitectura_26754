@@ -22,12 +22,12 @@ public class MasaService {
 
     /**
      * Convierte kilogramos a quintales
-     * @param kilogramos Valor en kilogramos a convertir
+     * @param kilogramosString Valor en kilogramos como string
      * @return ConversionResultModel con el resultado o error
      */
-    public ConversionResultModel convertirKilogramoAQuintal(double kilogramos) {
+    public ConversionResultModel convertirKilogramoAQuintal(String kilogramosString) {
         try {
-            BaseValidator.validarValorPositivo(kilogramos, Masa.KILOGRAMO);
+            double kilogramos = BaseValidator.validarStringPositivo(kilogramosString, Masa.KILOGRAMO);
             double quintales = kilogramos * Masa.KILOGRAMO_A_QUINTAL;
             var resultado = new UnidadConversionModel(kilogramos, quintales, Masa.KILOGRAMO, Masa.QUINTAL, "Masa", Masa.KILOGRAMO_A_QUINTAL);
             return ConversionResultModel.exito(resultado);
@@ -38,12 +38,12 @@ public class MasaService {
 
     /**
      * Convierte quintales a kilogramos
-     * @param quintales Valor en quintales a convertir
+     * @param quintalesString Valor en quintales como string
      * @return ConversionResultModel con el resultado o error
      */
-    public ConversionResultModel convertirQuintalAKilogramo(double quintales) {
+    public ConversionResultModel convertirQuintalAKilogramo(String quintalesString) {
         try {
-            BaseValidator.validarValorPositivo(quintales, Masa.QUINTAL);
+            double quintales = BaseValidator.validarStringPositivo(quintalesString, Masa.QUINTAL);
             double kilogramos = quintales * Masa.QUINTAL_A_KILOGRAMO;
             var resultado = new UnidadConversionModel(quintales, kilogramos, Masa.QUINTAL, Masa.KILOGRAMO, "Masa", Masa.QUINTAL_A_KILOGRAMO);
             return ConversionResultModel.exito(resultado);
@@ -54,12 +54,12 @@ public class MasaService {
 
     /**
      * Convierte kilogramos a libras
-     * @param kilogramos Valor en kilogramos a convertir
+     * @param kilogramosString Valor en kilogramos como string
      * @return ConversionResultModel con el resultado o error
      */
-    public ConversionResultModel convertirKilogramoALibra(double kilogramos) {
+    public ConversionResultModel convertirKilogramoALibra(String kilogramosString) {
         try {
-            BaseValidator.validarValorPositivo(kilogramos, Masa.KILOGRAMO);
+            double kilogramos = BaseValidator.validarStringPositivo(kilogramosString, Masa.KILOGRAMO);
             double libras = kilogramos * Masa.KILOGRAMO_A_LIBRA;
             var resultado = new UnidadConversionModel(kilogramos, libras, Masa.KILOGRAMO, Masa.LIBRA, "Masa", Masa.KILOGRAMO_A_LIBRA);
             return ConversionResultModel.exito(resultado);
@@ -70,12 +70,12 @@ public class MasaService {
 
     /**
      * Convierte libras a kilogramos
-     * @param libras Valor en libras a convertir
+     * @param librasString Valor en libras como string
      * @return ConversionResultModel con el resultado o error
      */
-    public ConversionResultModel convertirLibraAKilogramo(double libras) {
+    public ConversionResultModel convertirLibraAKilogramo(String librasString) {
         try {
-            BaseValidator.validarValorPositivo(libras, Masa.LIBRA);
+            double libras = BaseValidator.validarStringPositivo(librasString, Masa.LIBRA);
             double kilogramos = libras * Masa.LIBRA_A_KILOGRAMO;
             var resultado = new UnidadConversionModel(libras, kilogramos, Masa.LIBRA, Masa.KILOGRAMO, "Masa", Masa.LIBRA_A_KILOGRAMO);
             return ConversionResultModel.exito(resultado);
@@ -86,12 +86,12 @@ public class MasaService {
 
     /**
      * Convierte quintales a libras
-     * @param quintales Valor en quintales a convertir
+     * @param quintalesString Valor en quintales como string
      * @return ConversionResultModel con el resultado o error
      */
-    public ConversionResultModel convertirQuintalALibra(double quintales) {
+    public ConversionResultModel convertirQuintalALibra(String quintalesString) {
         try {
-            BaseValidator.validarValorPositivo(quintales, Masa.QUINTAL);
+            double quintales = BaseValidator.validarStringPositivo(quintalesString, Masa.QUINTAL);
             double libras = quintales * Masa.QUINTAL_A_LIBRA;
             var resultado = new UnidadConversionModel(quintales, libras, Masa.QUINTAL, Masa.LIBRA, "Masa", Masa.QUINTAL_A_LIBRA);
             return ConversionResultModel.exito(resultado);
@@ -102,12 +102,12 @@ public class MasaService {
 
     /**
      * Convierte libras a quintales
-     * @param libras Valor en libras a convertir
+     * @param librasString Valor en libras como string
      * @return ConversionResultModel con el resultado o error
      */
-    public ConversionResultModel convertirLibraAQuintal(double libras) {
+    public ConversionResultModel convertirLibraAQuintal(String librasString) {
         try {
-            BaseValidator.validarValorPositivo(libras, Masa.LIBRA);
+            double libras = BaseValidator.validarStringPositivo(librasString, Masa.LIBRA);
             double quintales = libras * Masa.LIBRA_A_QUINTAL;
             var resultado = new UnidadConversionModel(libras, quintales, Masa.LIBRA, Masa.QUINTAL, "Masa", Masa.LIBRA_A_QUINTAL);
             return ConversionResultModel.exito(resultado);

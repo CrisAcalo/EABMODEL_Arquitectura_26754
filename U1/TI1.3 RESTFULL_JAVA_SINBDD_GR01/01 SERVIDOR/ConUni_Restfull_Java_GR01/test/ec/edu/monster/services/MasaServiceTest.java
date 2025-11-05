@@ -49,7 +49,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirKilogramoAQuintal() {
         System.out.println("convertirKilogramoAQuintal - caso exitoso");
-        double kilogramos = 100.0;
+        String kilogramos = "100.0";
         ConversionResultModel result = instance.convertirKilogramoAQuintal(kilogramos);
 
         assertTrue(result.isExitoso(), "La conversión debería ser exitosa");
@@ -68,13 +68,43 @@ public class MasaServiceTest {
     @Test
     public void testConvertirKilogramoAQuintalValorNegativo() {
         System.out.println("convertirKilogramoAQuintal - valor negativo");
-        double kilogramos = -50.0;
+        String kilogramos = "-50.0";
         ConversionResultModel result = instance.convertirKilogramoAQuintal(kilogramos);
 
         assertFalse(result.isExitoso(), "No debería aceptar valores negativos");
         assertNull(result.getResultado(), "No debería haber resultado");
         assertNotNull(result.getError(), "Debería retornar un error");
-        assertEquals("VAL002", result.getError().getCodigoError());
+        assertEquals("VAL_001", result.getError().getCodigoError());
+    }
+
+    /**
+     * Test con string vacío
+     */
+    @Test
+    public void testConvertirKilogramoAQuintalValorVacio() {
+        System.out.println("convertirKilogramoAQuintal - valor vacío");
+        String kilogramos = "";
+        ConversionResultModel result = instance.convertirKilogramoAQuintal(kilogramos);
+
+        assertFalse(result.isExitoso(), "No debería aceptar valores vacíos");
+        assertNull(result.getResultado(), "No debería haber resultado");
+        assertNotNull(result.getError(), "Debería retornar un error");
+        assertEquals("VAL_005", result.getError().getCodigoError());
+    }
+
+    /**
+     * Test con string no numérico
+     */
+    @Test
+    public void testConvertirKilogramoAQuintalValorNoNumerico() {
+        System.out.println("convertirKilogramoAQuintal - valor no numérico");
+        String kilogramos = "abc";
+        ConversionResultModel result = instance.convertirKilogramoAQuintal(kilogramos);
+
+        assertFalse(result.isExitoso(), "No debería aceptar valores no numéricos");
+        assertNull(result.getResultado(), "No debería haber resultado");
+        assertNotNull(result.getError(), "Debería retornar un error");
+        assertEquals("VAL_006", result.getError().getCodigoError());
     }
 
     /**
@@ -84,7 +114,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirQuintalAKilogramo() {
         System.out.println("convertirQuintalAKilogramo - caso exitoso");
-        double quintales = 1.0;
+        String quintales = "1.0";
         ConversionResultModel result = instance.convertirQuintalAKilogramo(quintales);
 
         assertTrue(result.isExitoso());
@@ -101,7 +131,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirQuintalAKilogramoValorNegativo() {
         System.out.println("convertirQuintalAKilogramo - valor negativo");
-        double quintales = -5.0;
+        String quintales = "-5.0";
         ConversionResultModel result = instance.convertirQuintalAKilogramo(quintales);
 
         assertFalse(result.isExitoso());
@@ -115,7 +145,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirKilogramoALibra() {
         System.out.println("convertirKilogramoALibra - caso exitoso");
-        double kilogramos = 1.0;
+        String kilogramos = "1.0";
         ConversionResultModel result = instance.convertirKilogramoALibra(kilogramos);
 
         assertTrue(result.isExitoso());
@@ -132,7 +162,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirKilogramoALibraValorNegativo() {
         System.out.println("convertirKilogramoALibra - valor negativo");
-        double kilogramos = -10.0;
+        String kilogramos = "-10.0";
         ConversionResultModel result = instance.convertirKilogramoALibra(kilogramos);
 
         assertFalse(result.isExitoso());
@@ -146,7 +176,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirLibraAKilogramo() {
         System.out.println("convertirLibraAKilogramo - caso exitoso");
-        double libras = 2.20462;
+        String libras = "2.20462";
         ConversionResultModel result = instance.convertirLibraAKilogramo(libras);
 
         assertTrue(result.isExitoso());
@@ -163,7 +193,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirLibraAKilogramoValorNegativo() {
         System.out.println("convertirLibraAKilogramo - valor negativo");
-        double libras = -100.0;
+        String libras = "-100.0";
         ConversionResultModel result = instance.convertirLibraAKilogramo(libras);
 
         assertFalse(result.isExitoso());
@@ -177,7 +207,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirQuintalALibra() {
         System.out.println("convertirQuintalALibra - caso exitoso");
-        double quintales = 1.0;
+        String quintales = "1.0";
         ConversionResultModel result = instance.convertirQuintalALibra(quintales);
 
         assertTrue(result.isExitoso());
@@ -194,7 +224,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirQuintalALibraValorNegativo() {
         System.out.println("convertirQuintalALibra - valor negativo");
-        double quintales = -2.0;
+        String quintales = "-2.0";
         ConversionResultModel result = instance.convertirQuintalALibra(quintales);
 
         assertFalse(result.isExitoso());
@@ -208,7 +238,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirLibraAQuintal() {
         System.out.println("convertirLibraAQuintal - caso exitoso");
-        double libras = 220.462;
+        String libras = "220.462";
         ConversionResultModel result = instance.convertirLibraAQuintal(libras);
 
         assertTrue(result.isExitoso());
@@ -225,7 +255,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirLibraAQuintalValorNegativo() {
         System.out.println("convertirLibraAQuintal - valor negativo");
-        double libras = -500.0;
+        String libras = "-500.0";
         ConversionResultModel result = instance.convertirLibraAQuintal(libras);
 
         assertFalse(result.isExitoso());
@@ -238,7 +268,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirMultiplesKilogramos() {
         System.out.println("convertir 500 kg a quintales");
-        double kilogramos = 500.0;
+        String kilogramos = "500.0";
         ConversionResultModel result = instance.convertirKilogramoAQuintal(kilogramos);
 
         assertTrue(result.isExitoso());
@@ -252,7 +282,7 @@ public class MasaServiceTest {
     @Test
     public void testConvertirPesoGrande() {
         System.out.println("convertir 1000 kg a libras");
-        double kilogramos = 1000.0;
+        String kilogramos = "1000.0";
         ConversionResultModel result = instance.convertirKilogramoALibra(kilogramos);
 
         assertTrue(result.isExitoso());
@@ -266,12 +296,26 @@ public class MasaServiceTest {
     @Test
     public void testVerificarFactorConversion() {
         System.out.println("verificar factor de conversión kg a libra");
-        double kilogramos = 10.0;
+        String kilogramos = "10.0";
         ConversionResultModel result = instance.convertirKilogramoALibra(kilogramos);
 
         assertTrue(result.isExitoso());
         assertNotNull(result.getResultado().getFactorConversion());
         assertEquals(2.20462, result.getResultado().getFactorConversion(), 0.00001,
                      "El factor de conversión debe ser 2.20462");
+    }
+
+    /**
+     * Test adicional: Validar formato con coma decimal
+     */
+    @Test
+    public void testConvertirConComaDecimal() {
+        System.out.println("convertir con coma como separador decimal");
+        String kilogramos = "100,5";
+        ConversionResultModel result = instance.convertirKilogramoAQuintal(kilogramos);
+
+        assertTrue(result.isExitoso(), "Debería aceptar coma como separador decimal");
+        assertEquals(1.005, result.getResultado().getValorConvertidoExacto(), 0.01,
+                     "100.5 kg = 1.005 quintales");
     }
 }

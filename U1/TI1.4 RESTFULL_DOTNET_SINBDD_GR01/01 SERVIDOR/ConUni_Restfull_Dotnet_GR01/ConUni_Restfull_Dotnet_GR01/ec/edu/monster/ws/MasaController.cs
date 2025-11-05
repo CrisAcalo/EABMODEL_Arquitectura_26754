@@ -16,34 +16,34 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
     [Produces("application/json")]
     public class MasaController : ControllerBase
     {
-    private readonly MasaService _masaService;
+        private readonly MasaService _masaService;
 
         public MasaController(MasaService masaService)
-     {
-     _masaService = masaService;
-  }
+        {
+            _masaService = masaService;
+        }
 
         /// <summary>
         /// Convierte valores entre diferentes unidades de masa
-   /// </summary>
+        /// </summary>
         /// <param name="request">Solicitud de conversión con valor, unidad origen y unidad destino</param>
-     /// <returns>Resultado de la conversión con valores exactos y redondeados</returns>
+        /// <returns>Resultado de la conversión con valores exactos y redondeados</returns>
         /// <response code="200">Conversión exitosa o error de validación</response>
         /// <remarks>
-   /// Unidades soportadas: Kilogramo, Quintal, Libra (case-insensitive)
+        /// Unidades soportadas: Kilogramo, Quintal, Libra (case-insensitive)
         ///
         /// Ejemplo de solicitud:
         ///
         ///     POST /api/Masa/convertir
-      ///     {
- ///   "valor": "100",
-      ///        "unidadOrigen": "Kilogramo",
-        ///        "unidadDestino": "Libra"
+        ///     {
+        ///         "valor": "100",
+        ///         "unidadOrigen": "Kilogramo",
+        ///         "unidadDestino": "Libra"
         ///     }
-     ///
+        ///
         /// </remarks>
         [HttpPost("convertir")]
-      [ProducesResponseType(typeof(ConversionResultModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ConversionResultModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ConversionResultModel), StatusCodes.Status400BadRequest)]
         public ActionResult<ConversionResultModel> Convertir([FromBody] ConversionRequest request)
         {
@@ -51,77 +51,78 @@ namespace ConUni_Restfull_Dotnet_GR01.ec.edu.monster.ws
             var origen = request.UnidadOrigen.Trim().ToLower();
             var destino = request.UnidadDestino.Trim().ToLower();
 
-   // Determinar qué conversión realizar basándose en origen y destino
-       var resultado = (origen, destino) switch
-{
-  ("kilogramo", "quintal") => _masaService.ConvertirKilogramoAQuintal(request.Valor),
-     ("quintal", "kilogramo") => _masaService.ConvertirQuintalAKilogramo(request.Valor),
+            // Determinar qué conversión realizar basándose en origen y destino
+            var resultado = (origen, destino) switch
+            {
+                ("kilogramo", "quintal") => _masaService.ConvertirKilogramoAQuintal(request.Valor),
+                ("quintal", "kilogramo") => _masaService.ConvertirQuintalAKilogramo(request.Valor),
                 ("kilogramo", "libra") => _masaService.ConvertirKilogramoALibra(request.Valor),
-       ("libra", "kilogramo") => _masaService.ConvertirLibraAKilogramo(request.Valor),
-        ("quintal", "libra") => _masaService.ConvertirQuintalALibra(request.Valor),
-       ("libra", "quintal") => _masaService.ConvertirLibraAQuintal(request.Valor),
+                ("libra", "kilogramo") => _masaService.ConvertirLibraAKilogramo(request.Valor),
+                ("quintal", "libra") => _masaService.ConvertirQuintalALibra(request.Valor),
+                ("libra", "quintal") => _masaService.ConvertirLibraAQuintal(request.Valor),
 
-        // Conversión de una unidad a sí misma
-   _ when origen == destino => HandleSameUnitConversion(request.Valor, request.UnidadOrigen, request.UnidadDestino),
+                // Conversión de una unidad a sí misma
+                _ when origen == destino => HandleSameUnitConversion(request.Valor, request.UnidadOrigen, request.UnidadDestino),
 
-      // Conversión no soportada
-         _ => ConversionResultModel.Fallo(
-            new ConversionErrorModel(
-            ErrorConstants.ERROR_CONVERSION_MASA,
-   $"Conversión de {request.UnidadOrigen} a {request.UnidadDestino} no está soportada",
-            ErrorConstants.TIPO_CONVERSION,
-                TryParseDouble(request.Valor),
-          request.UnidadOrigen,
-            $"Las unidades soportadas son: {MasaConstants.KILOGRAMO}, {MasaConstants.QUINTAL}, {MasaConstants.LIBRA}"
-      )
-           )
+                // Conversión no soportada
+                _ => ConversionResultModel.Fallo(
+                    new ConversionErrorModel(
+                        ErrorConstants.ERROR_CONVERSION_MASA,
+                        $"Conversión de {request.UnidadOrigen} a {request.UnidadDestino} no está soportada",
+                        ErrorConstants.TIPO_CONVERSION,
+                        TryParseDouble(request.Valor),
+                        request.UnidadOrigen,
+                        $"Las unidades soportadas son: {MasaConstants.KILOGRAMO}, {MasaConstants.QUINTAL}, {MasaConstants.LIBRA}"
+                    )
+                )
             };
 
-         return Ok(resultado);
+            return Ok(resultado);
         }
 
-/// <summary>
+        /// <summary>
         /// Maneja conversiones donde origen y destino son la misma unidad
         /// </summary>
         private ConversionResultModel HandleSameUnitConversion(string valorString, string unidadOrigen, string unidadDestino)
         {
             // Primero validar que el valor sea válido
-     var error = BaseValidator.ValidarStringPositivo(valorString, unidadOrigen, out double valor);
-       if (error != null)
-      return ConversionResultModel.Fallo(error);
+            var error = BaseValidator.ValidarStringPositivo(valorString, unidadOrigen, out double valor);
+            if (error != null)
+                return ConversionResultModel.Fallo(error);
 
-       return ConversionResultModel.Exito(
+            return ConversionResultModel.Exito(
                 new UnidadConversionModel(
-         valor,
-             valor,
-       CapitalizarUnidad(unidadOrigen),
-        CapitalizarUnidad(unidadDestino),
-    "Masa",
-          1.0
-    )
-       );
+                    valor,
+                    valor,
+                    CapitalizarUnidad(unidadOrigen),
+                    CapitalizarUnidad(unidadDestino),
+                    "Masa",
+                    1.0
+                )
+            );
         }
 
-   /// <summary>
+        /// <summary>
         /// Intenta convertir string a double para casos de error
         /// </summary>
         private double? TryParseDouble(string value)
         {
             if (double.TryParse(value, out double result))
-     return result;
-return null;
+                return result;
+
+            return null;
         }
 
- /// <summary>
+        /// <summary>
         /// Capitaliza el nombre de la unidad (Primera letra en mayúscula)
-   /// </summary>
+        /// </summary>
         private string CapitalizarUnidad(string unidad)
-      {
+        {
             if (string.IsNullOrWhiteSpace(unidad))
-       return string.Empty;
+                return string.Empty;
 
-        unidad = unidad.Trim().ToLower();
-    return char.ToUpper(unidad[0]) + unidad.Substring(1);
+            unidad = unidad.Trim().ToLower();
+            return char.ToUpper(unidad[0]) + unidad.Substring(1);
         }
     }
 }

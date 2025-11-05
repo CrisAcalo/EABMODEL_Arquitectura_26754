@@ -25,7 +25,7 @@ import jakarta.ws.rs.core.Response;
  *
  * Ejemplo de request:
  * {
- *   "valor": 100,
+ *   "valor": "100",
  *   "unidadOrigen": "Kilogramo",
  *   "unidadDestino": "Libra"
  * }
@@ -51,7 +51,7 @@ public class MasaController {
 
         String origen = request.getUnidadOrigen();
         String destino = request.getUnidadDestino();
-        double valor = request.getValor();
+        String valor = request.getValor();
 
         // Determinar qué conversión realizar basándose en origen y destino
         if (Masa.KILOGRAMO.equalsIgnoreCase(origen) && Masa.QUINTAL.equalsIgnoreCase(destino)) {

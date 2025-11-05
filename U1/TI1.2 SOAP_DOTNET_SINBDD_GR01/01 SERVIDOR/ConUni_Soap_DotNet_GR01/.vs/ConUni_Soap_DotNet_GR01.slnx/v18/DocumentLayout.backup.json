@@ -72,11 +72,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+<<<<<<< HEAD
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-<<<<<<< HEAD
               "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\Program.cs",
@@ -97,6 +97,10 @@
               "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\models\\UnidadConversion.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAAJAAAAAAAAAA==",
 =======
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "ErrorConstants.cs",
               "DocumentMoniker": "C:\\Uni\\EABMODEL_Arquitectura_26754\\U1\\TI1.2 SOAP_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Soap_DotNet_GR01\\ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\constants\\ErrorConstants.cs",
@@ -231,11 +235,7 @@
               "RelativeToolTip": "ConUni_Soap_DotNet_GR01\\ec\\edu\\monster\\ws\\ITemperaturaService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-<<<<<<< HEAD
-              "WhenOpened": "2025-10-20T00:31:21.894Z"
-=======
               "WhenOpened": "2025-10-21T19:17:41.505Z"
->>>>>>> 54e826f39b0b8554bd08966862944fb425ad442b
             }
           ]
         }

@@ -25,7 +25,7 @@ import jakarta.ws.rs.core.Response;
  *
  * Ejemplo de request:
  * {
- *   "valor": 100,
+ *   "valor": "100",
  *   "unidadOrigen": "Metro",
  *   "unidadDestino": "Milla"
  * }
@@ -51,7 +51,7 @@ public class LongitudController {
 
         String origen = request.getUnidadOrigen();
         String destino = request.getUnidadDestino();
-        double valor = request.getValor();
+        String valor = request.getValor();
 
         // Determinar qué conversión realizar basándose en origen y destino
         if (Longitud.MILLA.equalsIgnoreCase(origen) && Longitud.METRO.equalsIgnoreCase(destino)) {
