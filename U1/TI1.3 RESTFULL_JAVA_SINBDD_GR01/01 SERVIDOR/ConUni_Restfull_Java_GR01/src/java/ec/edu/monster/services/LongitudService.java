@@ -17,9 +17,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class LongitudService {
-     public ConversionResultModel convertirMillaAMetro(double millas) {
+    public ConversionResultModel convertirMillaAMetro(String millasString) {
         try {
-            BaseValidator.validarValorPositivo(millas, Longitud.MILLA);
+            double millas = BaseValidator.validarStringPositivo(millasString, Longitud.MILLA);
             double metros = millas * Longitud.MILLA_A_METRO;
             var resultado = new UnidadConversionModel(millas, metros, Longitud.MILLA, Longitud.METRO, "Longitud", Longitud.MILLA_A_METRO);
             return ConversionResultModel.exito(resultado);
@@ -28,9 +28,9 @@ public class LongitudService {
         }
     }
 
-    public ConversionResultModel convertirMetroAMilla(double metros) {
+    public ConversionResultModel convertirMetroAMilla(String metrosString) {
         try {
-            BaseValidator.validarValorPositivo(metros, Longitud.METRO);
+            double metros = BaseValidator.validarStringPositivo(metrosString, Longitud.METRO);
             double millas = metros * Longitud.METRO_A_MILLA;
             var resultado = new UnidadConversionModel(metros, millas, Longitud.METRO, Longitud.MILLA, "Longitud", Longitud.METRO_A_MILLA);
             return ConversionResultModel.exito(resultado);
@@ -39,9 +39,9 @@ public class LongitudService {
         }
     }
 
-    public ConversionResultModel convertirMillaAPulgada(double millas) {
+    public ConversionResultModel convertirMillaAPulgada(String millasString) {
         try {
-            BaseValidator.validarValorPositivo(millas, Longitud.MILLA);
+            double millas = BaseValidator.validarStringPositivo(millasString, Longitud.MILLA);
             double pulgadas = millas * Longitud.MILLA_A_PULGADA;
             var resultado = new UnidadConversionModel(millas, pulgadas, Longitud.MILLA, Longitud.PULGADA, "Longitud", Longitud.MILLA_A_PULGADA);
             return ConversionResultModel.exito(resultado);
@@ -50,9 +50,9 @@ public class LongitudService {
         }
     }
 
-    public ConversionResultModel convertirPulgadaAMilla(double pulgadas) {
+    public ConversionResultModel convertirPulgadaAMilla(String pulgadasString) {
         try {
-            BaseValidator.validarValorPositivo(pulgadas, Longitud.PULGADA);
+            double pulgadas = BaseValidator.validarStringPositivo(pulgadasString, Longitud.PULGADA);
             double millas = pulgadas * Longitud.PULGADA_A_MILLA;
             var resultado = new UnidadConversionModel(pulgadas, millas, Longitud.PULGADA, Longitud.MILLA, "Longitud", Longitud.PULGADA_A_MILLA);
             return ConversionResultModel.exito(resultado);
@@ -61,9 +61,9 @@ public class LongitudService {
         }
     }
 
-    public ConversionResultModel convertirMetroAPulgada(double metros) {
+    public ConversionResultModel convertirMetroAPulgada(String metrosString) {
         try {
-            BaseValidator.validarValorPositivo(metros, Longitud.METRO);
+            double metros = BaseValidator.validarStringPositivo(metrosString, Longitud.METRO);
             double pulgadas = metros * Longitud.METRO_A_PULGADA;
             var resultado = new UnidadConversionModel(metros, pulgadas, Longitud.METRO, Longitud.PULGADA, "Longitud", Longitud.METRO_A_PULGADA);
             return ConversionResultModel.exito(resultado);
@@ -72,9 +72,9 @@ public class LongitudService {
         }
     }
 
-    public ConversionResultModel convertirPulgadaAMetro(double pulgadas) {
+    public ConversionResultModel convertirPulgadaAMetro(String pulgadasString) {
         try {
-            BaseValidator.validarValorPositivo(pulgadas, Longitud.PULGADA);
+            double pulgadas = BaseValidator.validarStringPositivo(pulgadasString, Longitud.PULGADA);
             double metros = pulgadas * Longitud.PULGADA_A_METRO;
             var resultado = new UnidadConversionModel(pulgadas, metros, Longitud.PULGADA, Longitud.METRO, "Longitud", Longitud.PULGADA_A_METRO);
             return ConversionResultModel.exito(resultado);

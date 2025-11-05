@@ -56,5 +56,43 @@ public class TemperaturaValidator {
             ));
         }
     }
-    
+
+    // Métodos para validar strings y convertirlos
+
+    /**
+     * Valida string y convierte a temperatura Celsius válida
+     * @param celsiusString Temperatura como string
+     * @return temperatura convertida
+     * @throws ValidationException si hay error
+     */
+    public static double validarStringTemperaturaCelsius(String celsiusString) throws ValidationException {
+        double celsius = BaseValidator.validarYConvertirADouble(celsiusString, Temperatura.CELSIUS);
+        validarTemperaturaCelsius(celsius);
+        return celsius;
+    }
+
+    /**
+     * Valida string y convierte a temperatura Fahrenheit válida
+     * @param fahrenheitString Temperatura como string
+     * @return temperatura convertida
+     * @throws ValidationException si hay error
+     */
+    public static double validarStringTemperaturaFahrenheit(String fahrenheitString) throws ValidationException {
+        double fahrenheit = BaseValidator.validarYConvertirADouble(fahrenheitString, Temperatura.FAHRENHEIT);
+        validarTemperaturaFahrenheit(fahrenheit);
+        return fahrenheit;
+    }
+
+    /**
+     * Valida string y convierte a temperatura Kelvin válida
+     * @param kelvinString Temperatura como string
+     * @return temperatura convertida
+     * @throws ValidationException si hay error
+     */
+    public static double validarStringTemperaturaKelvin(String kelvinString) throws ValidationException {
+        double kelvin = BaseValidator.validarYConvertirADouble(kelvinString, Temperatura.KELVIN);
+        validarTemperaturaKelvin(kelvin);
+        return kelvin;
+    }
+
 }

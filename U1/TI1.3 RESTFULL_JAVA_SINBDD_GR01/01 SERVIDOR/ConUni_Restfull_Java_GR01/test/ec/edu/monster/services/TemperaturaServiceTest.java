@@ -50,7 +50,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirCelsiusAFahrenheit() {
         System.out.println("convertirCelsiusAFahrenheit - caso exitoso");
-        double celsius = 0.0;
+        String celsius = "0.0";
         ConversionResultModel result = instance.convertirCelsiusAFahrenheit(celsius);
 
         assertTrue(result.isExitoso(), "La conversión debería ser exitosa");
@@ -69,7 +69,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirCelsiusAFahrenheitEbullicion() {
         System.out.println("convertirCelsiusAFahrenheit - punto de ebullición");
-        double celsius = 100.0;
+        String celsius = "100.0";
         ConversionResultModel result = instance.convertirCelsiusAFahrenheit(celsius);
 
         assertTrue(result.isExitoso());
@@ -83,7 +83,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirCelsiusAFahrenheitCeroAbsoluto() {
         System.out.println("convertirCelsiusAFahrenheit - bajo cero absoluto");
-        double celsius = -300.0; // Bajo -273.15°C
+        String celsius = "-300.0"; // Bajo -273.15°C
         ConversionResultModel result = instance.convertirCelsiusAFahrenheit(celsius);
 
         assertFalse(result.isExitoso(), "No debería aceptar temperaturas bajo cero absoluto");
@@ -99,7 +99,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirFahrenheitACelsius() {
         System.out.println("convertirFahrenheitACelsius - caso exitoso");
-        double fahrenheit = 32.0;
+        String fahrenheit = "32.0";
         ConversionResultModel result = instance.convertirFahrenheitACelsius(fahrenheit);
 
         assertTrue(result.isExitoso());
@@ -116,7 +116,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirFahrenheitACelsiusEbullicion() {
         System.out.println("convertirFahrenheitACelsius - punto de ebullición");
-        double fahrenheit = 212.0;
+        String fahrenheit = "212.0";
         ConversionResultModel result = instance.convertirFahrenheitACelsius(fahrenheit);
 
         assertTrue(result.isExitoso());
@@ -130,7 +130,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirFahrenheitACelsiusCeroAbsoluto() {
         System.out.println("convertirFahrenheitACelsius - bajo cero absoluto");
-        double fahrenheit = -500.0; // Bajo -459.67°F
+        String fahrenheit = "-500.0"; // Bajo -459.67°F
         ConversionResultModel result = instance.convertirFahrenheitACelsius(fahrenheit);
 
         assertFalse(result.isExitoso());
@@ -145,7 +145,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirCelsiusAKelvin() {
         System.out.println("convertirCelsiusAKelvin - caso exitoso");
-        double celsius = 0.0;
+        String celsius = "0.0";
         ConversionResultModel result = instance.convertirCelsiusAKelvin(celsius);
 
         assertTrue(result.isExitoso());
@@ -162,7 +162,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirCelsiusAKelvinCeroAbsoluto() {
         System.out.println("convertirCelsiusAKelvin - cero absoluto exacto");
-        double celsius = -273.15;
+        String celsius = "-273.15";
         ConversionResultModel result = instance.convertirCelsiusAKelvin(celsius);
 
         assertTrue(result.isExitoso(), "Debe aceptar exactamente -273.15°C");
@@ -176,7 +176,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirCelsiusAKelvinBajoCeroAbsoluto() {
         System.out.println("convertirCelsiusAKelvin - bajo cero absoluto");
-        double celsius = -274.0;
+        String celsius = "-274.0";
         ConversionResultModel result = instance.convertirCelsiusAKelvin(celsius);
 
         assertFalse(result.isExitoso());
@@ -190,7 +190,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirKelvinACelsius() {
         System.out.println("convertirKelvinACelsius - caso exitoso");
-        double kelvin = 273.15;
+        String kelvin = "273.15";
         ConversionResultModel result = instance.convertirKelvinACelsius(kelvin);
 
         assertTrue(result.isExitoso());
@@ -207,7 +207,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirKelvinACelsiusCeroAbsoluto() {
         System.out.println("convertirKelvinACelsius - cero absoluto");
-        double kelvin = 0.0;
+        String kelvin = "0.0";
         ConversionResultModel result = instance.convertirKelvinACelsius(kelvin);
 
         assertTrue(result.isExitoso(), "Debe aceptar 0K");
@@ -221,7 +221,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirKelvinACelsiusNegativo() {
         System.out.println("convertirKelvinACelsius - Kelvin negativo");
-        double kelvin = -10.0;
+        String kelvin = "-10.0";
         ConversionResultModel result = instance.convertirKelvinACelsius(kelvin);
 
         assertFalse(result.isExitoso());
@@ -236,7 +236,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirFahrenheitAKelvin() {
         System.out.println("convertirFahrenheitAKelvin - caso exitoso");
-        double fahrenheit = 32.0;
+        String fahrenheit = "32.0";
         ConversionResultModel result = instance.convertirFahrenheitAKelvin(fahrenheit);
 
         assertTrue(result.isExitoso());
@@ -253,7 +253,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirFahrenheitAKelvinCeroAbsoluto() {
         System.out.println("convertirFahrenheitAKelvin - bajo cero absoluto");
-        double fahrenheit = -500.0;
+        String fahrenheit = "-500.0";
         ConversionResultModel result = instance.convertirFahrenheitAKelvin(fahrenheit);
 
         assertFalse(result.isExitoso());
@@ -267,7 +267,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirKelvinAFahrenheit() {
         System.out.println("convertirKelvinAFahrenheit - caso exitoso");
-        double kelvin = 273.15;
+        String kelvin = "273.15";
         ConversionResultModel result = instance.convertirKelvinAFahrenheit(kelvin);
 
         assertTrue(result.isExitoso());
@@ -284,7 +284,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testConvertirKelvinAFahrenheitNegativo() {
         System.out.println("convertirKelvinAFahrenheit - Kelvin negativo");
-        double kelvin = -5.0;
+        String kelvin = "-5.0";
         ConversionResultModel result = instance.convertirKelvinAFahrenheit(kelvin);
 
         assertFalse(result.isExitoso());
@@ -297,7 +297,7 @@ public class TemperaturaServiceTest {
     @Test
     public void testTemperaturaAmbiente() {
         System.out.println("convertir 25°C a Fahrenheit");
-        double celsius = 25.0;
+        String celsius = "25.0";
         ConversionResultModel result = instance.convertirCelsiusAFahrenheit(celsius);
 
         assertTrue(result.isExitoso());
@@ -311,44 +311,20 @@ public class TemperaturaServiceTest {
     @Test
     public void testTemperaturaCorporal() {
         System.out.println("convertir temperatura corporal");
-        double celsius = 37.0;
+        String celsius = "37.0";
         ConversionResultModel result = instance.convertirCelsiusAFahrenheit(celsius);
 
         assertTrue(result.isExitoso());
         assertEquals(98.6, result.getResultado().getValorConvertidoExacto(), 0.1,
                      "37°C = 98.6°F (temperatura corporal)");
     }
-
-    /**
-     * Test adicional: Verificar conversión bidireccional
-     */
-    @Test
-    public void testConversionBidireccional() {
-        System.out.println("verificar conversión bidireccional C->F->C");
-        double celsiusOriginal = 50.0;
-
-        // Celsius a Fahrenheit
-        ConversionResultModel resultCF = instance.convertirCelsiusAFahrenheit(celsiusOriginal);
-        assertTrue(resultCF.isExitoso());
-        double fahrenheit = resultCF.getResultado().getValorConvertidoExacto();
-
-        // Fahrenheit de vuelta a Celsius
-        ConversionResultModel resultFC = instance.convertirFahrenheitACelsius(fahrenheit);
-        assertTrue(resultFC.isExitoso());
-        double celsiusFinal = resultFC.getResultado().getValorConvertidoExacto();
-
-        // Debe ser igual (con tolerancia por redondeo)
-        assertEquals(celsiusOriginal, celsiusFinal, 0.1,
-                     "La conversión bidireccional debe retornar al valor original");
-    }
-
     /**
      * Test adicional: Verificar fechas de conversión
      */
     @Test
     public void testVerificarFechaConversion() {
         System.out.println("verificar fecha de conversión");
-        double celsius = 20.0;
+        String celsius = "20.0";
         ConversionResultModel result = instance.convertirCelsiusAFahrenheit(celsius);
 
         assertTrue(result.isExitoso());

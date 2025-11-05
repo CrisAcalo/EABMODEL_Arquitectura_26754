@@ -36,8 +36,16 @@ public partial class TemperaturaView : UserControl
             return;
         }
 
-        // Validar valor numérico
-        if (!double.TryParse(txtValor.Text, out double valor))
+        // Validar que el campo no esté vacío
+        string valor = txtValor.Text.Trim();
+        if (string.IsNullOrWhiteSpace(valor))
+        {
+            MostrarError("Por favor ingrese un valor");
+            return;
+        }
+
+        // Validación básica: verificar que sea parseable como número (opcional en cliente)
+        if (!double.TryParse(valor.Replace(',', '.'), out _))
         {
             MostrarError("Por favor ingrese un valor numérico válido");
             return;
@@ -52,7 +60,7 @@ public partial class TemperaturaView : UserControl
             return;
         }
 
-        // Crear solicitud
+        // Crear solicitud con valor como string
         var request = new ConversionRequest
         {
             Valor = valor,

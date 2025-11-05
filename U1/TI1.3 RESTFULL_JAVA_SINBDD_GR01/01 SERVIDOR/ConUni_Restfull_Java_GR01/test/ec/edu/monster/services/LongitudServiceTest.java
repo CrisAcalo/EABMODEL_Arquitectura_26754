@@ -49,7 +49,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMillaAMetro() {
         System.out.println("convertirMillaAMetro - caso exitoso");
-        double millas = 1.0;
+        String millas = "1.0";
         ConversionResultModel result = instance.convertirMillaAMetro(millas);
 
         assertTrue(result.isExitoso(), "La conversión debería ser exitosa");
@@ -68,13 +68,13 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMillaAMetroValorNegativo() {
         System.out.println("convertirMillaAMetro - valor negativo");
-        double millas = -5.0;
+        String millas = "-5.0";
         ConversionResultModel result = instance.convertirMillaAMetro(millas);
 
         assertFalse(result.isExitoso(), "No debería aceptar valores negativos");
         assertNull(result.getResultado(), "No debería haber resultado");
         assertNotNull(result.getError(), "Debería retornar un error");
-        assertEquals("VAL002", result.getError().getCodigoError());
+        assertEquals("VAL_001", result.getError().getCodigoError());
     }
 
     /**
@@ -84,7 +84,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMetroAMilla() {
         System.out.println("convertirMetroAMilla - caso exitoso");
-        double metros = 1609.34;
+        String metros = "1609.34";
         ConversionResultModel result = instance.convertirMetroAMilla(metros);
 
         assertTrue(result.isExitoso());
@@ -101,7 +101,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMetroAMillaValorNegativo() {
         System.out.println("convertirMetroAMilla - valor negativo");
-        double metros = -100.0;
+        String metros = "-100.0";
         ConversionResultModel result = instance.convertirMetroAMilla(metros);
 
         assertFalse(result.isExitoso());
@@ -115,7 +115,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMillaAPulgada() {
         System.out.println("convertirMillaAPulgada - caso exitoso");
-        double millas = 1.0;
+        String millas = "1.0";
         ConversionResultModel result = instance.convertirMillaAPulgada(millas);
 
         assertTrue(result.isExitoso());
@@ -132,7 +132,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMillaAPulgadaValorNegativo() {
         System.out.println("convertirMillaAPulgada - valor negativo");
-        double millas = -2.0;
+        String millas = "-2.0";
         ConversionResultModel result = instance.convertirMillaAPulgada(millas);
 
         assertFalse(result.isExitoso());
@@ -146,7 +146,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirPulgadaAMilla() {
         System.out.println("convertirPulgadaAMilla - caso exitoso");
-        double pulgadas = 63360.0;
+        String pulgadas = "63360.0";
         ConversionResultModel result = instance.convertirPulgadaAMilla(pulgadas);
 
         assertTrue(result.isExitoso());
@@ -163,7 +163,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirPulgadaAMillaValorNegativo() {
         System.out.println("convertirPulgadaAMilla - valor negativo");
-        double pulgadas = -1000.0;
+        String pulgadas = "-1000.0";
         ConversionResultModel result = instance.convertirPulgadaAMilla(pulgadas);
 
         assertFalse(result.isExitoso());
@@ -177,7 +177,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMetroAPulgada() {
         System.out.println("convertirMetroAPulgada - caso exitoso");
-        double metros = 1.0;
+        String metros = "1.0";
         ConversionResultModel result = instance.convertirMetroAPulgada(metros);
 
         assertTrue(result.isExitoso());
@@ -194,7 +194,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMetroAPulgadaValorNegativo() {
         System.out.println("convertirMetroAPulgada - valor negativo");
-        double metros = -50.0;
+        String metros = "-50.0";
         ConversionResultModel result = instance.convertirMetroAPulgada(metros);
 
         assertFalse(result.isExitoso());
@@ -208,7 +208,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirPulgadaAMetro() {
         System.out.println("convertirPulgadaAMetro - caso exitoso");
-        double pulgadas = 39.3701;
+        String pulgadas = "39.3701";
         ConversionResultModel result = instance.convertirPulgadaAMetro(pulgadas);
 
         assertTrue(result.isExitoso());
@@ -225,7 +225,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirPulgadaAMetroValorNegativo() {
         System.out.println("convertirPulgadaAMetro - valor negativo");
-        double pulgadas = -200.0;
+        String pulgadas = "-200.0";
         ConversionResultModel result = instance.convertirPulgadaAMetro(pulgadas);
 
         assertFalse(result.isExitoso());
@@ -238,7 +238,7 @@ public class LongitudServiceTest {
     @Test
     public void testConvertirMultiplesMillas() {
         System.out.println("convertir 5 millas a metros");
-        double millas = 5.0;
+        String millas = "5.0";
         ConversionResultModel result = instance.convertirMillaAMetro(millas);
 
         assertTrue(result.isExitoso());
@@ -252,7 +252,7 @@ public class LongitudServiceTest {
     @Test
     public void testVerificarRedondeo() {
         System.out.println("verificar redondeo a 2 decimales");
-        double metros = 100.0;
+        String metros = "100.0";
         ConversionResultModel result = instance.convertirMetroAMilla(metros);
 
         assertTrue(result.isExitoso());

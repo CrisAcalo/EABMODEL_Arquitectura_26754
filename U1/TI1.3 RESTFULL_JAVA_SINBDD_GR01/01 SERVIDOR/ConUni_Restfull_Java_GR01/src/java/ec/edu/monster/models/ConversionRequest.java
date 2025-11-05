@@ -9,16 +9,16 @@ package ec.edu.monster.models;
  * @author jeffe
  */
 public class ConversionRequest {
-    private double valor;
+    private String valor;
     private String unidadOrigen;
     private String unidadDestino;
 
     // Getters y Setters
-    public double getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 
