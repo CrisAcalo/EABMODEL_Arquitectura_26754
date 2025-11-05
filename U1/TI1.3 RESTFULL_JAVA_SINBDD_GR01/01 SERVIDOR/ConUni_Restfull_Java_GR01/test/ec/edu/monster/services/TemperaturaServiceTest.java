@@ -318,9 +318,6 @@ public class TemperaturaServiceTest {
         assertEquals(98.6, result.getResultado().getValorConvertidoExacto(), 0.1,
                      "37°C = 98.6°F (temperatura corporal)");
     }
-
-   
-
     /**
      * Test adicional: Verificar fechas de conversión
      */

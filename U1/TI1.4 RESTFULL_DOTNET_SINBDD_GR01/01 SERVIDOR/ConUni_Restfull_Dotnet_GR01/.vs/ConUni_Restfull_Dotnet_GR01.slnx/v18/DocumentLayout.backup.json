@@ -3,36 +3,16 @@
   "WorkspaceRootPath": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\",
   "Documents": [
     {
-<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\masacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-=======
-      "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\uni\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\longitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\longitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\masacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\uni\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\masacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
->>>>>>> 3b4f58018025d25be5c44be885367ed777f2cce4
-      "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\masacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\services\\temperaturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\services\\temperaturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\temperaturacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\temperaturacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-<<<<<<< HEAD
-      "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\services\\temperaturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-=======
-      "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\uni\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\models\\conversionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\models\\conversionrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\uni\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\validators\\validationhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\validators\\validationhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\uni\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\services\\temperaturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
->>>>>>> 3b4f58018025d25be5c44be885367ed777f2cce4
-      "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\services\\temperaturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\services\\masaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -41,7 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\services\\longitudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\services\\longitudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-<<<<<<< HEAD
     },
     {
       "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\ws\\longitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,8 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|c:\\arquitectura de app\\eabmodel_arquitectura_26754\\u1\\ti1.4 restfull_dotnet_sinbdd_gr01\\01 servidor\\conuni_restfull_dotnet_gr01\\conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\validators\\validationhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F62CA48A-80D9-6257-CD1E-37258F65E7E6}|ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01.csproj|solutionrelative:conuni_restfull_dotnet_gr01\\ec\\edu\\monster\\validators\\validationhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-=======
->>>>>>> 3b4f58018025d25be5c44be885367ed777f2cce4
     }
   ],
   "DocumentGroupContainers": [
@@ -65,23 +42,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "TemperaturaService.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\services\\TemperaturaService.cs",
               "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\services\\TemperaturaService.cs",
               "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\services\\TemperaturaService.cs",
               "RelativeToolTip": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\services\\TemperaturaService.cs",
-              "ViewState": "AgIAALEAAAAAAAAAAAAiwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-04T23:49:41.045Z"
+              "WhenOpened": "2025-11-04T23:49:41.045Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "MasaService.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\services\\MasaService.cs",
               "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\services\\MasaService.cs",
@@ -93,7 +71,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "ConversionRequest.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\models\\ConversionRequest.cs",
               "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\models\\ConversionRequest.cs",
@@ -105,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "LongitudService.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\services\\LongitudService.cs",
               "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\services\\LongitudService.cs",
@@ -117,13 +95,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "MasaController.cs",
+              "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\MasaController.cs",
+              "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\MasaController.cs",
+              "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\MasaController.cs",
+              "RelativeToolTip": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\MasaController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAvwJMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-04T22:53:19.63Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "ValidationHelper.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\validators\\ValidationHelper.cs",
               "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\validators\\ValidationHelper.cs",
               "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\validators\\ValidationHelper.cs",
               "RelativeToolTip": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\validators\\ValidationHelper.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAiwIcAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAvwIYAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-04T23:21:17.709Z"
             },
@@ -135,36 +126,20 @@
               "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\TemperaturaController.cs",
               "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\TemperaturaController.cs",
               "RelativeToolTip": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\TemperaturaController.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAAAFwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAI8AAAAAAAAAAAA9wA0AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-04T22:53:21.786Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MasaController.cs",
-              "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\MasaController.cs",
-              "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\MasaController.cs",
-              "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\MasaController.cs",
-              "RelativeToolTip": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\MasaController.cs",
-<<<<<<< HEAD
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-=======
-              "ViewState": "AgIAACwAAAAAAAAAAAAcwEAAAAAqAAAAAAAAAA==",
->>>>>>> 3b4f58018025d25be5c44be885367ed777f2cce4
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-04T22:53:19.63Z",
+              "WhenOpened": "2025-11-04T22:53:21.786Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "LongitudController.cs",
               "DocumentMoniker": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\LongitudController.cs",
               "RelativeDocumentMoniker": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\LongitudController.cs",
               "ToolTip": "C:\\Arquitectura de App\\EABMODEL_Arquitectura_26754\\U1\\TI1.4 RESTFULL_DOTNET_SINBDD_GR01\\01 SERVIDOR\\ConUni_Restfull_Dotnet_GR01\\ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\LongitudController.cs",
               "RelativeToolTip": "ConUni_Restfull_Dotnet_GR01\\ec\\edu\\monster\\ws\\LongitudController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAwwEMAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAmwH8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-04T22:52:37.92Z"
             }

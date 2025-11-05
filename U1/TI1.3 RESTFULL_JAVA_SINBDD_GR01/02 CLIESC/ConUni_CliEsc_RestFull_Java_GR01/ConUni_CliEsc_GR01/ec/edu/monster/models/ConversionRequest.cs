@@ -6,9 +6,9 @@ namespace ConUni_CliEsc_GR01.ec.edu.monster.models;
 public class ConversionRequest
 {
     /// <summary>
-    /// Valor numérico a convertir
+    /// Valor numérico a convertir como string (para permitir validaciones del servidor)
     /// </summary>
-    public double Valor { get; set; }
+    public string Valor { get; set; } = string.Empty;
 
     /// <summary>
     /// Unidad de origen (ej: "Celsius", "Metro", "Kilogramo")
