@@ -57,8 +57,8 @@
                     <div style="margin-top: 20px; padding: 15px; background-color: #e0f4f5; border-radius: 8px;">
                         <p style="margin: 0; font-size: 0.9em; color: #033540;">
                             <strong>Credenciales de prueba:</strong><br />
-                            Usuario: <code>Monster</code><br />
-                            Contraseña: <code>Monster9</code>
+                            Usuario: <code>MONSTER</code><br />
+                            Contraseña: <code>MONSTER9</code>
                         </p>
                     </div>
                 </form>

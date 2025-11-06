@@ -7,8 +7,8 @@ namespace ConUni_CLIWEB_Rest
 {
     public partial class Login : Page
     {
-        private const string USUARIO_VALIDO = "Monster";
-        private const string CONTRASENA_VALIDA = "Monster9";
+        private const string USUARIO_VALIDO = "MONSTER";
+        private const string CONTRASENA_VALIDA = "MONSTER9";
         private const int MAX_INTENTOS = 3;
 
         protected void Page_Load(object sender, EventArgs e)
