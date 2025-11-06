@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.UI;
 
-namespace ConUni_CLIWEB_Rest
+namespace ClienteWebConversion
 {
-    public partial class Login : Page
+    // IMPORTANTE: Este archivo debe estar en la raíz del proyecto
+    // junto con Login.aspx
+    public partial class Login : System.Web.UI.Page
     {
         private const string USUARIO_VALIDO = "MONSTER";
         private const string CONTRASENA_VALIDA = "MONSTER9";
@@ -18,58 +19,91 @@ namespace ConUni_CLIWEB_Rest
                 // Si ya está autenticado, redirigir a la página principal
                 if (Session["UsuarioAutenticado"] != null)
                 {
-                    Response.Redirect("Default.aspx");
+                    Response.Redirect("~/Default.aspx");
+                }
+
+                // Verificar intentos
+                int intentos = Session["Intentos"] != null ? (int)Session["Intentos"] : 0;
+
+                if (intentos >= MAX_INTENTOS)
+                {
+                    pnlBloqueado.Visible = true;
+                    pnlFormulario.Visible = false;
+                }
+                else if (intentos > 0)
+                {
+                    int intentosRestantes = MAX_INTENTOS - intentos;
+                    lblIntentos.Text = $"⚠️ Te quedan {intentosRestantes} intento(s)";
+                    pnlIntentos.Visible = true;
                 }
             }
         }
 
-        protected void btnIngresar_Click(object sender, EventArgs e)
+        protected void btnLogin_Click(object sender, EventArgs e)
         {
-            // Obtener intentos de la sesión
-            int intentos = Session["IntentosLogin"] != null ? (int)Session["IntentosLogin"] : 0;
-
-            if (intentos >= MAX_INTENTOS)
+            // Validar que los campos no estén vacíos
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || string.IsNullOrWhiteSpace(txtContrasena.Text))
             {
-                MostrarError("Has superado el número máximo de intentos.");
+                MostrarError("⚠️ Debe ingresar usuario y contraseña.");
                 return;
             }
 
+            // Obtener intentos actuales
+            int intentos = Session["Intentos"] != null ? (int)Session["Intentos"] : 0;
+
+            // Verificar si ya superó los intentos
+            if (intentos >= MAX_INTENTOS)
+            {
+                MostrarError("🔒 Has superado el número máximo de intentos.");
+                pnlFormulario.Visible = false;
+                pnlBloqueado.Visible = true;
+                return;
+            }
+
+            // Validar credenciales
             string usuario = txtUsuario.Text.Trim();
             string contrasena = txtContrasena.Text;
 
-            // Validar credenciales
-            if (usuario == USUARIO_VALIDO && contrasena == CONTRASENA_VALIDA)
+            if (USUARIO_VALIDO.Equals(usuario) && CONTRASENA_VALIDA.Equals(contrasena))
             {
                 // Login exitoso
                 Session["UsuarioAutenticado"] = usuario;
-                Session["IntentosLogin"] = 0;
+                Session["Intentos"] = 0;
                 Session.Timeout = 30; // 30 minutos
 
-                Response.Redirect("Default.aspx");
+                // Redirigir a la página principal
+                Response.Redirect("~/Default.aspx");
             }
             else
             {
                 // Login fallido
                 intentos++;
-                Session["IntentosLogin"] = intentos;
+                Session["Intentos"] = intentos;
 
                 int intentosRestantes = MAX_INTENTOS - intentos;
 
                 if (intentosRestantes > 0)
                 {
-                    MostrarError($"Usuario o contraseña incorrectos. Te quedan {intentosRestantes} intento(s).");
+                    MostrarError("❌ Usuario o contraseña incorrectos.");
+                    lblIntentos.Text = $"⚠️ Te quedan {intentosRestantes} intento(s)";
+                    pnlIntentos.Visible = true;
                 }
                 else
                 {
-                    MostrarError("Has superado el número máximo de intentos.");
+                    MostrarError("🔒 Has superado el número máximo de intentos.");
+                    pnlFormulario.Visible = false;
+                    pnlBloqueado.Visible = true;
                 }
+
+                // Limpiar contraseña
+                txtContrasena.Text = string.Empty;
             }
         }
 
         private void MostrarError(string mensaje)
         {
-            pnlError.Visible = true;
             lblError.Text = mensaje;
+            pnlError.Visible = true;
         }
     }
 }
