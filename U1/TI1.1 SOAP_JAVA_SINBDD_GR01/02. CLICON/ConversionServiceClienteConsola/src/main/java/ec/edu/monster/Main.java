@@ -18,8 +18,8 @@ public class Main {
     private static String servidorURL;
     
     // Credenciales hardcodeadas
-    private static final String USUARIO_VALIDO = "Monster";
-    private static final String CONTRASENA_VALIDA = "Monster9";
+    private static final String USUARIO_VALIDO = "MONSTER";
+    private static final String CONTRASENA_VALIDA = "MONSTER9";
     private static final int MAX_INTENTOS = 3;
     
     public static void main(String[] args) {

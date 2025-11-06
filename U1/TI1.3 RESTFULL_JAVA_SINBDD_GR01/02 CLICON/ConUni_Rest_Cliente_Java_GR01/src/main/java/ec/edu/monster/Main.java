@@ -18,8 +18,8 @@ public class Main {
     private static RestClient restClient;
     
     // Credenciales hardcodeadas
-    private static final String USUARIO_VALIDO = "Monster";
-    private static final String CONTRASENA_VALIDA = "Monster9";
+    private static final String USUARIO_VALIDO = "MONSTER";
+    private static final String CONTRASENA_VALIDA = "MONSTER9";
     private static final int MAX_INTENTOS = 3;
     
     public static void main(String[] args) {
@@ -213,7 +213,7 @@ public class Main {
             RestClient.ConversionResult resultado = restClient.convertirLongitud(valor, unidadOrigen, unidadDestino);
             mostrarResultado(resultado);
         } catch (Exception e) {
-            System.out.println("\nError al conectar con el servicio: " + e.getMessage());
+            System.out.println("\n❌ Error al conectar con el servicio: " + e.getMessage());
             System.out.println("   Verifica que el servidor esté corriendo en: " + servidorURL + "\n");
         }
     }
@@ -221,17 +221,14 @@ public class Main {
     private static void menuConversionesMasa() {
         System.out.println("\n┌─────────────────────────────────────────┐");
         System.out.println("│    CONVERSIONES DE MASA                 │");
+        System.out.println("│    (Kilogramo, Quintal, Libra)          │");
         System.out.println("├─────────────────────────────────────────┤");
         System.out.println("│ 1. Kilogramo → Libra                    │");
         System.out.println("│ 2. Libra → Kilogramo                    │");
-        System.out.println("│ 3. Kilogramo → Onza                     │");
-        System.out.println("│ 4. Onza → Kilogramo                     │");
-        System.out.println("│ 5. Kilogramo → Tonelada                 │");
-        System.out.println("│ 6. Tonelada → Kilogramo                 │");
-        System.out.println("│ 7. Libra → Onza                         │");
-        System.out.println("│ 8. Onza → Libra                         │");
-        System.out.println("│ 9. Libra → Tonelada                     │");
-        System.out.println("│ 10. Tonelada → Libra                    │");
+        System.out.println("│ 3. Kilogramo → Quintal                  │");
+        System.out.println("│ 4. Quintal → Kilogramo                  │");
+        System.out.println("│ 5. Libra → Quintal                      │");
+        System.out.println("│ 6. Quintal → Libra                      │");
         System.out.println("│ 0. Volver                               │");
         System.out.println("└─────────────────────────────────────────┘");
         
@@ -246,14 +243,10 @@ public class Main {
         switch (opcion) {
             case 1: unidadOrigen = "Kilogramo"; unidadDestino = "Libra"; break;
             case 2: unidadOrigen = "Libra"; unidadDestino = "Kilogramo"; break;
-            case 3: unidadOrigen = "Kilogramo"; unidadDestino = "Onza"; break;
-            case 4: unidadOrigen = "Onza"; unidadDestino = "Kilogramo"; break;
-            case 5: unidadOrigen = "Kilogramo"; unidadDestino = "Tonelada"; break;
-            case 6: unidadOrigen = "Tonelada"; unidadDestino = "Kilogramo"; break;
-            case 7: unidadOrigen = "Libra"; unidadDestino = "Onza"; break;
-            case 8: unidadOrigen = "Onza"; unidadDestino = "Libra"; break;
-            case 9: unidadOrigen = "Libra"; unidadDestino = "Tonelada"; break;
-            case 10: unidadOrigen = "Tonelada"; unidadDestino = "Libra"; break;
+            case 3: unidadOrigen = "Kilogramo"; unidadDestino = "Quintal"; break;
+            case 4: unidadOrigen = "Quintal"; unidadDestino = "Kilogramo"; break;
+            case 5: unidadOrigen = "Libra"; unidadDestino = "Quintal"; break;
+            case 6: unidadOrigen = "Quintal"; unidadDestino = "Libra"; break;
             default:
                 System.out.println("\n❌ Opción inválida.\n");
                 return;
@@ -263,7 +256,7 @@ public class Main {
             RestClient.ConversionResult resultado = restClient.convertirMasa(valor, unidadOrigen, unidadDestino);
             mostrarResultado(resultado);
         } catch (Exception e) {
-            System.out.println("\nError al conectar con el servicio: " + e.getMessage());
+            System.out.println("\n❌ Error al conectar con el servicio: " + e.getMessage());
             System.out.println("   Verifica que el servidor esté corriendo en: " + servidorURL + "\n");
         }
     }
@@ -297,7 +290,7 @@ public class Main {
             case 5: unidadOrigen = "Kelvin"; unidadDestino = "Celsius"; break;
             case 6: unidadOrigen = "Kelvin"; unidadDestino = "Fahrenheit"; break;
             default:
-                System.out.println("\nOpción inválida.\n");
+                System.out.println("\n❌ Opción inválida.\n");
                 return;
         }
         
@@ -305,7 +298,7 @@ public class Main {
             RestClient.ConversionResult resultado = restClient.convertirTemperatura(valor, unidadOrigen, unidadDestino);
             mostrarResultado(resultado);
         } catch (Exception e) {
-            System.out.println("\nError al conectar con el servicio: " + e.getMessage());
+            System.out.println("\n❌ Error al conectar con el servicio: " + e.getMessage());
             System.out.println("   Verifica que el servidor esté corriendo en: " + servidorURL + "\n");
         }
     }
@@ -315,14 +308,14 @@ public class Main {
         
         if (resultado.isExitoso()) {
             RestClient.ResultadoConversion conv = resultado.getResultado();
-            System.out.println("CONVERSIÓN EXITOSA");
+            System.out.println("✅ CONVERSIÓN EXITOSA");
             System.out.println("=".repeat(50));
             System.out.println("Valor Original:    " + conv.getValorOriginal() + " " + conv.getUnidadOrigen());
             System.out.println("Valor Convertido:  " + conv.getValorConvertidoRedondeado() + " " + conv.getUnidadDestino());
             System.out.println("Valor Exacto:      " + conv.getValorConvertidoExacto());
             System.out.println("Factor:            " + conv.getFactorConversion());
         } else {
-            System.out.println("ERROR EN LA CONVERSIÓN");
+            System.out.println("❌ ERROR EN LA CONVERSIÓN");
             System.out.println("=".repeat(50));
             System.out.println("Mensaje:  " + resultado.getMensajeError());
         }
