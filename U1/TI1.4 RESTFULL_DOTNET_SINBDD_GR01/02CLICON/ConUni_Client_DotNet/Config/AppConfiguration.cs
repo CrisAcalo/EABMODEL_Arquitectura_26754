@@ -9,8 +9,8 @@ namespace ConUni_Client_DotNet.Config
     /// </summary>
     public class ServerConfiguration
     {
-        public string Ip { get; set; } = "localhost";
-        public string Puerto { get; set; } = "5150";
+        public string Ip { get; set; } = "192.168.0.10";
+        public string Puerto { get; set; } = "8083";
         public bool UseHttps { get; set; } = false;
     }
 
@@ -19,8 +19,8 @@ namespace ConUni_Client_DotNet.Config
     /// </summary>
     public class Authentication
     {
-        public string Usuario { get; set; } = "Monster";
-        public string Contrasena { get; set; } = "Monster9";
+        public string Usuario { get; set; } = "MONSTER";
+        public string Contrasena { get; set; } = "MONSTER9";
         public int MaxIntentos { get; set; } = 3;
     }
 
