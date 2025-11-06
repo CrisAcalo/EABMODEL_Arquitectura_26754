@@ -1,0 +1,42 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "http://localhost:8080/ConUni_Soap_Java_GR01/LongitudService?wsdl"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, ConUni_CliEsc_GR01.LongitudServiceReference"
+    ],
+    "references": [
+      "MaterialDesignColors, {MaterialDesignColors, 5.3.0}",
+      "MaterialDesignThemes.Wpf, {MaterialDesignThemes, 5.3.0}",
+      "Microsoft.Extensions.Configuration, {Microsoft.Extensions.Configuration, 8.0.0}",
+      "Microsoft.Extensions.Configuration.Abstractions, {Microsoft.Extensions.Configuration.Abstractions, 8.0.0}",
+      "Microsoft.Extensions.Configuration.FileExtensions, {Microsoft.Extensions.Configuration.FileExtensions, 8.0.0}",
+      "Microsoft.Extensions.Configuration.Json, {Microsoft.Extensions.Configuration.Json, 8.0.0}",
+      "Microsoft.Extensions.FileProviders.Abstractions, {Microsoft.Extensions.FileProviders.Abstractions, 8.0.0}",
+      "Microsoft.Extensions.FileProviders.Physical, {Microsoft.Extensions.FileProviders.Physical, 8.0.0}",
+      "Microsoft.Extensions.FileSystemGlobbing, {Microsoft.Extensions.FileSystemGlobbing, 8.0.0}",
+      "Microsoft.Extensions.ObjectPool, {Microsoft.Extensions.ObjectPool, 8.0.10}",
+      "Microsoft.Extensions.Primitives, {Microsoft.Extensions.Primitives, 8.0.0}",
+      "Microsoft.Xaml.Behaviors, {Microsoft.Xaml.Behaviors.Wpf, 1.1.77}",
+      "System.Net.Http.Json, {System.Net.Http.Json, 8.0.0}",
+      "System.Security.Cryptography.Pkcs, {System.Security.Cryptography.Pkcs, 8.0.1}",
+      "System.Security.Cryptography.Xml, {System.Security.Cryptography.Xml, 8.0.2}",
+      "System.ServiceModel, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Duplex, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Http, {System.ServiceModel.Http, 8.1.2}",
+      "System.ServiceModel.NetFramingBase, {System.ServiceModel.NetFramingBase, 8.1.2}",
+      "System.ServiceModel.NetTcp, {System.ServiceModel.NetTcp, 8.1.2}",
+      "System.ServiceModel.Primitives, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.ServiceModel.Security, {System.ServiceModel.Primitives, 8.1.2}",
+      "System.Text.Encodings.Web, {System.Text.Encodings.Web, 8.0.0}",
+      "System.Text.Json, {System.Text.Json, 8.0.0}"
+    ],
+    "targetFramework": "net8.0-windows",
+    "typeReuseMode": "All"
+  }
+}
