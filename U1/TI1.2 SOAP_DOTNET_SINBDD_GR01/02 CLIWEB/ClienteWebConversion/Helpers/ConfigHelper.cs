@@ -25,8 +25,8 @@ namespace ClienteWebConversion.Helpers
         {
             try
             {
-                string ip = ConfigurationManager.AppSettings["servidor.ip"] ?? "localhost";
-                string puerto = ConfigurationManager.AppSettings["servidor.puerto"] ?? "56686";
+                string ip = ConfigurationManager.AppSettings["servidor.ip"] ?? "192.168.0.10";
+                string puerto = ConfigurationManager.AppSettings["servidor.puerto"] ?? "8082";
                 string ruta = ConfigurationManager.AppSettings["servidor.ruta"] ?? "ec/edu/monster/ws";
 
                 servidorURL = $"http://{ip}:{puerto}/{ruta}";
@@ -36,7 +36,7 @@ namespace ClienteWebConversion.Helpers
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"⚠ Error al cargar configuración: {ex.Message}");
-                servidorURL = "http://localhost:56686/ec/edu/monster/ws";
+                servidorURL = "http://192.168.0.10:8082/ec/edu/monster/ws";
             }
         }
 

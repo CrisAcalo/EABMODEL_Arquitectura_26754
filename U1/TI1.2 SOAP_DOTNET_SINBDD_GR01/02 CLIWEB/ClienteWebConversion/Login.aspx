@@ -11,7 +11,9 @@
 <body>
     <form id="form1" runat="server">
         <div class="login-container">
-            <div class="login-icon">🔐</div>
+            <div class="login-icon">
+                <img src="images/monsterLogin.jpeg" alt="Monster Campaña" width="300" height="300">
+            </div>
             
             <div class="login-header">
                 <h1>Sistema de Autenticación</h1>
