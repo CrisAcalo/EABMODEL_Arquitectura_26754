@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Iniciar Sesión - Conversión de Unidades"
-        Height="500"
+        Height="750"
         Width="450"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -20,7 +20,7 @@
         <!-- Encabezado -->
         <Border Grid.Row="0" Background="#00695C" Padding="30">
             <StackPanel>
-                <TextBlock Text="🔐 INICIO DE SESIÓN"
+                <TextBlock Text="INICIO DE SESIÓN"
                            FontSize="28"
                            FontWeight="Bold"
                            Foreground="White"
@@ -43,17 +43,16 @@
             <StackPanel VerticalAlignment="Center">
 
                 <!-- Icono de Usuario -->
-                <Border Width="80"
-                        Height="80"
-                        CornerRadius="40"
-                        Background="#00695C"
+                <Border Width="120"
+                        Height="120"
+                        CornerRadius="60"
                         HorizontalAlignment="Center"
-                        Margin="0,0,0,30">
-                    <TextBlock Text="👤"
-                               FontSize="40"
-                               Foreground="White"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"/>
+                        Margin="0,0,0,30"
+                        BorderBrush="#00695C"
+                        BorderThickness="3">
+                    <Border.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/public/images/Monster.jpg" Stretch="UniformToFill"/>
+                    </Border.Background>
                 </Border>
 
                 <!-- Campo Usuario -->
@@ -68,7 +67,9 @@
                          BorderBrush="#00695C"
                          BorderThickness="2"
                          Margin="0,0,0,20"
-                         Height="40"/>
+                         Height="50"
+                         MaxWidth="300"
+                         HorizontalAlignment="Stretch"/>
 
                 <!-- Campo Contraseña -->
                 <TextBlock Text="Contraseña:"
@@ -82,7 +83,9 @@
                              BorderBrush="#00695C"
                              BorderThickness="2"
                              Margin="0,0,0,10"
-                             Height="40"
+                             Height="50"
+                             MaxWidth="300"
+                             HorizontalAlignment="Stretch"
                              KeyDown="TxtPassword_KeyDown"/>
 
                 <!-- Mensaje de Error -->

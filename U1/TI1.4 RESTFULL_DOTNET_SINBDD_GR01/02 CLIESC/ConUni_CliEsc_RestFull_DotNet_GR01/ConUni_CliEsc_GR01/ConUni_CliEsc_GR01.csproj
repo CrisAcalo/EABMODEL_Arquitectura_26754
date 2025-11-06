@@ -19,6 +19,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+	 <Resource Include="public\images\Monster.jpg" />
   </ItemGroup>
-
+	<ItemGroup>
+		<Folder Include="public\images\" />
+	</ItemGroup>
 </Project>
