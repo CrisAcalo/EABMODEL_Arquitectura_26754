@@ -24,8 +24,18 @@ namespace UniversalConverter.Client.ViewModels
         [ObservableProperty]
         private string _valorEntrada = "10"; // El valor que el usuario escribe
 
-        [ObservableProperty]
-        private ConversionResponse _conversionResult;
+        // Dictionary para mantener los resultados por tipo de conversión
+        private readonly Dictionary<ConversionType, ConversionResponse> _resultados = new();
+
+        // Propiedad para obtener el resultado actual según el tipo seleccionado
+        public ConversionResponse CurrentResult
+        {
+            get
+            {
+                _resultados.TryGetValue(SelectedConversionType, out var result);
+                return result;
+            }
+        }
 
         // Opciones de configuración de la API
         [ObservableProperty]
@@ -75,6 +85,8 @@ namespace UniversalConverter.Client.ViewModels
         partial void OnSelectedConversionTypeChanged(ConversionType value)
         {
             UpdateUnitLists();
+            // Notificamos que CurrentResult puede haber cambiado
+            OnPropertyChanged(nameof(CurrentResult));
         }
 
         private void UpdateUnitLists()
@@ -104,7 +116,7 @@ namespace UniversalConverter.Client.ViewModels
 
             // Seleccionamos valores por defecto para evitar que estén vacíos
             SelectedUnitFrom = UnitsFrom.FirstOrDefault();
-            SelectedUnitTo = UnitsTo.Skip(1).FirstOrDefault() ?? UnitsTo.FirstOrDefault();
+            SelectedUnitTo = UnitsTo.Skip(1).FirstOrDefault() ?? UnitsFrom.FirstOrDefault();
         }
 
         // --- Comandos ---
@@ -114,17 +126,17 @@ namespace UniversalConverter.Client.ViewModels
         [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private async Task Convert()
         {
-            // Limpiamos el resultado anterior antes de empezar
-            ConversionResult = null;
-
             if (string.IsNullOrWhiteSpace(ValorEntrada) || SelectedUnitFrom == SelectedUnitTo)
             {
                 // Creamos un objeto de respuesta de error para mostrar en la UI
-                ConversionResult = new ConversionResponse
+                var errorResponse = new ConversionResponse
                 {
                     Exitoso = false,
                     Error = new ErrorData { Mensaje = "Por favor, ingrese un valor y seleccione unidades diferentes." }
                 };
+
+                // Asignamos el error al resultado correspondiente
+                SetResultForCurrentType(errorResponse);
                 return;
             }
 
@@ -152,22 +164,31 @@ namespace UniversalConverter.Client.ViewModels
                     TipoConversion = SelectedConversionType
                 };
 
-                // Simplemente asignamos la respuesta completa a nuestra propiedad
-                ConversionResult = await activeService.ConvertAsync(request);
+                // Obtenemos el resultado y lo asignamos al tipo de conversión correspondiente
+                var result = await activeService.ConvertAsync(request);
+                SetResultForCurrentType(result);
             }
             catch (Exception ex)
             {
                 // En caso de un error inesperado, también creamos un objeto de respuesta
-                ConversionResult = new ConversionResponse
+                var errorResponse = new ConversionResponse
                 {
                     Exitoso = false,
                     Error = new ErrorData { Mensaje = $"Ha ocurrido un error inesperado: {ex.Message}" }
                 };
+
+                SetResultForCurrentType(errorResponse);
             }
             finally
             {
                 IsBusy = false;
             }
+        }
+
+        private void SetResultForCurrentType(ConversionResponse result)
+        {
+            _resultados[SelectedConversionType] = result;
+            OnPropertyChanged(nameof(CurrentResult));
         }
     }
 }

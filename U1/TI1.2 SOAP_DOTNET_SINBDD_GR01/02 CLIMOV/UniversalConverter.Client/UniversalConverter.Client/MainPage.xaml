@@ -11,134 +11,265 @@
     <ContentPage.Resources>
         <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
         <converters:InvertBoolConverter x:Key="InvertBoolConverter" />
-        <Color x:Key="PrimaryColor">#085454</Color>
-        <Color x:Key="PageBackgroundColor">#F0F4F8</Color>
-        <Color x:Key="FrameBackgroundColor">White</Color>
-        <Color x:Key="TextColor">#333333</Color>
-        <!-- CAMBIO: Color de texto por defecto -->
-
-        <Color x:Key="SuccessStrokeColor">#9CCC65</Color>
-        <Color x:Key="SuccessBackgroundColor">#F1F8E9</Color>
-
-        <Color x:Key="ErrorStrokeColor">#E57373</Color>
-        <Color x:Key="ErrorBackgroundColor">#FFEBEE</Color>
-
-        <Color x:Key="LightControlBackgroundColor">#E0F7FA</Color>
-
-        <Style x:Key="MainFrame" TargetType="Border">
-            <Setter Property="Padding" Value="15"/>
-            <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
-            <Setter Property="Stroke" Value="#DDDDDD"/>
-            <Setter Property="BackgroundColor" Value="{StaticResource FrameBackgroundColor}"/>
+        
+        <!-- Colores inspirados en la imagen -->
+        <Color x:Key="DarkTealColor">#043641</Color>
+        <Color x:Key="TealColor">#043a46</Color>
+        <Color x:Key="LightTealColor">#a0c1d1</Color>
+        <Color x:Key="PageBackgroundColor">#edf7f8</Color>
+        <Color x:Key="CardBackgroundColor">White</Color>
+        <Color x:Key="TextColor">#043b57</Color>
+        <Color x:Key="LightTextColor">#06546c</Color>
+        
+        <!-- Colores para resultados -->
+        <Color x:Key="SuccessColor">#27AE60</Color>
+        <Color x:Key="SuccessBackgroundColor">#E8F8F2</Color>
+        <Color x:Key="ErrorColor">#E74C3C</Color>
+        <Color x:Key="ErrorBackgroundColor">#FDEDEC</Color>
+        
+        <!-- Estilos para las tarjetas principales -->
+        <Style x:Key="MainCard" TargetType="Border">
+            <Setter Property="BackgroundColor" Value="{StaticResource CardBackgroundColor}"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 15"/>
+            <Setter Property="Stroke" Value="{StaticResource LightTealColor}"/>
+            <Setter Property="StrokeThickness" Value="2"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,10"/>
         </Style>
 
+        <!-- Estilo para botones principales -->
         <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource TealColor}"/>
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="HeightRequest" Value="48"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="Margin" Value="0,15,0,0"/>
         </Style>
 
-        <Style x:Key="InputControl" TargetType="VisualElement">
-            <Setter Property="BackgroundColor" Value="{StaticResource LightControlBackgroundColor}"/>
+        <!-- Estilo para controles de entrada -->
+        <Style x:Key="InputStyle" TargetType="VisualElement">
+            <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}"/>
         </Style>
 
-        <!-- CAMBIO: Estilos explícitos para asegurar el color del texto -->
+        <!-- Estilos globales -->
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
         </Style>
-        <Style TargetType="Picker" BasedOn="{StaticResource InputControl}">
+        
+        <Style TargetType="Picker" BasedOn="{StaticResource InputStyle}">
             <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+            <Setter Property="TitleColor" Value="{StaticResource LightTextColor}"/>
         </Style>
-        <Style TargetType="Entry" BasedOn="{StaticResource InputControl}">
+        
+        <Style TargetType="Entry" BasedOn="{StaticResource InputStyle}">
             <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+            <Setter Property="PlaceholderColor" Value="{StaticResource LightTextColor}"/>
         </Style>
 
     </ContentPage.Resources>
 
     <ScrollView BackgroundColor="{StaticResource PageBackgroundColor}">
-        <VerticalStackLayout Spacing="15" Padding="20">
+        <VerticalStackLayout Padding="20" Spacing="0">
 
-            <!-- 1. Cabecera -->
-            <Border Padding="20" StrokeThickness="0" BackgroundColor="{StaticResource PrimaryColor}" StrokeShape="RoundRectangle 10">
-                <VerticalStackLayout Spacing="5">
+            <!-- Cabecera Principal -->
+            <Border BackgroundColor="{StaticResource DarkTealColor}" 
+                    StrokeShape="RoundRectangle 20" 
+                    StrokeThickness="0" 
+                    Padding="25,20" 
+                    Margin="0,0,0,20">
+                <VerticalStackLayout Spacing="8">
                     <Label Text="Servicios de Conversión de Unidades" 
-                           TextColor="White" FontSize="24" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                    <Label Text="Cliente Multi-API con .NET MAUI" 
-                           TextColor="White" FontSize="16" HorizontalTextAlignment="Center"/>
+                           TextColor="White" 
+                           FontSize="22" 
+                           FontAttributes="Bold" 
+                           HorizontalTextAlignment="Center"/>
+                    <Label Text="Cliente Móvil Soap DotNet para conversiones de unidades" 
+                           TextColor="#B8E6E1" 
+                           FontSize="14" 
+                           HorizontalTextAlignment="Center"/>
                 </VerticalStackLayout>
             </Border>
 
-            <!-- 2. Configuración del Servidor -->
-            <Border Style="{StaticResource MainFrame}">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Configuración del Servidor" FontAttributes="Bold" FontSize="16"/>
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                        <Picker Grid.Column="0" Title="Tipo API" ItemsSource="{Binding ApiTypes}" SelectedItem="{Binding SelectedApiType}"/>
-                        <Picker Grid.Column="1" Title="Plataforma" ItemsSource="{Binding ApiPlatforms}" SelectedItem="{Binding SelectedApiPlatform}"/>
+            <!-- Panel de Configuración API (Colapsable) -->
+            <!--<Border Style="{StaticResource MainCard}">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="⚙️ Configuración del Servidor" 
+                           FontSize="16" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource DarkTealColor}"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <StackLayout Grid.Column="0">
+                            <Label Text="Tipo API" FontSize="12" TextColor="{StaticResource LightTextColor}"/>
+                            <Picker ItemsSource="{Binding ApiTypes}" 
+                                   SelectedItem="{Binding SelectedApiType}"
+                                   BackgroundColor="{StaticResource PageBackgroundColor}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Column="1">
+                            <Label Text="Plataforma" FontSize="12" TextColor="{StaticResource LightTextColor}"/>
+                            <Picker ItemsSource="{Binding ApiPlatforms}" 
+                                   SelectedItem="{Binding SelectedApiPlatform}"
+                                   BackgroundColor="{StaticResource PageBackgroundColor}"/>
+                        </StackLayout>
                     </Grid>
                 </VerticalStackLayout>
-            </Border>
+            </Border>-->
 
-            <!-- 3. Panel de Entrada de Datos -->
-            <Border Style="{StaticResource MainFrame}">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="{Binding SelectedConversionType}" FontSize="22" FontAttributes="Bold"/>
-                    <Label Text="Tipo de Conversión:"/>
-                    <Picker Title="Seleccione un tipo..." ItemsSource="{Binding ConversionTypes}" SelectedItem="{Binding SelectedConversionType}"/>
-                    <Label Text="Convertir de/a:"/>
-                    <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="10">
-                        <Picker Grid.Column="0" Title="Desde" ItemsSource="{Binding UnitsFrom}" SelectedItem="{Binding SelectedUnitFrom}" />
-                        <Label Grid.Column="1" Text="➔" FontSize="20" VerticalOptions="Center"/>
-                        <Picker Grid.Column="2" Title="Hacia" ItemsSource="{Binding UnitsTo}" SelectedItem="{Binding SelectedUnitTo}" />
-                    </Grid>
-                    <Label Text="Valor a convertir:"/>
-                    <Entry Keyboard="Numeric" Placeholder="Ej: 5.5" Text="{Binding ValorEntrada}" />
-                    <Button Text="CONVERTIR" Command="{Binding ConvertCommand}" IsEnabled="{Binding IsNotBusy}" Style="{StaticResource PrimaryButton}"/>
-                </VerticalStackLayout>
-            </Border>
+            <!-- Panel Principal de Conversión -->
+            <Border Style="{StaticResource MainCard}">
+                <VerticalStackLayout Spacing="20">
+                    
+                    <!-- Título con el tipo de conversión actual -->
+                    <Label Text="{Binding SelectedConversionType}" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="{StaticResource DarkTealColor}"
+                           HorizontalTextAlignment="Center"/>
 
-            <!-- Indicador de Carga -->
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
-                               HorizontalOptions="Center" VerticalOptions="Center" Color="{StaticResource PrimaryColor}"/>
+                    <!-- Selector de tipo de conversión -->
+                    <StackLayout>
+                        <Label Text="Tipo de Conversión:" 
+                               FontSize="14" 
+                               FontAttributes="Bold" 
+                               TextColor="{StaticResource TextColor}"/>
+                        <Picker ItemsSource="{Binding ConversionTypes}" 
+                               SelectedItem="{Binding SelectedConversionType}"
+                               BackgroundColor="{StaticResource PageBackgroundColor}"
+                               Margin="0,5,0,0"/>
+                    </StackLayout>
 
-            <!-- ########## CAMBIO: NUEVO PANEL DE RESULTADOS ########## -->
-            <!-- Este contenedor solo es visible si hay un resultado (no es nulo) -->
-            <VerticalStackLayout IsVisible="{Binding ConversionResult, Converter={StaticResource IsNotNullConverter}}">
-
-                <!-- Panel de Éxito: Se muestra solo si 'Exitoso' es true -->
-                <Border Padding="15" BackgroundColor="{StaticResource SuccessBackgroundColor}" Stroke="{StaticResource SuccessStrokeColor}"
-                        StrokeShape="RoundRectangle 10" IsVisible="{Binding ConversionResult.Exitoso}">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="Conversión Exitosa" FontAttributes="Bold" FontSize="18" TextColor="{StaticResource SuccessStrokeColor}"/>
-                        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="10" RowSpacing="5">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Valor Original:" FontAttributes="Bold"/>
-                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding ConversionResult.Resultado.ValorOriginal}"/>
-
-                            <Label Grid.Row="1" Grid.Column="0" Text="Valor Convertido:" FontAttributes="Bold"/>
-                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ConversionResult.Resultado.ValorConvertidoRedondeado}"/>
-
-                            <Label Grid.Row="2" Grid.Column="0" Text="Valor Exacto:" FontAttributes="Bold"/>
-                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding ConversionResult.Resultado.ValorConvertidoExacto}"/>
-
-                            <Label Grid.Row="3" Grid.Column="0" Text="Factor de Conversión:" FontAttributes="Bold"/>
-                            <Label Grid.Row="3" Grid.Column="1" Text="{Binding ConversionResult.Resultado.FactorConversion}"/>
+                    <!-- Selectores de unidades -->
+                    <StackLayout>
+                        <Label Text="Convertir de/a:" 
+                               FontSize="14" 
+                               FontAttributes="Bold" 
+                               TextColor="{StaticResource TextColor}"/>
+                        <Grid ColumnDefinitions="2*, Auto, 2*" ColumnSpacing="10" Margin="0,5,0,0">
+                            <Picker Grid.Column="0" 
+                                   ItemsSource="{Binding UnitsFrom}" 
+                                   SelectedItem="{Binding SelectedUnitFrom}"
+                                   BackgroundColor="{StaticResource PageBackgroundColor}"/>
+                            <Label Grid.Column="1" 
+                                   Text="→" 
+                                   FontSize="20" 
+                                   VerticalOptions="Center"
+                                   TextColor="{StaticResource TealColor}"
+                                   FontAttributes="Bold"/>
+                            <Picker Grid.Column="2" 
+                                   ItemsSource="{Binding UnitsTo}" 
+                                   SelectedItem="{Binding SelectedUnitTo}"
+                                   BackgroundColor="{StaticResource PageBackgroundColor}"/>
                         </Grid>
-                    </VerticalStackLayout>
-                </Border>
+                    </StackLayout>
 
-                <!-- Panel de Error: Se muestra solo si 'Exitoso' es false -->
-                <Border Padding="15" BackgroundColor="{StaticResource ErrorBackgroundColor}" Stroke="{StaticResource ErrorStrokeColor}"
-                        StrokeShape="RoundRectangle 10" IsVisible="{Binding ConversionResult.Exitoso, Converter={StaticResource InvertBoolConverter}}">
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="Error en la Conversión" FontAttributes="Bold" FontSize="18" TextColor="{StaticResource ErrorStrokeColor}"/>
-                        <Label Text="{Binding ConversionResult.Error.Mensaje}"/>
-                    </VerticalStackLayout>
-                </Border>
+                    <!-- Campo de valor -->
+                    <StackLayout>
+                        <Label Text="Valor:" 
+                               FontSize="14" 
+                               FontAttributes="Bold" 
+                               TextColor="{StaticResource TextColor}"/>
+                        <Entry Keyboard="Numeric" 
+                               Placeholder="Ej: 5.5" 
+                               Text="{Binding ValorEntrada}"
+                               BackgroundColor="{StaticResource PageBackgroundColor}"
+                               FontSize="16"
+                               Margin="0,5,0,0"/>
+                    </StackLayout>
 
-            </VerticalStackLayout>
-            <!-- ########## FIN DEL PANEL DE RESULTADOS ########## -->
+                    <!-- Botón de conversión -->
+                    <Button Text="CONVERTIR" 
+                           Command="{Binding ConvertCommand}" 
+                           IsEnabled="{Binding IsNotBusy}" 
+                           Style="{StaticResource PrimaryButton}"/>
+
+                    <!-- Indicador de carga -->
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                                     IsVisible="{Binding IsBusy}" 
+                                     Color="{StaticResource TealColor}"
+                                     HorizontalOptions="Center"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Panel de Resultados -->
+            <Border Style="{StaticResource MainCard}" 
+                    IsVisible="{Binding CurrentResult, Converter={StaticResource IsNotNullConverter}}">
+                <StackLayout>
+                    <!-- Resultado Exitoso -->
+                    <Border BackgroundColor="{StaticResource SuccessBackgroundColor}" 
+                            Stroke="{StaticResource SuccessColor}"
+                            StrokeShape="RoundRectangle 12" 
+                            StrokeThickness="2"
+                            Padding="20"
+                            IsVisible="{Binding CurrentResult.Exitoso}">
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="✅ Conversión Exitosa" 
+                                   FontAttributes="Bold" 
+                                   FontSize="18" 
+                                   TextColor="{StaticResource SuccessColor}"
+                                   HorizontalTextAlignment="Center"/>
+                            
+                            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto,Auto,Auto,Auto" 
+                                  ColumnSpacing="15" RowSpacing="8">
+                                
+                                <Label Grid.Row="0" Grid.Column="0" 
+                                       Text="Valor Original:" 
+                                       FontAttributes="Bold"
+                                       FontSize="14"/>
+                                <Label Grid.Row="0" Grid.Column="1" 
+                                       Text="{Binding CurrentResult.Resultado.ValorOriginal, StringFormat='{0:F2}'}"
+                                       FontSize="14"/>
+
+                                <Label Grid.Row="1" Grid.Column="0" 
+                                       Text="Valor Convertido:" 
+                                       FontAttributes="Bold"
+                                       FontSize="14"/>
+                                <Label Grid.Row="1" Grid.Column="1" 
+                                       Text="{Binding CurrentResult.Resultado.ValorConvertidoRedondeado, StringFormat='{0:F2}'}"
+                                       FontSize="14"
+                                       TextColor="{StaticResource TealColor}"
+                                       FontAttributes="Bold"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" 
+                                       Text="Valor Exacto:" 
+                                       FontAttributes="Bold"
+                                       FontSize="14"/>
+                                <Label Grid.Row="2" Grid.Column="1" 
+                                       Text="{Binding CurrentResult.Resultado.ValorConvertidoExacto, StringFormat='{0:F6}'}"
+                                       FontSize="12"/>
+
+                                <Label Grid.Row="3" Grid.Column="0" 
+                                       Text="Factor de Conversión:" 
+                                       FontAttributes="Bold"
+                                       FontSize="14"/>
+                                <Label Grid.Row="3" Grid.Column="1" 
+                                       Text="{Binding CurrentResult.Resultado.FactorConversion, StringFormat='{0:F6}'}"
+                                       FontSize="12"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Resultado con Error -->
+                    <Border BackgroundColor="{StaticResource ErrorBackgroundColor}" 
+                            Stroke="{StaticResource ErrorColor}"
+                            StrokeShape="RoundRectangle 12" 
+                            StrokeThickness="2"
+                            Padding="20"
+                            IsVisible="{Binding CurrentResult.Exitoso, Converter={StaticResource InvertBoolConverter}}">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="❌ Error en la Conversión" 
+                                   FontAttributes="Bold" 
+                                   FontSize="18" 
+                                   TextColor="{StaticResource ErrorColor}"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding CurrentResult.Error.Mensaje}"
+                                   FontSize="14"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </StackLayout>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>
