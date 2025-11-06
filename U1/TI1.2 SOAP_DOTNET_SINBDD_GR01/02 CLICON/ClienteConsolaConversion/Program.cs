@@ -96,7 +96,7 @@ namespace ClienteConsolaConversion
             {
                 Console.WriteLine($"⚠ Error al cargar configuración: {ex.Message}");
                 Console.WriteLine("  Usando valores por defecto...");
-                servidorURL = "http://localhost:56686/ec/edu/monster/ws";
+                servidorURL = "http://192.168.0.10:8082/ec/edu/monster/ws";
             }
         }
 
