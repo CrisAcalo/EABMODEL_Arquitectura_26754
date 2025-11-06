@@ -26,8 +26,8 @@ public class ConfigManager {
             
             if (input == null) {
                 System.out.println("No se encontró config.properties, usando valores por defecto");
-                config.setProperty("servidor.ip", "localhost");
-                config.setProperty("servidor.puerto", "8080");
+                config.setProperty("servidor.ip", "192.168.0.10");
+                config.setProperty("servidor.puerto", "8081");
                 config.setProperty("servidor.contexto", "ConUni_Restfull_Java_GR01");
             } else {
                 config.load(input);
@@ -44,7 +44,7 @@ public class ConfigManager {
             
         } catch (IOException ex) {
             System.out.println("Error al cargar configuración: " + ex.getMessage());
-            baseURL = "http://localhost:8080/ConUni_Restfull_Java_GR01/api";
+            baseURL = "http://192.168.0.10:8081/ConUni_Restfull_Java_GR01/api";
         }
     }
     

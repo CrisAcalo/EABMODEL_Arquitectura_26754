@@ -160,7 +160,7 @@ public class Main {
             
         } catch (IOException ex) {
             System.out.println("Error al cargar configuración: " + ex.getMessage());
-            servidorURL = "http://192.168.0.10:8080/ConUni_Restfull_Java_GR01/api";
+            servidorURL = "http://192.168.0.10:8081/ConUni_Restfull_Java_GR01/api";
             restClient = new RestClient(servidorURL);
         }
     }
