@@ -97,6 +97,9 @@
             <!-- Tarjeta de Masa -->
             <div class="service-card">
                 <h2>⚖️ Masa</h2>
+                <p style="font-size: 12px; color: #7f8c8d; margin-top: -10px; margin-bottom: 15px;">
+                    Unidades disponibles: Kilogramo, Quintal, Libra
+                </p>
                 <form action="MasaServlet" method="POST">
                     <div class="form-group">
                         <label for="tipoConversionMasa">Tipo de Conversión:</label>
@@ -104,14 +107,10 @@
                             <option value="">Seleccione...</option>
                             <option value="kilogramoLibra">Kilogramo → Libra</option>
                             <option value="libraKilogramo">Libra → Kilogramo</option>
-                            <option value="kilogramoOnza">Kilogramo → Onza</option>
-                            <option value="onzaKilogramo">Onza → Kilogramo</option>
-                            <option value="kilogramoTonelada">Kilogramo → Tonelada</option>
-                            <option value="toneladaKilogramo">Tonelada → Kilogramo</option>
-                            <option value="libraOnza">Libra → Onza</option>
-                            <option value="onzaLibra">Onza → Libra</option>
-                            <option value="libraTonelada">Libra → Tonelada</option>
-                            <option value="toneladaLibra">Tonelada → Libra</option>
+                            <option value="kilogramoQuintal">Kilogramo → Quintal</option>
+                            <option value="quintalKilogramo">Quintal → Kilogramo</option>
+                            <option value="libraQuintal">Libra → Quintal</option>
+                            <option value="quintalLibra">Quintal → Libra</option>
                         </select>
                     </div>
                     

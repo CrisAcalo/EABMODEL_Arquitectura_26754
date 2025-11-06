@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Servlet para conversiones de masa via REST
+ * Unidades soportadas: Kilogramo, Quintal, Libra
  * @author YourName
  */
 @WebServlet(name = "MasaServlet", urlPatterns = {"/MasaServlet"})
@@ -47,38 +48,34 @@ public class MasaServlet extends HttpServlet {
                     unidadOrigen = "Libra";
                     unidadDestino = "Kilogramo";
                     break;
-                case "kilogramoOnza":
+                case "kilogramoQuintal":
                     unidadOrigen = "Kilogramo";
-                    unidadDestino = "Onza";
+                    unidadDestino = "Quintal";
                     break;
-                case "onzaKilogramo":
-                    unidadOrigen = "Onza";
+                case "quintalKilogramo":
+                    unidadOrigen = "Quintal";
                     unidadDestino = "Kilogramo";
                     break;
-                case "kilogramoTonelada":
-                    unidadOrigen = "Kilogramo";
-                    unidadDestino = "Tonelada";
-                    break;
-                case "toneladaKilogramo":
-                    unidadOrigen = "Tonelada";
-                    unidadDestino = "Kilogramo";
-                    break;
-                case "libraOnza":
+                case "libraQuintal":
                     unidadOrigen = "Libra";
-                    unidadDestino = "Onza";
+                    unidadDestino = "Quintal";
                     break;
-                case "onzaLibra":
-                    unidadOrigen = "Onza";
+                case "quintalLibra":
+                    unidadOrigen = "Quintal";
                     unidadDestino = "Libra";
                     break;
-                case "libraTonelada":
-                    unidadOrigen = "Libra";
-                    unidadDestino = "Tonelada";
-                    break;
-                case "toneladaLibra":
-                    unidadOrigen = "Tonelada";
-                    unidadDestino = "Libra";
-                    break;
+                default:
+                    String htmlError = "<div class='result-item'>"
+                            + "<span class='result-label'>Error:</span>"
+                            + "<span class='result-value'>Tipo de conversión no válido: " + tipoConversion + "</span>"
+                            + "</div>"
+                            + "<div class='result-item'>"
+                            + "<span class='result-label'>Unidades disponibles:</span>"
+                            + "<span class='result-value'>Kilogramo, Quintal, Libra</span>"
+                            + "</div>";
+                    request.setAttribute("errorMasa", htmlError);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    return;
             }
             
             // Crear JSON para el request
