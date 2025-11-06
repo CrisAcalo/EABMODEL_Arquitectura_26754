@@ -88,6 +88,7 @@ body {
         display: flex;
         align-items: center;
         gap: 10px;
+        justify-content: center;
     }
 
     .service-card .icon {
@@ -259,6 +260,18 @@ body {
     font-size: 0.9em;
     margin-top: 5px;
     display: block;
+}
+
+/* ================================================
+   CÓDIGO (para mostrar credenciales)
+   ================================================ */
+code {
+    background-color: rgba(3, 53, 64, 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: var(--color-primary);
 }
 
 /* ================================================
