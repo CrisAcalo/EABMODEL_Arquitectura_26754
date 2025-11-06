@@ -16,8 +16,8 @@ import jakarta.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
-    private static final String USUARIO_VALIDO = "Monster";
-    private static final String CONTRASENA_VALIDA = "Monster9";
+    private static final String USUARIO_VALIDO = "MONSTER";
+    private static final String CONTRASENA_VALIDA = "MONSTER9";
     private static final int MAX_INTENTOS = 3;
 
     @Override
