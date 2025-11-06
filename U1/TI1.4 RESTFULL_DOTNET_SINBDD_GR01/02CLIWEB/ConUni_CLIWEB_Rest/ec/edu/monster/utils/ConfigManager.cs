@@ -16,7 +16,7 @@ namespace ConUni_CLIWEB_Rest.ec.edu.monster.utils
             string baseUrl = ConfigurationManager.AppSettings["RestAPI_BaseURL"];
             if (string.IsNullOrEmpty(baseUrl))
             {
-                return "http://localhost:5150/api"; // Valor por defecto
+                return "http://192.168.0.10:8083/api"; // Valor por defecto
             }
             return baseUrl;
         }
