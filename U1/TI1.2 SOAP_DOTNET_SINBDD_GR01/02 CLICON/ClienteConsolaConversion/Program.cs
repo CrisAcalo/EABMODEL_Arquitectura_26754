@@ -83,8 +83,8 @@ namespace ClienteConsolaConversion
         {
             try
             {
-                servidorIP = ConfigurationManager.AppSettings["servidor.ip"] ?? "localhost";
-                servidorPuerto = ConfigurationManager.AppSettings["servidor.puerto"] ?? "56686";
+                servidorIP = ConfigurationManager.AppSettings["servidor.ip"] ?? "192.168.0.10";
+                servidorPuerto = ConfigurationManager.AppSettings["servidor.puerto"] ?? "8082";
                 servidorRuta = ConfigurationManager.AppSettings["servidor.ruta"] ?? "ec/edu/monster/ws";
 
                 servidorURL = $"http://{servidorIP}:{servidorPuerto}/{servidorRuta}";
