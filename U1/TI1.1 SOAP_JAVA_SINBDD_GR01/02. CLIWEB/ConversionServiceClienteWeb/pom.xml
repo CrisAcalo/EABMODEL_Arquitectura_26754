@@ -108,7 +108,7 @@
                         </goals>
                         <configuration>
                             <wsdlUrls>
-                                <wsdlUrl>http://localhost:8080/ConUni_Soap_Java_GR01/LongitudService?wsdl</wsdlUrl>
+                                <wsdlUrl>http://192.168.0.10:8080/ConUni_Soap_Java_GR01/LongitudService?wsdl</wsdlUrl>
                             </wsdlUrls>
                             <packageName>ec.edu.monster.longitud</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
@@ -124,7 +124,7 @@
                         </goals>
                         <configuration>
                             <wsdlUrls>
-                                <wsdlUrl>http://localhost:8080/ConUni_Soap_Java_GR01/MasaService?wsdl</wsdlUrl>
+                                <wsdlUrl>http://192.168.0.10:8080/ConUni_Soap_Java_GR01/MasaService?wsdl</wsdlUrl>
                             </wsdlUrls>
                             <packageName>ec.edu.monster.masa</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
@@ -140,7 +140,7 @@
                         </goals>
                         <configuration>
                             <wsdlUrls>
-                                <wsdlUrl>http://localhost:8080/ConUni_Soap_Java_GR01/TemperaturaService?wsdl</wsdlUrl>
+                                <wsdlUrl>http://192.168.0.10:8080/ConUni_Soap_Java_GR01/TemperaturaService?wsdl</wsdlUrl>
                             </wsdlUrls>
                             <packageName>ec.edu.monster.temperatura</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>

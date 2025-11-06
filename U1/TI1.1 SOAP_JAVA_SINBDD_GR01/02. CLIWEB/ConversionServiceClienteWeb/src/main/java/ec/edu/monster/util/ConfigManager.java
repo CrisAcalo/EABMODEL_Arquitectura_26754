@@ -31,7 +31,7 @@ public class ConfigManager {
             
             if (input == null) {
                 System.out.println("No se encontró config.properties, usando valores por defecto");
-                config.setProperty("servidor.ip", "localhost");
+                config.setProperty("servidor.ip", "192.168.0.10");
                 config.setProperty("servidor.puerto", "8080");
                 config.setProperty("servidor.contexto", "ConUni_Soap_Java_GR01");
                 config.setProperty("servicio.longitud", "LongitudService");
