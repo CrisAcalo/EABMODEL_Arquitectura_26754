@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/TemperaturaService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" />
+  <xs:element name="CelsiusAFahrenheit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="celsius" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CelsiusAFahrenheitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="CelsiusAFahrenheitResult" nillable="true" type="q1:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FahrenheitACelsius">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fahrenheit" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FahrenheitACelsiusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="FahrenheitACelsiusResult" nillable="true" type="q2:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FahrenheitAKelvin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fahrenheit" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FahrenheitAKelvinResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="FahrenheitAKelvinResult" nillable="true" type="q3:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KelvinAFahrenheit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kelvin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KelvinAFahrenheitResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="KelvinAFahrenheitResult" nillable="true" type="q4:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KelvinACelsius">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kelvin" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KelvinACelsiusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="KelvinACelsiusResult" nillable="true" type="q5:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CelsiusAKelvin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="celsius" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CelsiusAKelvinResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="CelsiusAKelvinResult" nillable="true" type="q6:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

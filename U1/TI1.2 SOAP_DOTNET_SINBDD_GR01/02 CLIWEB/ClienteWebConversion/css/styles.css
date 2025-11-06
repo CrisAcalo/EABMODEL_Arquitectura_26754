@@ -1,0 +1,325 @@
+﻿/* ================================================
+   PALETA DE COLORES
+   ================================================ */
+:root {
+    --color-primary: #033540; /* Azul oscuro */
+    --color-secondary: #015466; /* Azul medio */
+    --color-accent: #63898c; /* Gris azulado */
+    --color-light: #a7d1d3; /* Azul claro */
+    --color-bg: #e0f4f5; /* Azul muy claro */
+    --color-white: #ffffff;
+    --color-success: #4caf50;
+    --color-error: #f44336;
+}
+
+/* ================================================
+   ESTILOS GENERALES
+   ================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-white) 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ================================================
+   HEADER
+   ================================================ */
+.header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: var(--color-white);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(3, 53, 64, 0.3);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+    .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header p {
+        font-size: 1.1em;
+        opacity: 0.9;
+    }
+
+/* ================================================
+   LOGIN
+   ================================================ */
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .login-header h1 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .login-header p {
+        color: #7f8c8d;
+    }
+
+.login-form {
+    margin-top: 20px;
+}
+
+.error-message {
+    background-color: #fee;
+    border-left: 4px solid #e74c3c;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    color: #c0392b;
+}
+
+.login-icon {
+    font-size: 60px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.attempts-info {
+    text-align: center;
+    color: #e74c3c;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* ================================================
+   TARJETAS DE SERVICIOS
+   ================================================ */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.service-card {
+    background: var(--color-white);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(3, 53, 64, 0.1);
+    transition: all 0.3s ease;
+    border-top: 5px solid var(--color-secondary);
+}
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(3, 53, 64, 0.2);
+    }
+
+    .service-card h2 {
+        color: var(--color-primary);
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .service-card .icon {
+        font-size: 1.5em;
+    }
+
+/* ================================================
+   FORMULARIOS
+   ================================================ */
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: block;
+        color: var(--color-primary);
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 1em;
+    }
+
+    .form-group select,
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="password"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid var(--color-light);
+        border-radius: 8px;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        background-color: var(--color-bg);
+    }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-secondary);
+            background-color: var(--color-white);
+        }
+
+/* ================================================
+   BOTONES
+   ================================================ */
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    color: var(--color-white);
+}
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(1, 84, 102, 0.4);
+    }
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+
+.btn-block {
+    width: 100%;
+}
+
+/* ================================================
+   RESULTADOS
+   ================================================ */
+.result-container {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-success {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-left: 5px solid var(--color-success);
+}
+
+.result-error {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    border-left: 5px solid var(--color-error);
+}
+
+.result-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.result-success .result-title {
+    color: #2e7d32;
+}
+
+.result-error .result-title {
+    color: #c62828;
+}
+
+.result-data {
+    display: grid;
+    gap: 10px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+}
+
+.result-label {
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.result-value {
+    color: var(--color-secondary);
+    font-weight: 500;
+}
+
+/* ================================================
+   FOOTER
+   ================================================ */
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--color-accent);
+    margin-top: 40px;
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 2em;
+    }
+
+    .service-card {
+        padding: 20px;
+    }
+}

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="MasaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMasaService_KilogramoAQuintal_InputMessage">
+    <wsdl:part name="parameters" element="tns:KilogramoAQuintal" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_KilogramoAQuintal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KilogramoAQuintalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_QuintalAKilogramo_InputMessage">
+    <wsdl:part name="parameters" element="tns:QuintalAKilogramo" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_QuintalAKilogramo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QuintalAKilogramoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_KilogramoALibra_InputMessage">
+    <wsdl:part name="parameters" element="tns:KilogramoALibra" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_KilogramoALibra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KilogramoALibraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_LibraAKilogramo_InputMessage">
+    <wsdl:part name="parameters" element="tns:LibraAKilogramo" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_LibraAKilogramo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LibraAKilogramoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_QuintalALibra_InputMessage">
+    <wsdl:part name="parameters" element="tns:QuintalALibra" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_QuintalALibra_OutputMessage">
+    <wsdl:part name="parameters" element="tns:QuintalALibraResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_LibraAQuintal_InputMessage">
+    <wsdl:part name="parameters" element="tns:LibraAQuintal" />
+  </wsdl:message>
+  <wsdl:message name="IMasaService_LibraAQuintal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LibraAQuintalResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IMasaService">
+    <wsdl:operation name="KilogramoAQuintal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/KilogramoAQuintal" message="tns:IMasaService_KilogramoAQuintal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/KilogramoAQuintalResponse" message="tns:IMasaService_KilogramoAQuintal_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QuintalAKilogramo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/QuintalAKilogramo" message="tns:IMasaService_QuintalAKilogramo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/QuintalAKilogramoResponse" message="tns:IMasaService_QuintalAKilogramo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="KilogramoALibra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/KilogramoALibra" message="tns:IMasaService_KilogramoALibra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/KilogramoALibraResponse" message="tns:IMasaService_KilogramoALibra_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LibraAKilogramo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/LibraAKilogramo" message="tns:IMasaService_LibraAKilogramo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/LibraAKilogramoResponse" message="tns:IMasaService_LibraAKilogramo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="QuintalALibra">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/QuintalALibra" message="tns:IMasaService_QuintalALibra_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/QuintalALibraResponse" message="tns:IMasaService_QuintalALibra_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LibraAQuintal">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMasaService/LibraAQuintal" message="tns:IMasaService_LibraAQuintal_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMasaService/LibraAQuintalResponse" message="tns:IMasaService_LibraAQuintal_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IMasaService" type="tns:IMasaService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="KilogramoAQuintal">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/KilogramoAQuintal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuintalAKilogramo">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/QuintalAKilogramo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KilogramoALibra">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/KilogramoALibra" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LibraAKilogramo">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/LibraAKilogramo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuintalALibra">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/QuintalALibra" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LibraAQuintal">
+      <soap:operation soapAction="http://tempuri.org/IMasaService/LibraAQuintal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MasaService">
+    <wsdl:port name="BasicHttpBinding_IMasaService" binding="tns:BasicHttpBinding_IMasaService">
+      <soap:address location="http://localhost:56686/ec/edu/monster/ws/MasaService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

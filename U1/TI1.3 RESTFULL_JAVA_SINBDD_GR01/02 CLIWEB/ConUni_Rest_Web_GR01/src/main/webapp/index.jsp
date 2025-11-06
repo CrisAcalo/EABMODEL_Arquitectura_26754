@@ -1,0 +1,205 @@
+<%-- 
+    Document   : index
+    Created on : Nov 2025
+    Author     : YourName
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    // Verificar si el usuario está autenticado
+    String usuarioAutenticado = (String) session.getAttribute("usuarioAutenticado");
+    if (usuarioAutenticado == null) {
+        // No hay sesión activa, redirigir al login
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente Web REST - Servicios de Conversión</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header con información de usuario y logout -->
+        <div class="header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1>Servicios de Conversión de Unidades</h1>
+                    <p>Cliente Web REST para conversiones de unidades</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="margin: 0; color: #27ae60;">
+                        👤 Bienvenido, <strong><%= usuarioAutenticado %></strong>
+                    </p>
+                    <a href="logout.jsp" class="btn btn-danger" 
+                       style="font-size: 14px; padding: 8px 16px; margin-top: 10px; display: inline-block;">
+                        🚪 Cerrar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid de Servicios -->
+        <div class="services-grid">
+            
+            <!-- Tarjeta de Longitud -->
+            <div class="service-card">
+                <h2>📏 Longitud</h2>
+                <form action="LongitudServlet" method="POST">
+                    <div class="form-group">
+                        <label for="tipoConversionLongitud">Tipo de Conversión:</label>
+                        <select id="tipoConversionLongitud" name="tipoConversion" required>
+                            <option value="">Seleccione...</option>
+                            <option value="millaMetro">Milla → Metro</option>
+                            <option value="metroMilla">Metro → Milla</option>
+                            <option value="millaPulgada">Milla → Pulgada</option>
+                            <option value="pulgadaMilla">Pulgada → Milla</option>
+                            <option value="metroPulgada">Metro → Pulgada</option>
+                            <option value="pulgadaMetro">Pulgada → Metro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="valorLongitud">Valor:</label>
+                        <input type="text" id="valorLongitud" name="valor" 
+                               placeholder="Ej: 5.5" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Convertir
+                    </button>
+                </form>
+                
+                <!-- Resultado -->
+                <% if(request.getAttribute("resultadoLongitud") != null) { %>
+                    <div class="result-container result-success">
+                        <div class="result-title">✅ Conversión Exitosa</div>
+                        <div class="result-data">
+                            ${resultadoLongitud}
+                        </div>
+                    </div>
+                <% } %>
+                
+                <% if(request.getAttribute("errorLongitud") != null) { %>
+                    <div class="result-container result-error">
+                        <div class="result-title">❌ Error en la Conversión</div>
+                        <div class="result-data">
+                            ${errorLongitud}
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Tarjeta de Masa -->
+            <div class="service-card">
+                <h2>⚖️ Masa</h2>
+                <form action="MasaServlet" method="POST">
+                    <div class="form-group">
+                        <label for="tipoConversionMasa">Tipo de Conversión:</label>
+                        <select id="tipoConversionMasa" name="tipoConversion" required>
+                            <option value="">Seleccione...</option>
+                            <option value="kilogramoLibra">Kilogramo → Libra</option>
+                            <option value="libraKilogramo">Libra → Kilogramo</option>
+                            <option value="kilogramoOnza">Kilogramo → Onza</option>
+                            <option value="onzaKilogramo">Onza → Kilogramo</option>
+                            <option value="kilogramoTonelada">Kilogramo → Tonelada</option>
+                            <option value="toneladaKilogramo">Tonelada → Kilogramo</option>
+                            <option value="libraOnza">Libra → Onza</option>
+                            <option value="onzaLibra">Onza → Libra</option>
+                            <option value="libraTonelada">Libra → Tonelada</option>
+                            <option value="toneladaLibra">Tonelada → Libra</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="valorMasa">Valor:</label>
+                        <input type="text" id="valorMasa" name="valor" 
+                               placeholder="Ej: 75.5" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Convertir
+                    </button>
+                </form>
+                
+                <!-- Resultado -->
+                <% if(request.getAttribute("resultadoMasa") != null) { %>
+                    <div class="result-container result-success">
+                        <div class="result-title">✅ Conversión Exitosa</div>
+                        <div class="result-data">
+                            ${resultadoMasa}
+                        </div>
+                    </div>
+                <% } %>
+                
+                <% if(request.getAttribute("errorMasa") != null) { %>
+                    <div class="result-container result-error">
+                        <div class="result-title">❌ Error en la Conversión</div>
+                        <div class="result-data">
+                            ${errorMasa}
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Tarjeta de Temperatura -->
+            <div class="service-card">
+                <h2>🌡️ Temperatura</h2>
+                <form action="TemperaturaServlet" method="POST">
+                    <div class="form-group">
+                        <label for="tipoConversionTemp">Tipo de Conversión:</label>
+                        <select id="tipoConversionTemp" name="tipoConversion" required>
+                            <option value="">Seleccione...</option>
+                            <option value="celsiusFahrenheit">Celsius → Fahrenheit</option>
+                            <option value="celsiusKelvin">Celsius → Kelvin</option>
+                            <option value="fahrenheitCelsius">Fahrenheit → Celsius</option>
+                            <option value="fahrenheitKelvin">Fahrenheit → Kelvin</option>
+                            <option value="kelvinCelsius">Kelvin → Celsius</option>
+                            <option value="kelvinFahrenheit">Kelvin → Fahrenheit</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="valorTemp">Valor:</label>
+                        <input type="text" id="valorTemp" name="valor" 
+                               placeholder="Ej: 25" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Convertir
+                    </button>
+                </form>
+                
+                <!-- Resultado -->
+                <% if(request.getAttribute("resultadoTemperatura") != null) { %>
+                    <div class="result-container result-success">
+                        <div class="result-title">✅ Conversión Exitosa</div>
+                        <div class="result-data">
+                            ${resultadoTemperatura}
+                        </div>
+                    </div>
+                <% } %>
+                
+                <% if(request.getAttribute("errorTemperatura") != null) { %>
+                    <div class="result-container result-error">
+                        <div class="result-title">❌ Error en la Conversión</div>
+                        <div class="result-data">
+                            ${errorTemperatura}
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 - Sistema de Conversión de Unidades REST | Cliente Web</p>
+        </div>
+    </div>
+</body>
+</html>
