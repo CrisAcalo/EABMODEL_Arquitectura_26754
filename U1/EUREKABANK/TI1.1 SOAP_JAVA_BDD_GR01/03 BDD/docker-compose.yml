@@ -1,0 +1,23 @@
+services:
+  mysql-monster:
+    image: mysql:8.0
+    container_name: mysql-monster
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: eurekabank
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./Crea_BD.sql:/docker-entrypoint-initdb.d/01-Crea_BD.sql
+      - ./Carga_Datos.sql:/docker-entrypoint-initdb.d/02-Carga_Datos.sql
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootroot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
+    driver: local
