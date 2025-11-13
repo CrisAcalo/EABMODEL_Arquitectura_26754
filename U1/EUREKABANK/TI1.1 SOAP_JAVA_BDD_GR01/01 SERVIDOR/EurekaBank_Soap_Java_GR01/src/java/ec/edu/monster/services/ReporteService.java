@@ -1,12 +1,9 @@
 package ec.edu.monster.services;
 
-import ec.edu.monster.constants.MensajesConstants;
 import ec.edu.monster.dal.CuentaDAO;
 import ec.edu.monster.dal.MovimientoDAO;
 import ec.edu.monster.models.Cuenta;
-import ec.edu.monster.models.dto.EstadoCuentaDTO;
 import ec.edu.monster.models.dto.MovimientoDetalleDTO;
-import ec.edu.monster.models.dto.RespuestaDTO;
 import ec.edu.monster.validators.CuentaValidator;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.logging.Logger;
 
 /**
  * Servicio de lógica de negocio para reportes y consultas
+ * Nota: Esta versión replica exactamente el comportamiento de .NET
  */
 public class ReporteService {
 
@@ -29,86 +27,47 @@ public class ReporteService {
 
     /**
      * Obtiene todos los movimientos de una cuenta
+     * Retorna List directamente (igual que .NET)
      */
-    public RespuestaDTO obtenerMovimientos(String codigoCuenta) {
-        try {
-            // Validar que la cuenta existe
-            Cuenta cuenta = cuentaDAO.obtenerPorCodigo(codigoCuenta);
-            CuentaValidator.validarExistencia(cuenta);
+    public List<MovimientoDetalleDTO> obtenerMovimientos(String codigoCuenta) throws Exception {
+        // Validar que la cuenta existe
+        Cuenta cuenta = cuentaDAO.obtenerPorCodigo(codigoCuenta);
+        CuentaValidator.validarExistencia(cuenta);
 
-            // Obtener movimientos
-            List<MovimientoDetalleDTO> movimientos = movimientoDAO.listarPorCuentaDescendente(codigoCuenta);
+        // Obtener movimientos
+        List<MovimientoDetalleDTO> movimientos = movimientoDAO.listarPorCuentaDescendente(codigoCuenta);
 
-            LOGGER.info("Consultados " + movimientos.size() + " movimientos de cuenta: " + codigoCuenta);
-            return RespuestaDTO.exito("Movimientos obtenidos correctamente", movimientos);
-
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error al obtener movimientos", e);
-            return RespuestaDTO.error(e.getMessage());
-        }
+        LOGGER.info("Consultados " + movimientos.size() + " movimientos de cuenta: " + codigoCuenta);
+        return movimientos;
     }
 
     /**
      * Obtiene los movimientos de una cuenta en un rango de fechas
+     * Retorna List directamente (igual que .NET)
      */
-    public RespuestaDTO obtenerMovimientosPorRango(String codigoCuenta,
-                                                    LocalDate fechaInicio,
-                                                    LocalDate fechaFin) {
-        try {
-            // Validar que la cuenta existe
-            Cuenta cuenta = cuentaDAO.obtenerPorCodigo(codigoCuenta);
-            CuentaValidator.validarExistencia(cuenta);
+    public List<MovimientoDetalleDTO> obtenerMovimientosPorRango(String codigoCuenta,
+                                                                   LocalDate fechaInicio,
+                                                                   LocalDate fechaFin) throws Exception {
+        // Validar que la cuenta existe
+        Cuenta cuenta = cuentaDAO.obtenerPorCodigo(codigoCuenta);
+        CuentaValidator.validarExistencia(cuenta);
 
-            // Validar fechas
-            if (fechaInicio == null || fechaFin == null) {
-                return RespuestaDTO.error("Las fechas de inicio y fin son obligatorias");
-            }
-
-            if (fechaInicio.isAfter(fechaFin)) {
-                return RespuestaDTO.error("La fecha de inicio no puede ser posterior a la fecha fin");
-            }
-
-            // Obtener movimientos en el rango
-            List<MovimientoDetalleDTO> movimientos = movimientoDAO.listarPorCuenta(
-                    codigoCuenta, fechaInicio, fechaFin);
-
-            LOGGER.info("Consultados " + movimientos.size() + " movimientos de cuenta: "
-                    + codigoCuenta + " entre " + fechaInicio + " y " + fechaFin);
-
-            return RespuestaDTO.exito("Movimientos obtenidos correctamente", movimientos);
-
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error al obtener movimientos por rango", e);
-            return RespuestaDTO.error(e.getMessage());
+        // Validar fechas
+        if (fechaInicio == null || fechaFin == null) {
+            throw new IllegalArgumentException("Las fechas de inicio y fin son obligatorias");
         }
-    }
 
-    /**
-     * Obtiene el estado de cuenta (información de la cuenta con sus movimientos recientes)
-     */
-    public RespuestaDTO obtenerEstadoCuenta(String codigoCuenta) {
-        try {
-            // Obtener cuenta
-            Cuenta cuenta = cuentaDAO.obtenerPorCodigo(codigoCuenta);
-            CuentaValidator.validarExistencia(cuenta);
-
-            // Obtener últimos 10 movimientos
-            List<MovimientoDetalleDTO> movimientos = movimientoDAO.listarPorCuentaDescendente(codigoCuenta);
-
-            // Limitar a 10 movimientos más recientes
-            if (movimientos.size() > 10) {
-                movimientos = movimientos.subList(0, 10);
-            }
-
-            // Crear DTO con la cuenta y sus movimientos
-            EstadoCuentaDTO estadoCuenta = new EstadoCuentaDTO(cuenta, movimientos);
-
-            LOGGER.info("Estado de cuenta obtenido para: " + codigoCuenta);
-            return RespuestaDTO.exito("Estado de cuenta obtenido correctamente", estadoCuenta);
-
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error al obtener estado de cuenta", e);
-            return RespuestaDTO.error(e.getMessage());
+        if (fechaInicio.isAfter(fechaFin)) {
+            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha fin");
         }
+
+        // Obtener movimientos en el rango
+        List<MovimientoDetalleDTO> movimientos = movimientoDAO.listarPorCuenta(
+                codigoCuenta, fechaInicio, fechaFin);
+
+        LOGGER.info("Consultados " + movimientos.size() + " movimientos de cuenta: "
+                + codigoCuenta + " entre " + fechaInicio + " y " + fechaFin);
+
+        return movimientos;
     }
 }

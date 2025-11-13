@@ -7,22 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO para operaciones con la tabla Empleado y Usuario
+ * DAO para operaciones con la tabla Empleado
+ * Nota: En esta versión, usuario y clave están directamente en la tabla Empleado (sin SHA)
  */
 public class EmpleadoDAO {
 
     /**
      * Valida las credenciales de un empleado (usuario y clave)
-     * Nota: La BD usa SHA() para encriptar la clave
+     * Nota: En esta versión las claves están en texto plano (igual que SQL Server)
      */
     public Empleado validarCredenciales(String usuario, String clave) throws SQLException {
-        String sql = "SELECT e.chr_emplcodigo, e.vch_emplpaterno, e.vch_emplmaterno, "
-                + "e.vch_emplnombre, e.vch_emplciudad, e.vch_empldireccion, "
-                + "u.vch_emplusuario, u.vch_emplestado "
-                + "FROM empleado e "
-                + "INNER JOIN usuario u ON e.chr_emplcodigo = u.chr_emplcodigo "
-                + "WHERE u.vch_emplusuario = ? AND u.vch_emplclave = SHA(?) "
-                + "AND u.vch_emplestado = 'ACTIVO'";
+        String sql = "SELECT chr_emplcodigo, vch_emplpaterno, vch_emplmaterno, "
+                + "vch_emplnombre, vch_emplciudad, vch_empldireccion, "
+                + "vch_emplusuario, vch_emplclave "
+                + "FROM empleado "
+                + "WHERE vch_emplusuario = ? AND vch_emplclave = ?";
 
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -40,6 +39,7 @@ public class EmpleadoDAO {
                 empleado.setCiudad(rs.getString("vch_emplciudad"));
                 empleado.setDireccion(rs.getString("vch_empldireccion"));
                 empleado.setUsuario(rs.getString("vch_emplusuario"));
+                // No devolvemos la clave por seguridad
                 return empleado;
             }
             return null;
@@ -51,7 +51,8 @@ public class EmpleadoDAO {
      */
     public Empleado obtenerPorCodigo(String codigo) throws SQLException {
         String sql = "SELECT chr_emplcodigo, vch_emplpaterno, vch_emplmaterno, "
-                + "vch_emplnombre, vch_emplciudad, vch_empldireccion "
+                + "vch_emplnombre, vch_emplciudad, vch_empldireccion, "
+                + "vch_emplusuario "
                 + "FROM empleado WHERE chr_emplcodigo = ?";
 
         try (Connection conn = ConexionDB.getConnection();
@@ -61,7 +62,9 @@ public class EmpleadoDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return mapearEmpleado(rs);
+                Empleado empleado = mapearEmpleado(rs);
+                empleado.setUsuario(rs.getString("vch_emplusuario"));
+                return empleado;
             }
             return null;
         }
@@ -71,12 +74,11 @@ public class EmpleadoDAO {
      * Obtiene un empleado por su usuario
      */
     public Empleado obtenerPorUsuario(String usuario) throws SQLException {
-        String sql = "SELECT e.chr_emplcodigo, e.vch_emplpaterno, e.vch_emplmaterno, "
-                + "e.vch_emplnombre, e.vch_emplciudad, e.vch_empldireccion, "
-                + "u.vch_emplusuario "
-                + "FROM empleado e "
-                + "INNER JOIN usuario u ON e.chr_emplcodigo = u.chr_emplcodigo "
-                + "WHERE u.vch_emplusuario = ?";
+        String sql = "SELECT chr_emplcodigo, vch_emplpaterno, vch_emplmaterno, "
+                + "vch_emplnombre, vch_emplciudad, vch_empldireccion, "
+                + "vch_emplusuario "
+                + "FROM empleado "
+                + "WHERE vch_emplusuario = ?";
 
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -94,53 +96,26 @@ public class EmpleadoDAO {
     }
 
     /**
-     * Registra un nuevo empleado con su usuario
+     * Registra un nuevo empleado con usuario y clave
      */
     public void registrar(Empleado empleado) throws SQLException {
-        Connection conn = null;
-        try {
-            conn = ConexionDB.getConnection();
-            conn.setAutoCommit(false);
+        String sql = "INSERT INTO empleado (chr_emplcodigo, vch_emplpaterno, "
+                + "vch_emplmaterno, vch_emplnombre, vch_emplciudad, vch_empldireccion, "
+                + "vch_emplusuario, vch_emplclave) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-            // Insertar empleado
-            String sqlEmpleado = "INSERT INTO empleado (chr_emplcodigo, vch_emplpaterno, "
-                    + "vch_emplmaterno, vch_emplnombre, vch_emplciudad, vch_empldireccion) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = ConexionDB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            try (PreparedStatement ps = conn.prepareStatement(sqlEmpleado)) {
-                ps.setString(1, empleado.getCodigo());
-                ps.setString(2, empleado.getPaterno());
-                ps.setString(3, empleado.getMaterno());
-                ps.setString(4, empleado.getNombre());
-                ps.setString(5, empleado.getCiudad());
-                ps.setString(6, empleado.getDireccion());
-                ps.executeUpdate();
-            }
-
-            // Insertar usuario (si tiene usuario y clave)
-            if (empleado.getUsuario() != null && empleado.getClave() != null) {
-                String sqlUsuario = "INSERT INTO usuario (chr_emplcodigo, vch_emplusuario, "
-                        + "vch_emplclave, vch_emplestado) VALUES (?, ?, SHA(?), 'ACTIVO')";
-
-                try (PreparedStatement ps = conn.prepareStatement(sqlUsuario)) {
-                    ps.setString(1, empleado.getCodigo());
-                    ps.setString(2, empleado.getUsuario());
-                    ps.setString(3, empleado.getClave());
-                    ps.executeUpdate();
-                }
-            }
-
-            conn.commit();
-        } catch (SQLException e) {
-            if (conn != null) {
-                conn.rollback();
-            }
-            throw e;
-        } finally {
-            if (conn != null) {
-                conn.setAutoCommit(true);
-                conn.close();
-            }
+            ps.setString(1, empleado.getCodigo());
+            ps.setString(2, empleado.getPaterno());
+            ps.setString(3, empleado.getMaterno());
+            ps.setString(4, empleado.getNombre());
+            ps.setString(5, empleado.getCiudad());
+            ps.setString(6, empleado.getDireccion());
+            ps.setString(7, empleado.getUsuario());
+            ps.setString(8, empleado.getClave());
+            ps.executeUpdate();
         }
     }
 
@@ -148,7 +123,7 @@ public class EmpleadoDAO {
      * Actualiza la clave de un empleado
      */
     public void actualizarClave(String codigoEmpleado, String claveNueva) throws SQLException {
-        String sql = "UPDATE usuario SET vch_emplclave = SHA(?) WHERE chr_emplcodigo = ?";
+        String sql = "UPDATE empleado SET vch_emplclave = ? WHERE chr_emplcodigo = ?";
 
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -164,7 +139,8 @@ public class EmpleadoDAO {
      */
     public List<Empleado> obtenerTodos() throws SQLException {
         String sql = "SELECT chr_emplcodigo, vch_emplpaterno, vch_emplmaterno, "
-                + "vch_emplnombre, vch_emplciudad, vch_empldireccion FROM empleado";
+                + "vch_emplnombre, vch_emplciudad, vch_empldireccion, "
+                + "vch_emplusuario FROM empleado";
 
         List<Empleado> empleados = new ArrayList<>();
 
@@ -173,7 +149,9 @@ public class EmpleadoDAO {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                empleados.add(mapearEmpleado(rs));
+                Empleado empleado = mapearEmpleado(rs);
+                empleado.setUsuario(rs.getString("vch_emplusuario"));
+                empleados.add(empleado);
             }
         }
 
