@@ -15,8 +15,8 @@
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="eurekabank"/>
-        <property name="user" value="eureka"/>
-        <property name="password" value="admin"/>
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
         <property name="useSSL" value="false"/>
         <property name="allowPublicKeyRetrieval" value="true"/>
         <property name="serverTimezone" value="UTC"/>

@@ -1,0 +1,99 @@
+﻿@page "/"
+
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+@inject SessionService SessionManager
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-4">Iniciar Sesión</h3>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Usuario</label>
+                        <input id="username" class="form-control" @bind="Username" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input id="password" type="password" class="form-control" @bind="Password" />
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(ErrorMessage))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @ErrorMessage
+                        </div>
+                    }
+
+                    <div class="d-grid">
+                        <button class="btn btn-primary" @onclick="LoginAsync" disabled="@IsBusy">
+                            @if (IsBusy)
+                            {
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span> Cargando...</span>
+                            }
+                            else
+                            {
+                                <span>Iniciar Sesión</span>
+                            }
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    // Propiedades para enlazar con los campos de entrada
+    private string Username { get; set; } = "";
+    private string Password { get; set; } = "";
+
+    // Propiedades para controlar el estado de la UI
+    private string? ErrorMessage { get; set; }
+    private bool IsBusy { get; set; }
+
+    // En el bloque @code de LoginPage.razor
+    private async Task LoginAsync()
+    {
+        IsBusy = true;
+        ErrorMessage = null;
+
+        try
+        {
+            var request = new Core.Models.Requests.LoginRequest
+            {
+                Usuario = Username,
+                Clave = Password
+            };
+
+            var response = await AuthenticationService.LoginAsync(request);
+
+            if (response.Exitoso && response.Datos != null)
+            {
+                // ===== INICIO DE LA MODIFICACIÓN =====
+                // ¡Guardamos la información del usuario en el servicio de sesión!
+                SessionManager.Login(response.Datos);
+                // ===================================
+
+                // Navegamos a la página de bienvenida (crearemos esta página a continuación)
+                NavigationManager.NavigateTo("/home");
+            }
+            else
+            {
+                ErrorMessage = response.Mensaje;
+            }
+        }
+        catch (Exception)
+        {
+            ErrorMessage = "Ocurrió un error inesperado al intentar conectar con el servidor.";
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+}

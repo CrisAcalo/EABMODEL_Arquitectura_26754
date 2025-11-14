@@ -1,0 +1,23 @@
+﻿@page "/home"
+
+@inject SessionService SessionManager
+
+<div class="container mt-4">
+    <div class="card text-center shadow-sm">
+        <div class="card-body p-5">
+            @if (SessionManager.IsLoggedIn)
+            {
+                <h1 class="card-title">¡Bienvenido, @SessionManager.CurrentUser?.Nombre!</h1>
+                <p class="card-text fs-5 text-muted">Ahora puedes realizar tus operaciones bancarias.</p>
+                <p>Tu código de empleado es: <strong>@SessionManager.CurrentUser?.Codigo</strong></p>
+                <a href="/transactions" class="btn btn-primary mt-3">Ir a Transacciones</a>
+            }
+            else
+            {
+                <h1 class="card-title">Acceso Denegado</h1>
+                <p class="card-text">Por favor, inicia sesión para continuar.</p>
+                <a href="/" class="btn btn-secondary mt-3">Ir a Login</a>
+            }
+        </div>
+    </div>
+</div>

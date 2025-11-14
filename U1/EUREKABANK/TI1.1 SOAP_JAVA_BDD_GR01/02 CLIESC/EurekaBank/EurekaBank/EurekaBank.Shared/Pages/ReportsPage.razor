@@ -1,0 +1,136 @@
+@page "/reports"
+
+@inject IReportService ReportService
+@inject SessionService SessionManager
+@inject NavigationManager NavigationManager
+
+<div class="container mt-4">
+    @if (SessionManager.IsLoggedIn)
+    {
+        <h3>Reporte de Movimientos</h3>
+        <p>Ingrese un código de cuenta para ver sus últimos movimientos.</p>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <input class="form-control" @bind="CodigoCuenta" placeholder="Ej: 00100001" />
+                    <button class="btn btn-primary" @onclick="CargarMovimientos" disabled="@IsBusy">
+                        @if (IsBusy)
+                        {
+                            <span class="spinner-border spinner-border-sm" role="status"></span>
+                        }
+                        else
+                        {
+                            <span class="bi bi-search"></span>
+                        }
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        @if (IsBusy)
+        {
+            <div class="d-flex justify-content-center mt-4">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        }
+        else if (Movimientos != null && Movimientos.Any())
+        {
+            <div class="table-responsive mt-4">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th># Mov.</th>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Acción</th>
+                            <th class="text-end">Importe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var mov in Movimientos)
+                        {
+                            <tr>
+                                <td>@mov.NumeroMovimiento</td>
+                                <td>@mov.Fecha.ToString("dd/MM/yyyy")</td>
+                                <td>@mov.TipoMovimiento</td>
+                                <td>
+                                    <span class="badge @(mov.Accion == "INGRESO" ? "bg-success" : "bg-danger")">
+                                        @mov.Accion
+                                    </span>
+                                </td>
+                                <td class="text-end">@mov.Importe.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else if (HaBuscado && !string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="alert alert-danger mt-4" role="alert">
+                <i class="bi bi-exclamation-triangle"></i> @ErrorMessage
+            </div>
+        }
+        else if (HaBuscado)
+        {
+            <div class="alert alert-info mt-4" role="alert">
+                <i class="bi bi-info-circle"></i> No se encontraron movimientos para la cuenta especificada.
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning mt-4" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> Por favor, inicia sesión para acceder a los reportes.
+        </div>
+        <button class="btn btn-primary" @onclick="IrALogin">
+            Ir a Iniciar Sesión
+        </button>
+    }
+</div>
+
+@code {
+    private string CodigoCuenta { get; set; } = "";
+    private IEnumerable<MovementDto>? Movimientos { get; set; }
+    private bool IsBusy { get; set; }
+    private bool HaBuscado { get; set; } // Para saber si ya se hizo una búsqueda
+    private string? ErrorMessage { get; set; }
+
+    private async Task CargarMovimientos()
+    {
+        if (string.IsNullOrWhiteSpace(CodigoCuenta))
+        {
+            ErrorMessage = "Por favor, ingrese un código de cuenta válido.";
+            return;
+        }
+
+        IsBusy = true;
+        HaBuscado = true;
+        Movimientos = null; // Limpiar resultados anteriores
+        ErrorMessage = null; // Limpiar errores anteriores
+        StateHasChanged();
+
+        try
+        {
+            Movimientos = await ReportService.ObtenerMovimientosAsync(CodigoCuenta);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "Error al obtener los movimientos: " + ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
+            StateHasChanged();
+        }
+    }
+
+    private void IrALogin()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

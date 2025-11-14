@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/MasaService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" />
+  <xs:element name="KilogramoAQuintal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kilogramos" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KilogramoAQuintalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="KilogramoAQuintalResult" nillable="true" type="q1:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuintalAKilogramo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="quintales" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuintalAKilogramoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="QuintalAKilogramoResult" nillable="true" type="q2:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KilogramoALibra">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="kilogramos" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KilogramoALibraResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="KilogramoALibraResult" nillable="true" type="q3:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LibraAKilogramo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="libras" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LibraAKilogramoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="LibraAKilogramoResult" nillable="true" type="q4:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuintalALibra">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="quintales" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="QuintalALibraResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="QuintalALibraResult" nillable="true" type="q5:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LibraAQuintal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="libras" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LibraAQuintalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" minOccurs="0" name="LibraAQuintalResult" nillable="true" type="q6:ConversionResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

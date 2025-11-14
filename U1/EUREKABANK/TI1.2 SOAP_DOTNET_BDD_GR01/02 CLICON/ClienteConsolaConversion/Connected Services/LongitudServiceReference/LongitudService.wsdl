@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="LongitudService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ConUni_Soap_DotNet_GR01.ec.edu.monster.models" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILongitudService_MillaAMetro_InputMessage">
+    <wsdl:part name="parameters" element="tns:MillaAMetro" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MillaAMetro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MillaAMetroResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MetroAMilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:MetroAMilla" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MetroAMilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MetroAMillaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MillaAPulgada_InputMessage">
+    <wsdl:part name="parameters" element="tns:MillaAPulgada" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MillaAPulgada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MillaAPulgadaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_PulgadaAMilla_InputMessage">
+    <wsdl:part name="parameters" element="tns:PulgadaAMilla" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_PulgadaAMilla_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PulgadaAMillaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MetroAPulgada_InputMessage">
+    <wsdl:part name="parameters" element="tns:MetroAPulgada" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_MetroAPulgada_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MetroAPulgadaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_PulgadaAMetro_InputMessage">
+    <wsdl:part name="parameters" element="tns:PulgadaAMetro" />
+  </wsdl:message>
+  <wsdl:message name="ILongitudService_PulgadaAMetro_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PulgadaAMetroResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ILongitudService">
+    <wsdl:operation name="MillaAMetro">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/MillaAMetro" message="tns:ILongitudService_MillaAMetro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/MillaAMetroResponse" message="tns:ILongitudService_MillaAMetro_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MetroAMilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/MetroAMilla" message="tns:ILongitudService_MetroAMilla_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/MetroAMillaResponse" message="tns:ILongitudService_MetroAMilla_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MillaAPulgada">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/MillaAPulgada" message="tns:ILongitudService_MillaAPulgada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/MillaAPulgadaResponse" message="tns:ILongitudService_MillaAPulgada_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PulgadaAMilla">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/PulgadaAMilla" message="tns:ILongitudService_PulgadaAMilla_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/PulgadaAMillaResponse" message="tns:ILongitudService_PulgadaAMilla_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MetroAPulgada">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/MetroAPulgada" message="tns:ILongitudService_MetroAPulgada_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/MetroAPulgadaResponse" message="tns:ILongitudService_MetroAPulgada_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PulgadaAMetro">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILongitudService/PulgadaAMetro" message="tns:ILongitudService_PulgadaAMetro_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILongitudService/PulgadaAMetroResponse" message="tns:ILongitudService_PulgadaAMetro_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ILongitudService" type="tns:ILongitudService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="MillaAMetro">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/MillaAMetro" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MetroAMilla">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/MetroAMilla" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MillaAPulgada">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/MillaAPulgada" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PulgadaAMilla">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/PulgadaAMilla" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MetroAPulgada">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/MetroAPulgada" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PulgadaAMetro">
+      <soap:operation soapAction="http://tempuri.org/ILongitudService/PulgadaAMetro" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LongitudService">
+    <wsdl:port name="BasicHttpBinding_ILongitudService" binding="tns:BasicHttpBinding_ILongitudService">
+      <soap:address location="http://localhost:56686/ec/edu/monster/ws/LongitudService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

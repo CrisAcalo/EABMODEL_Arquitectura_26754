@@ -1,0 +1,245 @@
+﻿<h3>TransactionsPage</h3>
+
+@code {
+
+}
+@page "/transactions"
+
+@inject ITransactionService TransactionService
+@inject SessionService SessionManager
+
+<div class="container mt-4">
+    <h3>Realizar Transacciones</h3>
+    <p>Selecciona el tipo de transacción que deseas realizar.</p>
+
+    <!-- Pestañas de Navegación (Implementación Blazor) -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(ActiveTab == "deposit" ? "active" : "")" 
+                    @onclick="@(() => SetActiveTab("deposit"))" 
+                    type="button">
+                Depósito
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(ActiveTab == "withdraw" ? "active" : "")" 
+                    @onclick="@(() => SetActiveTab("withdraw"))" 
+                    type="button">
+                Retiro
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(ActiveTab == "transfer" ? "active" : "")" 
+                    @onclick="@(() => SetActiveTab("transfer"))" 
+                    type="button">
+                Transferencia
+            </button>
+        </li>
+    </ul>
+
+    <!-- Contenido de las Pestañas -->
+    <div class="card shadow-sm">
+        
+        @if (ActiveTab == "deposit")
+        {
+            <!-- ===== PESTAÑA DE DEPÓSITO ===== -->
+            <div class="p-4">
+                <h4>Realizar Depósito</h4>
+                <div class="mb-3">
+                    <label class="form-label">Código de Cuenta</label>
+                    <input class="form-control" @bind="DepositModel.CodigoCuenta" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Importe a Depositar</label>
+                    <input type="number" step="0.01" class="form-control" @bind="DepositModel.Importe" />
+                </div>
+                <button class="btn btn-success" @onclick="HandleDeposit" disabled="@IsBusy">
+                    <span class="bi bi-box-arrow-in-down"></span> Realizar Depósito
+                </button>
+            </div>
+        }
+        else if (ActiveTab == "withdraw")
+        {
+            <!-- ===== PESTAÑA DE RETIRO ===== -->
+            <div class="p-4">
+                <h4>Realizar Retiro</h4>
+                <div class="mb-3">
+                    <label class="form-label">Código de Cuenta</label>
+                    <input class="form-control" @bind="WithdrawModel.CodigoCuenta" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Clave de la Cuenta</label>
+                    <input type="password" class="form-control" @bind="WithdrawModel.ClaveCuenta" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Importe a Retirar</label>
+                    <input type="number" step="0.01" class="form-control" @bind="WithdrawModel.Importe" />
+                </div>
+                <button class="btn btn-warning" @onclick="HandleWithdraw" disabled="@IsBusy">
+                    <span class="bi bi-box-arrow-up"></span> Realizar Retiro
+                </button>
+            </div>
+        }
+        else if (ActiveTab == "transfer")
+        {
+            <!-- ===== PESTAÑA DE TRANSFERENCIA ===== -->
+            <div class="p-4">
+                <h4>Realizar Transferencia</h4>
+                <div class="mb-3">
+                    <label class="form-label">Cuenta de Origen</label>
+                    <input class="form-control" @bind="TransferModel.CuentaOrigen" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Clave de Cuenta Origen</label>
+                    <input type="password" class="form-control" @bind="TransferModel.ClaveCuentaOrigen" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Cuenta de Destino</label>
+                    <input class="form-control" @bind="TransferModel.CuentaDestino" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Importe a Transferir</label>
+                    <input type="number" step="0.01" class="form-control" @bind="TransferModel.Importe" />
+                </div>
+                <button class="btn btn-info" @onclick="HandleTransfer" disabled="@IsBusy">
+                    <span class="bi bi-arrow-left-right"></span> Realizar Transferencia
+                </button>
+            </div>
+        }
+    </div>
+
+    <!-- Indicador de Carga y Resultados -->
+    <div class="mt-4">
+        @if (IsBusy)
+        {
+            <div class="d-flex align-items-center">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <strong class="ms-2">Procesando...</strong>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(ResultMessage))
+        {
+            <div class="alert @ResultCssClass mt-3" role="alert">
+                @ResultMessage
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    // Estado de la UI
+    private string ActiveTab { get; set; } = "deposit"; // Pestaña activa por defecto
+    private bool IsBusy { get; set; }
+    private string? ResultMessage { get; set; }
+    private string ResultCssClass { get; set; } = "alert-info";
+
+    // Modelos para cada formulario
+    private Core.Models.Requests.DepositRequest DepositModel { get; set; } = new();
+    private Core.Models.Requests.DepositRequest WithdrawModel { get; set; } = new();
+    private Core.Models.Requests.TransferRequest TransferModel { get; set; } = new();
+
+    // Método para cambiar de pestaña
+    private void SetActiveTab(string tabName)
+    {
+        ActiveTab = tabName;
+        // Limpiar mensaje anterior cuando cambiamos de pestaña
+        ResultMessage = null;
+        StateHasChanged();
+    }
+
+    // Lógica para el Depósito
+    private async Task HandleDeposit()
+    {
+        await ExecuteTransaction(async () =>
+        {
+            // Asignamos datos fijos que no vienen del formulario
+            DepositModel.CodigoEmpleado = SessionManager.CurrentUser?.Codigo ?? "N/A";
+            DepositModel.CodigoTipoMovimiento = "001"; // Valor fijo para depósito
+            DepositModel.ClaveCuenta = "123456"; // Valor por defecto o no requerido para depósito
+
+            var response = await TransactionService.RealizarDepositoAsync(DepositModel);
+
+            if (response.Exitoso)
+            {
+                ResultMessage = $"Depósito exitoso. Nuevo Saldo: {response.Datos?.SaldoNuevo:C}";
+                ResultCssClass = "alert-success";
+                DepositModel = new(); // Resetea el formulario
+            }
+            else
+            {
+                ResultMessage = $"Error: {response.Mensaje}";
+                ResultCssClass = "alert-danger";
+            }
+        });
+    }
+
+    // Lógica para el Retiro
+    private async Task HandleWithdraw()
+    {
+        await ExecuteTransaction(async () =>
+        {
+            WithdrawModel.CodigoEmpleado = SessionManager.CurrentUser?.Codigo ?? "N/A";
+            WithdrawModel.CodigoTipoMovimiento = "002"; // Valor fijo para retiro
+
+            var response = await TransactionService.RealizarRetiroAsync(WithdrawModel);
+
+            if (response.Exitoso)
+            {
+                ResultMessage = $"Retiro exitoso. Nuevo Saldo: {response.Datos?.SaldoNuevo:C}";
+                ResultCssClass = "alert-success";
+                WithdrawModel = new();
+            }
+            else
+            {
+                ResultMessage = $"Error: {response.Mensaje}";
+                ResultCssClass = "alert-danger";
+            }
+        });
+    }
+
+    // Lógica para la Transferencia
+    private async Task HandleTransfer()
+    {
+        await ExecuteTransaction(async () =>
+        {
+            TransferModel.CodigoEmpleado = SessionManager.CurrentUser?.Codigo ?? "N/A";
+
+            var response = await TransactionService.RealizarTransferenciaAsync(TransferModel);
+
+            if (response.Exitoso)
+            {
+                ResultMessage = $"Transferencia exitosa. Nuevo Saldo Origen: {response.Datos?.CuentaOrigen.SaldoNuevo:C}";
+                ResultCssClass = "alert-success";
+                TransferModel = new();
+            }
+            else
+            {
+                ResultMessage = $"Error: {response.Mensaje}";
+                ResultCssClass = "alert-danger";
+            }
+        });
+    }
+
+    // Método auxiliar genérico para manejar el estado de carga y errores
+    private async Task ExecuteTransaction(Func<Task> transactionLogic)
+    {
+        IsBusy = true;
+        ResultMessage = null;
+        StateHasChanged(); // Forzar actualización de UI
+
+        try
+        {
+            await transactionLogic();
+        }
+        catch (Exception)
+        {
+            ResultMessage = "Error inesperado al procesar la transacción.";
+            ResultCssClass = "alert-danger";
+        }
+        finally
+        {
+            IsBusy = false;
+            StateHasChanged(); // Forzar actualización de UI
+        }
+    }
+}

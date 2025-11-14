@@ -1,0 +1,62 @@
+﻿@inherits LayoutComponentBase
+@inject ApiServiceManager ApiManager
+@inject SessionService SessionManager
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <!-- ===== INICIO DE SELECTORES DE API ===== -->
+            <div class="d-flex align-items-center gap-3">
+                <select class="form-select form-select-sm" @bind="ApiManager.CurrentProtocol">
+                    <option value="@ApiProtocol.Rest">REST</option>
+                    <option value="@ApiProtocol.Soap">SOAP</option>
+                </select>
+                <select class="form-select form-select-sm" @bind="ApiManager.CurrentPlatform">
+                    <option value="@ApiPlatform.Java">Java</option>
+                    <option value="@ApiPlatform.DotNet">.NET</option>
+                </select>
+            </div>
+            <!-- ===== FIN DE SELECTORES DE API ===== -->
+
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+        <div class="top-row px-4">
+            <!-- Selectores de API que ya teníamos -->
+            <div class="d-flex align-items-center gap-3">
+                <!-- ... -->
+            </div>
+
+            <!-- ===== INICIO DE LA MODIFICACIÓN ===== -->
+            @if (SessionManager.IsLoggedIn)
+            {
+                <span class="ms-auto">
+                    Bienvenido, <strong>@SessionManager.CurrentUser?.Nombre</strong>
+                </span>
+            }
+            else
+            {
+                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank" class="ms-auto">About</a>
+            }
+            <!-- =================================== -->
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Usar InvokeAsync para asegurar que las actualizaciones de UI ocurran en el thread correcto
+        ApiManager.PropertyChanged += async (s, e) => await InvokeAsync(StateHasChanged);
+        SessionManager.PropertyChanged += async (s, e) => await InvokeAsync(StateHasChanged);
+        
+        base.OnInitialized();
+    }
+}
