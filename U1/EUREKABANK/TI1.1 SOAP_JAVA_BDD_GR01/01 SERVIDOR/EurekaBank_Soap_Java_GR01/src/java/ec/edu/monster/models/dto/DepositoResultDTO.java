@@ -1,11 +1,16 @@
 package ec.edu.monster.models.dto;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * DTO para el resultado de una operación de depósito
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DepositoResultDTO implements Serializable {
 
     private String codigoCuenta;

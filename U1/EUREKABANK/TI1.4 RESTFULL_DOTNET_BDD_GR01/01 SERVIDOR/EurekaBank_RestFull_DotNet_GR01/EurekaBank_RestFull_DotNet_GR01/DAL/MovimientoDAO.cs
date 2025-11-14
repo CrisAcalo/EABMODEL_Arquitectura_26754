@@ -66,6 +66,29 @@ namespace EurekaBank_RestFull_DotNet_GR01.DAL
         }
 
         /// <summary>
+        /// Obtiene el último número de movimiento de una cuenta dentro de una transacción activa
+        /// </summary>
+        /// <param name="conn">Conexión activa</param>
+        /// <param name="transaction">Transacción activa</param>
+        /// <param name="codigoCuenta">Código de la cuenta</param>
+        /// <returns>Último número de movimiento (0 si no tiene movimientos)</returns>
+        public int ObtenerUltimoNumero(SqlConnection conn, SqlTransaction transaction, string codigoCuenta)
+        {
+            try
+            {
+                string query = @"SELECT ISNULL(MAX(int_movinumero), 0) 
+                                FROM Movimiento 
+                                WHERE chr_cuencodigo = @CodigoCuenta";
+                
+                return conn.ExecuteScalar<int>(query, new { CodigoCuenta = codigoCuenta }, transaction);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener último número de movimiento: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
         /// Lista los movimientos de una cuenta en un rango de fechas
         /// </summary>
         /// <param name="codigoCuenta">Código de la cuenta</param>

@@ -1,5 +1,8 @@
 package ec.edu.monster.models;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -7,6 +10,8 @@ import java.time.LocalDate;
 /**
  * Entidad que representa una cuenta bancaria
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Cuenta implements Serializable {
 
     private String codigo;

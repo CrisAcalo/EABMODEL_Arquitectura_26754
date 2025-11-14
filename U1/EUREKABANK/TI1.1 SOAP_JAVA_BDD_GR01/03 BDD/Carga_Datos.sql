@@ -11,40 +11,36 @@ Blog           :  http://gcoronelc.blogspot.com
 Nota           :  Datos adaptados desde SQL Server para MySQL
 */
 
--- =============================================
--- Seleccionar la base de datos
--- =============================================
-
 use eurekabank;
 set names utf8;
 
-
--- =============================================
--- Cargar Datos de Prueba
--- =============================================
-
+-- ============================
 -- Tabla: moneda
-
+-- ============================
 insert into moneda values ( '01', 'Soles' );
 insert into moneda values ( '02', 'Dolares' );
 
+-- ============================
 -- Tabla: cargomantenimiento
-
+-- ============================
 insert into cargomantenimiento values ( '01', 3500.00, 7.00 );
 insert into cargomantenimiento values ( '02', 1200.00, 2.50 );
 
+-- ============================
 -- Tabla: costomovimiento
-
+-- ============================
 insert into costomovimiento values ( '01', 2.00 );
 insert into costomovimiento values ( '02', 0.60 );
 
+-- ============================
 -- Tabla: interesmensual
-
+-- ============================
 insert into interesmensual values ( '01', 0.70 );
 insert into interesmensual values ( '02', 0.60 );
 
+-- ============================
 -- Tabla: tipomovimiento
-
+-- ============================
 insert into tipomovimiento values( '001', 'Apertura de Cuenta', 'INGRESO', 'ACTIVO' );
 insert into tipomovimiento values( '002', 'Cancelar Cuenta', 'SALIDA', 'ACTIVO' );
 insert into tipomovimiento values( '003', 'Deposito', 'INGRESO', 'ACTIVO' );
@@ -56,8 +52,9 @@ insert into tipomovimiento values( '008', 'Transferencia', 'INGRESO', 'ACTIVO' )
 insert into tipomovimiento values( '009', 'Transferencia', 'SALIDA', 'ACTIVO' );
 insert into tipomovimiento values( '010', 'Cargo por Movimiento', 'SALIDA', 'ACTIVO' );
 
+-- ============================
 -- Tabla: sucursal
-
+-- ============================
 insert into sucursal values( '001', 'Sipan', 'Chiclayo', 'Av. Balta 1456', 2 );
 insert into sucursal values( '002', 'Chan Chan', 'Trujillo', 'Jr. Independencia 456', 3 );
 insert into sucursal values( '003', 'Los Olivos', 'Lima', 'Av. Central 1234', 1 );
@@ -66,9 +63,9 @@ insert into sucursal values( '005', 'Misti', 'Arequipa', 'Bolivar 546', 0 );
 insert into sucursal values( '006', 'Machupicchu', 'Cusco', 'Calle El Sol 534', 0 );
 insert into sucursal values( '007', 'Grau', 'Piura', 'Av. Grau 1528', 0 );
 
-
--- Tabla: empleado (con usuario y clave directamente)
-
+-- ============================
+-- Tabla: empleado
+-- ============================
 INSERT INTO empleado VALUES( '9999', 'Internet', 'Internet', 'internet', 'Internet', 'internet', 'internet', 'internet' );
 INSERT INTO empleado VALUES( '0001', 'Romero', 'Castillo', 'Carlos Alberto', 'Trujillo', 'Call1 1 Nro. 456', 'cromero', 'chicho' );
 INSERT INTO empleado VALUES( '0002', 'Castro', 'Vargas', 'Lidia', 'Lima', 'Federico Villarreal 456 - SMP', 'lcastro', 'flaca' );
@@ -82,8 +79,9 @@ INSERT INTO empleado VALUES( '0009', 'Pachas', 'Sifuentes', 'Luis Alberto', 'Tru
 INSERT INTO empleado VALUES( '0010', 'Tello', 'Alarcon', 'Hugo Valentin', 'Cusco', 'Los Angeles 865', 'htello', 'machupichu' );
 INSERT INTO empleado VALUES( '0011', 'Carrasco', 'Vargas', 'Pedro Hugo', 'Chiclayo', 'Av. Balta 1265', 'pcarrasco', 'tinajones' );
 
+-- ============================
 -- Tabla: asignado
-
+-- ============================
 insert into asignado values( '000001', '001', '0004', '20071115', null );
 insert into asignado values( '000002', '002', '0001', '20071120', null );
 insert into asignado values( '000003', '003', '0002', '20071128', null );
@@ -97,15 +95,15 @@ insert into asignado values( '000010', '002', '0009', '20080108', null );
 insert into asignado values( '000011', '006', '0010', '20080108', null );
 insert into asignado values( '000012', '004', '0005', '20090416', null );
 
-
-
+-- ============================
 -- Tabla: parametro
-
+-- ============================
 insert into parametro values( '001', 'ITF - Impuesto a la Transacciones Financieras', '0.08', 'ACTIVO' );
 insert into parametro values( '002', 'Número de Operaciones Sin Costo', '15', 'ACTIVO' );
 
+-- ============================
 -- Tabla: cliente
-
+-- ============================
 insert into cliente values( '00001', 'CORONEL', 'CASTILLO', 'ERIC GUSTAVO', '06914897', 'LIMA', 'LOS OLIVOS', '9666-4457', 'gcoronel@viabcp.com' );
 insert into cliente values( '00002', 'VALENCIA', 'MORALES', 'PEDRO HUGO', '01576173', 'LIMA', 'MAGDALENA', '924-7834', 'pvalencia@terra.com.pe' );
 insert into cliente values( '00003', 'MARCELO', 'VILLALOBOS', 'RICARDO', '10762367', 'LIMA', 'LINCE', '993-62966', 'ricardomarcelo@hotmail.com' );
@@ -127,17 +125,19 @@ insert into cliente values( '00018', 'VALENTIN', 'COTRINA', 'JUAN DIEGO', '10398
 insert into cliente values( '00019', 'YAURICASA', 'BAUTISTA', 'YESABETH', '10934584', 'LIMA', 'MAGDALENA', '977-75777', 'y.yauricasa@terra.com.pe' );
 insert into cliente values( '00020', 'ZEGARRA', 'GARCIA', 'FERNANDO MOISES', '10772365', 'LIMA', 'SAN ISIDRO', '936-45876', 'f.zegarra@hotmail.com' );
 
+-- ============================
 -- Tabla: cuenta
-
+-- ============================
 insert into cuenta values('00200001','01','002','0001','00008',7000,'20220105','ACTIVO',15,'123456');
 insert into cuenta values('00200002','01','002','0001','00001',6800,'20220109','ACTIVO',3,'123456');
 insert into cuenta values('00200003','02','002','0001','00007',6000,'20220111','ACTIVO',6,'123456');
 insert into cuenta values('00100001','01','001','0004','00005',6900,'20220106','ACTIVO',7,'123456');
 insert into cuenta values('00100002','02','001','0004','00005',4500,'20220108','ACTIVO',4,'123456');
-insert into cuenta values('00300001','01','003','0002','00010',0000,'20220107','CANCELADO',3,'123456');
+insert into cuenta values('00300001','01','003','0002','00010',0,'20220107','CANCELADO',3,'123456');
 
+-- ============================
 -- Tabla: movimiento
-
+-- ============================
 insert into movimiento values('00100002',01,'20220108','0004','001',1800,null);
 insert into movimiento values('00100002',02,'20220125','0004','004',1000,null);
 insert into movimiento values('00100002',03,'20220213','0004','003',2200,null);
@@ -145,18 +145,18 @@ insert into movimiento values('00100002',04,'20220308','0004','003',1500,null);
 
 insert into movimiento values('00100001',01,'20220106','0004','001',2800,null);
 insert into movimiento values('00100001',02,'20220115','0004','003',3200,null);
-insert into movimiento values('00100001',03,'20220120','0004','004',0800,null);
+insert into movimiento values('00100001',03,'20220120','0004','004',800,null);
 insert into movimiento values('00100001',04,'20220214','0004','003',2000,null);
-insert into movimiento values('00100001',05,'20220225','0004','004',0500,null);
-insert into movimiento values('00100001',06,'20220303','0004','004',0800,null);
+insert into movimiento values('00100001',05,'20220225','0004','004',500,null);
+insert into movimiento values('00100001',06,'20220303','0004','004',800,null);
 insert into movimiento values('00100001',07,'20220315','0004','003',1000,null);
 
 insert into movimiento values('00200003',01,'20220111','0001','001',2500,null);
 insert into movimiento values('00200003',02,'20220117','0001','003',1500,null);
-insert into movimiento values('00200003',03,'20220120','0001','004',0500,null);
-insert into movimiento values('00200003',04,'20220209','0001','004',0500,null);
+insert into movimiento values('00200003',03,'20220120','0001','004',500,null);
+insert into movimiento values('00200003',04,'20220209','0001','004',500,null);
 insert into movimiento values('00200003',05,'20220225','0001','003',3500,null);
-insert into movimiento values('00200003',06,'20220311','0001','004',0500,null);
+insert into movimiento values('00200003',06,'20220311','0001','004',500,null);
 
 insert into movimiento values('00200002',01,'20220109','0001','001',3800,null);
 insert into movimiento values('00200002',02,'20220120','0001','003',4200,null);
@@ -182,12 +182,13 @@ insert into movimiento values('00300001',01,'20220107','0002','001',5600,null);
 insert into movimiento values('00300001',02,'20220118','0002','003',1400,null);
 insert into movimiento values('00300001',03,'20220125','0002','002',7000,null);
 
---  Tabla: contador
-
-insert into contador Values( 'Moneda', 2, 2 );
-insert into contador Values( 'TipoMovimiento', 10, 3 );
-insert into contador Values( 'Sucursal', 7, 3 );
-insert into contador Values( 'Empleado', 11, 4 );
-insert into contador Values( 'Asignado', 12, 6 );
-insert into contador Values( 'Parametro', 2, 3 );
-insert into contador Values( 'Cliente', 20, 5 );
+-- ============================
+-- Tabla: contador
+-- ============================
+insert into contador values( 'Moneda', 2, 2 );
+insert into contador values( 'TipoMovimiento', 10, 3 );
+insert into contador values( 'Sucursal', 7, 3 );
+insert into contador values( 'Empleado', 11, 4 );
+insert into contador values( 'Asignado', 12, 6 );
+insert into contador values( 'Parametro', 2, 3 );
+insert into contador values( 'Cliente', 20, 5 );

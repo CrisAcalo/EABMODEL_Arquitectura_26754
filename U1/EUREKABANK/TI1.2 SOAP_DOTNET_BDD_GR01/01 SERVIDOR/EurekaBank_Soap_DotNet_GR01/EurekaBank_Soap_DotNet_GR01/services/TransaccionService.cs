@@ -9,7 +9,7 @@ using EurekaBank_Soap_DotNet_GR01.Constants;
 namespace EurekaBank_Soap_DotNet_GR01.Services
 {
     /// <summary>
-    /// Servicio de l�gica de negocio para transacciones bancarias
+    /// Servicio de lógica de negocio para transacciones bancarias
     /// </summary>
     public class TransaccionService
     {
@@ -23,7 +23,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
         }
 
         /// <summary>
-        /// Realiza un dep�sito en una cuenta
+        /// Realiza un depósitо en una cuenta
         /// </summary>
         public RespuestaDTO RealizarDeposito(TransaccionDTO datos)
         {
@@ -52,7 +52,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                     };
                 }
 
-                // 3. Validar que la cuenta est� activa
+                // 3. Validar que la cuenta esté activa
                 if (!CuentaValidator.EsActiva(cuenta))
                 {
                     return new RespuestaDTO
@@ -63,10 +63,10 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                     };
                 }
 
-                // 4. Generar n�mero de movimiento
+                // 4. Generar número de movimiento
                 int numeroMovimiento = movimientoDAO.ObtenerUltimoNumero(datos.CodigoCuenta) + 1;
 
-                // 5. Crear movimiento de dep�sito
+                // 5. Crear movimiento de depósitо
                 Movimiento movimiento = new Movimiento
                 {
                     CodigoCuenta = datos.CodigoCuenta,
@@ -192,7 +192,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                     };
                 }
 
-                // 7. Usar transacci�n SQL
+                // 7. Usar transacción SQL
                 conn = ConexionDB.ObtenerConexion();
                 conn.Open();
                 transaction = conn.BeginTransaction();
@@ -201,7 +201,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                 {
                     int numeroMovimiento = movimientoDAO.ObtenerUltimoNumero(datos.CodigoCuenta);
 
-                    // Movimientos usando la misma transacci�n
+                    // Movimientos usando la misma transacción
                     numeroMovimiento++;
                     EjecutarInsertMovimiento(conn, transaction, new Movimiento
                     {
@@ -341,7 +341,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                     return new RespuestaDTO
                     {
                         Exitoso = false,
-                        Mensaje = "Cuenta origen no est� activa",
+                        Mensaje = "Cuenta origen no está activa",
                         CodigoError = "CTA002"
                     };
                 }
@@ -351,7 +351,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                     return new RespuestaDTO
                     {
                         Exitoso = false,
-                        Mensaje = "Cuenta destino no est� activa",
+                        Mensaje = "Cuenta destino no está activa",
                         CodigoError = "CTA002"
                     };
                 }
@@ -393,7 +393,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                     };
                 }
 
-                // Transacci�n SQL
+                // Transacción SQL
                 conn = ConexionDB.ObtenerConexion();
                 conn.Open();
                 transaction = conn.BeginTransaction();
@@ -401,7 +401,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                 try
                 {
                     // CUENTA ORIGEN
-                    int numMovOrigen = movimientoDAO.ObtenerUltimoNumero(datos.CuentaOrigen);
+                    int numMovOrigen = ObtenerUltimoNumeroMovimiento(conn, transaction, datos.CuentaOrigen);
 
                     numMovOrigen++;
                     EjecutarInsertMovimiento(conn, transaction, new Movimiento
@@ -452,7 +452,7 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
                     }
 
                     // CUENTA DESTINO
-                    int numMovDestino = movimientoDAO.ObtenerUltimoNumero(datos.CuentaDestino);
+                    int numMovDestino = ObtenerUltimoNumeroMovimiento(conn, transaction, datos.CuentaDestino);
 
                     numMovDestino++;
                     EjecutarInsertMovimiento(conn, transaction, new Movimiento
@@ -522,7 +522,25 @@ namespace EurekaBank_Soap_DotNet_GR01.Services
             }
         }
 
-        // M�todos auxiliares para ejecutar comandos dentro de una transacci�n
+        // Métodos auxiliares para ejecutar comandos dentro de una transacción
+        
+        /// <summary>
+        /// Obtiene el último número de movimiento de una cuenta dentro de una transacción
+        /// </summary>
+        private int ObtenerUltimoNumeroMovimiento(SqlConnection conn, SqlTransaction transaction, string codigoCuenta)
+        {
+            string query = @"SELECT ISNULL(MAX(int_movinumero), 0) 
+                            FROM Movimiento 
+                            WHERE chr_cuencodigo = @CodigoCuenta";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+            {
+                cmd.Parameters.AddWithValue("@CodigoCuenta", codigoCuenta);
+                object result = cmd.ExecuteScalar();
+                return result != null ? Convert.ToInt32(result) : 0;
+            }
+        }
+
         private void EjecutarInsertMovimiento(SqlConnection conn, SqlTransaction transaction, Movimiento movimiento)
         {
             string query = @"INSERT INTO Movimiento 

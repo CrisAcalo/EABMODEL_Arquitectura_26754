@@ -1,10 +1,17 @@
 package ec.edu.monster.models.dto;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
 import java.io.Serializable;
 
 /**
  * DTO estándar para respuestas de servicios SOAP
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso({DepositoResultDTO.class, RetiroResultDTO.class, TransferenciaResultDTO.class})
 public class RespuestaDTO implements Serializable {
 
     private boolean exitoso;

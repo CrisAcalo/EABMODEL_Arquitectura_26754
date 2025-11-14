@@ -1,10 +1,15 @@
 package ec.edu.monster.models;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
  * Entidad que representa un empleado
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Empleado implements Serializable {
 
     private String codigo;

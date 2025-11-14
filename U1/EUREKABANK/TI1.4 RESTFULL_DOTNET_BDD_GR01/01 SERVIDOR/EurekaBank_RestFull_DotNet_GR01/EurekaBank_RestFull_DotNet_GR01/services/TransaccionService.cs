@@ -192,16 +192,17 @@ namespace EurekaBank_RestFull_DotNet_GR01.Services
                     };
                 }
 
-                // 7. Usar transacci�n SQL
+                // 7. Usar transacción SQL
                 conn = ConexionDB.ObtenerConexion();
                 conn.Open();
                 transaction = conn.BeginTransaction();
 
                 try
                 {
-                    int numeroMovimiento = movimientoDAO.ObtenerUltimoNumero(datos.CodigoCuenta);
+                    // USAR LA CONEXIÓN Y TRANSACCIÓN ACTUALES
+                    int numeroMovimiento = movimientoDAO.ObtenerUltimoNumero(conn, transaction, datos.CodigoCuenta);
 
-                    // Movimientos usando la misma transacci�n
+                    // Movimientos usando la misma transacción
                     numeroMovimiento++;
                     EjecutarInsertMovimiento(conn, transaction, new Movimiento
                     {
@@ -341,7 +342,7 @@ namespace EurekaBank_RestFull_DotNet_GR01.Services
                     return new RespuestaDTO
                     {
                         Exitoso = false,
-                        Mensaje = "Cuenta origen no est� activa",
+                        Mensaje = "Cuenta origen no está activa",
                         CodigoError = "CTA002"
                     };
                 }
@@ -351,7 +352,7 @@ namespace EurekaBank_RestFull_DotNet_GR01.Services
                     return new RespuestaDTO
                     {
                         Exitoso = false,
-                        Mensaje = "Cuenta destino no est� activa",
+                        Mensaje = "Cuenta destino no está activa",
                         CodigoError = "CTA002"
                     };
                 }
@@ -393,15 +394,15 @@ namespace EurekaBank_RestFull_DotNet_GR01.Services
                     };
                 }
 
-                // Transacci�n SQL
+                // Transacción SQL
                 conn = ConexionDB.ObtenerConexion();
                 conn.Open();
                 transaction = conn.BeginTransaction();
 
                 try
                 {
-                    // CUENTA ORIGEN
-                    int numMovOrigen = movimientoDAO.ObtenerUltimoNumero(datos.CuentaOrigen);
+                    // CUENTA ORIGEN - USAR LA CONEXIÓN Y TRANSACCIÓN ACTUALES
+                    int numMovOrigen = movimientoDAO.ObtenerUltimoNumero(conn, transaction, datos.CuentaOrigen);
 
                     numMovOrigen++;
                     EjecutarInsertMovimiento(conn, transaction, new Movimiento
@@ -451,8 +452,8 @@ namespace EurekaBank_RestFull_DotNet_GR01.Services
                         EjecutarIncrementarContador(conn, transaction, datos.CuentaOrigen);
                     }
 
-                    // CUENTA DESTINO
-                    int numMovDestino = movimientoDAO.ObtenerUltimoNumero(datos.CuentaDestino);
+                    // CUENTA DESTINO - USAR LA CONEXIÓN Y TRANSACCIÓN ACTUALES
+                    int numMovDestino = movimientoDAO.ObtenerUltimoNumero(conn, transaction, datos.CuentaDestino);
 
                     numMovDestino++;
                     EjecutarInsertMovimiento(conn, transaction, new Movimiento
