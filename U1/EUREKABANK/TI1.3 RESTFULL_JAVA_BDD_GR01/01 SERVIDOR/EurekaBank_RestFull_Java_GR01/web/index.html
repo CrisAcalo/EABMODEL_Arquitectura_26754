@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EurekaBank RESTful API - Java</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 25px;
+        }
+        .endpoint {
+            background-color: #ecf0f1;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        .method {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .post {
+            background-color: #27ae60;
+            color: white;
+        }
+        .get {
+            background-color: #3498db;
+            color: white;
+        }
+        .put {
+            background-color: #f39c12;
+            color: white;
+        }
+        .info {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 EurekaBank RESTful API - Java</h1>
+        <div class="info">
+            <p><strong>Versión:</strong> 1.0</p>
+            <p><strong>Tecnología:</strong> Java JDK 17 + Payara + JAX-RS</p>
+            <p><strong>Base de Datos:</strong> MySQL</p>
+            <p><strong>Descripción:</strong> API RESTful para el sistema bancario EurekaBank - Replica del servicio .NET</p>
+        </div>
+
+        <h2>📌 Endpoints de Transacciones</h2>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <code>/api/transaccion/deposito</code>
+            <p>Realiza un depósito en una cuenta bancaria</p>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <code>/api/transaccion/retiro</code>
+            <p>Realiza un retiro de una cuenta bancaria</p>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <code>/api/transaccion/transferencia</code>
+            <p>Realiza una transferencia entre dos cuentas</p>
+        </div>
+
+        <h2>🔐 Endpoints de Autenticación</h2>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <code>/api/autenticacion/login</code>
+            <p>Autentica un usuario empleado</p>
+        </div>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <code>/api/autenticacion/registrar</code>
+            <p>Registra un nuevo empleado en el sistema</p>
+        </div>
+        <div class="endpoint">
+            <span class="method put">PUT</span>
+            <code>/api/autenticacion/cambiar-clave</code>
+            <p>Cambia la contraseña de un empleado</p>
+        </div>
+
+        <h2>📊 Endpoints de Reportes</h2>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <code>/api/reporte/movimientos/{codigoCuenta}</code>
+            <p>Obtiene todos los movimientos de una cuenta</p>
+        </div>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <code>/api/reporte/movimientos/{codigoCuenta}/rango?fechaInicio=yyyy-MM-dd&fechaFin=yyyy-MM-dd</code>
+            <p>Obtiene movimientos de una cuenta en un rango de fechas</p>
+        </div>
+
+        <p style="margin-top: 30px; text-align: center; color: #7f8c8d;">
+            <em>API RESTful desarrollada para EurekaBank</em>
+        </p>
+    </div>
+</body>
+</html>

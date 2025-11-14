@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 /**
  * Clase para gestionar la conexión a la base de datos MySQL
- * Adaptada desde RESTful .NET a SOAP Java (JDK 17 + Payara)
+ * Adaptada desde RESTful .NET a RESTful Java (JDK 17 + Payara)
  *
  * @author EurekaBank
  */
 public class ConexionDB {
 
-    // Parámetros de conexión MySQL
+    // Parámetros de conexión MySQL en Docker
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/eurekabank?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USUARIO = "eureka";
@@ -35,7 +35,7 @@ public class ConexionDB {
      * @return Connection configurada
      * @throws SQLException si hay error al conectar
      */
-    public static Connection getConnection() throws SQLException {
+    public static Connection obtenerConexion() throws SQLException {
         try {
             Connection conn = DriverManager.getConnection(URL, USUARIO, CLAVE);
             return conn;
@@ -45,22 +45,12 @@ public class ConexionDB {
     }
 
     /**
-     * Obtiene una conexión a la base de datos (alias para compatibilidad)
-     *
-     * @return Connection configurada
-     * @throws SQLException si hay error al conectar
-     */
-    public static Connection obtenerConexion() throws SQLException {
-        return getConnection();
-    }
-
-    /**
      * Prueba la conexión a la base de datos
      *
      * @return true si la conexión es exitosa, false en caso contrario
      */
     public static boolean probarConexion() {
-        try (Connection conn = getConnection()) {
+        try (Connection conn = obtenerConexion()) {
             return conn != null && !conn.isClosed();
         } catch (SQLException e) {
             System.err.println("Error al probar conexión: " + e.getMessage());
