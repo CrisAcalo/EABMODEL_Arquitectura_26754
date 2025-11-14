@@ -2,22 +2,132 @@
 
 @inject SessionService SessionManager
 
-<div class="container mt-4">
-    <div class="card text-center shadow-sm">
-        <div class="card-body p-5">
-            @if (SessionManager.IsLoggedIn)
-            {
-                <h1 class="card-title">¡Bienvenido, @SessionManager.CurrentUser?.Nombre!</h1>
-                <p class="card-text fs-5 text-muted">Ahora puedes realizar tus operaciones bancarias.</p>
-                <p>Tu código de empleado es: <strong>@SessionManager.CurrentUser?.Codigo</strong></p>
-                <a href="/transactions" class="btn btn-primary mt-3">Ir a Transacciones</a>
-            }
-            else
-            {
-                <h1 class="card-title">Acceso Denegado</h1>
-                <p class="card-text">Por favor, inicia sesión para continuar.</p>
-                <a href="/" class="btn btn-secondary mt-3">Ir a Login</a>
-            }
+<div class="home-container spacing-responsive">
+    @if (SessionManager.IsLoggedIn)
+    {
+        <!-- Welcome Section -->
+        <div class="welcome-section mb-4">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10 col-xl-8">
+                    <div class="card card-responsive">
+                        <div class="card-body p-4">
+                            <div class="welcome-header d-flex align-items-center gap-3 mb-4">
+                                <div class="welcome-icon">
+                                    <i class="bi bi-person-check-fill"></i>
+                                </div>
+                                <div class="welcome-text">
+                                    <h1 class="welcome-title mb-1">¡Bienvenido!</h1>
+                                    <p class="welcome-name text-primary mb-0">@SessionManager.CurrentUser?.Nombre</p>
+                                </div>
+                            </div>
+                            <div class="welcome-body">
+                                <p class="text-muted mb-3">
+                                    Gestiona tus operaciones bancarias de forma segura y eficiente.
+                                </p>
+                                <div class="user-details bg-light rounded p-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-person-badge text-primary"></i>
+                                        <span class="text-dark">Código de empleado: <strong>@SessionManager.CurrentUser?.Codigo</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <!-- Quick Actions Section -->
+        <div class="actions-section mb-4">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10 col-xl-8">
+                    <h2 class="text-center mb-4 text-responsive-lg">Acciones Rápidas</h2>
+                    <div class="row g-3">
+                        <!-- Transacciones Card -->
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <a href="/transactions" class="card card-responsive text-decoration-none text-dark h-100 action-card">
+                                <div class="card-body d-flex align-items-center gap-3">
+                                    <div class="action-icon bg-success">
+                                        <i class="bi bi-arrow-left-right"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h3 class="h5 mb-1">Transacciones</h3>
+                                        <p class="text-muted small mb-0">Depósitos, retiros y transferencias</p>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-muted"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Reportes Card -->
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <a href="/reports" class="card card-responsive text-decoration-none text-dark h-100 action-card">
+                                <div class="card-body d-flex align-items-center gap-3">
+                                    <div class="action-icon bg-info">
+                                        <i class="bi bi-table"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h3 class="h5 mb-1">Reportes</h3>
+                                        <p class="text-muted small mb-0">Movimientos y estados de cuenta</p>
+                                    </div>
+                                    <i class="bi bi-chevron-right text-muted"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Configuración Card -->
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="card card-responsive h-100 action-card disabled">
+                                <div class="card-body d-flex align-items-center gap-3">
+                                    <div class="action-icon bg-secondary">
+                                        <i class="bi bi-gear"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h3 class="h5 mb-1">Configuración</h3>
+                                        <p class="text-muted small mb-0">Próximamente disponible</p>
+                                    </div>
+                                    <i class="bi bi-lock text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Section -->
+        <div class="status-section">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10 col-xl-8">
+                    <div class="alert alert-success d-flex align-items-center">
+                        <i class="bi bi-shield-check me-2"></i>
+                        <span>Sistema operativo - Conexión segura establecida</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Access Denied Section -->
+        <div class="access-denied-section d-flex align-items-center justify-content-center" style="min-height: 60vh;">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card card-responsive text-center">
+                    <div class="card-body p-5">
+                        <div class="access-denied-icon text-warning mb-4">
+                            <i class="bi bi-exclamation-triangle" style="font-size: 4rem;"></i>
+                        </div>
+                        <h1 class="h2 mb-3">Acceso Denegado</h1>
+                        <p class="text-muted mb-4">
+                            Por favor, inicia sesión para acceder al sistema bancario.
+                        </p>
+                        <a href="/" class="btn btn-primary btn-lg btn-responsive">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Iniciar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

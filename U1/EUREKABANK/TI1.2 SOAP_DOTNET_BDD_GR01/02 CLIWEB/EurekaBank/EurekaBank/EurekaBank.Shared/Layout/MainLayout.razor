@@ -2,52 +2,90 @@
 @inject ApiServiceManager ApiManager
 @inject SessionService SessionManager
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<div class="app-container">
+    @if (SessionManager.IsLoggedIn)
+    {
+        <!-- Top Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+            <div class="container-fluid">
+                <!-- Brand -->
+                <a class="navbar-brand d-flex align-items-center" href="/home">
+                    <i class="bi bi-bank2 me-2"></i>
+                    EurekaBank
+                </a>
 
-    <main>
-        <div class="top-row px-4">
-            <!-- ===== INICIO DE SELECTORES DE API ===== -->
-            <div class="d-flex align-items-center gap-3">
-                <select class="form-select form-select-sm" @bind="ApiManager.CurrentProtocol">
-                    <option value="@ApiProtocol.Rest">REST</option>
-                    <option value="@ApiProtocol.Soap">SOAP</option>
-                </select>
-                <select class="form-select form-select-sm" @bind="ApiManager.CurrentPlatform">
-                    <option value="@ApiPlatform.Java">Java</option>
-                    <option value="@ApiPlatform.DotNet">.NET</option>
-                </select>
+                <!-- Mobile menu toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navigation items -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="home" Match="NavLinkMatch.All">
+                                <i class="bi bi-house-door-fill me-1"></i>
+                                Inicio
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="transactions">
+                                <i class="bi bi-arrow-left-right me-1"></i>
+                                Transacciones
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="reports">
+                                <i class="bi bi-table me-1"></i>
+                                Reportes
+                            </NavLink>
+                        </li>
+                    </ul>
+
+                    <!-- API Selectors and User Info -->
+                    <div class="navbar-nav ms-auto d-flex flex-row align-items-center gap-3">
+                        <!-- API Selectors -->
+                        <div class="d-flex gap-2">
+                            <select class="form-select form-select-sm" @bind="ApiManager.CurrentProtocol" style="width: auto;">
+                                <option value="@ApiProtocol.Rest">REST</option>
+                                <option value="@ApiProtocol.Soap">SOAP</option>
+                            </select>
+                            <select class="form-select form-select-sm" @bind="ApiManager.CurrentPlatform" style="width: auto;">
+                                <option value="@ApiPlatform.Java">Java</option>
+                                <option value="@ApiPlatform.DotNet">.NET</option>
+                            </select>
+                        </div>
+
+                        <!-- User Info -->
+                        <div class="d-flex align-items-center text-white">
+                            <i class="bi bi-person-circle me-2"></i>
+                            <span class="d-none d-md-inline">@SessionManager.CurrentUser?.Nombre</span>
+                        </div>
+
+                        <!-- Logout -->
+                        <button class="btn btn-outline-light btn-sm" @onclick="Logout">
+                            <i class="bi bi-box-arrow-right me-1"></i>
+                            <span class="d-none d-md-inline">Salir</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <!-- ===== FIN DE SELECTORES DE API ===== -->
+        </nav>
 
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-        <div class="top-row px-4">
-            <!-- Selectores de API que ya teníamos -->
-            <div class="d-flex align-items-center gap-3">
-                <!-- ... -->
+        <!-- Main Content with top padding for fixed navbar -->
+        <main class="main-content-logged" style="padding-top: 76px;">
+            <div class="container-fluid py-3">
+                @Body
             </div>
-
-            <!-- ===== INICIO DE LA MODIFICACIÓN ===== -->
-            @if (SessionManager.IsLoggedIn)
-            {
-                <span class="ms-auto">
-                    Bienvenido, <strong>@SessionManager.CurrentUser?.Nombre</strong>
-                </span>
-            }
-            else
-            {
-                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank" class="ms-auto">About</a>
-            }
-            <!-- =================================== -->
-        </div>
-
-        <article class="content px-4">
+        </main>
+    }
+    else
+    {
+        <!-- Login page - no navigation -->
+        <main class="main-content-login">
             @Body
-        </article>
-    </main>
+        </main>
+    }
 </div>
 
 @code {
@@ -59,4 +97,12 @@
         
         base.OnInitialized();
     }
+
+    private void Logout()
+    {
+        SessionManager.Logout();
+        NavigationManager.NavigateTo("/", true);
+    }
+
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 }

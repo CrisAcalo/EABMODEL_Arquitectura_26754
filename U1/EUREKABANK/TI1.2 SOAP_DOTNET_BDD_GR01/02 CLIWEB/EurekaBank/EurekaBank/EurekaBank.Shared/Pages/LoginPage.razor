@@ -4,69 +4,157 @@
 @inject NavigationManager NavigationManager
 @inject SessionService SessionManager
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <h3 class="card-title text-center mb-4">Iniciar Sesión</h3>
+<div class="min-vh-100 d-flex align-items-center justify-content-center p-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="w-100" style="max-width: 440px;">
+        
+        <!-- Header Section -->
+        <div class="text-center text-white mb-4">
+            <div class="d-flex flex-column align-items-center gap-3 mb-3">
+                <div class="logo-icon">
+                    <i class="bi bi-bank2"></i>
+                </div>
+                <div>
+                    <h1 class="display-4 fw-bold mb-2">EurekaBank</h1>
+                    <p class="lead mb-0">Sistema Bancario Multiplataforma</p>
+                </div>
+            </div>
+        </div>
 
+        <!-- Login Form -->
+        <div class="card card-responsive">
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <h2 class="h3 fw-semibold mb-2">Iniciar Sesión</h2>
+                    <p class="text-muted">Ingresa tus credenciales para acceder al sistema</p>
+                </div>
+
+                <form @onsubmit:preventDefault="true">
+                    <!-- Username Field -->
                     <div class="mb-3">
-                        <label for="username" class="form-label">Usuario</label>
-                        <input id="username" class="form-control" @bind="Username" />
+                        <label for="username" class="form-label fw-semibold">
+                            <i class="bi bi-person me-2"></i>Usuario
+                        </label>
+                        <div class="input-group">
+                            <input 
+                                id="username" 
+                                type="text"
+                                class="form-control form-control-lg input-responsive" 
+                                @bind="Username"
+                                placeholder="Ingresa tu usuario"
+                                autocomplete="username"
+                                disabled="@IsBusy"
+                                maxlength="50"
+                                @onkeypress="@(async (e) => { if (e.Key == "Enter" && !IsBusy) await LoginAsync(); })" />
+                            <span class="input-group-text">
+                                <i class="bi bi-person-circle"></i>
+                            </span>
+                        </div>
                     </div>
 
+                    <!-- Password Field -->
                     <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input id="password" type="password" class="form-control" @bind="Password" />
+                        <label for="password" class="form-label fw-semibold">
+                            <i class="bi bi-lock me-2"></i>Contraseña
+                        </label>
+                        <div class="input-group">
+                            <input 
+                                id="password" 
+                                type="@(ShowPassword ? "text" : "password")"
+                                class="form-control form-control-lg input-responsive" 
+                                @bind="Password"
+                                placeholder="Ingresa tu contraseña"
+                                autocomplete="current-password"
+                                disabled="@IsBusy"
+                                maxlength="100"
+                                @onkeypress="@(async (e) => { if (e.Key == "Enter" && !IsBusy) await LoginAsync(); })" />
+                            <button 
+                                type="button" 
+                                class="btn btn-outline-secondary"
+                                @onclick="TogglePasswordVisibility"
+                                disabled="@IsBusy"
+                                title="@(ShowPassword ? "Ocultar contraseña" : "Mostrar contraseña")">
+                                <i class="bi @(ShowPassword ? "bi-eye-slash" : "bi-eye")"></i>
+                            </button>
+                        </div>
                     </div>
 
+                    <!-- Error Message -->
                     @if (!string.IsNullOrEmpty(ErrorMessage))
                     {
-                        <div class="alert alert-danger" role="alert">
-                            @ErrorMessage
+                        <div class="alert alert-danger d-flex align-items-start animate-fade-in" role="alert">
+                            <i class="bi bi-exclamation-triangle me-2 mt-1"></i>
+                            <div class="flex-grow-1">
+                                <strong>Error de autenticación</strong>
+                                <div class="mt-1">@ErrorMessage</div>
+                            </div>
+                            <button type="button" class="btn-close btn-close-sm" @onclick="ClearError"></button>
                         </div>
                     }
 
+                    <!-- Login Button -->
                     <div class="d-grid">
-                        <button class="btn btn-primary" @onclick="LoginAsync" disabled="@IsBusy">
+                        <button 
+                            type="submit"
+                            class="btn btn-primary btn-lg btn-responsive" 
+                            @onclick="LoginAsync" 
+                            disabled="@(IsBusy || string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))">
                             @if (IsBusy)
                             {
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <span> Cargando...</span>
+                                <span class="d-flex align-items-center justify-content-center gap-2">
+                                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                                    <span>Iniciando sesión...</span>
+                                </span>
                             }
                             else
                             {
-                                <span>Iniciar Sesión</span>
+                                <span class="d-flex align-items-center justify-content-center gap-2">
+                                    <i class="bi bi-box-arrow-in-right"></i>
+                                    <span>Iniciar Sesión</span>
+                                </span>
                             }
                         </button>
                     </div>
-                </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="text-center text-white-50 mt-4">
+            <div class="d-flex flex-column align-items-center gap-2">
+                <p class="mb-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-shield-check"></i>
+                    <span>Conexión segura SSL/TLS</span>
+                </p>
+                <small>v1.0.0</small>
             </div>
         </div>
     </div>
 </div>
 
 @code {
-    // Propiedades para enlazar con los campos de entrada
     private string Username { get; set; } = "";
     private string Password { get; set; } = "";
-
-    // Propiedades para controlar el estado de la UI
     private string? ErrorMessage { get; set; }
     private bool IsBusy { get; set; }
+    private bool ShowPassword { get; set; } = false;
 
-    // En el bloque @code de LoginPage.razor
     private async Task LoginAsync()
     {
+        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+        {
+            ErrorMessage = "Por favor, completa todos los campos requeridos.";
+            return;
+        }
+
         IsBusy = true;
         ErrorMessage = null;
+        StateHasChanged();
 
         try
         {
             var request = new Core.Models.Requests.LoginRequest
             {
-                Usuario = Username,
+                Usuario = Username.Trim(),
                 Clave = Password
             };
 
@@ -74,26 +162,50 @@
 
             if (response.Exitoso && response.Datos != null)
             {
-                // ===== INICIO DE LA MODIFICACIÓN =====
-                // ¡Guardamos la información del usuario en el servicio de sesión!
                 SessionManager.Login(response.Datos);
-                // ===================================
-
-                // Navegamos a la página de bienvenida (crearemos esta página a continuación)
-                NavigationManager.NavigateTo("/home");
+                NavigationManager.NavigateTo("/home", true);
             }
             else
             {
-                ErrorMessage = response.Mensaje;
+                ErrorMessage = response.Mensaje ?? "Credenciales incorrectas. Por favor, verifica tu usuario y contraseña.";
             }
         }
-        catch (Exception)
+        catch (HttpRequestException)
         {
-            ErrorMessage = "Ocurrió un error inesperado al intentar conectar con el servidor.";
+            ErrorMessage = "No se puede conectar con el servidor. Verifica tu conexión a internet.";
+        }
+        catch (TaskCanceledException)
+        {
+            ErrorMessage = "La petición ha tardado demasiado. Inténtalo de nuevo.";
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = "Ocurrió un error inesperado. Por favor, inténtalo más tarde.";
+            System.Diagnostics.Debug.WriteLine($"Login error: {ex.Message}");
         }
         finally
         {
             IsBusy = false;
+            StateHasChanged();
+        }
+    }
+
+    private void TogglePasswordVisibility()
+    {
+        ShowPassword = !ShowPassword;
+    }
+
+    private void ClearError()
+    {
+        ErrorMessage = null;
+    }
+
+    protected override void OnInitialized()
+    {
+        // Si ya está logueado, redirigir al home
+        if (SessionManager.IsLoggedIn)
+        {
+            NavigationManager.NavigateTo("/home", true);
         }
     }
 }

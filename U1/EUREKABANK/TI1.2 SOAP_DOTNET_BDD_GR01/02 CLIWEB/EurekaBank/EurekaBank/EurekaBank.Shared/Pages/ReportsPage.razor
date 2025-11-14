@@ -4,92 +4,249 @@
 @inject SessionService SessionManager
 @inject NavigationManager NavigationManager
 
-<div class="container mt-4">
+<div class="container-responsive">
     @if (SessionManager.IsLoggedIn)
     {
-        <h3>Reporte de Movimientos</h3>
-        <p>Ingrese un código de cuenta para ver sus últimos movimientos.</p>
-
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <div class="input-group mb-3">
-                    <input class="form-control" @bind="CodigoCuenta" placeholder="Ej: 00100001" />
-                    <button class="btn btn-primary" @onclick="CargarMovimientos" disabled="@IsBusy">
-                        @if (IsBusy)
-                        {
-                            <span class="spinner-border spinner-border-sm" role="status"></span>
-                        }
-                        else
-                        {
-                            <span class="bi bi-search"></span>
-                        }
-                        Buscar
-                    </button>
+        <!-- Header Section -->
+        <div class="page-header mb-4">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <h1 class="text-responsive-lg mb-2">
+                        <i class="bi bi-table me-2"></i>
+                        Reporte de Movimientos
+                    </h1>
+                    <p class="text-muted text-responsive-md">
+                        Consulta los movimientos bancarios ingresando el código de cuenta
+                    </p>
                 </div>
             </div>
         </div>
 
+        <!-- Search Section -->
+        <div class="search-section mb-4">
+            <div class="card card-responsive">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-search"></i>
+                        <span class="fw-semibold">Buscar Movimientos</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="accountCode" class="form-label">Código de Cuenta</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text">
+                                    <i class="bi bi-credit-card"></i>
+                                </span>
+                                <input 
+                                    id="accountCode"
+                                    class="form-control input-responsive" 
+                                    @bind="CodigoCuenta" 
+                                    placeholder="Ejemplo: 00100001"
+                                    maxlength="8"
+                                    @onkeypress="@(async (e) => { if (e.Key == "Enter" && !IsBusy) await CargarMovimientos(); })" />
+                                <button 
+                                    class="btn btn-primary btn-responsive" 
+                                    @onclick="CargarMovimientos" 
+                                    disabled="@(IsBusy || string.IsNullOrWhiteSpace(CodigoCuenta))"
+                                    type="button">
+                                    @if (IsBusy)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                        <span class="d-none d-sm-inline">Buscando...</span>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-search me-2"></i>
+                                        <span class="d-none d-sm-inline">Buscar</span>
+                                    }
+                                </button>
+                            </div>
+                            <div class="form-text">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Ingresa el código de 8 dígitos de la cuenta bancaria
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
         @if (IsBusy)
         {
-            <div class="d-flex justify-content-center mt-4">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Cargando...</span>
+            <div class="text-center my-5">
+                <div class="card card-responsive d-inline-block">
+                    <div class="card-body text-center p-5">
+                        <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+                        <h4 class="mb-2">Cargando movimientos...</h4>
+                        <p class="text-muted mb-0">Por favor espera mientras consultamos la información</p>
+                    </div>
                 </div>
             </div>
         }
-        else if (Movimientos != null && Movimientos.Any())
+
+        <!-- Results Section -->
+        @if (!IsBusy && Movimientos != null && Movimientos.Any())
         {
-            <div class="table-responsive mt-4">
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th># Mov.</th>
-                            <th>Fecha</th>
-                            <th>Tipo</th>
-                            <th>Acción</th>
-                            <th class="text-end">Importe</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="results-section">
+                <!-- Results Header -->
+                <div class="alert alert-info d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <strong>Movimientos Encontrados</strong>
+                    </div>
+                    <span class="badge bg-info">@Movimientos.Count() registro(s)</span>
+                </div>
+
+                <!-- Desktop Table -->
+                <div class="d-none d-lg-block">
+                    <div class="card card-responsive">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col"># Mov.</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Acción</th>
+                                        <th scope="col" class="text-end">Importe</th>
+                                        <th scope="col">Empleado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var mov in Movimientos)
+                                    {
+                                        <tr>
+                                            <td><span class="badge bg-primary">@mov.NumeroMovimiento</span></td>
+                                            <td>@mov.Fecha.ToString("dd/MM/yyyy")</td>
+                                            <td>@mov.TipoMovimiento</td>
+                                            <td>
+                                                <span class="badge @GetActionClass(mov.Accion)">
+                                                    <i class="bi @GetActionIcon(mov.Accion) me-1"></i>
+                                                    @mov.Accion
+                                                </span>
+                                            </td>
+                                            <td class="text-end fw-bold">@mov.Importe.ToString("C")</td>
+                                            <td>@mov.EmpleadoNombre</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Cards -->
+                <div class="d-lg-none">
+                    <div class="row g-3">
                         @foreach (var mov in Movimientos)
                         {
-                            <tr>
-                                <td>@mov.NumeroMovimiento</td>
-                                <td>@mov.Fecha.ToString("dd/MM/yyyy")</td>
-                                <td>@mov.TipoMovimiento</td>
-                                <td>
-                                    <span class="badge @(mov.Accion == "INGRESO" ? "bg-success" : "bg-danger")">
-                                        @mov.Accion
-                                    </span>
-                                </td>
-                                <td class="text-end">@mov.Importe.ToString("C")</td>
-                            </tr>
+                            <div class="col-12">
+                                <div class="card card-responsive">
+                                    <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                                        <span class="badge bg-primary">#@mov.NumeroMovimiento</span>
+                                        <small class="text-muted">@mov.Fecha.ToString("dd/MM/yyyy")</small>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-2">
+                                            <div class="col-6">
+                                                <small class="text-muted d-block">Tipo:</small>
+                                                <span class="fw-medium">@mov.TipoMovimiento</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block">Acción:</small>
+                                                <span class="badge @GetActionClass(mov.Accion)">@mov.Accion</span>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="bg-light rounded p-2 d-flex justify-content-between align-items-center">
+                                                    <small class="text-muted">Importe:</small>
+                                                    <span class="fw-bold fs-5 @GetAmountClass(mov.Accion)">@mov.Importe.ToString("C")</span>
+                                                </div>
+                                            </div>
+                                            @if (!string.IsNullOrEmpty(mov.EmpleadoNombre))
+                                            {
+                                                <div class="col-12">
+                                                    <small class="text-muted d-block">
+                                                        <i class="bi bi-person me-1"></i>Empleado:
+                                                    </small>
+                                                    <span class="text-dark">@mov.EmpleadoNombre</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         }
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </div>
         }
-        else if (HaBuscado && !string.IsNullOrEmpty(ErrorMessage))
+
+        <!-- Error State -->
+        @if (!IsBusy && HaBuscado && !string.IsNullOrEmpty(ErrorMessage))
         {
-            <div class="alert alert-danger mt-4" role="alert">
-                <i class="bi bi-exclamation-triangle"></i> @ErrorMessage
+            <div class="text-center my-5">
+                <div class="card card-responsive border-danger">
+                    <div class="card-body text-center p-4">
+                        <div class="text-danger mb-3">
+                            <i class="bi bi-exclamation-triangle" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="text-danger mb-2">Error al cargar movimientos</h4>
+                        <p class="text-muted">@ErrorMessage</p>
+                        <button class="btn btn-outline-primary btn-responsive" @onclick="() => { ErrorMessage = null; HaBuscado = false; }">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Intentar de nuevo
+                        </button>
+                    </div>
+                </div>
             </div>
         }
-        else if (HaBuscado)
+
+        <!-- No Results State -->
+        @if (!IsBusy && HaBuscado && string.IsNullOrEmpty(ErrorMessage) && (Movimientos == null || !Movimientos.Any()))
         {
-            <div class="alert alert-info mt-4" role="alert">
-                <i class="bi bi-info-circle"></i> No se encontraron movimientos para la cuenta especificada.
+            <div class="text-center my-5">
+                <div class="card card-responsive">
+                    <div class="card-body text-center p-4">
+                        <div class="text-muted mb-3">
+                            <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="mb-2">No hay movimientos</h4>
+                        <p class="text-muted">
+                            No se encontraron movimientos para la cuenta <strong>@CodigoCuenta</strong>
+                        </p>
+                        @if (!string.IsNullOrEmpty(DebugInfo))
+                        {
+                            <div class="mt-2">
+                                <small class="text-muted">@DebugInfo</small>
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
         }
     }
     else
     {
-        <div class="alert alert-warning mt-4" role="alert">
-            <i class="bi bi-exclamation-triangle"></i> Por favor, inicia sesión para acceder a los reportes.
+        <!-- Unauthorized Access -->
+        <div class="text-center" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+            <div class="card card-responsive">
+                <div class="card-body text-center p-5">
+                    <div class="text-warning mb-4">
+                        <i class="bi bi-shield-exclamation" style="font-size: 4rem;"></i>
+                    </div>
+                    <h2 class="mb-3">Acceso Restringido</h2>
+                    <p class="text-muted mb-4">
+                        Necesitas iniciar sesión para acceder a los reportes del sistema bancario.
+                    </p>
+                    <button class="btn btn-primary btn-lg btn-responsive" @onclick="IrALogin">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                        Iniciar Sesión
+                    </button>
+                </div>
+            </div>
         </div>
-        <button class="btn btn-primary" @onclick="IrALogin">
-            Ir a Iniciar Sesión
-        </button>
     }
 </div>
 
@@ -97,8 +254,9 @@
     private string CodigoCuenta { get; set; } = "";
     private IEnumerable<MovementDto>? Movimientos { get; set; }
     private bool IsBusy { get; set; }
-    private bool HaBuscado { get; set; } // Para saber si ya se hizo una búsqueda
+    private bool HaBuscado { get; set; }
     private string? ErrorMessage { get; set; }
+    private string? DebugInfo { get; set; }
 
     private async Task CargarMovimientos()
     {
@@ -110,17 +268,34 @@
 
         IsBusy = true;
         HaBuscado = true;
-        Movimientos = null; // Limpiar resultados anteriores
-        ErrorMessage = null; // Limpiar errores anteriores
+        Movimientos = null;
+        ErrorMessage = null;
+        DebugInfo = null;
         StateHasChanged();
 
         try
         {
+            System.Diagnostics.Debug.WriteLine($"=== REPORTS PAGE ===");
+            System.Diagnostics.Debug.WriteLine($"Starting search for account: {CodigoCuenta}");
+
             Movimientos = await ReportService.ObtenerMovimientosAsync(CodigoCuenta);
+            
+            var count = Movimientos?.Count() ?? 0;
+            DebugInfo = $"Service returned {count} movements";
+            
+            System.Diagnostics.Debug.WriteLine($"ReportsPage: Received {count} movements");
+            
+            if (count == 0)
+            {
+                DebugInfo += " - Check debug console for more details";
+            }
         }
         catch (Exception ex)
         {
             ErrorMessage = "Error al obtener los movimientos: " + ex.Message;
+            DebugInfo = $"Exception: {ex.GetType().Name} - {ex.Message}";
+            System.Diagnostics.Debug.WriteLine($"ReportsPage Exception: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
         }
         finally
         {
@@ -132,5 +307,35 @@
     private void IrALogin()
     {
         NavigationManager.NavigateTo("/");
+    }
+
+    private string GetActionClass(string? accion)
+    {
+        return accion?.ToUpper() switch
+        {
+            "INGRESO" => "bg-success",
+            "EGRESO" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    private string GetActionIcon(string? accion)
+    {
+        return accion?.ToUpper() switch
+        {
+            "INGRESO" => "bi-arrow-down-circle",
+            "EGRESO" => "bi-arrow-up-circle",
+            _ => "bi-circle"
+        };
+    }
+
+    private string GetAmountClass(string? accion)
+    {
+        return accion?.ToUpper() switch
+        {
+            "INGRESO" => "text-success",
+            "EGRESO" => "text-danger",
+            _ => "text-dark"
+        };
     }
 }

@@ -1,0 +1,419 @@
+/* EurekaBank - Responsive Styles */
+
+/* Variables CSS para temas */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --dark-color: #212529;
+    --light-color: #f8f9fa;
+    --navbar-height: 76px;
+}
+
+/* Reset y base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-color);
+    overflow-x: hidden;
+}
+
+/* ==================== MAIN LAYOUT STYLES ==================== */
+
+/* App Container */
+.app-container {
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Main Content Logged In */
+.main-content-logged {
+    min-height: calc(100vh - var(--navbar-height));
+    background-color: var(--light-color);
+}
+
+/* Main Content Login */
+.main-content-login {
+    min-height: 100vh;
+}
+
+/* ==================== NAVBAR CUSTOMIZATIONS ==================== */
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 0.25rem;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+    transform: translateY(-1px);
+}
+
+.navbar-nav .nav-link.active {
+    background-color: rgba(255,255,255,0.2);
+    font-weight: 600;
+}
+
+/* Form selectors in navbar */
+.navbar .form-select-sm {
+    min-width: 80px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.navbar .form-select-sm:focus {
+    border-color: rgba(255,255,255,0.5);
+    box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.25);
+    background-color: rgba(255,255,255,0.15);
+}
+
+.navbar .form-select-sm option {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* ==================== HOME PAGE STYLES ==================== */
+
+.welcome-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), #0056b3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #212529;
+}
+
+.welcome-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.action-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.action-card {
+    transition: all 0.3s ease;
+}
+
+.action-card:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.action-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ==================== LOGIN PAGE STYLES ==================== */
+
+.logo-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-close-sm {
+    font-size: 0.8rem;
+    padding: 0.25rem;
+}
+
+/* ==================== COMMON RESPONSIVE UTILITIES ==================== */
+
+/* Card styles */
+.card-responsive {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+    background: white;
+}
+
+/* Button styles */
+.btn-responsive {
+    min-height: 44px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Input styles */
+.input-responsive {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.input-responsive:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+    outline: none;
+}
+
+/* Spacing utilities */
+.spacing-responsive {
+    padding: 1rem;
+}
+
+/* Text responsive */
+.text-responsive-lg {
+    font-size: 1.25rem;
+}
+
+.text-responsive-md {
+    font-size: 1.1rem;
+}
+
+.text-responsive-sm {
+    font-size: 0.9rem;
+}
+
+/* Container responsive */
+.container-responsive {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Animation utilities */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-down {
+    animation: slideDown 0.3s ease;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .welcome-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .welcome-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .welcome-title {
+        font-size: 2rem;
+    }
+
+    .welcome-name {
+        font-size: 1.1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+
+    .main-content-logged {
+        padding-top: 0;
+    }
+
+    .main-content-logged .container-fluid {
+        padding: 1rem 0.5rem;
+    }
+
+    .spacing-responsive {
+        padding: 0.75rem;
+    }
+
+    .text-responsive-lg {
+        font-size: 1.1rem;
+    }
+    
+    .text-responsive-md {
+        font-size: 1rem;
+    }
+    
+    .text-responsive-sm {
+        font-size: 0.8rem;
+    }
+
+    .container-responsive {
+        padding: 0 0.75rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem !important;
+    }
+    
+    .lead {
+        font-size: 1rem;
+    }
+
+    .navbar .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 0.5rem !important;
+    }
+
+    .navbar .form-select-sm {
+        font-size: 0.75rem;
+        min-width: 70px;
+    }
+
+    .spacing-responsive {
+        padding: 0.5rem;
+    }
+
+    .container-responsive {
+        padding: 0 0.5rem;
+    }
+}
+
+/* Touch optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn-responsive {
+        min-height: 48px;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .input-responsive {
+        min-height: 48px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .navbar-nav .nav-link {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .animate-fade-in,
+    .animate-slide-down {
+        animation: none;
+    }
+
+    .navbar-nav .nav-link:hover {
+        transform: none;
+    }
+
+    .action-card:hover:not(.disabled) {
+        transform: none;
+    }
+}
+
+/* Focus indicators */
+.focus-visible:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .card-responsive {
+        border: 2px solid #000;
+    }
+
+    .navbar {
+        border-bottom: 2px solid #000;
+    }
+}
+
+/* PWA optimizations */
+@media (display-mode: standalone) {
+    .navbar {
+        padding-top: env(safe-area-inset-top, 0);
+    }
+
+    .main-content-logged {
+        padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+}
+
+/* Dark mode support (future) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light-color: #1a1a1a;
+        --dark-color: #ffffff;
+    }
+}
