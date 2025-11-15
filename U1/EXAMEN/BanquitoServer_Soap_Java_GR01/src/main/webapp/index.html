@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco BanQuito - Módulo de Crédito</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .status {
+            background: #10b981;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .endpoint {
+            background: #f8fafc;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+        
+        .method.get {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .method.post {
+            background: #10b981;
+            color: white;
+        }
+        
+        .url {
+            font-family: 'Courier New', monospace;
+            color: #374151;
+            font-weight: bold;
+        }
+        
+        .description {
+            margin-top: 10px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .example {
+            background: #1e293b;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+        
+        .config-info {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .config-info h3 {
+            color: #f59e0b;
+            margin-bottom: 10px;
+        }
+        
+        .config-item {
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Banco BanQuito</h1>
+        <div class="subtitle">Módulo de Crédito - Web Services RESTful</div>
+        
+        <div class="status">
+            ✓ Servidor Activo
+        </div>
+        
+        <div class="section">
+            <h2>📋 Servicios Disponibles</h2>
+            
+            <div class="endpoint">
+                <div>
+                    <span class="method get">GET</span>
+                    <span class="url">/api/credito/validar/{cedula}</span>
+                </div>
+                <div class="description">
+                    <strong>Validar Sujeto de Crédito</strong><br>
+                    Verifica si una persona es sujeto de crédito según las reglas del banco.
+                </div>
+                <div class="example">
+GET http://localhost:8080/banquito-server/api/credito/validar/1234567890
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <div>
+                    <span class="method get">GET</span>
+                    <span class="url">/api/credito/monto-maximo/{cedula}</span>
+                </div>
+                <div class="description">
+                    <strong>Obtener Monto Máximo de Crédito</strong><br>
+                    Calcula el monto máximo de crédito que puede obtener una persona.
+                </div>
+                <div class="example">
+GET http://localhost:8080/banquito-server/api/credito/monto-maximo/1234567890
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <div>
+                    <span class="method post">POST</span>
+                    <span class="url">/api/credito/otorgar</span>
+                </div>
+                <div class="description">
+                    <strong>Otorgar Crédito</strong><br>
+                    Aprueba y otorga un crédito, generando la tabla de amortización completa.
+                </div>
+                <div class="example">
+POST http://localhost:8080/banquito-server/api/credito/otorgar
+Content-Type: application/json
+
+{
+  "cedula": "1234567890",
+  "precioElectrodomestico": 1500.00,
+  "numeroCuotas": 12
+}
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <div>
+                    <span class="method get">GET</span>
+                    <span class="url">/api/credito/tabla-amortizacion/{numeroCredito}</span>
+                </div>
+                <div class="description">
+                    <strong>Obtener Tabla de Amortización</strong><br>
+                    Retorna la tabla de amortización de un crédito otorgado.
+                </div>
+                <div class="example">
+GET http://localhost:8080/banquito-server/api/credito/tabla-amortizacion/CRE1234567890
+                </div>
+            </div>
+        </div>
+        
+        <div class="config-info">
+            <h3>⚙️ Configuración Importante</h3>
+            <p style="margin-bottom: 15px;">
+                Para que los clientes en otras computadoras puedan acceder al servidor, 
+                debe editar el archivo:
+            </p>
+            <div class="config-item">
+                <strong>Archivo:</strong> src/main/resources/application.properties
+            </div>
+            <div class="config-item">
+                <strong>Parámetro:</strong> server.ip=<span style="color: #f59e0b;">TU_IP_LOCAL</span>
+            </div>
+            <p style="margin-top: 15px;">
+                Cambie TU_IP_LOCAL por la dirección IP de esta computadora en la red local 
+                (ejemplo: 192.168.1.100). Esta configuración centralizada permite que todos 
+                los clientes se conecten al servidor cambiando solo un valor.
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>🔧 Tecnologías Utilizadas</h2>
+            <ul style="list-style-position: inside; color: #6b7280; line-height: 2;">
+                <li>Java 17</li>
+                <li>Jakarta EE 10 (JAX-RS, JPA, CDI, EJB)</li>
+                <li>Payara Server 6</li>
+                <li>PostgreSQL</li>
+                <li>Arquitectura MVC</li>
+                <li>RESTful Web Services</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>Banco BanQuito - Módulo de Crédito</p>
+            <p>Desarrollado por Javi | Escuela Politécnica Nacional</p>
+        </div>
+    </div>
+</body>
+</html>
