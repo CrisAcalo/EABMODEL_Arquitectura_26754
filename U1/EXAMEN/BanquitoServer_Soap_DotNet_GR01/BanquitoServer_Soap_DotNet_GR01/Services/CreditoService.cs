@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using BanquitoServer_Soap_DotNet_GR01.Constants;
 using BanquitoServer_Soap_DotNet_GR01.DataAccess;
 using BanquitoServer_Soap_DotNet_GR01.DataAccess.Repositories;
 using BanquitoServer_Soap_DotNet_GR01.Models;
@@ -28,10 +28,10 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
         /// </summary>
         public ResultadoCredito OtorgarCredito(string cedula, decimal montoCredito, int numeroCuotas)
         {
-            // Obtener configuración
-            int plazoMin = int.Parse(ConfigurationManager.AppSettings["CreditoPlazoMinimo"] ?? "3");
-            int plazoMax = int.Parse(ConfigurationManager.AppSettings["CreditoPlazoMaximo"] ?? "24");
-            decimal tasaAnual = decimal.Parse(ConfigurationManager.AppSettings["CreditoTasaAnual"] ?? "0.16");
+            // Obtener configuración desde AppConfig
+            int plazoMin = AppConfig.CreditoPlazoMinimo;
+            int plazoMax = AppConfig.CreditoPlazoMaximo;
+            decimal tasaAnual = AppConfig.CreditoTasaAnual;
 
             // Validar plazo
             if (numeroCuotas < plazoMin || numeroCuotas > plazoMax)
@@ -39,7 +39,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
                 return new ResultadoCredito
                 {
                     Exito = false,
-                    Mensaje = $"El número de cuotas debe estar entre {plazoMin} y {plazoMax}",
+                    Mensaje = string.Format(ErrorMessages.PlazoInvalido, plazoMin, plazoMax),
                     Credito = null,
                     TablaAmortizacion = null
                 };
@@ -65,7 +65,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
                 return new ResultadoCredito
                 {
                     Exito = false,
-                    Mensaje = $"El monto solicitado (${montoCredito}) supera el máximo autorizado (${montoMaximoInfo.MontoMaximo})",
+                    Mensaje = string.Format(ErrorMessages.MontoSuperaMaximo, montoCredito, montoMaximoInfo.MontoMaximo),
                     Credito = null,
                     TablaAmortizacion = null
                 };
@@ -104,7 +104,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
             return new ResultadoCredito
             {
                 Exito = true,
-                Mensaje = "Crédito otorgado exitosamente",
+                Mensaje = ErrorMessages.CreditoOtorgado,
                 Credito = credito,
                 TablaAmortizacion = tablaAmortizacion
             };
@@ -128,8 +128,8 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
         /// </summary>
         private string GenerarNumeroCredito()
         {
-            long timestamp = DateTime.Now.Ticks;
-            return $"CRE{timestamp}";
+            // Formato: CRE + yyyyMMddHHmmss = 17 caracteres (dentro del límite de 20)
+            return $"CRE{DateTime.Now:yyyyMMddHHmmss}";
         }
     }
 

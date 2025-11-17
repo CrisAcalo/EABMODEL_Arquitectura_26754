@@ -73,7 +73,7 @@ namespace Comercializadora_Soap_DotNet_GR01.DTOs
         public string FormaPago { get; set; } // EFECTIVO o CREDITO
 
         [DataMember]
-        public int NumeroCuotas { get; set; } // Solo para crédito
+        public string NumeroCredito { get; set; } // Solo para CREDITO - Obtenido desde BanQuito
 
         [DataMember]
         public List<ItemFacturaDTO> Items { get; set; }

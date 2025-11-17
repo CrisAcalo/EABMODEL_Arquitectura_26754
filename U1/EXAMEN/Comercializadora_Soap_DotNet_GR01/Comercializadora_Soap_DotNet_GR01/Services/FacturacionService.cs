@@ -4,7 +4,6 @@ using System.Linq;
 using Comercializadora_Soap_DotNet_GR01.DataAcces.Repositories;
 using Comercializadora_Soap_DotNet_GR01.DTOs;
 using Comercializadora_Soap_DotNet_GR01.Models;
-using Comercializadora_Soap_DotNet_GR01.BanquitoSoap; // TODO: Agregar Service Reference
 
 namespace Comercializadora_Soap_DotNet_GR01.Services
 {
@@ -12,13 +11,11 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
     {
         private readonly ProductoRepository _productoRepository;
         private readonly FacturaRepository _facturaRepository;
-        private readonly CreditoSoapServiceClient _banquitoClient; // TODO: Cliente SOAP BanQuito
 
         public FacturacionService()
         {
             _productoRepository = new ProductoRepository();
             _facturaRepository = new FacturaRepository();
-            _banquitoClient = new CreditoSoapServiceClient(); // TODO
         }
 
         /// <summary>
@@ -97,7 +94,8 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
         }
 
         /// <summary>
-        /// Genera una factura con pago a crédito (consume servicio SOAP BanQuito)
+        /// Genera una factura con pago a crédito
+        /// El cliente debe enviar el NumeroCredito obtenido desde BanQuito
         /// </summary>
         public FacturaDTO GenerarFacturaCredito(SolicitudFacturaDTO solicitud)
         {
@@ -113,13 +111,24 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
                 if (string.IsNullOrWhiteSpace(solicitud.NombreCliente))
                     throw new Exception("El nombre del cliente es requerido");
 
-                if (solicitud.NumeroCuotas < 3 || solicitud.NumeroCuotas > 24)
-                    throw new Exception("El número de cuotas debe estar entre 3 y 24");
+                if (string.IsNullOrWhiteSpace(solicitud.NumeroCredito))
+                    throw new Exception("El número de crédito es requerido. Debe obtenerlo desde el servicio de BanQuito.");
 
-                // Calcular monto total de la compra
-                decimal montoTotal = 0;
-                var productosFactura = new List<(Producto producto, int cantidad)>();
+                // Crear factura
+                var factura = new Factura
+                {
+                    NumeroFactura = _facturaRepository.GenerarNumeroFactura(),
+                    CedulaCliente = solicitud.CedulaCliente,
+                    NombreCliente = solicitud.NombreCliente,
+                    FormaPago = "CREDITO",
+                    NumeroCredito = solicitud.NumeroCredito,
+                    FechaEmision = DateTime.Now
+                };
 
+                decimal subtotal = 0;
+                var detalles = new List<DetalleFactura>();
+
+                // Procesar cada item
                 foreach (var item in solicitud.Items)
                 {
                     var producto = _productoRepository.GetById(item.ProductoId);
@@ -129,80 +138,27 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
                     if (!_productoRepository.TieneStock(item.ProductoId, item.Cantidad))
                         throw new Exception($"Stock insuficiente para el producto {producto.Nombre}");
 
-                    montoTotal += producto.Precio * item.Cantidad;
-                    productosFactura.Add((producto, item.Cantidad));
-                }
+                    var subtotalItem = producto.Precio * item.Cantidad;
+                    subtotal += subtotalItem;
 
-                // ========================================
-                // CONSUMIR SERVICIOS SOAP DE BANQUITO
-                // ========================================
-
-                // 1. Validar si el cliente es sujeto de crédito
-                var validacionCredito = _banquitoClient.ValidarSujetoCredito(solicitud.CedulaCliente);
-                if (!validacionCredito.EsValido)
-                {
-                    throw new Exception($"Cliente no es sujeto de crédito: {validacionCredito.Mensaje}");
-                }
-
-                // 2. Obtener monto máximo de crédito
-                var montoMaximoResponse = _banquitoClient.ObtenerMontoMaximo(solicitud.CedulaCliente);
-                if (montoTotal > montoMaximoResponse.MontoMaximo)
-                {
-                    throw new Exception($"El monto de la compra (${montoTotal:N2}) excede el monto máximo aprobado (${montoMaximoResponse.MontoMaximo:N2})");
-                }
-
-                // 3. Otorgar el crédito
-                var solicitudCredito = new SolicitudCreditoDTO
-                {
-                    Cedula = solicitud.CedulaCliente,
-                    PrecioElectrodomestico = montoTotal,
-                    NumeroCuotas = solicitud.NumeroCuotas
-                };
-
-                var respuestaCredito = _banquitoClient.OtorgarCredito(solicitudCredito);
-                if (!respuestaCredito.Exito)
-                {
-                    throw new Exception($"Error al otorgar crédito: {respuestaCredito.Mensaje}");
-                }
-
-                string numeroCredito = respuestaCredito.NumeroCredito;
-
-                // ========================================
-                // CREAR FACTURA
-                // ========================================
-
-                var factura = new Factura
-                {
-                    NumeroFactura = _facturaRepository.GenerarNumeroFactura(),
-                    CedulaCliente = solicitud.CedulaCliente,
-                    NombreCliente = solicitud.NombreCliente,
-                    FormaPago = "CREDITO",
-                    Subtotal = montoTotal,
-                    Descuento = 0, // No hay descuento en crédito
-                    Total = montoTotal,
-                    NumeroCredito = numeroCredito,
-                    FechaEmision = DateTime.Now
-                };
-
-                var detalles = new List<DetalleFactura>();
-
-                // Crear detalles y actualizar stock
-                foreach (var (producto, cantidad) in productosFactura)
-                {
                     var detalle = new DetalleFactura
                     {
-                        ProductoId = producto.ProductoId,
-                        Cantidad = cantidad,
+                        ProductoId = item.ProductoId,
+                        Cantidad = item.Cantidad,
                         PrecioUnitario = producto.Precio,
-                        Subtotal = producto.Precio * cantidad
+                        Subtotal = subtotalItem
                     };
 
                     detalles.Add(detalle);
 
                     // Actualizar stock
-                    _productoRepository.ActualizarStock(producto.ProductoId, cantidad);
+                    _productoRepository.ActualizarStock(item.ProductoId, item.Cantidad);
                 }
 
+                // Crédito NO tiene descuento
+                factura.Subtotal = subtotal;
+                factura.Descuento = 0;
+                factura.Total = subtotal;
                 factura.Detalles = detalles;
 
                 // Guardar factura

@@ -1,5 +1,5 @@
 using System;
-using System.Configuration;
+using BanquitoServer_Soap_DotNet_GR01.Constants;
 using BanquitoServer_Soap_DotNet_GR01.DataAccess;
 using BanquitoServer_Soap_DotNet_GR01.DataAccess.Repositories;
 using BanquitoServer_Soap_DotNet_GR01.Models;
@@ -41,7 +41,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
                 return new ResultadoValidacion
                 {
                     EsValido = false,
-                    Mensaje = "La persona no es cliente del banco",
+                    Mensaje = ErrorMessages.ClienteNoEncontrado,
                     Cliente = null
                 };
             }
@@ -52,7 +52,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
                 return new ResultadoValidacion
                 {
                     EsValido = false,
-                    Mensaje = "El cliente no tiene depósitos en el último mes",
+                    Mensaje = ErrorMessages.SinDepositosRecientes,
                     Cliente = null
                 };
             }
@@ -67,7 +67,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
                     return new ResultadoValidacion
                     {
                         EsValido = false,
-                        Mensaje = $"El cliente casado debe tener al menos 25 años. Edad actual: {edad}",
+                        Mensaje = string.Format(ErrorMessages.EdadMinimaCasado, edad),
                         Cliente = null
                     };
                 }
@@ -79,7 +79,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
                 return new ResultadoValidacion
                 {
                     EsValido = false,
-                    Mensaje = "El cliente ya tiene un crédito activo",
+                    Mensaje = ErrorMessages.CreditoActivo,
                     Cliente = null
                 };
             }
@@ -88,7 +88,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
             return new ResultadoValidacion
             {
                 EsValido = true,
-                Mensaje = "El cliente es sujeto de crédito",
+                Mensaje = ErrorMessages.ClienteValido,
                 Cliente = cliente
             };
         }
@@ -119,9 +119,9 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
             decimal promedioDepositos = _movimientoRepository.PromedioDepositosPorPeriodo(cedula, fechaInicio, fechaFin);
             decimal promedioRetiros = _movimientoRepository.PromedioRetirosPorPeriodo(cedula, fechaInicio, fechaFin);
 
-            // Obtener configuración
-            decimal porcentaje = decimal.Parse(ConfigurationManager.AppSettings["CreditoPorcentajeCapacidad"] ?? "0.60");
-            int multiplicador = int.Parse(ConfigurationManager.AppSettings["CreditoMultiplicador"] ?? "9");
+            // Obtener configuración desde AppConfig
+            decimal porcentaje = AppConfig.CreditoPorcentajeCapacidad;
+            int multiplicador = AppConfig.CreditoMultiplicador;
 
             // Calcular monto máximo
             decimal diferencia = promedioDepositos - promedioRetiros;
@@ -133,7 +133,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.BusinessLogic
                 MontoMaximo = montoMaximo,
                 PromedioDepositos = Math.Round(promedioDepositos, 2),
                 PromedioRetiros = Math.Round(promedioRetiros, 2),
-                Mensaje = "Monto máximo calculado exitosamente"
+                Mensaje = ErrorMessages.MontoMaximoCalculado
             };
         }
     }

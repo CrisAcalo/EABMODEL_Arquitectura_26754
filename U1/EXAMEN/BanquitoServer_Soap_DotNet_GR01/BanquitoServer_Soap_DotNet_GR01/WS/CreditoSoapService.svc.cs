@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BanquitoServer_Soap_DotNet_GR01.BusinessLogic;
+using BanquitoServer_Soap_DotNet_GR01.Constants;
 using BanquitoServer_Soap_DotNet_GR01.DTOs;
+using BanquitoServer_Soap_DotNet_GR01.Validators;
 
 namespace BanquitoServer_Soap_DotNet_GR01.WS
 {
@@ -30,6 +32,18 @@ namespace BanquitoServer_Soap_DotNet_GR01.WS
         {
             try
             {
+                // Validar formato de cédula
+                if (!CedulaValidator.Validar(cedula, out string mensajeError))
+                {
+                    return new ValidacionCreditoDTO
+                    {
+                        EsValido = false,
+                        Mensaje = mensajeError,
+                        Cedula = cedula,
+                        NombreCompleto = null
+                    };
+                }
+
                 var resultado = _validacionService.ValidarSujetoCredito(cedula);
 
                 return new ValidacionCreditoDTO
@@ -45,7 +59,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.WS
                 return new ValidacionCreditoDTO
                 {
                     EsValido = false,
-                    Mensaje = $"Error interno: {ex.Message}",
+                    Mensaje = string.Format(ErrorMessages.ErrorInterno, ex.Message),
                     Cedula = cedula,
                     NombreCompleto = null
                 };
@@ -61,6 +75,19 @@ namespace BanquitoServer_Soap_DotNet_GR01.WS
         {
             try
             {
+                // Validar formato de cédula
+                if (!CedulaValidator.Validar(cedula, out string mensajeError))
+                {
+                    return new MontoMaximoCreditoDTO
+                    {
+                        Cedula = cedula,
+                        MontoMaximo = 0,
+                        PromedioDepositos = 0,
+                        PromedioRetiros = 0,
+                        Mensaje = mensajeError
+                    };
+                }
+
                 var resultado = _validacionService.CalcularMontoMaximo(cedula);
 
                 return new MontoMaximoCreditoDTO
@@ -80,7 +107,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.WS
                     MontoMaximo = 0,
                     PromedioDepositos = 0,
                     PromedioRetiros = 0,
-                    Mensaje = $"Error interno: {ex.Message}"
+                    Mensaje = string.Format(ErrorMessages.ErrorInterno, ex.Message)
                 };
             }
         }
@@ -94,10 +121,21 @@ namespace BanquitoServer_Soap_DotNet_GR01.WS
         {
             try
             {
+                // Validar y convertir la solicitud
+                if (!SolicitudCreditoValidator.ValidarYConvertir(solicitud, out decimal precio, out int cuotas, out string mensajeError))
+                {
+                    return new RespuestaCreditoDTO
+                    {
+                        Exito = false,
+                        Mensaje = mensajeError,
+                        Cedula = solicitud?.Cedula
+                    };
+                }
+
                 var resultado = _creditoService.OtorgarCredito(
                     solicitud.Cedula,
-                    solicitud.PrecioElectrodomestico,
-                    solicitud.NumeroCuotas);
+                    precio,
+                    cuotas);
 
                 var response = new RespuestaCreditoDTO
                 {
@@ -132,8 +170,8 @@ namespace BanquitoServer_Soap_DotNet_GR01.WS
                 return new RespuestaCreditoDTO
                 {
                     Exito = false,
-                    Mensaje = $"Error interno: {ex.Message}",
-                    Cedula = solicitud.Cedula
+                    Mensaje = string.Format(ErrorMessages.ErrorInterno, ex.Message),
+                    Cedula = solicitud?.Cedula
                 };
             }
         }

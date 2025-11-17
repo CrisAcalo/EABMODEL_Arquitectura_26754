@@ -79,39 +79,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Connected Services\BanquitoSoap\Comercializadora_Soap_DotNet_GR01.BanquitoSoap.CuotaAmortizacionDTO.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\BanquitoSoap\Comercializadora_Soap_DotNet_GR01.BanquitoSoap.MontoMaximoCreditoDTO.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\BanquitoSoap\Comercializadora_Soap_DotNet_GR01.BanquitoSoap.RespuestaCreditoDTO.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\BanquitoSoap\Comercializadora_Soap_DotNet_GR01.BanquitoSoap.ValidacionCreditoDTO.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Connected Services\BanquitoSoap\configuration91.svcinfo" />
-    <None Include="Connected Services\BanquitoSoap\configuration.svcinfo" />
-    <None Include="Connected Services\BanquitoSoap\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Content Include="OpenAPIs\CreditoSoapService.svc">
-      <Namespace>BanquitoSoap</Namespace>
-      <CodeGenerator>NSwagCSharp</CodeGenerator>
-      <SourceUri>http://localhost:51658/WS/CreditoSoapService.svc%3fwsdl</SourceUri>
-    </Content>
     <Content Include="Web.config" />
     <Content Include="WS\FacturacionSoapService.svc" />
     <Content Include="WS\ProductoSoapService.svc" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\BanquitoSoap\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Services\FacturacionService.cs" />
     <Compile Include="Services\ProductoService.cs" />
     <Compile Include="DataAcces\ComercializadoraDbContext.cs" />
@@ -134,16 +106,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\BanquitoSoap\CreditoSoapService.wsdl" />
-    <None Include="Connected Services\BanquitoSoap\CreditoSoapService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\BanquitoSoap\CreditoSoapService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\BanquitoSoap\CreditoSoapService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -152,12 +114,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\BanquitoSoap\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

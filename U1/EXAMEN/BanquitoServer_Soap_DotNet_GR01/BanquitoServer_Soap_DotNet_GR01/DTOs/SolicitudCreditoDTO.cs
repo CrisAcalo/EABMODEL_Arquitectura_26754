@@ -4,6 +4,7 @@ namespace BanquitoServer_Soap_DotNet_GR01.DTOs
 {
     /// <summary>
     /// DTO para solicitud de crédito
+    /// Usa strings para validación manual y mensajes de error amigables
     /// </summary>
     [DataContract]
     public class SolicitudCreditoDTO
@@ -12,9 +13,9 @@ namespace BanquitoServer_Soap_DotNet_GR01.DTOs
         public string Cedula { get; set; }
 
         [DataMember]
-        public decimal PrecioElectrodomestico { get; set; }
+        public string PrecioElectrodomestico { get; set; }
 
         [DataMember]
-        public int NumeroCuotas { get; set; }
+        public string NumeroCuotas { get; set; }
     }
 }

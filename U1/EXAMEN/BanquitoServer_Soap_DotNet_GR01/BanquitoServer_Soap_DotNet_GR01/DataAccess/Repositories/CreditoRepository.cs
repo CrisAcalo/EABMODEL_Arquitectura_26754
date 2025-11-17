@@ -1,4 +1,7 @@
+using System;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Text;
 using BanquitoServer_Soap_DotNet_GR01.Models;
 
 namespace BanquitoServer_Soap_DotNet_GR01.DataAccess.Repositories
@@ -39,8 +42,27 @@ namespace BanquitoServer_Soap_DotNet_GR01.DataAccess.Repositories
         /// </summary>
         public void Save(Credito credito)
         {
-            _context.Creditos.Add(credito);
-            _context.SaveChanges();
+            try
+            {
+                _context.Creditos.Add(credito);
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Construir mensaje detallado de errores de validación
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Errores de validación de Entity Framework:");
+
+                foreach (var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        sb.AppendLine($"  - Propiedad: {validationError.PropertyName}, Error: {validationError.ErrorMessage}");
+                    }
+                }
+
+                throw new Exception(sb.ToString(), ex);
+            }
         }
 
         /// <summary>

@@ -36,7 +36,6 @@ namespace BanquitoServer_Soap_DotNet_GR01.Models
         public decimal Saldo { get; set; }
 
         // Foreign Key
-        [Required]
         [Column("CreditoId")]
         [ForeignKey("Credito")]
         [Index("IX_CuotaAmortizacion_CreditoId")]
