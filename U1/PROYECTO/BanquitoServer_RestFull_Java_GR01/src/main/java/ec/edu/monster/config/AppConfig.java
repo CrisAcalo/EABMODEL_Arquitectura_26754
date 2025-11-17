@@ -48,7 +48,7 @@ public class AppConfig {
     }
     
     public int getServerPort() {
-        return Integer.parseInt(getProperty("server.port", "8080"));
+        return Integer.parseInt(getProperty("server.port", "8081"));
     }
     
     public String getServerContext() {

@@ -161,7 +161,7 @@
                     Verifica si una persona es sujeto de crédito según las reglas del banco.
                 </div>
                 <div class="example">
-GET http://localhost:8080/banquito-server/api/credito/validar/1234567890
+GET http://localhost:8081/banquito-server/api/credito/validar/1234567890
                 </div>
             </div>
             
@@ -175,7 +175,7 @@ GET http://localhost:8080/banquito-server/api/credito/validar/1234567890
                     Calcula el monto máximo de crédito que puede obtener una persona.
                 </div>
                 <div class="example">
-GET http://localhost:8080/banquito-server/api/credito/monto-maximo/1234567890
+GET http://localhost:8081/banquito-server/api/credito/monto-maximo/1234567890
                 </div>
             </div>
             
@@ -189,7 +189,7 @@ GET http://localhost:8080/banquito-server/api/credito/monto-maximo/1234567890
                     Aprueba y otorga un crédito, generando la tabla de amortización completa.
                 </div>
                 <div class="example">
-POST http://localhost:8080/banquito-server/api/credito/otorgar
+POST http://localhost:8081/banquito-server/api/credito/otorgar
 Content-Type: application/json
 
 {
@@ -210,7 +210,7 @@ Content-Type: application/json
                     Retorna la tabla de amortización de un crédito otorgado.
                 </div>
                 <div class="example">
-GET http://localhost:8080/banquito-server/api/credito/tabla-amortizacion/CRE1234567890
+GET http://localhost:8081/banquito-server/api/credito/tabla-amortizacion/CRE1234567890
                 </div>
             </div>
         </div>

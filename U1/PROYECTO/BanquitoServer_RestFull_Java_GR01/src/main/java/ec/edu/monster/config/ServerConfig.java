@@ -44,7 +44,7 @@ public class ServerConfig {
     }
     
     public int getServerPort() {
-        return Integer.parseInt(properties.getProperty("server.port", "8080"));
+        return Integer.parseInt(properties.getProperty("server.port", "8081"));
     }
     
     public String getContextPath() {
@@ -53,7 +53,7 @@ public class ServerConfig {
     
     /**
      * Obtiene la URL base completa del servidor
-     * Ejemplo: http://192.168.1.100:8080/banquito-server
+     * Ejemplo: http://192.168.1.100:8081/banquito-server
      */
     public String getServerBaseUrl() {
         return String.format("http://%s:%d%s", 
@@ -64,7 +64,7 @@ public class ServerConfig {
     
     /**
      * Obtiene la URL completa para los servicios REST
-     * Ejemplo: http://192.168.1.100:8080/banquito-server/api
+     * Ejemplo: http://192.168.1.100:8081/banquito-server/api
      */
     public String getRestApiUrl() {
         return getServerBaseUrl() + "/api";
