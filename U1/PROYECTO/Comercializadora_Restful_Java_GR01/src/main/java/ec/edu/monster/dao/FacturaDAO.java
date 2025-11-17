@@ -4,6 +4,8 @@ import ec.edu.monster.model.Factura;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -75,11 +77,23 @@ public class FacturaDAO extends GenericDAO<Factura> {
     }
     
     /**
-     * Generar número de factura único
+     * Generar número de factura único con formato FAC-YYYYMMDD-XXX
+     * Ejemplo: FAC-20251117-001, FAC-20251117-002, etc.
      */
     public String generarNumeroFactura() {
-        Long count = count() + 1;
-        return String.format("FAC-%06d", count);
+        // Obtener fecha actual en formato YYYYMMDD
+        String fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+        // Contar cuántas facturas existen con esta fecha
+        Long countHoy = em.createQuery(
+            "SELECT COUNT(f) FROM Factura f WHERE f.numeroFactura LIKE :patron", Long.class)
+            .setParameter("patron", "FAC-" + fecha + "-%")
+            .getSingleResult();
+
+        // Generar consecutivo del día (001, 002, 003, ...)
+        Long consecutivo = countHoy + 1;
+
+        return String.format("FAC-%s-%03d", fecha, consecutivo);
     }
     
     /**

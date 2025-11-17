@@ -3,7 +3,6 @@ package ec.edu.monster.rest;
 import ec.edu.monster.dto.FacturaDTO;
 import ec.edu.monster.dto.RespuestaDTO;
 import ec.edu.monster.service.FacturacionService;
-import ec.edu.monster.service.BanquitoClientService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -29,12 +28,9 @@ import java.util.logging.Logger;
 public class FacturacionResource {
     
     private static final Logger LOGGER = Logger.getLogger(FacturacionResource.class.getName());
-    
+
     @Inject
     private FacturacionService facturacionService;
-    
-    @Inject
-    private BanquitoClientService banquitoClient;
     
     /**
      * Obtener todas las facturas
@@ -161,14 +157,26 @@ public class FacturacionResource {
     /**
      * Crear nueva factura
      * POST /api/facturas
-     * 
-     * Body ejemplo:
+     *
+     * Body ejemplo para EFECTIVO (descuento se calcula automáticamente - 33%):
+     * {
+     *   "cedulaCliente": "1234567890",
+     *   "nombreCliente": "Juan Pérez",
+     *   "formaPago": "EFECTIVO",
+     *   "detalles": [
+     *     {
+     *       "productoId": 1,
+     *       "cantidad": 2
+     *     }
+     *   ]
+     * }
+     *
+     * Body ejemplo para CREDITO (debe incluir numeroCredito obtenido de BanQuito):
      * {
      *   "cedulaCliente": "1234567890",
      *   "nombreCliente": "Juan Pérez",
      *   "formaPago": "CREDITO",
      *   "numeroCredito": "CRE-000001",
-     *   "descuento": 0,
      *   "detalles": [
      *     {
      *       "productoId": 1,
@@ -203,29 +211,5 @@ public class FacturacionResource {
     @Produces(MediaType.TEXT_PLAIN)
     public Response ping() {
         return Response.ok("Servicio de Facturación está activo").build();
-    }
-    
-    /**
-     * Verificar conectividad con BanQuito
-     * GET /api/facturas/test-banquito
-     */
-    @GET
-    @Path("/test-banquito")
-    public Response testBanquito() {
-        try {
-            boolean disponible = banquitoClient.verificarConectividad();
-            if (disponible) {
-                return Response.ok(new RespuestaDTO(true, "Conexión con BanQuito exitosa"))
-                        .build();
-            } else {
-                return Response.status(Response.Status.SERVICE_UNAVAILABLE)
-                        .entity(new RespuestaDTO(false, "BanQuito no está disponible"))
-                        .build();
-            }
-        } catch (Exception e) {
-            return Response.status(Response.Status.SERVICE_UNAVAILABLE)
-                    .entity(new RespuestaDTO(false, "Error al conectar con BanQuito: " + e.getMessage()))
-                    .build();
-        }
     }
 }

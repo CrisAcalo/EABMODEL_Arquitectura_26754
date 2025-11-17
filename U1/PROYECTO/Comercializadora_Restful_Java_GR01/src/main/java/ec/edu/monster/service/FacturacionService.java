@@ -5,9 +5,6 @@ import ec.edu.monster.dao.ProductoDAO;
 import ec.edu.monster.dao.DetalleFacturaDAO;
 import ec.edu.monster.dto.FacturaDTO;
 import ec.edu.monster.dto.DetalleFacturaDTO;
-import ec.edu.monster.dto.banquito.ValidacionCreditoDTO;
-import ec.edu.monster.dto.banquito.MontoMaximoCreditoDTO;
-import ec.edu.monster.dto.banquito.RespuestaCreditoDTO;
 import ec.edu.monster.model.Factura;
 import ec.edu.monster.model.Producto;
 import ec.edu.monster.model.DetalleFactura;
@@ -22,24 +19,22 @@ import java.util.logging.Logger;
 
 /**
  * Servicio para la lógica de negocio de Facturación
- * Incluye integración con BanQuito para gestión de créditos
+ * El sistema es independiente - para pagos a CREDITO, el cliente debe
+ * obtener el numeroCredito directamente desde BanQuito antes de crear la factura
  */
 @Stateless
 public class FacturacionService {
-    
+
     private static final Logger LOGGER = Logger.getLogger(FacturacionService.class.getName());
-    
+
     @Inject
     private FacturaDAO facturaDAO;
-    
+
     @Inject
     private ProductoDAO productoDAO;
-    
+
     @Inject
     private DetalleFacturaDAO detalleFacturaDAO;
-    
-    @Inject
-    private BanquitoClientService banquitoClient;
     
     /**
      * Convertir DetalleFactura a DTO
@@ -125,7 +120,11 @@ public class FacturacionService {
     
     /**
      * Crear nueva factura
-     * Si es crédito, valida con BanQuito antes de crear
+     *
+     * FORMAS DE PAGO:
+     * - EFECTIVO: Se aplica automáticamente un 33% de descuento sobre el subtotal
+     * - CREDITO: Sin descuento. El cliente debe proporcionar un numeroCredito válido
+     *            obtenido previamente desde el sistema BanQuito
      */
     @Transactional
     public FacturaDTO crearFactura(FacturaDTO facturaDTO) {
@@ -153,47 +152,31 @@ public class FacturacionService {
             BigDecimal subtotalDetalle = producto.getPrecio().multiply(new BigDecimal(detalleDTO.getCantidad()));
             subtotal = subtotal.add(subtotalDetalle);
         }
-        
-        BigDecimal descuento = facturaDTO.getDescuento() != null ? facturaDTO.getDescuento() : BigDecimal.ZERO;
-        BigDecimal total = subtotal.subtract(descuento);
-        
-        // Si es crédito, validar con BanQuito
-        String numeroCredito = null;
-        if ("CREDITO".equals(facturaDTO.getFormaPago())) {
-            LOGGER.info("=== VALIDANDO CRÉDITO CON BANQUITO ===");
-            
-            // 1. Validar que el cliente es sujeto de crédito
-            ValidacionCreditoDTO validacion = banquitoClient.validarSujetoCredito(facturaDTO.getCedulaCliente());
-            if (!validacion.getEsValido()) {
-                throw new RuntimeException("Cliente no es sujeto de crédito: " + validacion.getMensaje());
-            }
-            LOGGER.info("Cliente validado: " + validacion.getNombreCompleto());
-            
-            // 2. Verificar monto máximo
-            MontoMaximoCreditoDTO montoMaximo = banquitoClient.obtenerMontoMaximoCredito(facturaDTO.getCedulaCliente());
-            if (total.compareTo(montoMaximo.getMontoMaximo()) > 0) {
+
+        // Calcular descuento automáticamente según forma de pago
+        BigDecimal descuento;
+        if ("EFECTIVO".equals(facturaDTO.getFormaPago())) {
+            // EFECTIVO: 33% de descuento sobre el subtotal
+            descuento = subtotal.multiply(new BigDecimal("0.33"));
+            LOGGER.info("Pago en EFECTIVO - Descuento 33% aplicado: $" + descuento);
+        } else if ("CREDITO".equals(facturaDTO.getFormaPago())) {
+            // CREDITO: Sin descuento, pero requiere numeroCredito
+            descuento = BigDecimal.ZERO;
+
+            // Validar que el cliente proporcione el número de crédito
+            if (facturaDTO.getNumeroCredito() == null || facturaDTO.getNumeroCredito().trim().isEmpty()) {
                 throw new RuntimeException(
-                    String.format("El monto de la factura ($%.2f) excede el monto máximo de crédito ($%.2f)", 
-                    total, montoMaximo.getMontoMaximo())
+                    "El número de crédito es requerido para pagos a CREDITO. " +
+                    "Debe obtenerlo desde el servicio de BanQuito antes de crear la factura."
                 );
             }
-            LOGGER.info("Monto validado: $" + total + " <= $" + montoMaximo.getMontoMaximo());
-            
-            // 3. Otorgar crédito en BanQuito (se puede configurar el número de cuotas)
-            Integer numeroCuotas = 12; // Por defecto 12 cuotas, se puede parametrizar
-            RespuestaCreditoDTO respuestaCredito = banquitoClient.otorgarCredito(
-                facturaDTO.getCedulaCliente(), 
-                total, 
-                numeroCuotas
-            );
-            
-            if (!respuestaCredito.getExito()) {
-                throw new RuntimeException("Error al otorgar crédito en BanQuito: " + respuestaCredito.getMensaje());
-            }
-            
-            numeroCredito = respuestaCredito.getNumeroCredito();
-            LOGGER.info("Crédito otorgado: " + numeroCredito);
+
+            LOGGER.info("Pago a CREDITO - Sin descuento - Número de crédito: " + facturaDTO.getNumeroCredito());
+        } else {
+            throw new RuntimeException("Forma de pago no válida. Debe ser EFECTIVO o CREDITO");
         }
+
+        BigDecimal total = subtotal.subtract(descuento);
         
         // Crear factura
         Factura factura = new Factura();
@@ -201,7 +184,7 @@ public class FacturacionService {
         factura.setCedulaCliente(facturaDTO.getCedulaCliente());
         factura.setNombreCliente(facturaDTO.getNombreCliente());
         factura.setFormaPago(facturaDTO.getFormaPago());
-        factura.setNumeroCredito(numeroCredito); // Será null si es efectivo
+        factura.setNumeroCredito(facturaDTO.getNumeroCredito()); // null para EFECTIVO, requerido para CREDITO
         factura.setSubtotal(subtotal);
         factura.setDescuento(descuento);
         factura.setTotal(total);
@@ -230,7 +213,8 @@ public class FacturacionService {
         Factura guardada = facturaDAO.save(factura);
         
         LOGGER.info("Factura creada exitosamente: " + guardada.getNumeroFactura());
-        
+
+        // Convertir factura guardada a DTO y retornar
         return convertirFacturaADTO(facturaDAO.findByIdWithDetalles(guardada.getFacturaId()));
     }
     
