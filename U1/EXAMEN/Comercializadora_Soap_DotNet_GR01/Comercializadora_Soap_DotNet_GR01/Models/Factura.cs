@@ -30,14 +30,11 @@ namespace Comercializadora_Soap_DotNet_GR01.Models
         public string FormaPago { get; set; } // EFECTIVO o CREDITO
 
         [Required]
-        [Column(TypeName = "decimal(12,2)")]
         public decimal Subtotal { get; set; }
 
-        [Column(TypeName = "decimal(12,2)")]
         public decimal Descuento { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(12,2)")]
         public decimal Total { get; set; }
 
         [MaxLength(20)]

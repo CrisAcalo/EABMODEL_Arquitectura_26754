@@ -25,7 +25,6 @@ namespace Comercializadora_Soap_DotNet_GR01.Models
         public string Descripcion { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(12,2)")]
         public decimal Precio { get; set; }
 
         [Required]

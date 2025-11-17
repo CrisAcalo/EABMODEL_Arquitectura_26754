@@ -13,7 +13,7 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
             _productoService = new ProductoService();
         }
 
-        public RespuestaDTO CrearProducto(ProductoDTO producto)
+        public RespuestaDTO CrearProducto(CrearProductoDTO producto)
         {
             return _productoService.CrearProducto(producto);
         }
@@ -43,7 +43,7 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
             return _productoService.ObtenerProductosPorPrecio(precioMin, precioMax);
         }
 
-        public RespuestaDTO ActualizarProducto(ProductoDTO producto)
+        public RespuestaDTO ActualizarProducto(ActualizarProductoDTO producto)
         {
             return _productoService.ActualizarProducto(producto);
         }

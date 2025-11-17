@@ -14,27 +14,27 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
             _facturacionService = new FacturacionService();
         }
 
-        public FacturaDTO GenerarFacturaEfectivo(SolicitudFacturaDTO solicitud)
+        public FacturaDTO GenerarFactura(SolicitudFacturaDTO solicitud)
         {
             try
             {
-                return _facturacionService.GenerarFacturaEfectivo(solicitud);
+                return _facturacionService.GenerarFactura(solicitud);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error en servicio SOAP GenerarFacturaEfectivo: {ex.Message}");
-            }
-        }
-
-        public FacturaDTO GenerarFacturaCredito(SolicitudFacturaDTO solicitud)
-        {
-            try
-            {
-                return _facturacionService.GenerarFacturaCredito(solicitud);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error en servicio SOAP GenerarFacturaCredito: {ex.Message}");
+                // Devolver DTO con error en lugar de lanzar excepción
+                return new FacturaDTO
+                {
+                    NumeroFactura = "ERROR",
+                    CedulaCliente = solicitud?.CedulaCliente,
+                    NombreCliente = $"ERROR: {ex.Message}",
+                    FormaPago = "ERROR",
+                    Subtotal = 0,
+                    Descuento = 0,
+                    Total = 0,
+                    FechaEmision = DateTime.Now,
+                    Detalles = new List<DetalleFacturaDTO>()
+                };
             }
         }
 
@@ -46,7 +46,8 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error en servicio SOAP ObtenerFacturasPorCliente: {ex.Message}");
+                // Devolver lista vacía en caso de error
+                return new List<FacturaDTO>();
             }
         }
 
@@ -58,7 +59,8 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error en servicio SOAP ObtenerFacturaPorNumero: {ex.Message}");
+                // Devolver null en caso de error (factura no encontrada)
+                return null;
             }
         }
     }

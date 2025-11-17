@@ -21,11 +21,9 @@ namespace Comercializadora_Soap_DotNet_GR01.Models
         public int Cantidad { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(12,2)")]
         public decimal PrecioUnitario { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(12,2)")]
         public decimal Subtotal { get; set; }
 
         // Navigation properties

@@ -63,29 +63,34 @@ namespace Comercializadora_Soap_DotNet_GR01.DTOs
     [DataContract]
     public class SolicitudFacturaDTO
     {
-        [DataMember]
+        [DataMember(IsRequired = false, Order = 1)]
         public string CedulaCliente { get; set; }
 
-        [DataMember]
-        public string NombreCliente { get; set; }
-
-        [DataMember]
+        [DataMember(IsRequired = false, Order = 2)]
         public string FormaPago { get; set; } // EFECTIVO o CREDITO
 
-        [DataMember]
+        [DataMember(IsRequired = false, Order = 3)]
+        public List<ItemFacturaDTO> Items { get; set; }
+
+        [DataMember(IsRequired = false, Order = 4)]
+        public string NombreCliente { get; set; }
+
+        [DataMember(IsRequired = false, Order = 5)]
         public string NumeroCredito { get; set; } // Solo para CREDITO - Obtenido desde BanQuito
 
-        [DataMember]
-        public List<ItemFacturaDTO> Items { get; set; }
+        public SolicitudFacturaDTO()
+        {
+            Items = new List<ItemFacturaDTO>();
+        }
     }
 
     [DataContract]
     public class ItemFacturaDTO
     {
-        [DataMember]
-        public int ProductoId { get; set; }
-
-        [DataMember]
+        [DataMember(Order = 1)]
         public int Cantidad { get; set; }
+
+        [DataMember(Order = 2)]
+        public int ProductoId { get; set; }
     }
 }

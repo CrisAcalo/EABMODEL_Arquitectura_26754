@@ -1,10 +1,12 @@
-﻿using System;
 using System.Runtime.Serialization;
 
 namespace Comercializadora_Soap_DotNet_GR01.DTOs
 {
+    /// <summary>
+    /// DTO para actualizar un producto (sin campos autogenerados o de solo lectura)
+    /// </summary>
     [DataContract]
-    public class ProductoDTO
+    public class ActualizarProductoDTO
     {
         [DataMember(Order = 1)]
         public int ProductoId { get; set; }
@@ -31,9 +33,6 @@ namespace Comercializadora_Soap_DotNet_GR01.DTOs
         public string ImagenUrl { get; set; }
 
         [DataMember(Order = 9)]
-        public DateTime FechaRegistro { get; set; }
-
-        [DataMember(Order = 10)]
         public string Estado { get; set; }
     }
 }

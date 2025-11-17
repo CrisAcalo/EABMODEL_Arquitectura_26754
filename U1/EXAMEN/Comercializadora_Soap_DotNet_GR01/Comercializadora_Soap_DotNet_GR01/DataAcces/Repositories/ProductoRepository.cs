@@ -24,6 +24,7 @@ namespace Comercializadora_Soap_DotNet_GR01.DataAcces.Repositories
         {
             _context.Productos.Add(producto);
             _context.SaveChanges();
+            // El ID ya se asigna automáticamente por Identity después de SaveChanges
             return producto;
         }
 

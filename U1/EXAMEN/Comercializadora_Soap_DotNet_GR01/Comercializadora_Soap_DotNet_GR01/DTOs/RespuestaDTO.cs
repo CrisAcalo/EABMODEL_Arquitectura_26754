@@ -12,6 +12,6 @@ namespace Comercializadora_Soap_DotNet_GR01.DTOs
         public string Mensaje { get; set; }
 
         [DataMember]
-        public object Datos { get; set; }
+        public ProductoDTO Datos { get; set; }
     }
 }

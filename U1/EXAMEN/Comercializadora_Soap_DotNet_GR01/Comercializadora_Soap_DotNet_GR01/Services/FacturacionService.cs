@@ -19,15 +19,20 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
         }
 
         /// <summary>
-        /// Genera una factura con pago en efectivo (33% descuento)
+        /// Genera una factura (EFECTIVO con 33% descuento o CREDITO sin descuento)
         /// </summary>
-        public FacturaDTO GenerarFacturaEfectivo(SolicitudFacturaDTO solicitud)
+        /// <param name="solicitud">Solicitud con FormaPago: EFECTIVO o CREDITO.
+        /// Si es CREDITO, NumeroCredito es requerido (obtenido desde BanQuito)</param>
+        public FacturaDTO GenerarFactura(SolicitudFacturaDTO solicitud)
         {
             try
             {
-                // Validaciones
-                if (solicitud == null || solicitud.Items == null || !solicitud.Items.Any())
-                    throw new Exception("La solicitud de factura no contiene productos");
+                // Validaciones comunes
+                if (solicitud == null)
+                    throw new Exception("La solicitud de factura es nula");
+
+                if (solicitud.Items == null || !solicitud.Items.Any())
+                    throw new Exception("La solicitud de factura no contiene productos. Debe enviar al menos un producto.");
 
                 if (string.IsNullOrWhiteSpace(solicitud.CedulaCliente))
                     throw new Exception("La cédula del cliente es requerida");
@@ -35,13 +40,26 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
                 if (string.IsNullOrWhiteSpace(solicitud.NombreCliente))
                     throw new Exception("El nombre del cliente es requerido");
 
+                // Validar FormaPago
+                if (string.IsNullOrWhiteSpace(solicitud.FormaPago))
+                    throw new Exception("La forma de pago es requerida. Valores permitidos: EFECTIVO, CREDITO");
+
+                string formaPago = solicitud.FormaPago.ToUpper();
+                if (formaPago != "EFECTIVO" && formaPago != "CREDITO")
+                    throw new Exception("Forma de pago inválida. Valores permitidos: EFECTIVO, CREDITO");
+
+                // Validar NumeroCredito solo si es CREDITO
+                if (formaPago == "CREDITO" && string.IsNullOrWhiteSpace(solicitud.NumeroCredito))
+                    throw new Exception("El número de crédito es requerido para pagos a CREDITO. Debe obtenerlo desde el servicio de BanQuito.");
+
                 // Crear factura
                 var factura = new Factura
                 {
                     NumeroFactura = _facturaRepository.GenerarNumeroFactura(),
                     CedulaCliente = solicitud.CedulaCliente,
                     NombreCliente = solicitud.NombreCliente,
-                    FormaPago = "EFECTIVO",
+                    FormaPago = formaPago,
+                    NumeroCredito = formaPago == "CREDITO" ? solicitud.NumeroCredito : null,
                     FechaEmision = DateTime.Now
                 };
 
@@ -75,90 +93,21 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
                     _productoRepository.ActualizarStock(item.ProductoId, item.Cantidad);
                 }
 
-                // Aplicar descuento del 33%
+                // Calcular descuento según forma de pago
                 factura.Subtotal = subtotal;
-                factura.Descuento = subtotal * 0.33m;
-                factura.Total = subtotal - factura.Descuento;
-                factura.Detalles = detalles;
-
-                // Guardar factura
-                var facturaCreada = _facturaRepository.Create(factura);
-
-                // Mapear a DTO
-                return MapearFacturaADTO(facturaCreada);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al generar factura en efectivo: {ex.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Genera una factura con pago a crédito
-        /// El cliente debe enviar el NumeroCredito obtenido desde BanQuito
-        /// </summary>
-        public FacturaDTO GenerarFacturaCredito(SolicitudFacturaDTO solicitud)
-        {
-            try
-            {
-                // Validaciones
-                if (solicitud == null || solicitud.Items == null || !solicitud.Items.Any())
-                    throw new Exception("La solicitud de factura no contiene productos");
-
-                if (string.IsNullOrWhiteSpace(solicitud.CedulaCliente))
-                    throw new Exception("La cédula del cliente es requerida");
-
-                if (string.IsNullOrWhiteSpace(solicitud.NombreCliente))
-                    throw new Exception("El nombre del cliente es requerido");
-
-                if (string.IsNullOrWhiteSpace(solicitud.NumeroCredito))
-                    throw new Exception("El número de crédito es requerido. Debe obtenerlo desde el servicio de BanQuito.");
-
-                // Crear factura
-                var factura = new Factura
+                if (formaPago == "EFECTIVO")
                 {
-                    NumeroFactura = _facturaRepository.GenerarNumeroFactura(),
-                    CedulaCliente = solicitud.CedulaCliente,
-                    NombreCliente = solicitud.NombreCliente,
-                    FormaPago = "CREDITO",
-                    NumeroCredito = solicitud.NumeroCredito,
-                    FechaEmision = DateTime.Now
-                };
-
-                decimal subtotal = 0;
-                var detalles = new List<DetalleFactura>();
-
-                // Procesar cada item
-                foreach (var item in solicitud.Items)
+                    // EFECTIVO: 33% de descuento
+                    factura.Descuento = subtotal * 0.33m;
+                    factura.Total = subtotal - factura.Descuento;
+                }
+                else
                 {
-                    var producto = _productoRepository.GetById(item.ProductoId);
-                    if (producto == null)
-                        throw new Exception($"Producto con ID {item.ProductoId} no encontrado");
-
-                    if (!_productoRepository.TieneStock(item.ProductoId, item.Cantidad))
-                        throw new Exception($"Stock insuficiente para el producto {producto.Nombre}");
-
-                    var subtotalItem = producto.Precio * item.Cantidad;
-                    subtotal += subtotalItem;
-
-                    var detalle = new DetalleFactura
-                    {
-                        ProductoId = item.ProductoId,
-                        Cantidad = item.Cantidad,
-                        PrecioUnitario = producto.Precio,
-                        Subtotal = subtotalItem
-                    };
-
-                    detalles.Add(detalle);
-
-                    // Actualizar stock
-                    _productoRepository.ActualizarStock(item.ProductoId, item.Cantidad);
+                    // CREDITO: Sin descuento
+                    factura.Descuento = 0;
+                    factura.Total = subtotal;
                 }
 
-                // Crédito NO tiene descuento
-                factura.Subtotal = subtotal;
-                factura.Descuento = 0;
-                factura.Total = subtotal;
                 factura.Detalles = detalles;
 
                 // Guardar factura
@@ -169,7 +118,7 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error al generar factura a crédito: {ex.Message}");
+                throw new Exception($"Error al generar factura: {ex.Message}");
             }
         }
 

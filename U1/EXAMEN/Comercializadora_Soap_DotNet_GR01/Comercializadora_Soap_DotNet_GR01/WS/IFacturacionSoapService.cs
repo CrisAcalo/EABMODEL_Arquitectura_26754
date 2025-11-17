@@ -8,10 +8,7 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
     public interface IFacturacionSoapService
     {
         [OperationContract]
-        FacturaDTO GenerarFacturaEfectivo(SolicitudFacturaDTO solicitud);
-
-        [OperationContract]
-        FacturaDTO GenerarFacturaCredito(SolicitudFacturaDTO solicitud);
+        FacturaDTO GenerarFactura(SolicitudFacturaDTO solicitud);
 
         [OperationContract]
         List<FacturaDTO> ObtenerFacturasPorCliente(string cedula);

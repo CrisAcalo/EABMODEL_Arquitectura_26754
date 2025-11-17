@@ -22,7 +22,7 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
         }
 
         // Crear producto
-        public RespuestaDTO CrearProducto(ProductoDTO productoDto)
+        public RespuestaDTO CrearProducto(CrearProductoDTO productoDto)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
                 if (_productoRepository.ExisteCodigo(productoDto.Codigo))
                     return new RespuestaDTO { Exito = false, Mensaje = $"Ya existe un producto con el código {productoDto.Codigo}" };
 
-                // Mapear DTO a Model
+                // Mapear DTO a Model (ProductoId y FechaRegistro se autogeneran)
                 var producto = new Producto
                 {
                     Codigo = productoDto.Codigo,
@@ -55,11 +55,18 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
 
                 var productoCreado = _productoRepository.Create(producto);
 
+                if (productoCreado == null || productoCreado.ProductoId == 0)
+                {
+                    return new RespuestaDTO { Exito = false, Mensaje = "Error: El producto no se guardó correctamente en la base de datos" };
+                }
+
+                var productoDTO = MapearADTO(productoCreado);
+
                 return new RespuestaDTO
                 {
                     Exito = true,
-                    Mensaje = "Producto creado exitosamente",
-                    Datos = MapearADTO(productoCreado)
+                    Mensaje = $"Producto creado exitosamente con ID: {productoCreado.ProductoId}",
+                    Datos = productoDTO
                 };
             }
             catch (Exception ex)
@@ -104,7 +111,7 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
         }
 
         // Actualizar producto
-        public RespuestaDTO ActualizarProducto(ProductoDTO productoDto)
+        public RespuestaDTO ActualizarProducto(ActualizarProductoDTO productoDto)
         {
             try
             {
@@ -125,7 +132,7 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
                 if (_productoRepository.ExisteCodigo(productoDto.Codigo, productoDto.ProductoId))
                     return new RespuestaDTO { Exito = false, Mensaje = $"Ya existe otro producto con el código {productoDto.Codigo}" };
 
-                // Actualizar campos
+                // Actualizar campos (FechaRegistro NO se modifica)
                 productoExistente.Codigo = productoDto.Codigo;
                 productoExistente.Nombre = productoDto.Nombre;
                 productoExistente.Descripcion = productoDto.Descripcion;

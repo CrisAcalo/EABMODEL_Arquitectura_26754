@@ -84,6 +84,8 @@
     <Content Include="WS\ProductoSoapService.svc" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\ActualizarProductoDTO.cs" />
+    <Compile Include="DTOs\CrearProductoDTO.cs" />
     <Compile Include="Services\FacturacionService.cs" />
     <Compile Include="Services\ProductoService.cs" />
     <Compile Include="DataAcces\ComercializadoraDbContext.cs" />

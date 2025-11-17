@@ -8,7 +8,7 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
     public interface IProductoSoapService
     {
         [OperationContract]
-        RespuestaDTO CrearProducto(ProductoDTO producto);
+        RespuestaDTO CrearProducto(CrearProductoDTO producto);
 
         [OperationContract]
         List<ProductoDTO> ObtenerProductos();
@@ -26,7 +26,7 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
         List<ProductoDTO> ObtenerProductosPorPrecio(decimal precioMin, decimal precioMax);
 
         [OperationContract]
-        RespuestaDTO ActualizarProducto(ProductoDTO producto);
+        RespuestaDTO ActualizarProducto(ActualizarProductoDTO producto);
 
         [OperationContract]
         RespuestaDTO EliminarProducto(int id);
