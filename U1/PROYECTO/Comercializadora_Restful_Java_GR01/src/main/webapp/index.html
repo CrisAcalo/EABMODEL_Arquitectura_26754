@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comercializadora RESTful Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .endpoint {
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+        .method {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏪 Comercializadora RESTful Server</h1>
+        <p>Servidor RESTful para el sistema de comercialización de electrodomésticos.</p>
+        
+        <h2>📦 Endpoints de Productos</h2>
+        <div class="endpoint">
+            <span class="method">GET</span> /api/productos - Obtener todos los productos
+        </div>
+        <div class="endpoint">
+            <span class="method">GET</span> /api/productos/activos - Obtener productos activos
+        </div>
+        <div class="endpoint">
+            <span class="method">GET</span> /api/productos/{id} - Obtener producto por ID
+        </div>
+        <div class="endpoint">
+            <span class="method">POST</span> /api/productos - Crear nuevo producto
+        </div>
+        <div class="endpoint">
+            <span class="method">PUT</span> /api/productos/{id} - Actualizar producto
+        </div>
+        <div class="endpoint">
+            <span class="method">DELETE</span> /api/productos/{id} - Eliminar producto
+        </div>
+        
+        <h2>🧾 Endpoints de Facturación</h2>
+        <div class="endpoint">
+            <span class="method">GET</span> /api/facturas - Obtener todas las facturas
+        </div>
+        <div class="endpoint">
+            <span class="method">GET</span> /api/facturas/{id} - Obtener factura por ID
+        </div>
+        <div class="endpoint">
+            <span class="method">GET</span> /api/facturas/cliente/{cedula} - Obtener facturas por cliente
+        </div>
+        <div class="endpoint">
+            <span class="method">POST</span> /api/facturas - Crear nueva factura
+        </div>
+        
+        <h2>🔧 Pruebas</h2>
+        <div class="endpoint">
+            <span class="method">GET</span> /api/productos/ping - Test servicio productos
+        </div>
+        <div class="endpoint">
+            <span class="method">GET</span> /api/facturas/ping - Test servicio facturación
+        </div>
+        
+        <p><strong>Versión:</strong> 1.0-SNAPSHOT</p>
+        <p><strong>Grupo:</strong> GR01</p>
+    </div>
+</body>
+</html>
