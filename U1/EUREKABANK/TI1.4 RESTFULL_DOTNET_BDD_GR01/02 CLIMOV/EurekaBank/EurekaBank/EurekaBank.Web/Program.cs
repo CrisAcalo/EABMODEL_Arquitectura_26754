@@ -8,6 +8,9 @@ using EurekaBank.Core.Managers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configurar URLs para permitir conexiones externas
+builder.WebHost.UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5001");
+
 // El builder aquí ya lee appsettings.json por defecto, no hay que hacer nada.
 
 // --- 1. REGISTRAR SERVICIOS DE LA PLANTILLA ---
@@ -50,7 +53,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-app.UseHttpsRedirection();
+
+// Comentar esta línea para evitar redirección HTTPS forzada
+// app.UseHttpsRedirection();
+
 app.UseStaticFiles(); // Es importante tener esto para el CSS/JS
 app.UseAntiforgery();
 
