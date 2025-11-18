@@ -23,7 +23,7 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
         /// Útil para conocer el monto ANTES de solicitar crédito en BanQuito
         /// NO actualiza stock, NO crea factura en BD
         /// </summary>
-        public CalculoFacturaDTO CalcularTotalFactura(SolicitudFacturaDTO solicitud)
+        public CalculoFacturaDTO CalcularTotalFactura(SolicitudCalculoDTO solicitud)
         {
             try
             {

@@ -12,7 +12,7 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
         /// Útil para conocer el monto ANTES de solicitar crédito
         /// </summary>
         [OperationContract]
-        CalculoFacturaDTO CalcularTotalFactura(SolicitudFacturaDTO solicitud);
+        CalculoFacturaDTO CalcularTotalFactura(SolicitudCalculoDTO solicitud);
 
         [OperationContract]
         FacturaDTO GenerarFactura(SolicitudFacturaDTO solicitud);

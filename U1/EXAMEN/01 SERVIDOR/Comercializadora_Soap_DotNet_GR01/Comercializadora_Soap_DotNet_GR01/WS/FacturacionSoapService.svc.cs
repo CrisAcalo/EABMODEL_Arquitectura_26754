@@ -14,7 +14,7 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
             _facturacionService = new FacturacionService();
         }
 
-        public CalculoFacturaDTO CalcularTotalFactura(SolicitudFacturaDTO solicitud)
+        public CalculoFacturaDTO CalcularTotalFactura(SolicitudCalculoDTO solicitud)
         {
             try
             {

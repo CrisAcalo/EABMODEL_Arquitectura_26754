@@ -93,4 +93,20 @@ namespace Comercializadora_Soap_DotNet_GR01.DTOs
         [DataMember(Order = 2)]
         public int ProductoId { get; set; }
     }
+
+    /// <summary>
+    /// DTO específico para calcular total de factura
+    /// Solo requiere los productos (Items)
+    /// </summary>
+    [DataContract]
+    public class SolicitudCalculoDTO
+    {
+        [DataMember(IsRequired = true, Order = 1)]
+        public List<ItemFacturaDTO> Items { get; set; }
+
+        public SolicitudCalculoDTO()
+        {
+            Items = new List<ItemFacturaDTO>();
+        }
+    }
 }
