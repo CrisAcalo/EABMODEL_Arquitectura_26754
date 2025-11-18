@@ -1,129 +1,281 @@
-﻿<h3>TransactionsPage</h3>
-
-@code {
-
-}
-@page "/transactions"
+﻿@page "/transactions"
 
 @inject ITransactionService TransactionService
 @inject SessionService SessionManager
+@inject NavigationManager NavigationManager
 
-<div class="container mt-4">
-    <h3>Realizar Transacciones</h3>
-    <p>Selecciona el tipo de transacción que deseas realizar.</p>
-
-    <!-- Pestañas de Navegación (Implementación Blazor) -->
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link @(ActiveTab == "deposit" ? "active" : "")" 
-                    @onclick="@(() => SetActiveTab("deposit"))" 
-                    type="button">
-                Depósito
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link @(ActiveTab == "withdraw" ? "active" : "")" 
-                    @onclick="@(() => SetActiveTab("withdraw"))" 
-                    type="button">
-                Retiro
-            </button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link @(ActiveTab == "transfer" ? "active" : "")" 
-                    @onclick="@(() => SetActiveTab("transfer"))" 
-                    type="button">
-                Transferencia
-            </button>
-        </li>
-    </ul>
-
-    <!-- Contenido de las Pestañas -->
-    <div class="card shadow-sm">
-        
-        @if (ActiveTab == "deposit")
-        {
-            <!-- ===== PESTAÑA DE DEPÓSITO ===== -->
-            <div class="p-4">
-                <h4>Realizar Depósito</h4>
-                <div class="mb-3">
-                    <label class="form-label">Código de Cuenta</label>
-                    <input class="form-control" @bind="DepositModel.CodigoCuenta" />
+<div class="container-responsive">
+    @if (SessionManager.IsLoggedIn)
+    {
+        <!-- Header Section -->
+        <div class="page-header mb-4">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <h1 class="text-responsive-lg mb-2">
+                        <span class="me-2">⚡</span>
+                        Realizar Transacciones
+                    </h1>
+                    <p class="text-muted text-responsive-md">
+                        Selecciona el tipo de transacción que deseas realizar
+                    </p>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Importe a Depositar</label>
-                    <input type="number" step="0.01" class="form-control" @bind="DepositModel.Importe" />
-                </div>
-                <button class="btn btn-success" @onclick="HandleDeposit" disabled="@IsBusy">
-                    <span class="bi bi-box-arrow-in-down"></span> Realizar Depósito
-                </button>
             </div>
-        }
-        else if (ActiveTab == "withdraw")
-        {
-            <!-- ===== PESTAÑA DE RETIRO ===== -->
-            <div class="p-4">
-                <h4>Realizar Retiro</h4>
-                <div class="mb-3">
-                    <label class="form-label">Código de Cuenta</label>
-                    <input class="form-control" @bind="WithdrawModel.CodigoCuenta" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Clave de la Cuenta</label>
-                    <input type="password" class="form-control" @bind="WithdrawModel.ClaveCuenta" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Importe a Retirar</label>
-                    <input type="number" step="0.01" class="form-control" @bind="WithdrawModel.Importe" />
-                </div>
-                <button class="btn btn-warning" @onclick="HandleWithdraw" disabled="@IsBusy">
-                    <span class="bi bi-box-arrow-up"></span> Realizar Retiro
-                </button>
-            </div>
-        }
-        else if (ActiveTab == "transfer")
-        {
-            <!-- ===== PESTAÑA DE TRANSFERENCIA ===== -->
-            <div class="p-4">
-                <h4>Realizar Transferencia</h4>
-                <div class="mb-3">
-                    <label class="form-label">Cuenta de Origen</label>
-                    <input class="form-control" @bind="TransferModel.CuentaOrigen" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Clave de Cuenta Origen</label>
-                    <input type="password" class="form-control" @bind="TransferModel.ClaveCuentaOrigen" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Cuenta de Destino</label>
-                    <input class="form-control" @bind="TransferModel.CuentaDestino" />
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Importe a Transferir</label>
-                    <input type="number" step="0.01" class="form-control" @bind="TransferModel.Importe" />
-                </div>
-                <button class="btn btn-info" @onclick="HandleTransfer" disabled="@IsBusy">
-                    <span class="bi bi-arrow-left-right"></span> Realizar Transferencia
-                </button>
-            </div>
-        }
-    </div>
+        </div>
 
-    <!-- Indicador de Carga y Resultados -->
-    <div class="mt-4">
+        <!-- Pestañas de Navegación (Implementación Blazor) -->
+        <div class="card card-responsive mb-4">
+            <div class="card-header p-0">
+                <ul class="nav nav-pills nav-fill" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link @(ActiveTab == "deposit" ? "active" : "") rounded-0 border-0" 
+                                @onclick="@(() => SetActiveTab("deposit"))" 
+                                type="button">
+                            <span class="me-2">💰</span>
+                            <span class="d-none d-sm-inline">Depósito</span>
+                            <span class="d-sm-none">Dep.</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link @(ActiveTab == "withdraw" ? "active" : "") rounded-0 border-0" 
+                                @onclick="@(() => SetActiveTab("withdraw"))" 
+                                type="button">
+                            <span class="me-2">💳</span>
+                            <span class="d-none d-sm-inline">Retiro</span>
+                            <span class="d-sm-none">Ret.</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link @(ActiveTab == "transfer" ? "active" : "") rounded-0 border-0" 
+                                @onclick="@(() => SetActiveTab("transfer"))" 
+                                type="button">
+                            <span class="me-2">🔄</span>
+                            <span class="d-none d-sm-inline">Transferencia</span>
+                            <span class="d-sm-none">Trans.</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contenido de las Pestañas -->
+            <div class="card-body">
+                @if (ActiveTab == "deposit")
+                {
+                    <!-- ===== PESTAÑA DE DEPÓSITO ===== -->
+                    <div class="transaction-form">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="action-icon bg-success me-3">
+                                <span style="color: white; font-size: 1.5rem;">💰</span>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">Realizar Depósito</h4>
+                                <p class="text-muted mb-0">Ingresa dinero a una cuenta bancaria</p>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">🏦</span>
+                                    Código de Cuenta
+                                </label>
+                                <input class="form-control input-responsive" @bind="DepositModel.CodigoCuenta" placeholder="Ej: 00100001" maxlength="8" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">💵</span>
+                                    Importe a Depositar
+                                </label>
+                                <input type="number" step="0.01" min="0" class="form-control input-responsive" @bind="DepositModel.Importe" placeholder="0.00" />
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-success btn-lg btn-responsive" @onclick="HandleDeposit" disabled="@(IsBusy || string.IsNullOrWhiteSpace(DepositModel.CodigoCuenta) || DepositModel.Importe <= 0)">
+                                @if (IsBusy)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                    <span>Procesando...</span>
+                                }
+                                else
+                                {
+                                    <span class="me-2">💰</span>
+                                    <span>Realizar Depósito</span>
+                                }
+                            </button>
+                        </div>
+                    </div>
+                }
+                else if (ActiveTab == "withdraw")
+                {
+                    <!-- ===== PESTAÑA DE RETIRO ===== -->
+                    <div class="transaction-form">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="action-icon bg-warning me-3">
+                                <span style="color: white; font-size: 1.5rem;">💳</span>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">Realizar Retiro</h4>
+                                <p class="text-muted mb-0">Retira dinero de una cuenta bancaria</p>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">🏦</span>
+                                    Código de Cuenta
+                                </label>
+                                <input class="form-control input-responsive" @bind="WithdrawModel.CodigoCuenta" placeholder="Ej: 00100001" maxlength="8" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">🔐</span>
+                                    Clave de la Cuenta
+                                </label>
+                                <input type="password" class="form-control input-responsive" @bind="WithdrawModel.ClaveCuenta" placeholder="Ingresa la clave" />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">💵</span>
+                                    Importe a Retirar
+                                </label>
+                                <input type="number" step="0.01" min="0" class="form-control input-responsive" @bind="WithdrawModel.Importe" placeholder="0.00" />
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-warning btn-lg btn-responsive" @onclick="HandleWithdraw" disabled="@(IsBusy || string.IsNullOrWhiteSpace(WithdrawModel.CodigoCuenta) || string.IsNullOrWhiteSpace(WithdrawModel.ClaveCuenta) || WithdrawModel.Importe <= 0)">
+                                @if (IsBusy)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                    <span>Procesando...</span>
+                                }
+                                else
+                                {
+                                    <span class="me-2">💳</span>
+                                    <span>Realizar Retiro</span>
+                                }
+                            </button>
+                        </div>
+                    </div>
+                }
+                else if (ActiveTab == "transfer")
+                {
+                    <!-- ===== PESTAÑA DE TRANSFERENCIA ===== -->
+                    <div class="transaction-form">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="action-icon bg-info me-3">
+                                <span style="color: white; font-size: 1.5rem;">🔄</span>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">Realizar Transferencia</h4>
+                                <p class="text-muted mb-0">Transfiere dinero entre cuentas bancarias</p>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">🏦</span>
+                                    Cuenta de Origen
+                                </label>
+                                <input class="form-control input-responsive" @bind="TransferModel.CuentaOrigen" placeholder="Ej: 00100001" maxlength="8" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">🔐</span>
+                                    Clave Cuenta Origen
+                                </label>
+                                <input type="password" class="form-control input-responsive" @bind="TransferModel.ClaveCuentaOrigen" placeholder="Clave de origen" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">🏪</span>
+                                    Cuenta de Destino
+                                </label>
+                                <input class="form-control input-responsive" @bind="TransferModel.CuentaDestino" placeholder="Ej: 00200001" maxlength="8" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    <span class="me-2">💵</span>
+                                    Importe a Transferir
+                                </label>
+                                <input type="number" step="0.01" min="0" class="form-control input-responsive" @bind="TransferModel.Importe" placeholder="0.00" />
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <button class="btn btn-info btn-lg btn-responsive" @onclick="HandleTransfer" disabled="@(IsBusy || string.IsNullOrWhiteSpace(TransferModel.CuentaOrigen) || string.IsNullOrWhiteSpace(TransferModel.ClaveCuentaOrigen) || string.IsNullOrWhiteSpace(TransferModel.CuentaDestino) || TransferModel.Importe <= 0)">
+                                @if (IsBusy)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                    <span>Procesando...</span>
+                                }
+                                else
+                                {
+                                    <span class="me-2">🔄</span>
+                                    <span>Realizar Transferencia</span>
+                                }
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Resultados -->
         @if (IsBusy)
         {
-            <div class="d-flex align-items-center">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                <strong class="ms-2">Procesando...</strong>
+            <div class="text-center my-5">
+                <div class="card card-responsive d-inline-block">
+                    <div class="card-body text-center p-5">
+                        <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+                        <h4 class="mb-2">Procesando transacción...</h4>
+                        <p class="text-muted mb-0">Por favor espera mientras procesamos tu solicitud</p>
+                    </div>
+                </div>
             </div>
         }
+
         @if (!string.IsNullOrEmpty(ResultMessage))
         {
-            <div class="alert @ResultCssClass mt-3" role="alert">
-                @ResultMessage
+            <div class="alert @ResultCssClass alert-dismissible fade show animate-fade-in" role="alert">
+                @if (ResultCssClass.Contains("success"))
+                {
+                    <span class="me-2">✅</span>
+                }
+                else
+                {
+                    <span class="me-2">❌</span>
+                }
+                <strong>@ResultMessage</strong>
+                <button type="button" class="btn-close" @onclick="ClearResult">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
         }
-    </div>
+    }
+    else
+    {
+        <!-- Unauthorized Access -->
+        <div class="text-center" style="min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+            <div class="card card-responsive">
+                <div class="card-body text-center p-5">
+                    <div class="text-warning mb-4">
+                        <span style="font-size: 4rem;">⚠️</span>
+                    </div>
+                    <h2 class="mb-3">Acceso Restringido</h2>
+                    <p class="text-muted mb-4">
+                        Necesitas iniciar sesión para realizar transacciones bancarias.
+                    </p>
+                    <button class="btn btn-primary btn-lg btn-responsive" @onclick="IrALogin">
+                        <span class="me-2">🚪</span>
+                        Iniciar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @code {
@@ -143,7 +295,7 @@
     {
         ActiveTab = tabName;
         // Limpiar mensaje anterior cuando cambiamos de pestaña
-        ResultMessage = null;
+        ClearResult();
         StateHasChanged();
     }
 
@@ -161,7 +313,7 @@
 
             if (response.Exitoso)
             {
-                ResultMessage = $"Depósito exitoso. Nuevo Saldo: {response.Datos?.SaldoNuevo:C}";
+                ResultMessage = $"Depósito exitoso";
                 ResultCssClass = "alert-success";
                 DepositModel = new(); // Resetea el formulario
             }
@@ -185,7 +337,7 @@
 
             if (response.Exitoso)
             {
-                ResultMessage = $"Retiro exitoso. Nuevo Saldo: {response.Datos?.SaldoNuevo:C}";
+                ResultMessage = $"Retiro exitoso";
                 ResultCssClass = "alert-success";
                 WithdrawModel = new();
             }
@@ -208,7 +360,7 @@
 
             if (response.Exitoso)
             {
-                ResultMessage = $"Transferencia exitosa. Nuevo Saldo Origen: {response.Datos?.CuentaOrigen.SaldoNuevo:C}";
+                ResultMessage = $"Transferencia exitosa.";
                 ResultCssClass = "alert-success";
                 TransferModel = new();
             }
@@ -231,9 +383,9 @@
         {
             await transactionLogic();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            ResultMessage = "Error inesperado al procesar la transacción.";
+            ResultMessage = $"Error inesperado al procesar la transacción: {ex.Message}";
             ResultCssClass = "alert-danger";
         }
         finally
@@ -241,5 +393,15 @@
             IsBusy = false;
             StateHasChanged(); // Forzar actualización de UI
         }
+    }
+
+    private void ClearResult()
+    {
+        ResultMessage = null;
+    }
+
+    private void IrALogin()
+    {
+        NavigationManager.NavigateTo("/");
     }
 }

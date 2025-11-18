@@ -1,4 +1,4 @@
-@page "/reports"
+﻿@page "/reports"
 
 @inject IReportService ReportService
 @inject SessionService SessionManager
@@ -12,11 +12,11 @@
             <div class="row align-items-center">
                 <div class="col-12">
                     <h1 class="text-responsive-lg mb-2">
-                        <i class="bi bi-table me-2"></i>
+                        <span class="me-2">📊</span>
                         Reporte de Movimientos
                     </h1>
                     <p class="text-muted text-responsive-md">
-                        Consulta los movimientos bancarios ingresando el c�digo de cuenta
+                        Consulta los movimientos bancarios ingresando el código de cuenta
                     </p>
                 </div>
             </div>
@@ -27,17 +27,17 @@
             <div class="card card-responsive">
                 <div class="card-header bg-primary text-white">
                     <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-search"></i>
+                        <span>🔍</span>
                         <span class="fw-semibold">Buscar Movimientos</span>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <label for="accountCode" class="form-label">C�digo de Cuenta</label>
+                            <label for="accountCode" class="form-label">Código de Cuenta</label>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-text">
-                                    <i class="bi bi-credit-card"></i>
+                                    <span>💳</span>
                                 </span>
                                 <input 
                                     id="accountCode"
@@ -58,14 +58,14 @@
                                     }
                                     else
                                     {
-                                        <i class="bi bi-search me-2"></i>
+                                        <span class="me-2">🔍</span>
                                         <span class="d-none d-sm-inline">Buscar</span>
                                     }
                                 </button>
                             </div>
                             <div class="form-text">
-                                <i class="bi bi-info-circle me-1"></i>
-                                Ingresa el c�digo de 8 d�gitos de la cuenta bancaria
+                                <span class="me-1">ℹ️</span>
+                                Ingresa el código de 8 dígitos de la cuenta bancaria
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                     <div class="card-body text-center p-5">
                         <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
                         <h4 class="mb-2">Cargando movimientos...</h4>
-                        <p class="text-muted mb-0">Por favor espera mientras consultamos la informaci�n</p>
+                        <p class="text-muted mb-0">Por favor espera mientras consultamos la información</p>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                 <!-- Results Header -->
                 <div class="alert alert-info d-flex justify-content-between align-items-center">
                     <div>
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <span class="text-success me-2">✅</span>
                         <strong>Movimientos Encontrados</strong>
                     </div>
                     <span class="badge bg-info">@Movimientos.Count() registro(s)</span>
@@ -110,7 +110,7 @@
                                         <th scope="col"># Mov.</th>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Tipo</th>
-                                        <th scope="col">Acci�n</th>
+                                        <th scope="col">Acción</th>
                                         <th scope="col" class="text-end">Importe</th>
                                         <th scope="col">Empleado</th>
                                     </tr>
@@ -124,8 +124,7 @@
                                             <td>@mov.TipoMovimiento</td>
                                             <td>
                                                 <span class="badge @GetActionClass(mov.Accion)">
-                                                    <i class="bi @GetActionIcon(mov.Accion) me-1"></i>
-                                                    @mov.Accion
+                                                    @GetActionIcon(mov.Accion) @mov.Accion
                                                 </span>
                                             </td>
                                             <td class="text-end fw-bold">@mov.Importe.ToString("C")</td>
@@ -156,7 +155,7 @@
                                                 <span class="fw-medium">@mov.TipoMovimiento</span>
                                             </div>
                                             <div class="col-6">
-                                                <small class="text-muted d-block">Acci�n:</small>
+                                                <small class="text-muted d-block">Acción:</small>
                                                 <span class="badge @GetActionClass(mov.Accion)">@mov.Accion</span>
                                             </div>
                                             <div class="col-12">
@@ -169,7 +168,7 @@
                                             {
                                                 <div class="col-12">
                                                     <small class="text-muted d-block">
-                                                        <i class="bi bi-person me-1"></i>Empleado:
+                                                        <span class="me-1">👤</span>Empleado:
                                                     </small>
                                                     <span class="text-dark">@mov.EmpleadoNombre</span>
                                                 </div>
@@ -191,12 +190,12 @@
                 <div class="card card-responsive border-danger">
                     <div class="card-body text-center p-4">
                         <div class="text-danger mb-3">
-                            <i class="bi bi-exclamation-triangle" style="font-size: 3rem;"></i>
+                            <span style="font-size: 3rem;">❌</span>
                         </div>
                         <h4 class="text-danger mb-2">Error al cargar movimientos</h4>
                         <p class="text-muted">@ErrorMessage</p>
                         <button class="btn btn-outline-primary btn-responsive" @onclick="() => { ErrorMessage = null; HaBuscado = false; }">
-                            <i class="bi bi-arrow-clockwise me-2"></i>Intentar de nuevo
+                            <span class="me-2">🔄</span>Intentar de nuevo
                         </button>
                     </div>
                 </div>
@@ -210,7 +209,7 @@
                 <div class="card card-responsive">
                     <div class="card-body text-center p-4">
                         <div class="text-muted mb-3">
-                            <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                            <span style="font-size: 3rem;">📭</span>
                         </div>
                         <h4 class="mb-2">No hay movimientos</h4>
                         <p class="text-muted">
@@ -234,15 +233,15 @@
             <div class="card card-responsive">
                 <div class="card-body text-center p-5">
                     <div class="text-warning mb-4">
-                        <i class="bi bi-shield-exclamation" style="font-size: 4rem;"></i>
+                        <span style="font-size: 4rem;">⚠️</span>
                     </div>
                     <h2 class="mb-3">Acceso Restringido</h2>
                     <p class="text-muted mb-4">
-                        Necesitas iniciar sesi�n para acceder a los reportes del sistema bancario.
+                        Necesitas iniciar sesión para acceder a los reportes del sistema bancario.
                     </p>
                     <button class="btn btn-primary btn-lg btn-responsive" @onclick="IrALogin">
-                        <i class="bi bi-box-arrow-in-right me-2"></i>
-                        Iniciar Sesi�n
+                        <span class="me-2">🚪</span>
+                        Iniciar Sesión
                     </button>
                 </div>
             </div>
@@ -262,7 +261,7 @@
     {
         if (string.IsNullOrWhiteSpace(CodigoCuenta))
         {
-            ErrorMessage = "Por favor, ingrese un c�digo de cuenta v�lido.";
+            ErrorMessage = "Por favor, ingrese un código de cuenta válido.";
             return;
         }
 
@@ -323,9 +322,9 @@
     {
         return accion?.ToUpper() switch
         {
-            "INGRESO" => "bi-arrow-down-circle",
-            "EGRESO" => "bi-arrow-up-circle",
-            _ => "bi-circle"
+            "INGRESO" => "⬇️",
+            "EGRESO" => "⬆️",
+            _ => "⚪"
         };
     }
 
