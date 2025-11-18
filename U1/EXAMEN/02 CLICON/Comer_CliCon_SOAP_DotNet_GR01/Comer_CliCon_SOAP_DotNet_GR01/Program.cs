@@ -6,8 +6,21 @@ namespace Comer_CliCon_SOAP_DotNet_GR01
 {
     class Program
     {
+        private const string USUARIO_CORRECTO = "MONSTER";
+        private const string PASSWORD_CORRECTO = "MONSTER9";
+        private const int MAX_INTENTOS = 3;
+
         static void Main(string[] args)
         {
+            // Validar login antes de acceder al sistema
+            if (!Login())
+            {
+                ConsoleHelper.MostrarError("Acceso denegado. Máximo de intentos alcanzado.");
+                Console.WriteLine("\nPresione cualquier tecla para salir...");
+                Console.ReadKey();
+                return;
+            }
+
             bool salir = false;
 
             while (!salir)
@@ -36,6 +49,70 @@ namespace Comer_CliCon_SOAP_DotNet_GR01
                         break;
                 }
             }
+        }
+
+        static bool Login()
+        {
+            Console.Clear();
+            ConsoleHelper.MostrarTitulo("SISTEMA DE COMERCIALIZACIÓN - LOGIN");
+            Console.WriteLine();
+
+            int intentos = 0;
+
+            while (intentos < MAX_INTENTOS)
+            {
+                Console.Write("Usuario: ");
+                string usuario = Console.ReadLine() ?? "";
+
+                Console.Write("Password: ");
+                string password = LeerPassword();
+
+                if (usuario == USUARIO_CORRECTO && password == PASSWORD_CORRECTO)
+                {
+                    Console.WriteLine();
+                    ConsoleHelper.MostrarExito("¡Login exitoso! Bienvenido al sistema.");
+                    Thread.Sleep(1500);
+                    Console.Clear();
+                    return true;
+                }
+
+                intentos++;
+                int intentosRestantes = MAX_INTENTOS - intentos;
+
+                if (intentosRestantes > 0)
+                {
+                    ConsoleHelper.MostrarError($"Usuario o contraseña incorrectos. Intentos restantes: {intentosRestantes}");
+                    Console.WriteLine();
+                }
+            }
+
+            return false;
+        }
+
+        static string LeerPassword()
+        {
+            string password = "";
+            ConsoleKeyInfo key;
+
+            do
+            {
+                key = Console.ReadKey(true);
+
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    password += key.KeyChar;
+                    Console.Write("*");
+                }
+                else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+                {
+                    password = password.Substring(0, password.Length - 1);
+                    Console.Write("\b \b");
+                }
+            }
+            while (key.Key != ConsoleKey.Enter);
+
+            Console.WriteLine();
+            return password;
         }
 
         static void MostrarMenuPrincipal()
@@ -564,18 +641,36 @@ namespace Comer_CliCon_SOAP_DotNet_GR01
                 decimal montoTotal = 0;
                 using (var facturacionClient = new FacturacionServiceClient())
                 {
-                    var calculo = facturacionClient.CalcularTotalFactura(solicitud);
-
-                    if (calculo.FormaPago == "ERROR")
+                    // Crear solicitud de cálculo solo con los items
+                    var solicitudCalculo = new SolicitudCalculoDTO
                     {
-                        ConsoleHelper.MostrarError("Error al calcular total de la factura");
+                        Items = solicitud.Items
+                    };
+
+                    var calculo = facturacionClient.CalcularTotalFactura(solicitudCalculo);
+
+                    if (!calculo.Exitoso)
+                    {
+                        ConsoleHelper.MostrarError($"Error al calcular total: {calculo.Mensaje}");
                         ConsoleHelper.PausarConsola();
                         return;
                     }
 
                     montoTotal = calculo.Total;
-                    ConsoleHelper.MostrarInfo($"Subtotal:  {calculo.Subtotal:C}");
-                    ConsoleHelper.MostrarInfo($"Descuento: {calculo.Descuento:C}");
+
+                    // Mostrar desglose de productos
+                    if (calculo.Detalles != null && calculo.Detalles.Count > 0)
+                    {
+                        Console.WriteLine("\n--- DESGLOSE DE PRODUCTOS ---");
+                        Console.WriteLine($"{"Producto",-30} {"Cant.",6} {"P.Unit.",12} {"Subtotal",12}");
+                        ConsoleHelper.MostrarLinea();
+                        foreach (var detalle in calculo.Detalles)
+                        {
+                            Console.WriteLine($"{detalle.NombreProducto,-30} {detalle.Cantidad,6} {detalle.PrecioUnitario,12:C} {detalle.Subtotal,12:C}");
+                        }
+                        ConsoleHelper.MostrarLinea();
+                    }
+
                     ConsoleHelper.MostrarExito($"TOTAL A FINANCIAR: {montoTotal:C}");
                     Console.WriteLine();
                 }
@@ -598,7 +693,7 @@ namespace Comer_CliCon_SOAP_DotNet_GR01
                     var solicitudCredito = new SolicitudCreditoDTO
                     {
                         Cedula = cedula,
-                        PrecioElectrodomestico = montoTotal.ToString(),
+                        PrecioElectrodomestico = montoTotal.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
                         NumeroCuotas = cuotas.ToString()
                     };
                     var credito = creditoClient.OtorgarCredito(solicitudCredito);
