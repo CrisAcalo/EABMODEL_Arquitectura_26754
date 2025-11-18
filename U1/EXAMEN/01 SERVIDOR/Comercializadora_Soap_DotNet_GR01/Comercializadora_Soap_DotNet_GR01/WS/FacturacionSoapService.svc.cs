@@ -16,20 +16,8 @@ namespace Comercializadora_Soap_DotNet_GR01.WS
 
         public CalculoFacturaDTO CalcularTotalFactura(SolicitudCalculoDTO solicitud)
         {
-            try
-            {
-                return _facturacionService.CalcularTotalFactura(solicitud);
-            }
-            catch (Exception ex)
-            {
-                // Devolver DTO con error
-                return new CalculoFacturaDTO
-                {
-                    Subtotal = 0,
-                    Total = 0,
-                    Detalles = new List<DetalleCalculoDTO>()
-                };
-            }
+            // El servicio ya maneja los errores internamente y retorna un DTO con mensaje
+            return _facturacionService.CalcularTotalFactura(solicitud);
         }
 
         public FacturaDTO GenerarFactura(SolicitudFacturaDTO solicitud)

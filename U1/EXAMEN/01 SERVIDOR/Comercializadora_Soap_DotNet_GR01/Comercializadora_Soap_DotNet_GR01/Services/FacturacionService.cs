@@ -45,7 +45,7 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
                         throw new Exception($"Producto con ID {item.ProductoId} no encontrado");
 
                     if (!_productoRepository.TieneStock(item.ProductoId, item.Cantidad))
-                        throw new Exception($"Stock insuficiente para el producto {producto.Nombre}");
+                        throw new Exception($"Stock insuficiente para el producto '{producto.Nombre}'. Stock disponible: {producto.Stock}, solicitado: {item.Cantidad}");
 
                     var subtotalItem = producto.Precio * item.Cantidad;
                     subtotal += subtotalItem;
@@ -60,18 +60,25 @@ namespace Comercializadora_Soap_DotNet_GR01.Services
                     });
                 }
 
-                // Retornar cálculo base sin descuentos
-                // El cliente decidirá la forma de pago después
+                // Retornar cálculo exitoso
                 return new CalculoFacturaDTO
                 {
-                    Subtotal = subtotal,
+                    Exitoso = true,
+                    Mensaje = "Cálculo realizado exitosamente",
                     Total = subtotal,
                     Detalles = detalles
                 };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error al calcular total de factura: {ex.Message}");
+                // Retornar error con mensaje comprensible
+                return new CalculoFacturaDTO
+                {
+                    Exitoso = false,
+                    Mensaje = ex.Message,
+                    Total = 0,
+                    Detalles = new List<DetalleCalculoDTO>()
+                };
             }
         }
 

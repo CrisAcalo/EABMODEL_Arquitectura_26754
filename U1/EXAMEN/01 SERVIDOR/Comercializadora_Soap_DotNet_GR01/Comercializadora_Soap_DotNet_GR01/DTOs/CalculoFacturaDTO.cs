@@ -10,14 +10,22 @@ namespace Comercializadora_Soap_DotNet_GR01.DTOs
     [DataContract]
     public class CalculoFacturaDTO
     {
-        [DataMember]
-        public decimal Subtotal { get; set; }
+        [DataMember(Order = 1)]
+        public bool Exitoso { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 2)]
+        public string Mensaje { get; set; }
+
+        [DataMember(Order = 3)]
         public decimal Total { get; set; }
 
-        [DataMember]
+        [DataMember(Order = 4)]
         public List<DetalleCalculoDTO> Detalles { get; set; }
+
+        public CalculoFacturaDTO()
+        {
+            Detalles = new List<DetalleCalculoDTO>();
+        }
     }
 
     /// <summary>
