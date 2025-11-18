@@ -1,1 +1,0 @@
-<%@ ServiceHost Language="C#" Debug="true" Service="BanquitoServer_Soap_DotNet_GR01.WS.CreditoSoapService" CodeBehind="CreditoSoapService.svc.cs" %>
