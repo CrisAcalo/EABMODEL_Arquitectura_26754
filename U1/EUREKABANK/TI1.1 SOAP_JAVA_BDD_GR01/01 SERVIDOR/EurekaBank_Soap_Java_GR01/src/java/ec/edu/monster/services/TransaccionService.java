@@ -33,9 +33,10 @@ public class TransaccionService {
 
     /**
      * Realiza un depósito en una cuenta
-     * NO usa transacción SQL (operación simple)
+     * USA TRANSACCIÓN SQL (genera depósito + ITF)
      */
     public RespuestaDTO realizarDeposito(TransaccionDTO datos) {
+        Connection conn = null;
         try {
             // Validar importe
             TransaccionValidator.validarImporte(datos.getImporte());
@@ -44,30 +45,70 @@ public class TransaccionService {
             Cuenta cuenta = cuentaDAO.obtenerPorCodigo(datos.getCodigoCuenta());
             CuentaValidator.validarParaDeposito(cuenta, datos.getClaveCuenta(), datos.getImporte());
 
+            // Calcular ITF y cargo por movimiento
+            BigDecimal itf = TransaccionValidator.calcularITF(datos.getImporte());
+            BigDecimal cargo = TransaccionValidator.calcularCargoMovimiento(cuenta);
+            BigDecimal totalDescontar = itf.add(cargo);
+
             // Guardar saldo anterior
             BigDecimal saldoAnterior = cuenta.getSaldo();
 
-            // Calcular nuevo saldo
-            BigDecimal nuevoSaldo = saldoAnterior.add(datos.getImporte());
+            // Calcular nuevo saldo (se suma el depósito y se restan ITF y cargo)
+            BigDecimal nuevoSaldo = saldoAnterior.add(datos.getImporte()).subtract(totalDescontar);
 
-            // Obtener siguiente número de movimiento
-            int numeroMovimiento = movimientoDAO.obtenerUltimoNumero(cuenta.getCodigo()) + 1;
+            // INICIAR TRANSACCIÓN SQL
+            conn = ConexionDB.getConnection();
+            conn.setAutoCommit(false);
 
-            // Registrar movimiento
-            Movimiento movimiento = new Movimiento(
+            // Obtener número base de movimiento
+            int numeroBase = movimientoDAO.obtenerUltimoNumero(conn, cuenta.getCodigo());
+
+            // 1. Registrar depósito principal
+            Movimiento movDeposito = new Movimiento(
                     cuenta.getCodigo(),
-                    numeroMovimiento,
+                    ++numeroBase,
                     LocalDate.now(),
                     datos.getCodigoEmpleado(),
                     TipoMovimientoConstants.DEPOSITO,
                     datos.getImporte(),
                     null
             );
-            movimientoDAO.insertar(movimiento);
+            movimientoDAO.insertar(conn, movDeposito);
+            cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
 
-            // Actualizar saldo y contador
-            cuentaDAO.actualizarSaldo(cuenta.getCodigo(), nuevoSaldo);
-            cuentaDAO.incrementarContadorMovimientos(cuenta.getCodigo());
+            // 2. Registrar ITF (siempre se cobra)
+            Movimiento movITF = new Movimiento(
+                    cuenta.getCodigo(),
+                    ++numeroBase,
+                    LocalDate.now(),
+                    datos.getCodigoEmpleado(),
+                    TipoMovimientoConstants.ITF,
+                    itf,
+                    null
+            );
+            movimientoDAO.insertar(conn, movITF);
+            cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
+
+            // 3. Registrar cargo por movimiento (si aplica)
+            if (cargo.compareTo(BigDecimal.ZERO) > 0) {
+                Movimiento movCargo = new Movimiento(
+                        cuenta.getCodigo(),
+                        ++numeroBase,
+                        LocalDate.now(),
+                        datos.getCodigoEmpleado(),
+                        TipoMovimientoConstants.CARGO_MOVIMIENTO,
+                        cargo,
+                        null
+                );
+                movimientoDAO.insertar(conn, movCargo);
+                cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
+            }
+
+            // 4. Actualizar saldo
+            cuentaDAO.actualizarSaldo(conn, cuenta.getCodigo(), nuevoSaldo);
+
+            // CONFIRMAR TRANSACCIÓN
+            conn.commit();
 
             // Crear DTO de resultado
             DepositoResultDTO resultado = new DepositoResultDTO(
@@ -75,15 +116,34 @@ public class TransaccionService {
                     datos.getImporte(),
                     saldoAnterior,
                     nuevoSaldo,
-                    numeroMovimiento
+                    movDeposito.getNumero()
             );
 
             LOGGER.info("Depósito exitoso en cuenta: " + cuenta.getCodigo());
             return RespuestaDTO.exito(MensajesConstants.DEPOSITO_EXITOSO, resultado);
 
         } catch (Exception e) {
+            // REVERTIR TRANSACCIÓN
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                    LOGGER.warning("Transacción revertida debido a error");
+                } catch (Exception ex) {
+                    LOGGER.log(Level.SEVERE, "Error al revertir transacción", ex);
+                }
+            }
             LOGGER.log(Level.SEVERE, "Error en depósito", e);
             return RespuestaDTO.error(e.getMessage());
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Error al cerrar conexión", e);
+                }
+            }
         }
     }
 
@@ -215,7 +275,7 @@ public class TransaccionService {
 
     /**
      * Realiza una transferencia entre dos cuentas
-     * USA TRANSACCIÓN SQL (afecta dos cuentas)
+     * USA TRANSACCIÓN SQL (afecta dos cuentas y registra ITF en origen)
      */
     public RespuestaDTO realizarTransferencia(TransferenciaDTO datos) {
         Connection conn = null;
@@ -227,34 +287,39 @@ public class TransaccionService {
             Cuenta cuentaOrigen = cuentaDAO.obtenerPorCodigo(datos.getCuentaOrigen());
             Cuenta cuentaDestino = cuentaDAO.obtenerPorCodigo(datos.getCuentaDestino());
 
-            // Validar transferencia
+            // Calcular ITF y cargo por movimiento para cuenta origen
+            BigDecimal itf = TransaccionValidator.calcularITF(datos.getImporte());
+            BigDecimal cargo = TransaccionValidator.calcularCargoMovimiento(cuentaOrigen);
+            BigDecimal totalDescontar = datos.getImporte().add(itf).add(cargo);
+
+            // Validar transferencia (con ITF y cargo incluidos)
             CuentaValidator.validarParaTransferencia(
                     cuentaOrigen,
                     cuentaDestino,
                     datos.getClaveCuentaOrigen(),
-                    datos.getImporte()
+                    totalDescontar
             );
 
             // Guardar saldos anteriores
             BigDecimal saldoAnteriorOrigen = cuentaOrigen.getSaldo();
             BigDecimal saldoAnteriorDestino = cuentaDestino.getSaldo();
 
-            // Calcular nuevos saldos
-            BigDecimal nuevoSaldoOrigen = saldoAnteriorOrigen.subtract(datos.getImporte());
+            // Calcular nuevos saldos (origen pierde importe + ITF, destino recibe solo importe)
+            BigDecimal nuevoSaldoOrigen = saldoAnteriorOrigen.subtract(totalDescontar);
             BigDecimal nuevoSaldoDestino = saldoAnteriorDestino.add(datos.getImporte());
 
             // INICIAR TRANSACCIÓN SQL
             conn = ConexionDB.getConnection();
             conn.setAutoCommit(false);
 
-            // Obtener números de movimiento
-            int numeroMovimientoOrigen = movimientoDAO.obtenerUltimoNumero(conn, cuentaOrigen.getCodigo()) + 1;
+            // Obtener número base de movimiento para cuenta origen
+            int numeroBaseOrigen = movimientoDAO.obtenerUltimoNumero(conn, cuentaOrigen.getCodigo());
             int numeroMovimientoDestino = movimientoDAO.obtenerUltimoNumero(conn, cuentaDestino.getCodigo()) + 1;
 
             // 1. Registrar movimiento de salida en cuenta origen
             Movimiento movOrigen = new Movimiento(
                     cuentaOrigen.getCodigo(),
-                    numeroMovimientoOrigen,
+                    ++numeroBaseOrigen,
                     LocalDate.now(),
                     datos.getCodigoEmpleado(),
                     TipoMovimientoConstants.TRANSFERENCIA_SALIDA,
@@ -264,7 +329,35 @@ public class TransaccionService {
             movimientoDAO.insertar(conn, movOrigen);
             cuentaDAO.incrementarContadorMovimientos(conn, cuentaOrigen.getCodigo());
 
-            // 2. Registrar movimiento de ingreso en cuenta destino
+            // 2. Registrar ITF en cuenta origen
+            Movimiento movITF = new Movimiento(
+                    cuentaOrigen.getCodigo(),
+                    ++numeroBaseOrigen,
+                    LocalDate.now(),
+                    datos.getCodigoEmpleado(),
+                    TipoMovimientoConstants.ITF,
+                    itf,
+                    null
+            );
+            movimientoDAO.insertar(conn, movITF);
+            cuentaDAO.incrementarContadorMovimientos(conn, cuentaOrigen.getCodigo());
+
+            // 3. Registrar cargo por movimiento en cuenta origen (si aplica)
+            if (cargo.compareTo(BigDecimal.ZERO) > 0) {
+                Movimiento movCargo = new Movimiento(
+                        cuentaOrigen.getCodigo(),
+                        ++numeroBaseOrigen,
+                        LocalDate.now(),
+                        datos.getCodigoEmpleado(),
+                        TipoMovimientoConstants.CARGO_MOVIMIENTO,
+                        cargo,
+                        null
+                );
+                movimientoDAO.insertar(conn, movCargo);
+                cuentaDAO.incrementarContadorMovimientos(conn, cuentaOrigen.getCodigo());
+            }
+
+            // 4. Registrar movimiento de ingreso en cuenta destino
             Movimiento movDestino = new Movimiento(
                     cuentaDestino.getCodigo(),
                     numeroMovimientoDestino,
@@ -277,7 +370,7 @@ public class TransaccionService {
             movimientoDAO.insertar(conn, movDestino);
             cuentaDAO.incrementarContadorMovimientos(conn, cuentaDestino.getCodigo());
 
-            // 3. Actualizar saldos
+            // 5. Actualizar saldos
             cuentaDAO.actualizarSaldo(conn, cuentaOrigen.getCodigo(), nuevoSaldoOrigen);
             cuentaDAO.actualizarSaldo(conn, cuentaDestino.getCodigo(), nuevoSaldoDestino);
 
@@ -293,7 +386,7 @@ public class TransaccionService {
                     nuevoSaldoOrigen,
                     saldoAnteriorDestino,
                     nuevoSaldoDestino,
-                    numeroMovimientoOrigen,
+                    movOrigen.getNumero(),
                     numeroMovimientoDestino
             );
 
