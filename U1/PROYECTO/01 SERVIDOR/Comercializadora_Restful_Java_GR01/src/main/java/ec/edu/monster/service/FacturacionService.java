@@ -5,6 +5,10 @@ import ec.edu.monster.dao.ProductoDAO;
 import ec.edu.monster.dao.DetalleFacturaDAO;
 import ec.edu.monster.dto.FacturaDTO;
 import ec.edu.monster.dto.DetalleFacturaDTO;
+import ec.edu.monster.dto.SolicitudCalculoDTO;
+import ec.edu.monster.dto.CalculoFacturaDTO;
+import ec.edu.monster.dto.DetalleCalculoDTO;
+import ec.edu.monster.dto.ItemFacturaDTO;
 import ec.edu.monster.model.Factura;
 import ec.edu.monster.model.Producto;
 import ec.edu.monster.model.DetalleFactura;
@@ -236,5 +240,80 @@ public class FacturacionService {
             factura = facturaDAO.findByIdWithDetalles(factura.getFacturaId());
         }
         return convertirFacturaADTO(factura);
+    }
+
+    /**
+     * Calcula el total de una factura SIN generarla
+     * Útil para conocer el monto ANTES de solicitar crédito en BanQuito
+     * NO actualiza stock, NO crea factura en BD
+     *
+     * @param solicitud Solicitud con lista de items (productoId y cantidad)
+     * @return CalculoFacturaDTO con el total calculado y detalles
+     */
+    public CalculoFacturaDTO calcularTotalFactura(SolicitudCalculoDTO solicitud) {
+        try {
+            // Validaciones básicas
+            if (solicitud == null) {
+                throw new RuntimeException("La solicitud de factura es nula");
+            }
+
+            if (solicitud.getItems() == null || solicitud.getItems().isEmpty()) {
+                throw new RuntimeException("La solicitud de factura no contiene productos. Debe enviar al menos un producto.");
+            }
+
+            BigDecimal subtotal = BigDecimal.ZERO;
+            List<DetalleCalculoDTO> detalles = new ArrayList<>();
+
+            // Calcular subtotal y validar productos
+            for (ItemFacturaDTO item : solicitud.getItems()) {
+                Producto producto = productoDAO.findById(item.getProductoId());
+
+                if (producto == null) {
+                    throw new RuntimeException("Producto con ID " + item.getProductoId() + " no encontrado");
+                }
+
+                if (producto.getStock() < item.getCantidad()) {
+                    throw new RuntimeException(
+                        String.format("Stock insuficiente para el producto '%s'. Stock disponible: %d, solicitado: %d",
+                            producto.getNombre(), producto.getStock(), item.getCantidad())
+                    );
+                }
+
+                BigDecimal subtotalItem = producto.getPrecio().multiply(new BigDecimal(item.getCantidad()));
+                subtotal = subtotal.add(subtotalItem);
+
+                DetalleCalculoDTO detalle = new DetalleCalculoDTO();
+                detalle.setProductoId(item.getProductoId());
+                detalle.setNombreProducto(producto.getNombre());
+                detalle.setCantidad(item.getCantidad());
+                detalle.setPrecioUnitario(producto.getPrecio());
+                detalle.setSubtotal(subtotalItem);
+
+                detalles.add(detalle);
+            }
+
+            // Retornar cálculo exitoso
+            CalculoFacturaDTO resultado = new CalculoFacturaDTO();
+            resultado.setExitoso(true);
+            resultado.setMensaje("Cálculo realizado exitosamente");
+            resultado.setTotal(subtotal);
+            resultado.setDetalles(detalles);
+
+            LOGGER.info("Cálculo de factura realizado. Total: $" + subtotal);
+
+            return resultado;
+
+        } catch (Exception ex) {
+            // Retornar error con mensaje comprensible
+            CalculoFacturaDTO resultado = new CalculoFacturaDTO();
+            resultado.setExitoso(false);
+            resultado.setMensaje(ex.getMessage());
+            resultado.setTotal(BigDecimal.ZERO);
+            resultado.setDetalles(new ArrayList<>());
+
+            LOGGER.warning("Error en cálculo de factura: " + ex.getMessage());
+
+            return resultado;
+        }
     }
 }

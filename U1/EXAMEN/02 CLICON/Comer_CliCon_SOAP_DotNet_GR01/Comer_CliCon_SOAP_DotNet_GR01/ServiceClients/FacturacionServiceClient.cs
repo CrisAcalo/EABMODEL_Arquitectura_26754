@@ -21,7 +21,7 @@ namespace Comer_CliCon_SOAP_DotNet_GR01.ServiceClients
             _client = _factory.CreateChannel();
         }
 
-        public CalculoFacturaDTO CalcularTotalFactura(SolicitudFacturaDTO solicitud) => _client.CalcularTotalFactura(solicitud);
+        public CalculoFacturaDTO CalcularTotalFactura(SolicitudCalculoDTO solicitud) => _client.CalcularTotalFactura(solicitud);
         public FacturaDTO GenerarFactura(SolicitudFacturaDTO solicitud) => _client.GenerarFactura(solicitud);
         public List<FacturaDTO> ObtenerFacturasPorCliente(string cedula) => _client.ObtenerFacturasPorCliente(cedula);
         public FacturaDTO ObtenerFacturaPorNumero(string numeroFactura) => _client.ObtenerFacturaPorNumero(numeroFactura);

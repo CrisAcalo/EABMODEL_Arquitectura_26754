@@ -2,6 +2,8 @@ package ec.edu.monster.rest;
 
 import ec.edu.monster.dto.FacturaDTO;
 import ec.edu.monster.dto.RespuestaDTO;
+import ec.edu.monster.dto.SolicitudCalculoDTO;
+import ec.edu.monster.dto.CalculoFacturaDTO;
 import ec.edu.monster.service.FacturacionService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -12,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  * Recurso REST para operaciones de Facturación
- * 
+ *
  * Endpoints disponibles:
  * - GET  /api/facturas                    : Obtener todas las facturas
  * - GET  /api/facturas/{id}               : Obtener factura por ID
@@ -21,6 +23,7 @@ import java.util.logging.Logger;
  * - GET  /api/facturas/credito            : Obtener facturas a crédito
  * - GET  /api/facturas/credito/{numero}   : Obtener factura por número de crédito
  * - POST /api/facturas                    : Crear nueva factura
+ * - POST /api/facturas/calcular           : Calcular total de factura sin crearla
  */
 @Path("/facturas")
 @Produces(MediaType.APPLICATION_JSON)
@@ -201,7 +204,93 @@ public class FacturacionResource {
                     .build();
         }
     }
-    
+
+    /**
+     * Calcular total de factura SIN generarla
+     * POST /api/facturas/calcular
+     *
+     * Este endpoint permite calcular el total de una factura ANTES de crearla.
+     * Útil para conocer el monto exacto antes de solicitar crédito en BanQuito.
+     *
+     * NO crea la factura en la base de datos
+     * NO actualiza el stock de productos
+     *
+     * Body ejemplo:
+     * {
+     *   "items": [
+     *     {
+     *       "productoId": 1,
+     *       "cantidad": 2
+     *     },
+     *     {
+     *       "productoId": 3,
+     *       "cantidad": 1
+     *     }
+     *   ]
+     * }
+     *
+     * Respuesta ejemplo exitosa:
+     * {
+     *   "exitoso": true,
+     *   "mensaje": "Cálculo realizado exitosamente",
+     *   "total": 150.00,
+     *   "detalles": [
+     *     {
+     *       "productoId": 1,
+     *       "nombreProducto": "Laptop Dell",
+     *       "cantidad": 2,
+     *       "precioUnitario": 50.00,
+     *       "subtotal": 100.00
+     *     },
+     *     {
+     *       "productoId": 3,
+     *       "nombreProducto": "Mouse",
+     *       "cantidad": 1,
+     *       "precioUnitario": 50.00,
+     *       "subtotal": 50.00
+     *     }
+     *   ]
+     * }
+     *
+     * Respuesta ejemplo con error:
+     * {
+     *   "exitoso": false,
+     *   "mensaje": "Stock insuficiente para el producto 'Laptop Dell'. Stock disponible: 1, solicitado: 2",
+     *   "total": 0,
+     *   "detalles": []
+     * }
+     */
+    @POST
+    @Path("/calcular")
+    public Response calcularTotalFactura(SolicitudCalculoDTO solicitud) {
+        try {
+            LOGGER.info("Calculando total de factura...");
+            CalculoFacturaDTO resultado = facturacionService.calcularTotalFactura(solicitud);
+
+            // El servicio ya retorna el DTO con exitoso true/false
+            // Si es exitoso retornamos 200 OK, si no 400 BAD REQUEST
+            if (resultado.getExitoso()) {
+                return Response.ok(resultado).build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(resultado)
+                        .build();
+            }
+        } catch (Exception e) {
+            LOGGER.severe("Error inesperado al calcular factura: " + e.getMessage());
+            e.printStackTrace();
+
+            // Retornar DTO de error
+            CalculoFacturaDTO error = new CalculoFacturaDTO();
+            error.setExitoso(false);
+            error.setMensaje("Error interno del servidor: " + e.getMessage());
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(error)
+                    .build();
+        }
+    }
+
     /**
      * Endpoint de prueba
      * GET /api/facturas/ping
