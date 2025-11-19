@@ -1,0 +1,143 @@
+﻿@page "/"
+@using Comercializadora.Shared.Services
+@using Comercializadora.Core.Managers
+@inject IFormFactor FormFactor
+@inject ApiServiceManager ApiManager
+
+<PageTitle>Comercializadora - Inicio</PageTitle>
+
+<AuthorizedView>
+    <div class="container-fluid py-3">
+        <!-- Hero Card -->
+        <div class="card mb-4 bg-primary text-white">
+            <div class="card-body py-5">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="display-5 fw-bold mb-3">
+                            🏪 Sistema Comercializadora
+                        </h1>
+                        <p class="lead mb-4">
+                            Plataforma unificada para la gestión de productos y servicios comerciales
+                        </p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a href="/products" class="btn btn-light btn-lg">
+                                📦 Ver Productos
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="display-1">🛒</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">⚙️ Configuración Actual</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">📡 <strong>Perfil Activo:</strong></span>
+                            <span class="badge bg-primary fs-6">
+                                @(ApiManager.CurrentProfile == TechnologyProfile.SoapDotNet ? "🔧 SOAP / .NET" : "⚡ RESTful / Java")
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">💻 <strong>Plataforma:</strong></span>
+                            <span class="badge bg-secondary fs-6">@platform</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-info mt-3 mb-0">
+                    <small>
+                        ℹ️ El sistema soporta múltiples protocolos y tecnologías para máxima flexibilidad en la integración.
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="display-4 mb-3">📦</div>
+                        <h5 class="card-title">Gestión de Productos</h5>
+                        <p class="card-text">
+                            Administra el inventario completo de productos con funcionalidades CRUD completas.
+                        </p>
+                        <a href="/products" class="btn btn-primary">
+                            ➡️ Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="display-4 mb-3">🧾</div>
+                        <h5 class="card-title">Nueva Venta</h5>
+                        <p class="card-text">
+                            Adquisición de productos mediante crédito
+                        </p>
+                        <a href="/venta" class="btn btn-primary">
+                            ➡️ Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="display-4 mb-3">💳</div>
+                        <h5 class="card-title">Consultas</h5>
+                        <p class="card-text">
+                            Realice las consultas de sus facturas, y tablas de amortización
+                        </p>
+                        <a href="/consultas" class="btn btn-primary">
+                            ➡️ Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Information Card -->
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title mb-0">💻 Información Técnica</h6>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled mb-0">
+                            <li><strong>🏗️ Arquitectura:</strong> Microservicios distribuidos</li>
+                            <li><strong>📡 Protocolos:</strong> SOAP</li>
+                            <li><strong>⚙️ Tecnologías:</strong> .NET 10, Blazor</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled mb-0">
+                            <li><strong>📱 Cliente:</strong> @factor</li>
+                            <li><strong>🔧 Framework:</strong> Blazor WebAssembly/Server</li>
+                            <li><strong>🗃️ Base de Datos:</strong> SQL Server</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</AuthorizedView>
+
+@code {
+    private string factor => FormFactor.GetFormFactor();
+    private string platform => FormFactor.GetPlatform();
+}

@@ -1,0 +1,507 @@
+﻿@page "/diagnostics"
+@using Comercializadora.Core.Managers
+@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Logging
+@inject IConfiguration Configuration
+@inject ApiServiceManager ApiManager
+@inject ILogger<Diagnostics> Logger
+
+<PageTitle>Diagnóstico del Sistema</PageTitle>
+
+<div class="container-fluid py-3">
+    <!-- Header Card -->
+    <div class="card mb-4 bg-warning text-dark">
+        <div class="card-body">
+            <h1 class="card-title">🔧 Diagnóstico del Sistema</h1>
+            <p class="card-text">Verificación de configuraciones y conexiones</p>
+        </div>
+    </div>
+
+    <!-- Configuration Card -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">📋 Configuraciones</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <h6>🌐 URLs REST</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Java:</span>
+                            <span class="badge bg-@(GetStatusClass(restJavaUrl)) fs-6">
+                                @(string.IsNullOrWhiteSpace(restJavaUrl) ? "NO CONFIGURADA" : restJavaUrl)
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>.NET:</span>
+                            <span class="badge bg-@(GetStatusClass(restDotNetUrl)) fs-6">
+                                @(string.IsNullOrWhiteSpace(restDotNetUrl) ? "NO CONFIGURADA" : restDotNetUrl)
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>📡 URLs SOAP</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Java:</span>
+                            <span class="badge bg-@(GetStatusClass(soapJavaUrl)) fs-6">
+                                @(string.IsNullOrWhiteSpace(soapJavaUrl) ? "NO CONFIGURADA" : soapJavaUrl)
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>.NET:</span>
+                            <span class="badge bg-@(GetStatusClass(soapDotNetUrl)) fs-6">
+                                @(string.IsNullOrWhiteSpace(soapDotNetUrl) ? "NO CONFIGURADA" : soapDotNetUrl)
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Manager Status -->
+    @* <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">⚙️ Estado del API Manager</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Perfil Actual:</strong> 
+                        <span class="badge bg-primary">
+                            @(ApiManager.CurrentProfile == TechnologyProfile.SoapDotNet ? "🔧 SOAP / .NET" : "⚡ RESTful / Java")
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Última actualización:</strong> @DateTime.Now.ToString("HH:mm:ss")</p>
+                </div>
+            </div>
+        </div>
+    </div> *@
+
+    <!-- Test Buttons -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">🧪 Pruebas de Conectividad</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100" @onclick="TestSoapConnection" disabled="@isTestingSoap">
+                        @if (isTestingSoap)
+                        {
+                            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                        }
+                        🔧 Test SOAP .NET
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-success w-100" @onclick="TestRestConnection" disabled="@isTestingRest">
+                        @if (isTestingRest)
+                        {
+                            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                        }
+                        ⚡ Test REST Java
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-info w-100" @onclick="TestUrlValidation">
+                        🌐 Validar URLs
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-secondary w-100" @onclick="ClearResults">
+                        🗑️ Limpiar
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-warning w-100" @onclick="ShowAllConfiguration">
+                        📋 Ver Configuración
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results -->
+    @if (testResults.Any())
+    {
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">📊 Resultados de Pruebas</h5>
+            </div>
+            <div class="card-body">
+                @foreach (var result in testResults.TakeLast(10))
+                {
+                    <div class="alert alert-@(result.Success ? "success" : "danger") mb-2">
+                        <strong>@result.Timestamp.ToString("HH:mm:ss")</strong> - @result.Test: 
+                        @result.Message
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private string restJavaUrl = "";
+    private string restDotNetUrl = "";
+    private string soapJavaUrl = "";
+    private string soapDotNetUrl = "";
+    private bool isTestingSoap = false;
+    private bool isTestingRest = false;
+    private List<TestResult> testResults = new();
+
+    protected override void OnInitialized()
+    {
+        LoadConfigurations();
+        Logger.LogInformation("Página de diagnósticos cargada");
+    }
+
+    private void LoadConfigurations()
+    {
+        try
+        {
+            Logger.LogInformation("🔍 Iniciando carga de configuraciones...");
+            
+            // Verificar si existe la sección Hosts
+            var hostsSection = Configuration.GetSection("Hosts");
+            if (!hostsSection.Exists())
+            {
+                Logger.LogError("❌ La sección 'Hosts' no existe en la configuración");
+                return;
+            }
+            
+            Logger.LogInformation("✅ Sección 'Hosts' encontrada");
+            
+            // Verificar sección Comercializadora
+            var comercializadoraSection = hostsSection.GetSection("Comercializadora");
+            if (!comercializadoraSection.Exists())
+            {
+                Logger.LogError("❌ La sección 'Hosts:Comercializadora' no existe");
+                return;
+            }
+            
+            Logger.LogInformation("✅ Sección 'Hosts:Comercializadora' encontrada");
+            
+            // Cargar URLs REST
+            var restSection = comercializadoraSection.GetSection("Rest");
+            if (restSection.Exists())
+            {
+                restJavaUrl = restSection["Java"] ?? "";
+                restDotNetUrl = restSection["DotNet"] ?? "";
+                Logger.LogInformation("🌐 REST Java URL: {JavaUrl}", restJavaUrl);
+                Logger.LogInformation("🔧 REST DotNet URL: {DotNetUrl}", restDotNetUrl);
+            }
+            else
+            {
+                Logger.LogError("❌ La sección 'Hosts:Comercializadora:Rest' no existe");
+            }
+            
+            // Cargar URLs SOAP
+            var soapSection = comercializadoraSection.GetSection("Soap");
+            if (soapSection.Exists())
+            {
+                var javaSection = soapSection.GetSection("Java");
+                if (javaSection.Exists())
+                {
+                    soapJavaUrl = javaSection["Products"] ?? "";
+                    Logger.LogInformation("☕ SOAP Java URL: {JavaUrl}", soapJavaUrl);
+                }
+                
+                var dotNetSection = soapSection.GetSection("DotNet");
+                if (dotNetSection.Exists())
+                {
+                    soapDotNetUrl = dotNetSection["Products"] ?? "";
+                    Logger.LogInformation("📡 SOAP DotNet URL: {DotNetUrl}", soapDotNetUrl);
+                }
+            }
+            else
+            {
+                Logger.LogError("❌ La sección 'Hosts:Comercializadora:Soap' no existe");
+            }
+            
+            // Log final de configuraciones cargadas
+            Logger.LogInformation("📊 Configuraciones cargadas:");
+            Logger.LogInformation("   REST Java: {RestJava}", string.IsNullOrEmpty(restJavaUrl) ? "NO CONFIGURADA" : restJavaUrl);
+            Logger.LogInformation("   REST .NET: {RestDotNet}", string.IsNullOrEmpty(restDotNetUrl) ? "NO CONFIGURADA" : restDotNetUrl);
+            Logger.LogInformation("   SOAP Java: {SoapJava}", string.IsNullOrEmpty(soapJavaUrl) ? "NO CONFIGURADA" : soapJavaUrl);
+            Logger.LogInformation("   SOAP .NET: {SoapDotNet}", string.IsNullOrEmpty(soapDotNetUrl) ? "NO CONFIGURADA" : soapDotNetUrl);
+            
+            // Verificar cuáles son válidas
+            var validUrls = 0;
+            if (!string.IsNullOrEmpty(restJavaUrl) && Uri.IsWellFormedUriString(restJavaUrl, UriKind.Absolute)) validUrls++;
+            if (!string.IsNullOrEmpty(restDotNetUrl) && Uri.IsWellFormedUriString(restDotNetUrl, UriKind.Absolute)) validUrls++;
+            if (!string.IsNullOrEmpty(soapJavaUrl) && Uri.IsWellFormedUriString(soapJavaUrl, UriKind.Absolute)) validUrls++;
+            if (!string.IsNullOrEmpty(soapDotNetUrl) && Uri.IsWellFormedUriString(soapDotNetUrl, UriKind.Absolute)) validUrls++;
+            
+            Logger.LogInformation("✅ URLs válidas encontradas: {ValidUrls} de 4", validUrls);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "❌ Error al cargar configuraciones");
+        }
+    }
+
+    private string GetStatusClass(string url)
+    {
+        if (string.IsNullOrWhiteSpace(url))
+            return "danger";
+        
+        if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            return "success";
+            
+        return "warning";
+    }
+
+    private async Task TestSoapConnection()
+    {
+        isTestingSoap = true;
+        StateHasChanged();
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(soapDotNetUrl))
+            {
+                AddResult("SOAP .NET", false, "URL no configurada");
+                return;
+            }
+
+            Logger.LogInformation("Iniciando test de conexión SOAP: {Url}", soapDotNetUrl);
+
+            // Test básico de conectividad
+            using var client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(10);
+            
+            var response = await client.GetAsync(soapDotNetUrl + "?wsdl");
+            
+            if (response.IsSuccessStatusCode)
+            {
+                AddResult("SOAP .NET", true, $"Conexión exitosa - Status: {response.StatusCode}");
+                Logger.LogInformation("Test SOAP exitoso: {StatusCode}", response.StatusCode);
+            }
+            else
+            {
+                AddResult("SOAP .NET", false, $"Error HTTP: {response.StatusCode}");
+                Logger.LogWarning("Test SOAP falló: {StatusCode}", response.StatusCode);
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            AddResult("SOAP .NET", false, "Timeout de conexión (10 segundos)");
+            Logger.LogError("Timeout en test SOAP");
+        }
+        catch (Exception ex)
+        {
+            AddResult("SOAP .NET", false, $"Error: {ex.Message}");
+            Logger.LogError(ex, "Error en test SOAP");
+        }
+        finally
+        {
+            isTestingSoap = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task TestRestConnection()
+    {
+        isTestingRest = true;
+        StateHasChanged();
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(restJavaUrl))
+            {
+                AddResult("REST Java", false, "URL no configurada");
+                return;
+            }
+
+            Logger.LogInformation("Iniciando test de conexión REST: {Url}", restJavaUrl);
+
+            using var client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(10);
+            client.DefaultRequestHeaders.Add("User-Agent", "ComercializadoraDiagnostic/1.0");
+            
+            var testUrl = restJavaUrl + "/api/productos/activos";
+            var response = await client.GetAsync(testUrl);
+            
+            var content = await response.Content.ReadAsStringAsync();
+            
+            if (response.IsSuccessStatusCode)
+            {
+                AddResult("REST Java", true, $"Conexión exitosa - Status: {response.StatusCode}");
+                Logger.LogInformation("Test REST exitoso: {StatusCode}, Content Length: {Length}", 
+                    response.StatusCode, content.Length);
+            }
+            else
+            {
+                AddResult("REST Java", false, $"Error HTTP: {response.StatusCode} - {content}");
+                Logger.LogWarning("Test REST falló: {StatusCode} - {Content}", response.StatusCode, content);
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            AddResult("REST Java", false, "Timeout de conexión (10 segundos)");
+            Logger.LogError("Timeout en test REST");
+        }
+        catch (Exception ex)
+        {
+            AddResult("REST Java", false, $"Error: {ex.Message}");
+            Logger.LogError(ex, "Error en test REST");
+        }
+        finally
+        {
+            isTestingRest = false;
+            StateHasChanged();
+        }
+    }
+
+    private void TestUrlValidation()
+    {
+        var urls = new Dictionary<string, string>
+        {
+            ["REST Java"] = restJavaUrl,
+            ["REST .NET"] = restDotNetUrl,
+            ["SOAP Java"] = soapJavaUrl,
+            ["SOAP .NET"] = soapDotNetUrl
+        };
+
+        foreach (var url in urls)
+        {
+            if (string.IsNullOrWhiteSpace(url.Value))
+            {
+                AddResult($"Validación {url.Key}", false, "URL no configurada");
+            }
+            else if (Uri.IsWellFormedUriString(url.Value, UriKind.Absolute))
+            {
+                AddResult($"Validación {url.Key}", true, $"URL válida: {url.Value}");
+            }
+            else
+            {
+                AddResult($"Validación {url.Key}", false, $"URL inválida: {url.Value}");
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    private void ClearResults()
+    {
+        testResults.Clear();
+        StateHasChanged();
+    }
+
+    private void AddResult(string test, bool success, string message)
+    {
+        testResults.Add(new TestResult
+        {
+            Timestamp = DateTime.Now,
+            Test = test,
+            Success = success,
+            Message = message
+        });
+        
+        StateHasChanged();
+    }
+
+    private class TestResult
+    {
+        public DateTime Timestamp { get; set; }
+        public string Test { get; set; } = "";
+        public bool Success { get; set; }
+        public string Message { get; set; } = "";
+    }
+
+    private void ShowAllConfiguration()
+    {
+        try
+        {
+            Logger.LogInformation("🔍 Mostrando toda la configuración disponible...");
+            
+            // Obtener todas las secciones de configuración
+            var allSections = Configuration.GetChildren();
+            
+            AddResult("Configuración Completa", true, "Iniciando análisis de configuración...");
+            
+            foreach (var section in allSections)
+            {
+                Logger.LogInformation("📁 Sección encontrada: {SectionKey}", section.Key);
+                AddResult($"Sección", true, $"Encontrada: {section.Key}");
+                
+                if (section.Key == "Hosts")
+                {
+                    var hostChildren = section.GetChildren();
+                    foreach (var host in hostChildren)
+                    {
+                        Logger.LogInformation("🏠 Host encontrado: {HostKey}", host.Key);
+                        AddResult($"Host", true, $"Encontrado: {host.Key}");
+                        
+                        if (host.Key == "Comercializadora")
+                        {
+                            var comercializadoraChildren = host.GetChildren();
+                            foreach (var service in comercializadoraChildren)
+                            {
+                                Logger.LogInformation("🔧 Servicio encontrado: {ServiceKey}", service.Key);
+                                AddResult($"Servicio", true, $"Encontrado: {service.Key}");
+                                
+                                var serviceChildren = service.GetChildren();
+                                foreach (var platform in serviceChildren)
+                                {
+                                    Logger.LogInformation("⚙️ Plataforma encontrada: {PlatformKey} = {PlatformValue}", 
+                                        platform.Key, platform.Value ?? "NULL");
+                                    
+                                    AddResult($"URL {service.Key} {platform.Key}", 
+                                        !string.IsNullOrEmpty(platform.Value), 
+                                        platform.Value ?? "NO CONFIGURADA");
+                                    
+                                    // Si es una sección anidada (como DotNet/Java en SOAP)
+                                    if (string.IsNullOrEmpty(platform.Value))
+                                    {
+                                        var nestedChildren = platform.GetChildren();
+                                        foreach (var nested in nestedChildren)
+                                        {
+                                            Logger.LogInformation("🔗 Endpoint encontrado: {NestedKey} = {NestedValue}", 
+                                                nested.Key, nested.Value ?? "NULL");
+                                            
+                                            AddResult($"URL {service.Key} {platform.Key} {nested.Key}", 
+                                                !string.IsNullOrEmpty(nested.Value), 
+                                                nested.Value ?? "NO CONFIGURADA");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Verificar las claves específicas que estamos buscando
+            var keysToCheck = new[]
+            {
+                "Hosts:Comercializadora:Rest:Java",
+                "Hosts:Comercializadora:Rest:DotNet", 
+                "Hosts:Comercializadora:Soap:Java:Products",
+                "Hosts:Comercializadora:Soap:DotNet:Products"
+            };
+            
+            foreach (var key in keysToCheck)
+            {
+                var value = Configuration[key];
+                Logger.LogInformation("🔑 Clave específica '{Key}' = '{Value}'", key, value ?? "NULL");
+                AddResult($"Clave directa", !string.IsNullOrEmpty(value), $"{key} = {value ?? "NULL"}");
+            }
+            
+            AddResult("Análisis completo", true, "Configuración analizada completamente. Ver logs para detalles.");
+            
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "❌ Error al mostrar configuración");
+            AddResult("Error configuración", false, $"Error: {ex.Message}");
+        }
+    }
+}

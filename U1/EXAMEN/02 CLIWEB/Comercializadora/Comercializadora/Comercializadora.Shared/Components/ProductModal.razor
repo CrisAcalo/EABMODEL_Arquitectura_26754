@@ -1,0 +1,327 @@
+@using Comercializadora.Core.Models.Comercializadora
+
+<!-- Bootstrap Modal -->
+<div class="modal @(Show ? "show d-block" : "")" tabindex="-1" style="@(Show ? "background: rgba(0,0,0,0.5);" : "display: none;")" @onclick="OnClose">
+    <div class="modal-dialog modal-lg" @onclick:stopPropagation="true">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    @if (IsEditMode)
+                    {
+                        <span>Editar Producto</span>
+                    }
+                    else
+                    {
+                        <span>Nuevo Producto</span>
+                    }
+                </h5>
+                <button type="button" class="btn-close btn-close-white" @onclick="OnClose"></button>
+            </div>
+            
+            <div class="modal-body">
+                <EditForm Model="Product" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+                    <DataAnnotationsValidator />
+                    <FieldCssClassProvider Provider="CustomFieldProvider" />
+                    
+                    @if (!string.IsNullOrEmpty(formErrorMessage))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @formErrorMessage
+                        </div>
+                    }
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Código *
+                                <small class="text-muted">(3-20 caracteres)</small>
+                            </label>
+                            <InputText class="@(GetCompleteCssClass("Codigo", "form-control"))" 
+                                      @bind-Value="Product.Codigo" 
+                                      placeholder="Ej: PROD001"
+                                      maxlength="20"
+                                      @onblur="@(() => ValidateField("Codigo"))" />
+                            <ValidationMessage For="@(() => Product.Codigo)" class="text-danger small mt-1" />
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Nombre *
+                                <small class="text-muted">(3-100 caracteres)</small>
+                            </label>
+                            <InputText class="@(GetCompleteCssClass("Nombre", "form-control"))" 
+                                      @bind-Value="Product.Nombre" 
+                                      placeholder="Nombre del producto"
+                                      maxlength="100"
+                                      @onblur="@(() => ValidateField("Nombre"))" />
+                            <ValidationMessage For="@(() => Product.Nombre)" class="text-danger small mt-1" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Descripción *
+                            <small class="text-muted">(10-500 caracteres)</small>
+                        </label>
+                        <InputTextArea class="@(GetCompleteCssClass("Descripcion", "form-control"))" 
+                                      @bind-Value="Product.Descripcion" 
+                                      rows="3" 
+                                      placeholder="Descripción detallada del producto (mínimo 10 caracteres)"
+                                      maxlength="500"
+                                      @onblur="@(() => ValidateField("Descripcion"))" />
+                        <ValidationMessage For="@(() => Product.Descripcion)" class="text-danger small mt-1" />
+                        <div class="form-text">
+                            @if (!string.IsNullOrEmpty(Product.Descripcion))
+                            {
+                                <span>@Product.Descripcion.Length / 500 caracteres</span>
+                            }
+                            else
+                            {
+                                <span>0 / 500 caracteres</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Precio *
+                                <small class="text-muted">(0.01 - 999,999.99)</small>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">S/</span>
+                                <InputNumber class="@(GetCompleteCssClass("Precio", "form-control"))" 
+                                           @bind-Value="Product.Precio" 
+                                           step="0.01" 
+                                           placeholder="0.00"
+                                           min="0.01"
+                                           max="999999.99"
+                                           @onblur="@(() => ValidateField("Precio"))" />
+                            </div>
+                            <ValidationMessage For="@(() => Product.Precio)" class="text-danger small mt-1" />
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Stock *
+                                <small class="text-muted">(mayor o igual a 0)</small>
+                            </label>
+                            <InputNumber class="@(GetCompleteCssClass("Stock", "form-control"))" 
+                                       @bind-Value="Product.Stock" 
+                                       placeholder="Cantidad disponible"
+                                       min="0"
+                                       @onblur="@(() => ValidateField("Stock"))" />
+                            <ValidationMessage For="@(() => Product.Stock)" class="text-danger small mt-1" />
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Categoría *</label>
+                            <InputSelect class="@(GetCompleteCssClass("Categoria", "form-select"))" @bind-Value="Product.Categoria"
+                                       @onblur="@(() => ValidateField("Categoria"))">
+                                <option value="">-- Seleccionar categoría --</option>
+                                @foreach (var category in Enum.GetValues<ProductCategory>())
+                                {
+                                    <option value="@category.ToString()">@category.ToString()</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => Product.Categoria)" class="text-danger small mt-1" />
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Estado *</label>
+                            <InputSelect class="@(GetCompleteCssClass("Estado", "form-select"))" @bind-Value="Product.Estado"
+                                       @onblur="@(() => ValidateField("Estado"))">
+                                <option value="">-- Seleccionar estado --</option>
+                                <option value="ACTIVO">ACTIVO</option>
+                                <option value="INACTIVO">INACTIVO</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => Product.Estado)" class="text-danger small mt-1" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            URL de Imagen
+                            <small class="text-muted">(opcional)</small>
+                        </label>
+                        <InputText class="@(GetCompleteCssClass("ImagenUrl", "form-control"))" 
+                                  @bind-Value="Product.ImagenUrl" 
+                                  placeholder="https://ejemplo.com/imagen.jpg"
+                                  type="url"
+                                  @onblur="@(() => ValidateField("ImagenUrl"))" />
+                        <ValidationMessage For="@(() => Product.ImagenUrl)" class="text-danger small mt-1" />
+                        @if (!string.IsNullOrEmpty(Product.ImagenUrl))
+                        {
+                            <div class="mt-2 text-center">
+                                <img src="@Product.ImagenUrl" alt="Vista previa" 
+                                     class="img-thumbnail border rounded" 
+                                     style="max-width: 120px; max-height: 120px; object-fit: cover;" 
+                                     onerror="this.style.display='none'" />
+                            </div>
+                        }
+                    </div>
+                    
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" @onclick="OnClose" disabled="@IsSaving">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary" disabled="@(IsSaving || !isFormValid)">
+                            @if (IsSaving)
+                            {
+                                <div class="spinner-border spinner-border-sm me-2" role="status">
+                                    <span class="visually-hidden">Guardando...</span>
+                                </div>
+                            }
+                            @(IsEditMode ? "Actualizar" : "Crear") Producto
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public ProductDto Product { get; set; } = new();
+    [Parameter] public bool Show { get; set; } = false;
+    [Parameter] public bool IsEditMode { get; set; } = false;
+    [Parameter] public bool IsSaving { get; set; } = false;
+    [Parameter] public EventCallback OnSave { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private EditContext? editContext;
+    private string formErrorMessage = "";
+    private bool isFormValid = false;
+    private CustomFieldClassProvider CustomFieldProvider { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        editContext = new EditContext(Product);
+        editContext.SetFieldCssClassProvider(CustomFieldProvider);
+        ValidateForm();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        if (editContext?.Model != Product)
+        {
+            editContext = new EditContext(Product);
+            editContext.SetFieldCssClassProvider(CustomFieldProvider);
+            ValidateForm();
+        }
+    }
+
+    private void ValidateField(string fieldName)
+    {
+        if (editContext != null)
+        {
+            var field = editContext.Field(fieldName);
+            editContext.NotifyFieldChanged(field);
+            ValidateForm();
+            StateHasChanged();  // Fuerza actualización de CSS
+        }
+    }
+
+    private void ValidateForm()
+    {
+        if (editContext == null) return;
+
+        isFormValid = editContext.Validate();
+        
+        // Validaciones personalizadas
+        var requiredFields = new[]
+        {
+            (!string.IsNullOrWhiteSpace(Product.Codigo), "Código"),
+            (!string.IsNullOrWhiteSpace(Product.Nombre), "Nombre"), 
+            (!string.IsNullOrWhiteSpace(Product.Descripcion), "Descripción"),
+            (Product.Precio > 0, "Precio"),
+            (Product.Stock >= 0, "Stock"),
+            (!string.IsNullOrWhiteSpace(Product.Categoria), "Categoría"),
+            (!string.IsNullOrWhiteSpace(Product.Estado), "Estado")
+        };
+
+        var missingFields = requiredFields.Where(f => !f.Item1).Select(f => f.Item2).ToList();
+        
+        if (missingFields.Any())
+        {
+            isFormValid = false;
+            formErrorMessage = $"Los siguientes campos son requeridos: {string.Join(", ", missingFields)}";
+        }
+        else
+        {
+            formErrorMessage = "";
+        }
+    }
+
+    private string GetCompleteCssClass(string fieldName, string baseClass)
+    {
+        if (editContext == null) return baseClass;
+        
+        var fieldIdentifier = new FieldIdentifier(Product, fieldName);
+        var hasErrors = editContext.GetValidationMessages(fieldIdentifier).Any();
+        var isModified = editContext.IsModified(fieldIdentifier);
+        
+        if (hasErrors)
+        {
+            return $"{baseClass} is-invalid";
+        }
+        if (isModified && !hasErrors)
+        {
+            return $"{baseClass} is-valid";
+        }
+        return baseClass;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (editContext != null && editContext.Validate() && CustomValidate())
+        {
+            formErrorMessage = "";
+            await OnSave.InvokeAsync();
+        }
+        else
+        {
+            formErrorMessage = "Por favor, corrija los errores en el formulario antes de continuar.";
+        }
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        formErrorMessage = "Por favor, corrija los errores en el formulario antes de continuar.";
+    }
+
+    private bool CustomValidate()
+    {
+        var requiredFields = new[]
+        {
+            (!string.IsNullOrWhiteSpace(Product.Codigo), "Código"),
+            (!string.IsNullOrWhiteSpace(Product.Nombre), "Nombre"), 
+            (!string.IsNullOrWhiteSpace(Product.Descripcion), "Descripción"),
+            (Product.Precio > 0, "Precio"),
+            (Product.Stock >= 0, "Stock"),
+            (!string.IsNullOrWhiteSpace(Product.Categoria), "Categoría"),
+            (!string.IsNullOrWhiteSpace(Product.Estado), "Estado")
+        };
+
+        return !requiredFields.Any(f => !f.Item1);
+    }
+
+    public void Dispose() { }
+
+    private class CustomFieldClassProvider : FieldCssClassProvider
+    {
+        public override string GetFieldCssClass(EditContext editContext, in FieldIdentifier fieldIdentifier)
+        {
+            var isModified = editContext.IsModified(fieldIdentifier);
+            var hasErrors = editContext.GetValidationMessages(fieldIdentifier).Any();
+            
+            if (hasErrors) return "is-invalid";
+            if (isModified) return "is-valid";
+            return "";
+        }
+    }
+}

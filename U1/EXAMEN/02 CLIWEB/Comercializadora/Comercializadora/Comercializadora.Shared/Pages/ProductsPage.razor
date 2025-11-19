@@ -1,0 +1,378 @@
+﻿@page "/products"
+@using Comercializadora.Core.Models.Comercializadora
+@using Comercializadora.Core.Services.Abstractions
+@using Comercializadora.Core.Managers
+@inject IProductService ProductService
+@inject ApiServiceManager ApiManager
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+
+<PageTitle>Gestión de Productos</PageTitle>
+
+<AuthorizedView>
+    <div class="container-fluid py-3">
+        <!-- Header Card -->
+        <div class="card mb-4 bg-primary text-white">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="card-title h3 mb-2">
+                            📦 Gestión de Productos
+                        </h1>
+                        <p class="card-text mb-0">Sistema de administración de productos</p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <small class="d-block opacity-75">Perfil Activo:</small>
+                        <span class="badge bg-light text-dark fs-6">
+                            @(ApiManager.CurrentProfile == TechnologyProfile.SoapDotNet ? "🔧 SOAP / .NET" : "⚡ RESTful / Java")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Card -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button class="btn btn-success" @onclick="ShowCreateModal">
+                                ➕ Nuevo Producto
+                            </button>
+                            <button class="btn btn-outline-primary" @onclick="LoadProducts">
+                                🔄 Actualizar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="d-flex align-items-center justify-content-end gap-3">
+                            @if (isLoading)
+                            {
+                                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                            }
+                            <small class="text-muted">
+                                Total: @products.Count() productos
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h6 class="card-title mb-0">🔍 Filtros de Búsqueda</h6>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">🔍 Buscar</label>
+                        <input type="text" class="form-control" placeholder="Código o nombre..."
+                               @bind="searchCode" @onkeyup="FilterProducts" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">📂 Categoría</label>
+                        <select class="form-select" @bind="selectedCategory" @bind:after="FilterProducts">
+                            <option value="">Todas las categorías</option>
+                            @foreach (var category in Enum.GetValues<ProductCategory>())
+                            {
+                                <option value="@category.ToString()">📋 @category.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Table Card -->
+        <div class="card">  
+            <div class="card-header">
+                <h6 class="card-title mb-0">📋 Lista de Productos</h6>
+            </div>
+            <div class="card-body p-0">
+                <ProductsTable Products="filteredProducts" 
+                               IsLoading="isLoading" 
+                               OnEdit="ShowEditModal" 
+                               OnDelete="DeleteProduct" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de producto -->
+    <ProductModal Product="currentProduct" 
+                  Show="showModal" 
+                  IsEditMode="isEditMode" 
+                  IsSaving="isSaving" 
+                  OnSave="SaveProduct" 
+                  OnClose="CloseModal" />
+
+    <!-- Toast para mensajes -->
+    @if (!string.IsNullOrEmpty(toastMessage))
+    {
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
+            <div class="toast show @(toastIsSuccess ? "bg-success" : "bg-danger") text-white" role="alert">
+                <div class="toast-header @(toastIsSuccess ? "bg-success" : "bg-danger") text-white border-0">
+                    <span class="me-2">@(toastIsSuccess ? "✅" : "❌")</span>
+                    <strong class="me-auto">@(toastIsSuccess ? "Éxito" : "Error")</strong>
+                    <button type="button" class="btn-close btn-close-white" @onclick="ClearToast"></button>
+                </div>
+                <div class="toast-body">
+                    @toastMessage
+                </div>
+            </div>
+        </div>
+    }
+</AuthorizedView>
+
+@code {
+    private IEnumerable<ProductDto> products = new List<ProductDto>();
+    private IEnumerable<ProductDto> filteredProducts = new List<ProductDto>();
+    private ProductDto currentProduct = new();
+    private bool isLoading = false;
+    private bool isSaving = false;
+    private bool showModal = false;
+    private bool isEditMode = false;
+    private string searchCode = "";
+    private string selectedCategory = "";
+    private decimal? minPrice = null;
+    private decimal? maxPrice = null;
+    private string toastMessage = "";
+    private bool toastIsSuccess = false;
+    private CancellationTokenSource? toastCancellationSource;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+    }
+
+    private async Task LoadProducts()
+    {
+        isLoading = true;
+        try
+        {
+            products = await ProductService.ObtenerProductosAsync();
+            FilterProducts();
+        }
+        catch (Exception ex)
+        {
+            ShowToast($"Error al cargar productos: {ex.Message}", false);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void FilterProducts()
+    {
+        filteredProducts = products;
+
+        if (!string.IsNullOrWhiteSpace(searchCode))
+        {
+            filteredProducts = filteredProducts.Where(p => 
+                p.Codigo?.Contains(searchCode, StringComparison.OrdinalIgnoreCase) == true ||
+                p.Nombre?.Contains(searchCode, StringComparison.OrdinalIgnoreCase) == true);
+        }
+
+        if (!string.IsNullOrWhiteSpace(selectedCategory))
+        {
+            filteredProducts = filteredProducts.Where(p => p.Categoria == selectedCategory);
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task FilterByPrice()
+    {
+        if (minPrice.HasValue && maxPrice.HasValue)
+        {
+            try
+            {
+                isLoading = true;
+                var priceFilteredProducts = await ProductService.ObtenerProductosPorPrecioAsync(minPrice.Value, maxPrice.Value);
+                filteredProducts = priceFilteredProducts;
+            }
+            catch (Exception ex)
+            {
+                ShowToast($"Error al filtrar por precio: {ex.Message}", false);
+            }
+            finally
+            {
+                isLoading = false;
+            }
+        }
+        else
+        {
+            FilterProducts();
+        }
+    }
+
+    private void ShowCreateModal()
+    {
+        currentProduct = new ProductDto 
+        { 
+            Estado = "ACTIVO",
+            FechaRegistro = DateTime.Now,
+            Stock = 0
+        };
+        isEditMode = false;
+        showModal = true;
+    }
+
+    private void ShowEditModal(ProductDto product)
+    {
+        currentProduct = new ProductDto
+        {
+            ProductoId = product.ProductoId,
+            Codigo = product.Codigo,
+            Nombre = product.Nombre,
+            Descripcion = product.Descripcion,
+            Precio = product.Precio,
+            Stock = product.Stock,
+            Categoria = product.Categoria,
+            ImagenUrl = product.ImagenUrl,
+            FechaRegistro = product.FechaRegistro,
+            Estado = product.Estado
+        };
+        isEditMode = true;
+        showModal = true;
+    }
+
+    private void CloseModal()
+    {
+        showModal = false;
+        currentProduct = new();
+    }
+
+    private async Task SaveProduct()
+    {
+        isSaving = true;
+        try
+        {
+            if (isEditMode)
+            {
+                var response = await ProductService.ActualizarProductoAsync(currentProduct);
+                if (response.Exito)
+                {
+                    ShowToast("Producto actualizado correctamente", true);
+                    CloseModal();
+                    await LoadProducts();
+                }
+                else
+                {
+                    ShowToast(response.Mensaje ?? "Error al actualizar el producto", false);
+                }
+            }
+            else
+            {
+                var response = await ProductService.CrearProductoAsync(currentProduct);
+                if (response.Exito)
+                {
+                    ShowToast("Producto creado correctamente", true);
+                    CloseModal();
+                    await LoadProducts();
+                }
+                else
+                {
+                    ShowToast(response.Mensaje ?? "Error al crear el producto", false);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowToast($"Error: {ex.Message}", false);
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private async Task DeleteProduct(int productId)
+    {
+        var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "¿Está seguro de que desea eliminar este producto?");
+        
+        if (confirmed)
+        {
+            try
+            {
+                var response = await ProductService.EliminarProductoAsync(productId);
+                if (response.Exito)
+                {
+                    ShowToast("Producto eliminado correctamente", true);
+                    await LoadProducts();
+                }
+                else
+                {
+                    ShowToast(response.Mensaje ?? "Error al eliminar el producto", false);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowToast($"Error al eliminar producto: {ex.Message}", false);
+            }
+        }
+    }
+
+    private void ShowToast(string message, bool isSuccess)
+    {
+        // Cancelar el timer anterior si existe
+        toastCancellationSource?.Cancel();
+        toastCancellationSource?.Dispose();
+        
+        toastMessage = message;
+        toastIsSuccess = isSuccess;
+        StateHasChanged();
+
+        // Crear nuevo CancellationToken para el auto-hide
+        toastCancellationSource = new CancellationTokenSource();
+        var token = toastCancellationSource.Token;
+
+        // Auto-hide toast after 5 seconds usando InvokeAsync para el hilo correcto
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(5000, token);
+                if (!token.IsCancellationRequested)
+                {
+                    await InvokeAsync(() =>
+                    {
+                        if (!token.IsCancellationRequested)
+                        {
+                            toastMessage = "";
+                            StateHasChanged();
+                        }
+                    });
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // Timer cancelado, no hacer nada
+            }
+        }, token);
+    }
+
+    private async Task ClearToast()
+    {
+        // Cancelar el timer de auto-hide
+        toastCancellationSource?.Cancel();
+        
+        await InvokeAsync(() =>
+        {
+            toastMessage = "";
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        toastCancellationSource?.Cancel();
+        toastCancellationSource?.Dispose();
+    }
+}
