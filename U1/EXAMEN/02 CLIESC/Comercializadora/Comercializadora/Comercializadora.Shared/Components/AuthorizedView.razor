@@ -1,0 +1,93 @@
+@using Comercializadora.Shared.Services
+@inject IAuthenticationService AuthService
+@inject NavigationManager Navigation
+
+@if (AuthService.IsAuthenticated)
+{
+    @ChildContent
+}
+else
+{
+    <div class="auth-required-container">
+        <div class="auth-required-content">
+            <div class="auth-required-icon">??</div>
+            <h3>Acceso Restringido</h3>
+            <p>Debe iniciar sesión para acceder a esta página.</p>
+            <button class="btn btn-primary" @onclick="RedirectToLogin">
+                Iniciar Sesión
+            </button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // Suscribirse a cambios de autenticación
+        AuthService.AuthenticationStateChanged += OnAuthenticationStateChanged;
+        
+        // Si no está autenticado, redirigir inmediatamente
+        if (!AuthService.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/login", replace: true);
+        }
+    }
+
+    private void OnAuthenticationStateChanged(bool isAuthenticated)
+    {
+        if (!isAuthenticated)
+        {
+            Navigation.NavigateTo("/login", replace: true);
+        }
+        else
+        {
+            StateHasChanged();
+        }
+    }
+
+    private void RedirectToLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    public void Dispose()
+    {
+        AuthService.AuthenticationStateChanged -= OnAuthenticationStateChanged;
+    }
+}
+
+<style>
+.auth-required-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+}
+
+.auth-required-content {
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+.auth-required-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #6c757d;
+}
+
+.auth-required-content h3 {
+    color: #495057;
+    margin-bottom: 1rem;
+}
+
+.auth-required-content p {
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+</style>
