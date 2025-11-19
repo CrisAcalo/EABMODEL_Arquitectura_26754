@@ -1,0 +1,44 @@
+﻿@inherits LayoutComponentBase
+@inject ApiServiceManager ApiManager
+
+<!-- Navbar superior -->
+<NavMenu />
+
+<!-- Contenido principal con padding para navbar fijo y notch -->
+<div class="main-container">
+    <!-- Barra de perfil -->
+    @* <div class="profile-bar bg-light border-bottom">
+        <div class="container-fluid">
+            <div class="row align-items-center py-2">
+                <div class="col-auto">
+                    <small class="text-muted">📡 Perfil:</small>
+                </div>
+                <div class="col-auto">
+                    <select class="form-select form-select-sm" @bind="ApiManager.CurrentProfile">
+                        <option value="@TechnologyProfile.SoapDotNet">🔧 SOAP / .NET</option>
+                        <option value="@TechnologyProfile.RestfulJava">⚡ RESTful / Java</option>
+                    </select>
+                </div>
+                <div class="col text-end">
+                    <a href="https://learn.microsoft.com/aspnet/core/" target="_blank" class="btn btn-link btn-sm text-decoration-none">
+                        ℹ️ Ayuda
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> *@
+
+    <!-- Contenido de la página -->
+    <main class="content-area">
+        <div class="container-fluid py-3">
+            @Body
+        </div>
+    </main>
+</div>
+
+<!-- Error UI -->
+<div id="blazor-error-ui">
+    ⚠️ Ha ocurrido un error no controlado.
+    <a href="" class="reload">🔄 Recargar</a>
+    <a class="dismiss">❌</a>
+</div>

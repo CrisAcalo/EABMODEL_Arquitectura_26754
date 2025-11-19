@@ -1,0 +1,293 @@
+﻿@page "/consultas"
+@using Comercializadora.Core.Services.Abstractions
+@using Comercializadora.Core.Models.BanQuito.Responses
+@using Comercializadora.Core.Models.Comercializadora.Responses
+@using Comercializadora.Shared.Shared
+@inject ICreditoService CreditoService
+@inject IFacturacionService FacturacionService
+
+<PageTitle>Consultas Generales</PageTitle>
+
+<div class="container-fluid py-3">
+    <!-- Header -->
+    <div class="card mb-4 bg-primary text-white">
+        <div class="card-body">
+            <h1 class="card-title h3 mb-0">Consultas Generales</h1>
+        </div>
+    </div>
+
+    <!-- Pestañas de Navegación -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(activeTab == "credito" ? "active" : "")" 
+                    id="credito-tab" 
+                    data-bs-toggle="tab" 
+                    @onclick="@(() => SetActiveTab("credito"))" 
+                    type="button" 
+                    role="tab">
+                Consulta de Crédito
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(activeTab == "factura-num" ? "active" : "")" 
+                    id="factura-num-tab" 
+                    data-bs-toggle="tab" 
+                    @onclick="@(() => SetActiveTab("factura-num"))" 
+                    type="button" 
+                    role="tab">
+                Factura por Número
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link @(activeTab == "factura-cli" ? "active" : "")" 
+                    id="factura-cli-tab" 
+                    data-bs-toggle="tab" 
+                    @onclick="@(() => SetActiveTab("factura-cli"))" 
+                    type="button" 
+                    role="tab">
+                Facturas por Cliente
+            </button>
+        </li>
+    </ul>
+
+    <!-- Contenido de las Pestañas -->
+    <div class="tab-content card shadow-sm">
+
+        <!-- ===== PESTAÑA: CONSULTA DE CRÉDITO ===== -->
+        @if (activeTab == "credito")
+        {
+            <div class="tab-pane fade show active" id="credito" role="tabpanel">
+                <div class="p-4">
+                    <h5 class="mb-3">Buscar Tabla de Amortización</h5>
+                    <div class="input-group">
+                        <input @bind="numeroCredito" class="form-control" placeholder="Ingrese número de crédito..." />
+                        <button class="btn btn-primary" @onclick="BuscarTablaAmortizacion" disabled="@isBusy">
+                            @if (isBusy && busquedaTipo == "credito")
+                            {
+                                <div class="spinner-border spinner-border-sm me-2" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                            }
+                            Buscar
+                        </button>
+                    </div>
+                    @if (tablaAmortizacion != null && tablaAmortizacion.Any())
+                    {
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-striped mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th># Cuota</th>
+                                        <th class="text-end">Valor Cuota</th>
+                                        <th class="text-end">Interés Pagado</th>
+                                        <th class="text-end">Capital Pagado</th>
+                                        <th class="text-end">Saldo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in tablaAmortizacion)
+                                    {
+                                        <tr>
+                                            <td>@item.NumeroCuota</td>
+                                            <td class="text-end">@item.ValorCuota.ToString("C")</td>
+                                            <td class="text-end">@item.Interes.ToString("C")</td>
+                                            <td class="text-end">@item.CapitalPagado.ToString("C")</td>
+                                            <td class="text-end">@item.Saldo.ToString("C")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- ===== PESTAÑA: FACTURA POR NÚMERO ===== -->
+        @if (activeTab == "factura-num")
+        {
+            <div class="tab-pane fade show active" id="factura-num" role="tabpanel">
+                <div class="p-4">
+                    <h5 class="mb-3">Buscar Factura por Número</h5>
+                    <div class="input-group">
+                        <input @bind="numeroFactura" class="form-control" placeholder="Ingrese número de factura..." />
+                        <button class="btn btn-primary" @onclick="BuscarFacturaPorNumero" disabled="@isBusy">
+                            @if (isBusy && busquedaTipo == "factura-num")
+                            {
+                                <div class="spinner-border spinner-border-sm me-2" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                            }
+                            Buscar
+                        </button>
+                    </div>
+                    @if (facturaEncontrada != null)
+                    {
+                        <FacturaDetalleComponent Factura="facturaEncontrada" />
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- ===== PESTAÑA: FACTURAS POR CLIENTE ===== -->
+        @if (activeTab == "factura-cli")
+        {
+            <div class="tab-pane fade show active" id="factura-cli" role="tabpanel">
+                <div class="p-4">
+                    <h5 class="mb-3">Buscar Facturas por Cédula de Cliente</h5>
+                    <div class="input-group">
+                        <input @bind="cedulaCliente" class="form-control" placeholder="Ingrese cédula del cliente..." />
+                        <button class="btn btn-primary" @onclick="BuscarFacturasPorCliente" disabled="@isBusy">
+                            @if (isBusy && busquedaTipo == "factura-cli")
+                            {
+                                <div class="spinner-border spinner-border-sm me-2" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                            }
+                            Buscar
+                        </button>
+                    </div>
+                    @if (listaFacturas != null && listaFacturas.Any())
+                    {
+                        @foreach(var factura in listaFacturas)
+                        {
+                            <FacturaDetalleComponent Factura="factura" IsCollapsed="true" />
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Mensajes de Resultado -->
+    <div class="mt-3">
+        @if (busquedaRealizada && !isBusy && string.IsNullOrEmpty(errorMessage) && !resultadosEncontrados)
+        {
+            <div class="alert alert-warning" role="alert">
+                No se encontraron resultados para la búsqueda.
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger" role="alert">@errorMessage</div>
+        }
+    </div>
+</div>
+
+@code {
+    private string activeTab = "credito";
+    private bool isBusy;
+    private bool busquedaRealizada;
+    private string? errorMessage;
+    private string busquedaTipo = "";
+    private bool resultadosEncontrados => (tablaAmortizacion?.Any() ?? false) || (facturaEncontrada != null) || (listaFacturas?.Any() ?? false);
+
+    // Estado para Consulta de Crédito
+    private string numeroCredito = "";
+    private IEnumerable<AmortizationItemDto>? tablaAmortizacion;
+
+    // Estado para Factura por Número
+    private string numeroFactura = "";
+    private InvoiceDto? facturaEncontrada;
+    
+    // Estado para Facturas por Cliente
+    private string cedulaCliente = "";
+    private IEnumerable<InvoiceDto>? listaFacturas;
+
+    private void SetActiveTab(string tabName)
+    {
+        activeTab = tabName;
+        // Limpiar resultados al cambiar de pestaña
+        errorMessage = null;
+        busquedaRealizada = false;
+        StateHasChanged();
+    }
+
+    private async Task LimpiarEstado(string tipo)
+    {
+        isBusy = true;
+        busquedaRealizada = true;
+        busquedaTipo = tipo;
+        errorMessage = null;
+        tablaAmortizacion = null;
+        facturaEncontrada = null;
+        listaFacturas = null;
+        StateHasChanged();
+        await Task.Delay(1); // Pequeña demora para que la UI se actualice
+    }
+
+    private async Task BuscarTablaAmortizacion()
+    {
+        await LimpiarEstado("credito");
+        try
+        {
+            if (string.IsNullOrWhiteSpace(numeroCredito)) 
+            { 
+                errorMessage = "El número de crédito es requerido."; 
+                isBusy = false;
+                StateHasChanged();
+                return; 
+            }
+            tablaAmortizacion = await CreditoService.ObtenerTablaAmortizacionAsync(numeroCredito);
+        }
+        catch (Exception ex) 
+        { 
+            errorMessage = $"Error al consultar crédito: {ex.Message}"; 
+        }
+        finally 
+        { 
+            isBusy = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task BuscarFacturaPorNumero()
+    {
+        await LimpiarEstado("factura-num");
+        try
+        {
+            if (string.IsNullOrWhiteSpace(numeroFactura)) 
+            { 
+                errorMessage = "El número de factura es requerido."; 
+                isBusy = false;
+                StateHasChanged();
+                return; 
+            }
+            facturaEncontrada = await FacturacionService.ObtenerFacturaPorNumeroAsync(numeroFactura);
+        }
+        catch (Exception ex) 
+        { 
+            errorMessage = $"Error al consultar factura: {ex.Message}"; 
+        }
+        finally 
+        { 
+            isBusy = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task BuscarFacturasPorCliente()
+    {
+        await LimpiarEstado("factura-cli");
+        try
+        {
+            if (string.IsNullOrWhiteSpace(cedulaCliente)) 
+            { 
+                errorMessage = "La cédula del cliente es requerida."; 
+                isBusy = false;
+                StateHasChanged();
+                return; 
+            }
+            listaFacturas = await FacturacionService.ObtenerFacturasPorClienteAsync(cedulaCliente);
+        }
+        catch (Exception ex) 
+        { 
+            errorMessage = $"Error al consultar facturas: {ex.Message}"; 
+        }
+        finally 
+        { 
+            isBusy = false;
+            StateHasChanged();
+        }
+    }
+}

@@ -1,0 +1,381 @@
+﻿@page "/venta"
+@using Comercializadora.Core.Services.Abstractions
+@using Comercializadora.Core.Models.BanQuito.Responses
+@using Comercializadora.Core.Models.Comercializadora.Requests
+@using Comercializadora.Core.Models.Comercializadora.Responses
+@using Comercializadora.Core.Models.Comercializadora
+@using Comercializadora.Shared.Shared
+@inject ICreditoService CreditoService
+@inject IFacturacionService FacturacionService
+@inject IProductService ProductService
+
+<PageTitle>Nueva Venta a Crédito</PageTitle>
+
+<div class="container-fluid py-3">
+    <!-- Header -->
+    <div class="card mb-4 bg-primary text-white">
+        <div class="card-body">
+            <h1 class="card-title h3 mb-0">💳 Nueva Venta a Crédito</h1>
+        </div>
+    </div>
+
+    <!-- Wizard Steps -->
+    <div class="card">
+        <div class="card-body">
+
+            <!-- ==================== PASO 1: VALIDAR CLIENTE ==================== -->
+            @if (currentStep == 1)
+            {
+                <h4 class="mb-3">Paso 1: Validar Cliente</h4>
+                <div class="input-group">
+                    <input @bind="cedulaCliente" class="form-control" placeholder="Ingrese la cédula del cliente" @onkeyup="HandleCedulaKeyup" />
+                    <button class="btn btn-primary" @onclick="ValidarCliente" disabled="@isBusy">
+                        Validar
+                    </button>
+                </div>
+            }
+
+            <!-- ==================== PASO 2: AÑADIR PRODUCTOS ==================== -->
+            @if (currentStep >= 2)
+            {
+                <div class="border-bottom pb-3 mb-3">
+                    <h4 class="mb-1">Paso 1: Cliente Validado ✅</h4>
+                    <p><strong>Cliente:</strong> @validationResponse?.NombreCompleto (@validationResponse?.Cedula)</p>
+                    <p class="mb-0"><strong>Monto Máximo de Crédito:</strong> @maxAmountResponse?.MontoMaximo.ToString("C")</p>
+                </div>
+
+                <h4 class="mb-3">Paso 2: Carrito de Compras</h4>
+
+                <!-- Selector de Productos -->
+                <div class="row g-3 align-items-end mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Seleccionar Producto</label>
+                        <select class="form-select" @bind="selectedProductId">
+                            <option value="0">-- Elija un producto --</option>
+                            @if (allProducts != null)
+                            {
+                                @foreach (var product in allProducts)
+                                {
+                                    <option value="@product.ProductoId">@product.Nombre (@product.Precio.ToString("C"))</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" @bind="selectedProductQty" min="1" />
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-success w-100" @onclick="AgregarAlCarrito" disabled="@(selectedProductId == 0 || selectedProductQty <= 0)">
+                            ➕ Agregar al Carrito
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Carrito -->
+                @if (carrito.Any())
+                {
+                    <ul class="list-group mb-3">
+                        @foreach (var item in carrito)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                @item.Value.NombreProducto (@item.Value.Cantidad x @item.Value.PrecioUnitario.ToString("C"))
+                                <div>
+                                    <span class="fw-bold me-3">@item.Value.Subtotal.ToString("C")</span>
+                                    <button class="btn btn-sm btn-outline-danger" @onclick="() => EliminarDelCarrito(item.Key)">❌</button>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <button class="btn btn-info" @onclick="CalcularTotal" disabled="@isBusy">
+                        Calcular Total y Proceder al Paso 3
+                    </button>
+                }
+            }
+
+            <!-- ==================== PASO 3: CONFIRMAR Y GENERAR ==================== -->
+            @if (currentStep >= 3)
+            {
+                <div class="border-bottom pb-3 mb-3 mt-4">
+                    <h4 class="mb-1">Paso 2: Carrito Confirmado ✅</h4>
+                    <p class="mb-0"><strong>Total de la Venta:</strong> @calculationResponse?.Total.ToString("C")</p>
+                    @if (isCreditApproved)
+                    {
+                        <div class="alert alert-success mt-2">✅ El monto de la venta es menor o igual al límite de crédito. Se puede proceder.</div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger mt-2">❌ El monto de la venta excede el límite de crédito del cliente.</div>
+                    }
+                </div>
+
+                <h4 class="mb-3">Paso 3: Otorgar Crédito y Facturar</h4>
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label">Número de Cuotas (3-24)</label>
+                        <input type="number" class="form-control" @bind="numeroCuotas" min="3" max="24" />
+                    </div>
+                    <div class="col-md-8">
+                        <button class="btn btn-danger w-100" @onclick="FinalizarVenta" disabled="@(!isCreditApproved || isBusy || numeroCuotas < 3 || numeroCuotas > 24)">
+                            FINALIZAR VENTA Y OTORGAR CRÉDITO
+                        </button>
+                    </div>
+                </div>
+            }
+
+            <!-- ==================== RESULTADO FINAL (MODIFICADO) ==================== -->
+            @if (currentStep == 4 && generatedInvoice != null)
+            {
+                <div class="mt-4 text-center">
+                    <div class="display-1">🎉</div>
+                    <h3>¡Venta Completada!</h3>
+                    <p class="lead">La factura <strong>@generatedInvoice.NumeroFactura</strong> ha sido generada exitosamente.</p>
+                    <p>Número de crédito asociado: <strong>@generatedInvoice.NumeroCredito</strong></p>
+                </div>
+
+                <FacturaDetalleComponent Factura="generatedInvoice" />
+
+                <!-- ===== INICIO DE CÓDIGO NUEVO ===== -->
+                @if (creditGrantResponse?.TablaAmortizacion != null && creditGrantResponse.TablaAmortizacion.Any())
+                {
+                    <h4 class="mt-5 mb-3">Tabla de Amortización del Crédito</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th># Cuota</th>
+                                    <th class="text-end">Valor Cuota</th>
+                                    <th class="text-end">Interés Pagado</th>
+                                    <th class="text-end">Capital Pagado</th>
+                                    <th class="text-end">Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in creditGrantResponse.TablaAmortizacion)
+                                {
+                                    <tr>
+                                        <td>@item.NumeroCuota</td>
+                                        <td class="text-end">@item.ValorCuota.ToString("C")</td>
+                                        <td class="text-end">@item.Interes.ToString("C")</td>
+                                        <td class="text-end">@item.CapitalPagado.ToString("C")</td>
+                                        <td class="text-end">@item.Saldo.ToString("C")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                <!-- ===== FIN DE CÓDIGO NUEVO ===== -->
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-secondary" @onclick="ResetPage">Realizar Nueva Venta</button>
+                </div>
+            }
+
+            <!-- Mensajes de Estado y Error -->
+            @if (isBusy)
+            {
+                <div class="d-flex align-items-center mt-3">
+                    <div class="spinner-border spinner-border-sm" role="status"></div>
+                    <span class="ms-2">Procesando...</span>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger mt-3">@errorMessage</div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private int currentStep = 1;
+    private bool isBusy = false;
+    private string? errorMessage;
+
+    // Paso 1
+    private string cedulaCliente = "";
+    private CreditValidationResponse? validationResponse;
+    private MaxCreditAmountResponse? maxAmountResponse;
+
+    // Paso 2
+    private List<ProductDto>? allProducts;
+    private int selectedProductId;
+    private int selectedProductQty = 1;
+    private Dictionary<int, InvoiceDetailDto> carrito = new();
+    private CalculationResponse? calculationResponse;
+    private bool isCreditApproved = false;
+
+    // Paso 3
+    private int numeroCuotas = 12;
+
+    // Paso 4
+    private InvoiceDto? generatedInvoice;
+    private CreditGrantResponse? creditGrantResponse;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Precargar la lista de productos para el selector
+        allProducts = (await ProductService.ObtenerProductosAsync()).ToList();
+    }
+
+    private async Task HandleCedulaKeyup(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await ValidarCliente();
+        }
+    }
+
+    private async Task ValidarCliente()
+    {
+        isBusy = true;
+        errorMessage = null;
+
+        try
+        {
+            validationResponse = await CreditoService.ValidarSujetoCreditoAsync(cedulaCliente);
+            if (validationResponse.EsValido)
+            {
+                maxAmountResponse = await CreditoService.ObtenerMontoMaximoAsync(cedulaCliente);
+                currentStep = 2;
+            }
+            else
+            {
+                errorMessage = validationResponse.Mensaje ?? "El cliente no es sujeto de crédito.";
+            }
+        }
+        finally { isBusy = false; }
+    }
+
+    private void AgregarAlCarrito()
+    {
+        var product = allProducts?.FirstOrDefault(p => p.ProductoId == selectedProductId);
+        if (product == null) return;
+
+        if (carrito.ContainsKey(product.ProductoId))
+        {
+            carrito[product.ProductoId].Cantidad += selectedProductQty;
+            carrito[product.ProductoId].Subtotal = carrito[product.ProductoId].Cantidad * carrito[product.ProductoId].PrecioUnitario;
+        }
+        else
+        {
+            carrito[product.ProductoId] = new InvoiceDetailDto
+            {
+                ProductoId = product.ProductoId,
+                NombreProducto = product.Nombre,
+                Cantidad = selectedProductQty,
+                PrecioUnitario = product.Precio,
+                Subtotal = selectedProductQty * product.Precio
+            };
+        }
+        selectedProductId = 0;
+        selectedProductQty = 1;
+    }
+
+    private void EliminarDelCarrito(int productId)
+    {
+        carrito.Remove(productId);
+    }
+
+    private async Task CalcularTotal()
+    {
+        isBusy = true;
+        errorMessage = null;
+        try
+        {
+            var request = new CalculationRequest
+            {
+                Items = carrito.Values.Select(v => new InvoiceRequestItemDto { ProductoId = v.ProductoId, Cantidad = v.Cantidad }).ToList()
+            };
+            calculationResponse = await FacturacionService.CalcularTotalFacturaAsync(request);
+
+            if (calculationResponse.Exitoso)
+            {
+                isCreditApproved = calculationResponse.Total <= maxAmountResponse?.MontoMaximo;
+                currentStep = 3;
+            }
+            else
+            {
+                errorMessage = calculationResponse.Mensaje ?? "Error al calcular el total.";
+            }
+        }
+        finally { isBusy = false; }
+    }
+
+    private async Task FinalizarVenta()
+    {
+        isBusy = true;
+        errorMessage = null;
+        creditGrantResponse = null; // Limpiar la respuesta anterior
+
+        try
+        {
+            // 1. Otorgar el crédito en BanQuito
+            var creditRequest = new Core.Models.BanQuito.Requests.CreditGrantRequest
+            {
+                Cedula = cedulaCliente,
+                PrecioElectrodomestico = calculationResponse!.Total,
+                NumeroCuotas = numeroCuotas
+            };
+
+            // Llamamos al servicio y guardamos la respuesta completa en nuestra nueva propiedad
+            creditGrantResponse = await CreditoService.OtorgarCreditoAsync(creditRequest);
+
+            // Verificamos si la operación de crédito fue exitosa
+            if (creditGrantResponse == null || !creditGrantResponse.Exito)
+            {
+                errorMessage = creditGrantResponse?.Mensaje ?? "El banco rechazó el otorgamiento del crédito por un error desconocido.";
+                isBusy = false;
+                return; // Detenemos el flujo aquí
+            }
+
+            // 2. Generar la factura en la Comercializadora
+            var invoiceRequest = new InvoiceGenerationRequest
+            {
+                CedulaCliente = cedulaCliente,
+                NombreCliente = validationResponse!.NombreCompleto!,
+                FormaPago = "CREDITO",
+                NumeroCredito = creditGrantResponse.NumeroCredito,
+                Items = carrito.Values.Select(v => new InvoiceRequestItemDto { ProductoId = v.ProductoId, Cantidad = v.Cantidad }).ToList()
+            };
+
+            generatedInvoice = await FacturacionService.GenerarFacturaAsync(invoiceRequest);
+
+            if (generatedInvoice != null)
+            {
+                currentStep = 4; // ¡Éxito! Avanzamos al paso final para mostrar los resultados
+            }
+            else
+            {
+                // Este es un caso problemático: el crédito se otorgó pero la factura falló.
+                // Es importante notificarlo claramente.
+                errorMessage = "¡Atención! El crédito fue aprobado por el banco, pero hubo un error al generar la factura en la comercializadora. Por favor, contacte a soporte.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Ocurrió un error crítico durante la finalización de la venta: {ex.Message}";
+        }
+        finally
+        {
+            isBusy = false;
+        }
+    }
+
+    private void ResetPage()
+    {
+        currentStep = 1;
+        isBusy = false;
+        errorMessage = null;
+        cedulaCliente = "";
+        validationResponse = null;
+        maxAmountResponse = null;
+        carrito.Clear();
+        calculationResponse = null;
+        isCreditApproved = false;
+        numeroCuotas = 12;
+        generatedInvoice = null;
+    }
+}
