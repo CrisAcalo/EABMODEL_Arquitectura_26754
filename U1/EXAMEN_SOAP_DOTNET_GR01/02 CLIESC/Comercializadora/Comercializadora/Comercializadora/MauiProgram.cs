@@ -5,8 +5,8 @@ using Comercializadora.Core.Services.Implementations.Rest;
 using Comercializadora.Core.Services.Implementations.Soap;
 using Comercializadora.Services;
 using Comercializadora.Shared.Services;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 namespace Comercializadora
@@ -32,16 +32,16 @@ namespace Comercializadora
 
             // --- REGISTRO DE SERVICIOS CORE ---
             builder.Services.AddSingleton<ApiServiceManager>();
-            
+
             // --- SERVICIO DE AUTENTICACIÓN ---
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
-            
+
             // Configurar HttpClient específico para MAUI con manejo de certificados
             builder.Services.AddHttpClient("ComercializadoraClient", client =>
             {
                 client.Timeout = TimeSpan.FromMinutes(5);
                 client.DefaultRequestHeaders.Add("User-Agent", "ComercializadoraMAUI/1.0");
-                
+
                 // Headers adicionales para evitar problemas con algunos servidores
                 client.DefaultRequestHeaders.Add("Accept", "application/json, text/plain, */*");
                 client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
@@ -51,16 +51,16 @@ namespace Comercializadora
 #if ANDROID
                 // Configuración específica para Android
                 var handler = new HttpClientHandler();
-                
+
                 // En modo DEBUG, ignorar errores de certificado SSL
 #if DEBUG
                 handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
 #endif
-                
+
                 // Configuraciones adicionales para Android
                 handler.UseCookies = false; // Evitar problemas con cookies
                 handler.AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate;
-                
+
                 return handler;
 #elif IOS
                 // Configuración específica para iOS
@@ -109,7 +109,7 @@ namespace Comercializadora
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
-            
+
             // Logging específico para conexiones HTTP en debug
             builder.Logging.AddFilter("System.Net.Http.HttpClient", LogLevel.Debug);
             builder.Logging.AddFilter("Comercializadora", LogLevel.Debug);
