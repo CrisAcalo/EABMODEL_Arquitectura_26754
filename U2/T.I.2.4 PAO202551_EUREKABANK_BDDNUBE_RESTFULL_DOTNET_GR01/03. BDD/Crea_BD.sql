@@ -12,17 +12,14 @@ Blog           :  http://gcoronelc.blogspot.com
 
 
 -- =============================================
--- Creación de la Base de Datos
+-- Creacion de la Base de Datos
 -- =============================================
 
-USE master;
-go
-
-IF( EXISTS ( SELECT name FROM master.sys.databases WHERE name = 'EUREKABANK' ) )
+IF EXISTS (SELECT * FROM sys.databases WHERE name = 'EUREKABANK')
 BEGIN
-	DROP DATABASE EUREKABANK;
+    DROP DATABASE EUREKABANK;
 END;
-go
+GO
 
 CREATE DATABASE EUREKABANK;
 go
@@ -37,7 +34,7 @@ go
 
 
 -- =============================================
--- Creación de los Objetos de la Base de Datos
+-- Creaciï¿½n de los Objetos de la Base de Datos
 -- =============================================
 
 CREATE TABLE TipoMovimiento (
