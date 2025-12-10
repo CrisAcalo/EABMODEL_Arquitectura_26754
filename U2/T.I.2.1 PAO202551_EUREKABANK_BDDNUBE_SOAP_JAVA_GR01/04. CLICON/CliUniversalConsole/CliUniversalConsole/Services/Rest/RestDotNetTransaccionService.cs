@@ -33,9 +33,6 @@ namespace CliUniversalConsole.Services.Rest
                 var response = await _httpClient.PostAsync($"{_baseUrl}/deposito", content);
                 var responseBody = await response.Content.ReadAsStringAsync();
 
-                Console.WriteLine($"DEBUG - Response Status: {response.StatusCode}");
-                Console.WriteLine($"DEBUG - Response Body: {responseBody}");
-
                 return ParseDepositoResponse(responseBody, request.CodigoCuenta);
             }
             catch (Exception ex)

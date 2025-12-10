@@ -71,13 +71,23 @@ namespace CliUniversalConsole.Services.Soap
 
                 foreach (var returnElement in returnElements)
                 {
+                    // Parseo seguro de fecha
+                    string fechaStr = returnElement.Element("fecha")?.Value ?? "";
+                    DateTime fechaMovimiento = DateTime.MinValue;
+                    if (!string.IsNullOrEmpty(fechaStr))
+                    {
+                        DateTime.TryParse(fechaStr, out fechaMovimiento);
+                    }
+
                     var movimiento = new MovimientoDetalle
                     {
                         CodigoCuenta = returnElement.Element("codigoCuenta")?.Value ?? "",
-                        Numero = int.Parse(returnElement.Element("numero")?.Value ?? "0"),
-                        Fecha = DateTime.Parse(returnElement.Element("fecha")?.Value ?? DateTime.Now.ToString()),
+                        // El XML devuelve 'numeroMovimiento', no 'numero'
+                        Numero = int.Parse(returnElement.Element("numeroMovimiento")?.Value ?? "0"),
+                        Fecha = fechaMovimiento,
                         TipoMovimiento = returnElement.Element("tipoMovimiento")?.Value ?? "",
-                        CodigoEmpleado = returnElement.Element("codigoEmpleado")?.Value ?? "",
+                        // El XML devuelve 'empleadoNombre', mapeamos a CodigoEmpleado para mostrar algo
+                        CodigoEmpleado = returnElement.Element("empleadoNombre")?.Value ?? returnElement.Element("codigoEmpleado")?.Value ?? "",
                         CuentaReferencia = returnElement.Element("cuentaReferencia")?.Value,
                         Importe = decimal.Parse(returnElement.Element("importe")?.Value ?? "0")
                     };
