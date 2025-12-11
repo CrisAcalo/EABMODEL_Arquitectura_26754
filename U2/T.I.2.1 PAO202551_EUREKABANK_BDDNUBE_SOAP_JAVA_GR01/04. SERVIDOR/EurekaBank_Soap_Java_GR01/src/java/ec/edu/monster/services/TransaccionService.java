@@ -45,16 +45,11 @@ public class TransaccionService {
             Cuenta cuenta = cuentaDAO.obtenerPorCodigo(datos.getCodigoCuenta());
             CuentaValidator.validarParaDeposito(cuenta, datos.getClaveCuenta(), datos.getImporte());
 
-            // Calcular ITF y cargo por movimiento
-            BigDecimal itf = TransaccionValidator.calcularITF(datos.getImporte());
-            BigDecimal cargo = TransaccionValidator.calcularCargoMovimiento(cuenta);
-            BigDecimal totalDescontar = itf.add(cargo);
-
             // Guardar saldo anterior
             BigDecimal saldoAnterior = cuenta.getSaldo();
 
             // Calcular nuevo saldo (se suma el depósito y se restan ITF y cargo)
-            BigDecimal nuevoSaldo = saldoAnterior.add(datos.getImporte()).subtract(totalDescontar);
+            BigDecimal nuevoSaldo = saldoAnterior.add(datos.getImporte());
 
             // INICIAR TRANSACCIÓN SQL
             conn = ConexionDB.getConnection();
@@ -71,40 +66,11 @@ public class TransaccionService {
                     datos.getCodigoEmpleado(),
                     TipoMovimientoConstants.DEPOSITO,
                     datos.getImporte(),
-                    null
-            );
+                    null);
             movimientoDAO.insertar(conn, movDeposito);
             cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
 
-            // 2. Registrar ITF (siempre se cobra)
-            Movimiento movITF = new Movimiento(
-                    cuenta.getCodigo(),
-                    ++numeroBase,
-                    LocalDate.now(),
-                    datos.getCodigoEmpleado(),
-                    TipoMovimientoConstants.ITF,
-                    itf,
-                    null
-            );
-            movimientoDAO.insertar(conn, movITF);
-            cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
-
-            // 3. Registrar cargo por movimiento (si aplica)
-            if (cargo.compareTo(BigDecimal.ZERO) > 0) {
-                Movimiento movCargo = new Movimiento(
-                        cuenta.getCodigo(),
-                        ++numeroBase,
-                        LocalDate.now(),
-                        datos.getCodigoEmpleado(),
-                        TipoMovimientoConstants.CARGO_MOVIMIENTO,
-                        cargo,
-                        null
-                );
-                movimientoDAO.insertar(conn, movCargo);
-                cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
-            }
-
-            // 4. Actualizar saldo
+            // 3. Actualizar saldo
             cuentaDAO.actualizarSaldo(conn, cuenta.getCodigo(), nuevoSaldo);
 
             // CONFIRMAR TRANSACCIÓN
@@ -116,8 +82,7 @@ public class TransaccionService {
                     datos.getImporte(),
                     saldoAnterior,
                     nuevoSaldo,
-                    movDeposito.getNumero()
-            );
+                    movDeposito.getNumero());
 
             LOGGER.info("Depósito exitoso en cuenta: " + cuenta.getCodigo());
             return RespuestaDTO.exito(MensajesConstants.DEPOSITO_EXITOSO, resultado);
@@ -187,8 +152,7 @@ public class TransaccionService {
                     datos.getCodigoEmpleado(),
                     TipoMovimientoConstants.RETIRO,
                     datos.getImporte(),
-                    null
-            );
+                    null);
             movimientoDAO.insertar(conn, movRetiro);
             cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
 
@@ -203,8 +167,7 @@ public class TransaccionService {
                     datos.getCodigoEmpleado(),
                     TipoMovimientoConstants.ITF,
                     itf,
-                    null
-            );
+                    null);
             movimientoDAO.insertar(conn, movITF);
             cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
             numeroMovimientoITF = movITF.getNumero();
@@ -218,8 +181,7 @@ public class TransaccionService {
                         datos.getCodigoEmpleado(),
                         TipoMovimientoConstants.CARGO_MOVIMIENTO,
                         cargo,
-                        null
-                );
+                        null);
                 movimientoDAO.insertar(conn, movCargo);
                 cuentaDAO.incrementarContadorMovimientos(conn, cuenta.getCodigo());
                 numeroMovimientoCargo = movCargo.getNumero();
@@ -242,8 +204,7 @@ public class TransaccionService {
                     nuevoSaldo,
                     movRetiro.getNumero(),
                     numeroMovimientoITF,
-                    numeroMovimientoCargo
-            );
+                    numeroMovimientoCargo);
 
             LOGGER.info("Retiro exitoso de cuenta: " + cuenta.getCodigo());
             return RespuestaDTO.exito(MensajesConstants.RETIRO_EXITOSO, resultado);
@@ -297,14 +258,14 @@ public class TransaccionService {
                     cuentaOrigen,
                     cuentaDestino,
                     datos.getClaveCuentaOrigen(),
-                    totalDescontar
-            );
+                    totalDescontar);
 
             // Guardar saldos anteriores
             BigDecimal saldoAnteriorOrigen = cuentaOrigen.getSaldo();
             BigDecimal saldoAnteriorDestino = cuentaDestino.getSaldo();
 
-            // Calcular nuevos saldos (origen pierde importe + ITF, destino recibe solo importe)
+            // Calcular nuevos saldos (origen pierde importe + ITF, destino recibe solo
+            // importe)
             BigDecimal nuevoSaldoOrigen = saldoAnteriorOrigen.subtract(totalDescontar);
             BigDecimal nuevoSaldoDestino = saldoAnteriorDestino.add(datos.getImporte());
 
@@ -324,8 +285,7 @@ public class TransaccionService {
                     datos.getCodigoEmpleado(),
                     TipoMovimientoConstants.TRANSFERENCIA_SALIDA,
                     datos.getImporte(),
-                    cuentaDestino.getCodigo()
-            );
+                    cuentaDestino.getCodigo());
             movimientoDAO.insertar(conn, movOrigen);
             cuentaDAO.incrementarContadorMovimientos(conn, cuentaOrigen.getCodigo());
 
@@ -337,8 +297,7 @@ public class TransaccionService {
                     datos.getCodigoEmpleado(),
                     TipoMovimientoConstants.ITF,
                     itf,
-                    null
-            );
+                    null);
             movimientoDAO.insertar(conn, movITF);
             cuentaDAO.incrementarContadorMovimientos(conn, cuentaOrigen.getCodigo());
 
@@ -351,8 +310,7 @@ public class TransaccionService {
                         datos.getCodigoEmpleado(),
                         TipoMovimientoConstants.CARGO_MOVIMIENTO,
                         cargo,
-                        null
-                );
+                        null);
                 movimientoDAO.insertar(conn, movCargo);
                 cuentaDAO.incrementarContadorMovimientos(conn, cuentaOrigen.getCodigo());
             }
@@ -365,8 +323,7 @@ public class TransaccionService {
                     datos.getCodigoEmpleado(),
                     TipoMovimientoConstants.TRANSFERENCIA_INGRESO,
                     datos.getImporte(),
-                    cuentaOrigen.getCodigo()
-            );
+                    cuentaOrigen.getCodigo());
             movimientoDAO.insertar(conn, movDestino);
             cuentaDAO.incrementarContadorMovimientos(conn, cuentaDestino.getCodigo());
 
@@ -387,8 +344,7 @@ public class TransaccionService {
                     saldoAnteriorDestino,
                     nuevoSaldoDestino,
                     movOrigen.getNumero(),
-                    numeroMovimientoDestino
-            );
+                    numeroMovimientoDestino);
 
             LOGGER.info("Transferencia exitosa de " + cuentaOrigen.getCodigo()
                     + " a " + cuentaDestino.getCodigo());

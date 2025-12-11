@@ -11,6 +11,7 @@
             <file>file:/C:/EABMODEL_Arquitectura_26754/U2/T.I.2.1%20PAO202551_EUREKABANK_BDDNUBE_SOAP_JAVA_GR01/04.%20SERVIDOR/EurekaBank_Soap_Java_GR01/src/java/ec/edu/monster/models/dto/MovimientoDetalleDTO.java</file>
             <file>file:/C:/EABMODEL_Arquitectura_26754/U2/T.I.2.1%20PAO202551_EUREKABANK_BDDNUBE_SOAP_JAVA_GR01/04.%20SERVIDOR/EurekaBank_Soap_Java_GR01/src/java/ec/edu/monster/services/TransaccionService.java</file>
             <file>file:/C:/EABMODEL_Arquitectura_26754/U2/T.I.2.1%20PAO202551_EUREKABANK_BDDNUBE_SOAP_JAVA_GR01/04.%20SERVIDOR/EurekaBank_Soap_Java_GR01/src/java/ec/edu/monster/db/ConexionDB.java</file>
+            <file>file:/C:/EABMODEL_Arquitectura_26754/U2/T.I.2.1%20PAO202551_EUREKABANK_BDDNUBE_SOAP_JAVA_GR01/04.%20SERVIDOR/EurekaBank_Soap_Java_GR01/src/java/ec/edu/monster/models/Movimiento.java</file>
             <file>file:/C:/EABMODEL_Arquitectura_26754/U2/T.I.2.1%20PAO202551_EUREKABANK_BDDNUBE_SOAP_JAVA_GR01/04.%20SERVIDOR/EurekaBank_Soap_Java_GR01/src/java/ec/edu/monster/dal/ClienteDAO.java</file>
             <file>file:/C:/EABMODEL_Arquitectura_26754/U2/T.I.2.1%20PAO202551_EUREKABANK_BDDNUBE_SOAP_JAVA_GR01/04.%20SERVIDOR/EurekaBank_Soap_Java_GR01/src/java/ec/edu/monster/models/dto/TransferenciaDTO.java</file>
             <file>file:/C:/EABMODEL_Arquitectura_26754/U2/T.I.2.1%20PAO202551_EUREKABANK_BDDNUBE_SOAP_JAVA_GR01/04.%20SERVIDOR/EurekaBank_Soap_Java_GR01/src/java/ec/edu/monster/ws/ServicioAutenticacion.java</file>
