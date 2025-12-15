@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Configuración base: permitir HTTP en desarrollo -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <!-- Incluir certificados del sistema -->
+            <certificates src="system"/>
+            <!-- Incluir certificados de usuario (para certificados autofirmados) -->
+            <certificates src="user"/>
+        </trust-anchors>
+    </base-config>
+    
+    <!-- Configuración específica para dominios conocidos -->
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Servidores SOAP locales -->
+        <domain includeSubdomains="true">10.40.11.26</domain>
+        
+        <!-- Dominios de ngrok -->
+        <domain includeSubdomains="true">ngrok-free.app</domain>
+        <domain includeSubdomains="true">ngrok.io</domain>
+        <domain includeSubdomains="true">ngrok.app</domain>
+        
+        <!-- Localhost y direcciones locales para desarrollo -->
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">192.168.</domain>
+        <domain includeSubdomains="true">10.</domain>
+        <domain includeSubdomains="true">172.</domain>
+        
+        <!-- Otros dominios comunes de desarrollo -->
+        <domain includeSubdomains="true">dev</domain>
+        <domain includeSubdomains="true">local</domain>
+        
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </domain-config>
+    
+    <!-- Configuración de debug: muy permisiva para desarrollo -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user"/>
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

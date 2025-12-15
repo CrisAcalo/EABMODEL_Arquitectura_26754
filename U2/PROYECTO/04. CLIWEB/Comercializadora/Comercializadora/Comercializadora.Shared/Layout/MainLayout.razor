@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+@inject ApiServiceManager ApiManager
+
+<!-- Navbar superior -->
+<NavMenu />
+
+<!-- Contenido principal con padding para navbar fijo y notch -->
+<div class="main-container">
+    <!-- Barra de perfil -->
+    <!-- Barra de perfil oculta por ser REST-Only -->
+    @* <div class="profile-bar bg-light border-bottom">
+        <div class="container-fluid">
+            <!-- Selector eliminado -->
+        </div>
+    </div> *@
+
+    <!-- Contenido de la página -->
+    <main class="content-area">
+        <div class="container-fluid py-3">
+            @Body
+        </div>
+    </main>
+</div>
+
+<!-- Error UI -->
+<div id="blazor-error-ui">
+    ⚠️ Ha ocurrido un error no controlado.
+    <a href="" class="reload">🔄 Recargar</a>
+    <a class="dismiss">❌</a>
+</div>

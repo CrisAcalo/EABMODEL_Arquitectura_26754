@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="Comercializadora.Core/Comercializadora.Core.csproj" />
+  <Project Path="Comercializadora/Comercializadora.Shared/Comercializadora.Shared.csproj" />
+  <Project Path="Comercializadora/Comercializadora.Web/Comercializadora.Web.csproj" />
+  <Project Path="Comercializadora/Comercializadora/Comercializadora.csproj">
+    <Deploy />
+  </Project>
+</Solution>

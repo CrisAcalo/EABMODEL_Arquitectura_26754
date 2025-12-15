@@ -1,0 +1,57 @@
+@inherits LayoutComponentBase
+@namespace Comercializadora.Shared.Layout
+
+<div class="login-body">
+    <div class="login-page-wrapper">
+        @Body
+    </div>
+</div>
+
+<style>
+    /* Reset para la página de login */
+    .login-body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+    }
+    
+    .login-page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+    
+    /* Override any global content padding */
+    .login-page-wrapper .content {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Mobile adjustments - no navbar padding needed */
+    @@media screen and (max-width: 768px) {
+        .login-body {
+            padding-top: 0 !important;
+        }
+        
+        .login-page-wrapper {
+            padding: 0.5rem;
+            align-items: flex-start;
+            padding-top: 2rem;
+        }
+    }
+    
+    /* Asegurar que se override cualquier estilo del layout principal */
+    .login-body * {
+        box-sizing: border-box;
+    }
+</style>
