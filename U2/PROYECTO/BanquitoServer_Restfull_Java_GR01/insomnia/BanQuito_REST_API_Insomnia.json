@@ -1,0 +1,269 @@
+{
+  "_type": "export",
+  "name": "BanQuito REST API - Créditos",
+  "__export_format": 4,
+  "__export_date": "2024-12-14T13:24:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "wrk_banquito",
+      "_type": "workspace",
+      "name": "BanQuito REST API - Créditos",
+      "description": "Endpoints REST equivalentes al servicio SOAP .NET"
+    },
+    {
+      "_id": "fld_creditos",
+      "_type": "request_group",
+      "name": "📁 Créditos",
+      "parentId": "wrk_banquito"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "name": "Base Environment",
+      "parentId": "wrk_banquito",
+      "data": {
+        "base_url": "http://localhost:8080/BanquitoServer_Restfull_Java_GR01",
+        "cedula_valida": "1710123456",
+        "cedula_casado_mayor": "1712345678",
+        "cedula_casado_menor": "1734567890",
+        "cedula_sin_deposito": "1767890123",
+        "cedula_con_credito": "1778901234",
+        "cedula_ingresos_altos": "1745678901",
+        "cedula_no_existe": "9999999999"
+      }
+    },
+    {
+      "_id": "req_ws1_validar_apto",
+      "_type": "request",
+      "name": "✅ WS1 - Validar Sujeto Crédito (APTO)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/validar/{{ _.cedula_valida }}",
+      "description": "Cliente Luis Fernando - Perfil IDEAL, debe retornar esValido=true"
+    },
+    {
+      "_id": "req_ws1_validar_casado_mayor",
+      "_type": "request",
+      "name": "✅ WS1 - Validar Casado >25 años (APTO)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/validar/{{ _.cedula_casado_mayor }}",
+      "description": "Cliente Juan Carlos - Casado mayor de 25 años, debe retornar esValido=true"
+    },
+    {
+      "_id": "req_ws1_validar_casado_menor",
+      "_type": "request",
+      "name": "❌ WS1 - Validar Casado <25 años (NO APTO)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/validar/{{ _.cedula_casado_menor }}",
+      "description": "Cliente Carlos - Casado menor de 25 años, debe retornar esValido=false"
+    },
+    {
+      "_id": "req_ws1_validar_sin_deposito",
+      "_type": "request",
+      "name": "❌ WS1 - Validar Sin Depósito Reciente (NO APTO)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/validar/{{ _.cedula_sin_deposito }}",
+      "description": "Cliente Patricia - Sin depósito en último mes, debe retornar esValido=false"
+    },
+    {
+      "_id": "req_ws1_validar_con_credito",
+      "_type": "request",
+      "name": "❌ WS1 - Validar Con Crédito Activo (NO APTO)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/validar/{{ _.cedula_con_credito }}",
+      "description": "Cliente Roberto - Ya tiene crédito activo, debe retornar esValido=false"
+    },
+    {
+      "_id": "req_ws1_validar_no_existe",
+      "_type": "request",
+      "name": "❌ WS1 - Validar Cédula No Existe",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/validar/{{ _.cedula_no_existe }}",
+      "description": "Cédula que no existe en BD, debe retornar esValido=false"
+    },
+    {
+      "_id": "req_ws2_monto_ideal",
+      "_type": "request",
+      "name": "💰 WS2 - Monto Máximo (Cliente Ideal)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/monto-maximo/{{ _.cedula_valida }}",
+      "description": "Luis Fernando - Monto máximo esperado ~$2,360"
+    },
+    {
+      "_id": "req_ws2_monto_alto",
+      "_type": "request",
+      "name": "💰💰 WS2 - Monto Máximo (Ingresos Altos)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/monto-maximo/{{ _.cedula_ingresos_altos }}",
+      "description": "Ana Lucía - Empresaria, Monto máximo esperado ~$8,100"
+    },
+    {
+      "_id": "req_ws2_monto_casado_menor",
+      "_type": "request",
+      "name": "❌ WS2 - Monto Máximo (Casado <25 - NO APTO)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/monto-maximo/{{ _.cedula_casado_menor }}",
+      "description": "Carlos - NO APTO, debe retornar montoMaximo=0"
+    },
+    {
+      "_id": "req_ws3_otorgar_exitoso",
+      "_type": "request",
+      "name": "🎉 WS3 - Otorgar Crédito (EXITOSO)",
+      "parentId": "fld_creditos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/creditos",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"cedula\": \"1710123456\",\n  \"precioElectrodomestico\": \"1500.00\",\n  \"numeroCuotas\": \"12\"\n}"
+      },
+      "description": "Luis Fernando - Crédito de $1,500 a 12 cuotas, debe ser EXITOSO"
+    },
+    {
+      "_id": "req_ws3_otorgar_casado_mayor",
+      "_type": "request",
+      "name": "🎉 WS3 - Otorgar Crédito (Casado >25)",
+      "parentId": "fld_creditos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/creditos",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"cedula\": \"1712345678\",\n  \"precioElectrodomestico\": \"2000.00\",\n  \"numeroCuotas\": \"18\"\n}"
+      },
+      "description": "Juan Carlos - Casado >25, Crédito de $2,000 a 18 cuotas"
+    },
+    {
+      "_id": "req_ws3_otorgar_monto_alto",
+      "_type": "request",
+      "name": "🎉 WS3 - Otorgar Crédito (Monto Alto)",
+      "parentId": "fld_creditos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/creditos",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"cedula\": \"1745678901\",\n  \"precioElectrodomestico\": \"5000.00\",\n  \"numeroCuotas\": \"24\"\n}"
+      },
+      "description": "Ana Lucía - Empresaria, Crédito de $5,000 a 24 cuotas"
+    },
+    {
+      "_id": "req_ws3_otorgar_supera_maximo",
+      "_type": "request",
+      "name": "❌ WS3 - Otorgar Crédito (SUPERA MÁXIMO)",
+      "parentId": "fld_creditos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/creditos",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"cedula\": \"1756789012\",\n  \"precioElectrodomestico\": \"3000.00\",\n  \"numeroCuotas\": \"12\"\n}"
+      },
+      "description": "Pedro - Ingresos bajos, $3,000 supera su máximo (~$545), debe FALLAR"
+    },
+    {
+      "_id": "req_ws3_otorgar_casado_menor",
+      "_type": "request",
+      "name": "❌ WS3 - Otorgar Crédito (Casado <25)",
+      "parentId": "fld_creditos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/creditos",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"cedula\": \"1734567890\",\n  \"precioElectrodomestico\": \"500.00\",\n  \"numeroCuotas\": \"6\"\n}"
+      },
+      "description": "Carlos - Casado <25 años, debe FALLAR por edad"
+    },
+    {
+      "_id": "req_ws3_otorgar_ya_tiene_credito",
+      "_type": "request",
+      "name": "❌ WS3 - Otorgar Crédito (Ya tiene crédito)",
+      "parentId": "fld_creditos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/creditos",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"cedula\": \"1778901234\",\n  \"precioElectrodomestico\": \"800.00\",\n  \"numeroCuotas\": \"6\"\n}"
+      },
+      "description": "Roberto - Ya tiene crédito activo, debe FALLAR"
+    },
+    {
+      "_id": "req_ws3_otorgar_plazo_invalido",
+      "_type": "request",
+      "name": "❌ WS3 - Otorgar Crédito (Plazo Inválido)",
+      "parentId": "fld_creditos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/creditos",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"cedula\": \"1710123456\",\n  \"precioElectrodomestico\": \"1000.00\",\n  \"numeroCuotas\": \"36\"\n}"
+      },
+      "description": "Plazo de 36 meses excede el máximo (24), debe FALLAR"
+    },
+    {
+      "_id": "req_ws4_tabla_existente",
+      "_type": "request",
+      "name": "📋 WS4 - Tabla Amortización (Crédito Existente)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/CRE20251115093421/amortizacion",
+      "description": "Crédito de Roberto - Debe retornar 6 cuotas"
+    },
+    {
+      "_id": "req_ws4_tabla_no_existe",
+      "_type": "request",
+      "name": "📋 WS4 - Tabla Amortización (No Existe)",
+      "parentId": "fld_creditos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/creditos/CRE99999999999999/amortizacion",
+      "description": "Crédito que no existe, debe retornar lista vacía"
+    }
+  ]
+}

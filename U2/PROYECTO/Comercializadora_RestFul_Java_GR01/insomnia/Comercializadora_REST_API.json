@@ -1,0 +1,210 @@
+{
+    "_type": "export",
+    "name": "Comercializadora REST API",
+    "__export_format": 4,
+    "__export_date": "2024-12-14T15:45:00.000Z",
+    "resources": [
+        {
+            "_id": "wrk_comercializadora",
+            "_type": "workspace",
+            "name": "Comercializadora REST API"
+        },
+        {
+            "_id": "env_base",
+            "_type": "environment",
+            "name": "Base Environment",
+            "parentId": "wrk_comercializadora",
+            "data": {
+                "base_url": "http://localhost:8080/Comercializadora_RestFul_Java_GR01"
+            }
+        },
+        {
+            "_id": "fld_productos",
+            "_type": "request_group",
+            "name": "📦 Productos",
+            "parentId": "wrk_comercializadora"
+        },
+        {
+            "_id": "fld_facturas",
+            "_type": "request_group",
+            "name": "🧾 Facturación",
+            "parentId": "wrk_comercializadora"
+        },
+        {
+            "_id": "req_crear_producto",
+            "_type": "request",
+            "name": "✅ Crear Producto",
+            "parentId": "fld_productos",
+            "method": "POST",
+            "url": "{{ _.base_url }}/api/productos",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"codigo\": \"PROD-TEST-001\",\n  \"nombre\": \"Producto de Prueba\",\n  \"descripcion\": \"Descripción del producto\",\n  \"precio\": 150.00,\n  \"stock\": 10,\n  \"categoria\": \"PEQUEÑOS\",\n  \"imagenUrl\": null\n}"
+            }
+        },
+        {
+            "_id": "req_listar_productos",
+            "_type": "request",
+            "name": "📋 Listar Productos",
+            "parentId": "fld_productos",
+            "method": "GET",
+            "url": "{{ _.base_url }}/api/productos"
+        },
+        {
+            "_id": "req_producto_id",
+            "_type": "request",
+            "name": "🔍 Obtener por ID",
+            "parentId": "fld_productos",
+            "method": "GET",
+            "url": "{{ _.base_url }}/api/productos/1"
+        },
+        {
+            "_id": "req_producto_codigo",
+            "_type": "request",
+            "name": "🔍 Obtener por Código",
+            "parentId": "fld_productos",
+            "method": "GET",
+            "url": "{{ _.base_url }}/api/productos/codigo/PROD-MED-001"
+        },
+        {
+            "_id": "req_productos_categoria",
+            "_type": "request",
+            "name": "📂 Filtrar por Categoría",
+            "parentId": "fld_productos",
+            "method": "GET",
+            "url": "{{ _.base_url }}/api/productos/categoria/COCINA"
+        },
+        {
+            "_id": "req_productos_precio",
+            "_type": "request",
+            "name": "💰 Filtrar por Precio",
+            "parentId": "fld_productos",
+            "method": "GET",
+            "url": "{{ _.base_url }}/api/productos/precio?precioMin=100&precioMax=500"
+        },
+        {
+            "_id": "req_actualizar_producto",
+            "_type": "request",
+            "name": "✏️ Actualizar Producto (PATCH)",
+            "parentId": "fld_productos",
+            "method": "PATCH",
+            "url": "{{ _.base_url }}/api/productos/1",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"precio\": 135.00,\n  \"stock\": 45\n}"
+            }
+        },
+        {
+            "_id": "req_eliminar_producto",
+            "_type": "request",
+            "name": "🗑️ Eliminar Producto",
+            "parentId": "fld_productos",
+            "method": "DELETE",
+            "url": "{{ _.base_url }}/api/productos/35"
+        },
+        {
+            "_id": "req_calcular_factura",
+            "_type": "request",
+            "name": "🧮 Calcular Total (sin generar)",
+            "parentId": "fld_facturas",
+            "method": "POST",
+            "url": "{{ _.base_url }}/api/facturas/calcular",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"items\": [\n    {\"productoId\": 8, \"cantidad\": 1},\n    {\"productoId\": 9, \"cantidad\": 2}\n  ]\n}"
+            },
+            "description": "Calcula el total SIN generar factura. Útil para solicitar crédito en BanQuito."
+        },
+        {
+            "_id": "req_generar_efectivo",
+            "_type": "request",
+            "name": "💵 Generar Factura EFECTIVO (33% desc)",
+            "parentId": "fld_facturas",
+            "method": "POST",
+            "url": "{{ _.base_url }}/api/facturas",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"cedulaCliente\": \"1710123456\",\n  \"nombreCliente\": \"Juan Pérez\",\n  \"formaPago\": \"EFECTIVO\",\n  \"items\": [\n    {\"productoId\": 1, \"cantidad\": 1},\n    {\"productoId\": 4, \"cantidad\": 1}\n  ]\n}"
+            },
+            "description": "EFECTIVO tiene 33% de descuento"
+        },
+        {
+            "_id": "req_generar_credito",
+            "_type": "request",
+            "name": "💳 Generar Factura CRÉDITO",
+            "parentId": "fld_facturas",
+            "method": "POST",
+            "url": "{{ _.base_url }}/api/facturas",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"cedulaCliente\": \"1712345678\",\n  \"nombreCliente\": \"María López\",\n  \"formaPago\": \"CREDITO\",\n  \"numeroCredito\": \"CRE20251214150000\",\n  \"items\": [\n    {\"productoId\": 19, \"cantidad\": 1}\n  ]\n}"
+            },
+            "description": "CRÉDITO no tiene descuento. Requiere NumeroCredito de BanQuito."
+        },
+        {
+            "_id": "req_error_credito_sin_numero",
+            "_type": "request",
+            "name": "❌ CRÉDITO sin NumeroCredito",
+            "parentId": "fld_facturas",
+            "method": "POST",
+            "url": "{{ _.base_url }}/api/facturas",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"cedulaCliente\": \"1712345678\",\n  \"nombreCliente\": \"María López\",\n  \"formaPago\": \"CREDITO\",\n  \"items\": [\n    {\"productoId\": 1, \"cantidad\": 1}\n  ]\n}"
+            },
+            "description": "Debe fallar porque CRÉDITO requiere NumeroCredito"
+        },
+        {
+            "_id": "req_facturas_cliente",
+            "_type": "request",
+            "name": "👤 Facturas por Cliente",
+            "parentId": "fld_facturas",
+            "method": "GET",
+            "url": "{{ _.base_url }}/api/facturas/cliente/1710123456"
+        },
+        {
+            "_id": "req_factura_numero",
+            "_type": "request",
+            "name": "🔍 Factura por Número",
+            "parentId": "fld_facturas",
+            "method": "GET",
+            "url": "{{ _.base_url }}/api/facturas/FAC-20251116-001"
+        }
+    ]
+}

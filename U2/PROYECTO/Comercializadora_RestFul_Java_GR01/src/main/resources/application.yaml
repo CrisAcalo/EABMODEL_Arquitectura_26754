@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: Comercializadora_RestFul_Java_GR01
+
+  # Conexión a MySQL Docker
+  datasource:
+    url: jdbc:mysql://localhost:3306/ComercializadoraDB?useSSL=false&serverTimezone=America/Guayaquil&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: root
+    password: rootroot
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+
+  # JPA / Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+# Servidor
+server:
+  port: 8080
+
+# Swagger / OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+
+# Configuración de negocio
+comercializadora:
+  descuento-efectivo: 0.33

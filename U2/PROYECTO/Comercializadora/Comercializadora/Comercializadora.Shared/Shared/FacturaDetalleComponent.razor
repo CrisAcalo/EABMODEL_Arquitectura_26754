@@ -1,0 +1,72 @@
+﻿@using Comercializadora.Core.Models.Comercializadora.Responses
+
+<div class="card mt-4">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center" @onclick="ToggleCollapse" style="cursor: pointer;">
+        <div>
+            <span class="fw-bold">Factura:</span> @Factura.NumeroFactura
+            <span class="mx-2">|</span>
+            <span class="fw-bold">Cliente:</span> @Factura.NombreCliente
+        </div>
+        <button class="btn btn-sm btn-outline-secondary">
+            @(isCollapsed ? "Ver Detalles ▼" : "Ocultar Detalles ▲")
+        </button>
+    </div>
+    <div class="collapse @(isCollapsed ? "" : "show")">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>Cédula:</strong> @Factura.CedulaCliente</p>
+                    <p><strong>Fecha de Emisión:</strong> @Factura.FechaEmision.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Forma de Pago:</strong> @Factura.FormaPago</p>
+                    <p><strong># Crédito:</strong> @(Factura.NumeroCredito ?? "N/A")</p>
+                </div>
+            </div>
+
+            <h5>Detalles de la Compra</h5>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead><tr><th>Producto</th><th>Cantidad</th><th class="text-end">P. Unitario</th><th class="text-end">Subtotal</th></tr></thead>
+                    <tbody>
+                        @foreach (var detalle in Factura.Detalles)
+                        {
+                            <tr>
+                                <td>@detalle.NombreProducto</td>
+                                <td>@detalle.Cantidad</td>
+                                <td class="text-end">@detalle.PrecioUnitario.ToString("C")</td>
+                                <td class="text-end">@detalle.Subtotal.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="fw-bold">
+                        <tr><td colspan="3" class="text-end">Subtotal:</td><td class="text-end">@Factura.Subtotal.ToString("C")</td></tr>
+                        <tr><td colspan="3" class="text-end">Descuento:</td><td class="text-end text-danger">- @Factura.Descuento.ToString("C")</td></tr>
+                        <tr class="table-group-divider fs-5"><td colspan="3" class="text-end">Total:</td><td class="text-end">@Factura.Total.ToString("C")</td></tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public InvoiceDto Factura { get; set; } = new();
+
+    [Parameter]
+    public bool IsCollapsed { get; set; } = false;
+
+    private bool isCollapsed;
+
+    protected override void OnInitialized()
+    {
+        isCollapsed = IsCollapsed;
+    }
+
+    private void ToggleCollapse()
+    {
+        isCollapsed = !isCollapsed;
+    }
+}

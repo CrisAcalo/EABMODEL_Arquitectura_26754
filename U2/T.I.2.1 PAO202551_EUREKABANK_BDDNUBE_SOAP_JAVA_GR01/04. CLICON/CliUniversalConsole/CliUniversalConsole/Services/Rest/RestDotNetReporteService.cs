@@ -42,13 +42,13 @@ namespace CliUniversalConsole.Services.Rest
                     {
                         var movimiento = new MovimientoDetalle
                         {
-                            CodigoCuenta = item.TryGetProperty("CodigoCuenta", out var cc) ? cc.GetString() ?? "" : "",
-                            Numero = item.TryGetProperty("Numero", out var num) ? num.GetInt32() : 0,
-                            Fecha = item.TryGetProperty("Fecha", out var fecha) ? DateTime.Parse(fecha.GetString() ?? "") : DateTime.Now,
-                            TipoMovimiento = item.TryGetProperty("TipoMovimiento", out var tipo) ? tipo.GetString() ?? "" : "",
-                            CodigoEmpleado = item.TryGetProperty("CodigoEmpleado", out var emp) ? emp.GetString() ?? "" : "",
-                            CuentaReferencia = item.TryGetProperty("CuentaReferencia", out var ref1) ? ref1.GetString() : null,
-                            Importe = item.TryGetProperty("Importe", out var imp) ? imp.GetDecimal() : 0
+                            CodigoCuenta = item.TryGetProperty("codigoCuenta", out var cc) ? cc.GetString() ?? "" : "",
+                            Numero = item.TryGetProperty("numeroMovimiento", out var num) ? num.GetInt32() : 0,
+                            Fecha = item.TryGetProperty("fecha", out var fecha) ? DateTime.Parse(fecha.GetString() ?? "") : DateTime.Now,
+                            TipoMovimiento = item.TryGetProperty("tipoMovimiento", out var tipo) ? tipo.GetString() ?? "" : "",
+                            CodigoEmpleado = item.TryGetProperty("empleadoNombre", out var emp) ? emp.GetString() ?? "" : "",
+                            CuentaReferencia = item.TryGetProperty("cuentaReferencia", out var ref1) ? ref1.GetString() : null,
+                            Importe = item.TryGetProperty("importe", out var imp) ? imp.GetDecimal() : 0
                         };
                         movimientos.Add(movimiento);
                     }
