@@ -1,19 +1,3 @@
-/*
-Empresa        :  EurekaBank
-Software       :  Sistema de Cuentas de Ahorro
-DBMS           :  SQL Server
-Base de Datos  :  eurekabank
-Script         :  Carga Datos
-Responsable    :  Ing. Eric Gustavo Coronel Castillo
-Email          :  gcoronelc@gmail.com
-Sitio Web      :  www.desarrollasoftware.com
-Blog           :  http://gcoronelc.blogspot.com
-*/
-
--- =============================================
--- Seleccionar la base de datos
--- =============================================
-
 use eurekabank;
 go
 

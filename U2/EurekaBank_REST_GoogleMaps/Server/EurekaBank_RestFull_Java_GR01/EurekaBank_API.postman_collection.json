@@ -1,0 +1,281 @@
+{
+	"info": {
+		"_postman_id": "eurekabank-api-collection",
+		"name": "EurekaBank RESTful API - Java",
+		"description": "Colección de pruebas para la API RESTful de EurekaBank desarrollada en Java con Jakarta EE 10 y Payara Server 6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticación",
+			"item": [
+				{
+					"name": "Login Empleado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Usuario\": \"admin\",\n  \"Clave\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/Autenticacion/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"Autenticacion",
+								"login"
+							]
+						},
+						"description": "Autentica un empleado en el sistema. Devuelve los datos del empleado si la autenticación es exitosa."
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Empleado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Codigo\": \"E005\",\n  \"Paterno\": \"González\",\n  \"Materno\": \"López\",\n  \"Nombre\": \"Carlos\",\n  \"Ciudad\": \"Quito\",\n  \"Direccion\": \"Av. 10 de Agosto 123\",\n  \"Usuario\": \"cgonzalez\",\n  \"Clave\": \"pass123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/Autenticacion/registrar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"Autenticacion",
+								"registrar"
+							]
+						},
+						"description": "Registra un nuevo empleado en el sistema bancario."
+					},
+					"response": []
+				},
+				{
+					"name": "Cambiar Clave",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Codigo\": \"E001\",\n  \"ClaveActual\": \"admin123\",\n  \"ClaveNueva\": \"newpass456\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/Autenticacion/cambiar-clave",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"Autenticacion",
+								"cambiar-clave"
+							]
+						},
+						"description": "Cambia la clave de acceso de un empleado. Requiere la clave actual para validación."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transacciones",
+			"item": [
+				{
+					"name": "Realizar Depósito",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"CodigoCuenta\": \"00100001\",\n  \"ClaveCuenta\": \"123456\",\n  \"Importe\": 500.00,\n  \"CodigoEmpleado\": \"E001\",\n  \"CodigoTipoMovimiento\": \"001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/Transaccion/deposito",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"Transaccion",
+								"deposito"
+							]
+						},
+						"description": "Realiza un depósito en una cuenta bancaria. Incrementa el saldo de la cuenta."
+					},
+					"response": []
+				},
+				{
+					"name": "Realizar Retiro",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"CodigoCuenta\": \"00100001\",\n  \"ClaveCuenta\": \"123456\",\n  \"Importe\": 200.00,\n  \"CodigoEmpleado\": \"E001\",\n  \"CodigoTipoMovimiento\": \"002\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/Transaccion/retiro",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"Transaccion",
+								"retiro"
+							]
+						},
+						"description": "Realiza un retiro de una cuenta bancaria. Valida saldo disponible y cobra comisión."
+					},
+					"response": []
+				},
+				{
+					"name": "Realizar Transferencia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"CuentaOrigen\": \"00100001\",\n  \"CuentaDestino\": \"00100002\",\n  \"ClaveCuentaOrigen\": \"123456\",\n  \"Importe\": 300.00,\n  \"CodigoEmpleado\": \"E001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/Transaccion/transferencia",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"Transaccion",
+								"transferencia"
+							]
+						},
+						"description": "Realiza una transferencia entre dos cuentas bancarias. Debita de origen y acredita a destino."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reportes",
+			"item": [
+				{
+					"name": "Obtener Movimientos por Cuenta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/Reporte/movimientos/00100001",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"Reporte",
+								"movimientos",
+								"00100001"
+							]
+						},
+						"description": "Obtiene todos los movimientos (depósitos, retiros, transferencias) de una cuenta específica."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Movimientos por Rango de Fechas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/Reporte/movimientos/00100001/rango?fechaInicio=2024-01-01&fechaFin=2024-12-31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"Reporte",
+								"movimientos",
+								"00100001",
+								"rango"
+							],
+							"query": [
+								{
+									"key": "fechaInicio",
+									"value": "2024-01-01",
+									"description": "Fecha de inicio (formato: yyyy-MM-dd)"
+								},
+								{
+									"key": "fechaFin",
+									"value": "2024-12-31",
+									"description": "Fecha de fin (formato: yyyy-MM-dd)"
+								}
+							]
+						},
+						"description": "Obtiene los movimientos de una cuenta filtrados por un rango de fechas específico."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080/EurekaBank_RestFull_Java_GR01",
+			"type": "string"
+		}
+	]
+}
