@@ -1,7 +1,8 @@
-@page "/sucursales"
+﻿@page "/sucursales"
 @inject ISucursalService SucursalService
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
+@inject IGoogleMapsService GoogleMapsService
 
 <PageTitle>Sucursales - EurekaBank</PageTitle>
 
@@ -12,14 +13,14 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h1 class="text-responsive-lg mb-2">
-                        <span class="me-2">??</span>
-                        Gesti�n de Sucursales
+                        <span class="me-2">🏢</span>
+                        Gestión de Sucursales
                     </h1>
                     <p class="text-muted mb-0">Administra las oficinas y ubicaciones del banco</p>
                 </div>
                 <div>
                     <button class="btn btn-primary btn-responsive" @onclick="CrearSucursal">
-                        <span class="me-1">?</span>
+                        <span class="me-1">➕</span>
                         Nueva Sucursal
                     </button>
                 </div>
@@ -34,13 +35,13 @@
                 <div class="card-body">
                     <div class="row g-3 align-items-end">
                         <div class="col-md-6">
-                            <label class="form-label">?? Buscar sucursal</label>
+                            <label class="form-label">🔍 Buscar sucursal</label>
                             <input type="text" class="form-control input-responsive" @bind="filtroNombre" 
                                    @onkeyup="FiltrarSucursales" placeholder="Buscar por nombre o ciudad...">
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">??? Filtrar por ciudad</label>
-                            <select class="form-select input-responsive" @bind="filtroCiudad" @onchange="FiltrarSucursales">
+                            <label class="form-label">🏙️ Filtrar por ciudad</label>
+                            <select class="form-select input-responsive" @bind="filtroCiudad" @bind:after="FiltrarSucursales">
                                 <option value="">Todas las ciudades</option>
                                 @foreach (var ciudad in ciudadesDisponibles)
                                 {
@@ -50,7 +51,7 @@
                         </div>
                         <div class="col-md-3">
                             <button class="btn btn-outline-secondary btn-responsive w-100" @onclick="LimpiarFiltros">
-                                <span class="me-1">???</span>
+                                <span class="me-1">🗑️</span>
                                 Limpiar
                             </button>
                         </div>
@@ -75,7 +76,7 @@
     @if (!string.IsNullOrEmpty(errorMessage))
     {
         <div class="alert alert-danger alert-dismissible fade show animate-fade-in" role="alert">
-            <span class="me-2">?</span>
+            <span class="me-2">❌</span>
             <strong>Error:</strong> @errorMessage
             <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
         </div>
@@ -85,8 +86,8 @@
     @if (!string.IsNullOrEmpty(successMessage))
     {
         <div class="alert alert-success alert-dismissible fade show animate-fade-in" role="alert">
-            <span class="me-2">?</span>
-            <strong>�xito:</strong> @successMessage
+            <span class="me-2">✅</span>
+            <strong>Éxito:</strong> @successMessage
             <button type="button" class="btn-close" @onclick="() => successMessage = string.Empty"></button>
         </div>
     }
@@ -100,24 +101,24 @@
                     <div class="card-header bg-light">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">
-                                <span class="me-2">??</span>
+                                <span class="me-2">📋</span>
                                 Sucursales (@sucursalesFiltradas.Count)
                             </h5>
                             <div class="d-flex gap-2">
                                 <button class="btn btn-sm btn-outline-primary" @onclick="ToggleVista">
                                     @if (vistaTabla)
                                     {
-                                        <span class="me-1">??</span>
+                                        <span class="me-1">📱</span>
                                         <span>Vista Tarjetas</span>
                                     }
                                     else
                                     {
-                                        <span class="me-1">??</span>
+                                        <span class="me-1">📊</span>
                                         <span>Vista Tabla</span>
                                     }
                                 </button>
                                 <button class="btn btn-sm btn-outline-secondary" @onclick="CargarSucursales">
-                                    <span class="me-1">??</span>
+                                    <span class="me-1">🔄</span>
                                     Actualizar
                                 </button>
                             </div>
@@ -131,10 +132,10 @@
                                 <table class="table table-hover mb-0">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>C�digo</th>
+                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Ciudad</th>
-                                            <th>Direcci�n</th>
+                                            <th>Dirección</th>
                                             <th>Cuentas</th>
                                             <th>Coordenadas</th>
                                             <th class="text-center">Acciones</th>
@@ -151,7 +152,7 @@
                                                     <strong>@sucursal.Nombre</strong>
                                                 </td>
                                                 <td>
-                                                    <span class="me-1">???</span>@sucursal.Ciudad
+                                                    <span class="me-1">🏙️</span>@sucursal.Ciudad
                                                 </td>
                                                 <td>
                                                     <small class="text-muted">@sucursal.DireccionCompleta</small>
@@ -163,13 +164,13 @@
                                                     @if (sucursal.TieneCoordenadas)
                                                     {
                                                         <span class="text-success" title="@sucursal.Latitud, @sucursal.Longitud">
-                                                            <span class="me-1">??</span>S�
+                                                            <span class="me-1">📍</span>Sí
                                                         </span>
                                                     }
                                                     else
                                                     {
                                                         <span class="text-muted">
-                                                            <span class="me-1">??</span>No
+                                                            <span class="me-1">📍</span>No
                                                         </span>
                                                     }
                                                 </td>
@@ -178,17 +179,17 @@
                                                         <button class="btn btn-outline-info" 
                                                                 @onclick="() => VerSucursal(sucursal.Codigo)"
                                                                 title="Ver detalles">
-                                                            <span>???</span>
+                                                            <span>👁️</span>
                                                         </button>
                                                         <button class="btn btn-outline-warning" 
                                                                 @onclick="() => EditarSucursal(sucursal.Codigo)"
                                                                 title="Editar">
-                                                            <span>??</span>
+                                                            <span>✏️</span>
                                                         </button>
                                                         <button class="btn btn-outline-danger" 
                                                                 @onclick="() => ConfirmarEliminar(sucursal)"
                                                                 title="Eliminar">
-                                                            <span>???</span>
+                                                            <span>🗑️</span>
                                                         </button>
                                                     </div>
                                                 </td>
@@ -210,7 +211,7 @@
                                                 <div class="card-header bg-primary text-white">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h6 class="mb-0">
-                                                            <span class="me-1">??</span>@sucursal.Nombre
+                                                            <span class="me-1">🏢</span>@sucursal.Nombre
                                                         </h6>
                                                         <span class="badge bg-light text-dark">#@sucursal.Codigo</span>
                                                     </div>
@@ -218,11 +219,11 @@
                                                 <div class="card-body">
                                                     <div class="mb-3">
                                                         <div class="d-flex align-items-center mb-2">
-                                                            <span class="me-2">???</span>
+                                                            <span class="me-2">🏙️</span>
                                                             <strong>@sucursal.Ciudad</strong>
                                                         </div>
                                                         <div class="d-flex align-items-start">
-                                                            <span class="me-2">??</span>
+                                                            <span class="me-2">📍</span>
                                                             <small class="text-muted">@sucursal.DireccionCompleta</small>
                                                         </div>
                                                     </div>
@@ -236,7 +237,7 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="text-@(sucursal.TieneCoordenadas ? "success" : "muted") fw-bold">
-                                                                @(sucursal.TieneCoordenadas ? "?" : "?")
+                                                                @(sucursal.TieneCoordenadas ? "✓" : "✗")
                                                             </div>
                                                             <small class="text-muted">GPS</small>
                                                         </div>
@@ -246,15 +247,23 @@
                                                     <div class="d-flex justify-content-between">
                                                         <button class="btn btn-sm btn-outline-info" 
                                                                 @onclick="() => VerSucursal(sucursal.Codigo)">
-                                                            <span class="me-1">???</span>Ver
+                                                            <span class="me-1">👁️</span>Ver
                                                         </button>
+                                                        @if (sucursal.TieneCoordenadas)
+                                                        {
+                                                            <button class="btn btn-sm btn-outline-success" 
+                                                                    @onclick="() => AbrirMapaSucursal(sucursal)"
+                                                                    title="Ver en mapa">
+                                                                <span class="me-1">🗺️</span>Mapa
+                                                            </button>
+                                                        }
                                                         <button class="btn btn-sm btn-outline-warning" 
                                                                 @onclick="() => EditarSucursal(sucursal.Codigo)">
-                                                            <span class="me-1">??</span>Editar
+                                                            <span class="me-1">✏️</span>Editar
                                                         </button>
                                                         <button class="btn btn-sm btn-outline-danger" 
                                                                 @onclick="() => ConfirmarEliminar(sucursal)">
-                                                            <span class="me-1">???</span>Eliminar
+                                                            <span class="me-1">🗑️</span>Eliminar
                                                         </button>
                                                     </div>
                                                 </div>
@@ -275,12 +284,12 @@
     {
         <div class="text-center py-5">
             <div class="mb-4">
-                <span style="font-size: 4rem;">??</span>
+                <span style="font-size: 4rem;">🏢</span>
             </div>
             <h3 class="text-muted">No hay sucursales registradas</h3>
             <p class="text-muted mb-4">Comienza creando tu primera sucursal</p>
             <button class="btn btn-primary btn-lg btn-responsive" @onclick="CrearSucursal">
-                <span class="me-2">?</span>
+                <span class="me-2">➕</span>
                 Crear Primera Sucursal
             </button>
         </div>
@@ -291,19 +300,19 @@
     {
         <div class="text-center py-5">
             <div class="mb-4">
-                <span style="font-size: 4rem;">??</span>
+                <span style="font-size: 4rem;">🔍</span>
             </div>
             <h3 class="text-muted">No se encontraron resultados</h3>
-            <p class="text-muted mb-4">Intenta ajustar tus criterios de b�squeda</p>
+            <p class="text-muted mb-4">Intenta ajustar tus criterios de búsqueda</p>
             <button class="btn btn-outline-primary btn-responsive" @onclick="LimpiarFiltros">
-                <span class="me-2">???</span>
+                <span class="me-2">🗑️</span>
                 Limpiar Filtros
             </button>
         </div>
     }
 </div>
 
-<!-- Modal de Confirmaci�n de Eliminaci�n -->
+<!-- Modal de Confirmación de Eliminación -->
 @if (sucursalAEliminar != null)
 {
     <div class="modal fade show" style="display: block; background: rgba(0,0,0,0.5);" tabindex="-1">
@@ -311,15 +320,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <span class="me-2">??</span>
-                        Confirmar Eliminaci�n
+                        <span class="me-2">⚠️</span>
+                        Confirmar Eliminación
                     </h5>
                 </div>
                 <div class="modal-body">
-                    <p>�Est�s seguro de que deseas eliminar la sucursal <strong>@sucursalAEliminar.Nombre</strong>?</p>
+                    <p>¿Estás seguro de que deseas eliminar la sucursal <strong>@sucursalAEliminar.Nombre</strong>?</p>
                     <div class="alert alert-warning">
-                        <span class="me-2">??</span>
-                        Esta acci�n no se puede deshacer.
+                        <span class="me-2">⚠️</span>
+                        Esta acción no se puede deshacer.
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -331,7 +340,7 @@
                         {
                             <span class="spinner-border spinner-border-sm me-2" role="status"></span>
                         }
-                        <span class="me-1">???</span>
+                        <span class="me-1">🗑️</span>
                         Eliminar
                     </button>
                 </div>
@@ -341,7 +350,7 @@
 }
 
 @code {
-    // Estado de la p�gina
+    // Estado de la página
     private List<SucursalDto> sucursales = new();
     private List<SucursalDto> sucursalesFiltradas = new();
     private List<string> ciudadesDisponibles = new();
@@ -355,7 +364,7 @@
     private string filtroNombre = string.Empty;
     private string filtroCiudad = string.Empty;
 
-    // Modal de eliminaci�n
+    // Modal de eliminación
     private SucursalDto? sucursalAEliminar = null;
 
     protected override async Task OnInitializedAsync()
@@ -378,7 +387,7 @@
                 sucursales = response.Datos ?? new List<SucursalDto>();
                 sucursalesFiltradas = new List<SucursalDto>(sucursales);
                 
-                // Extraer ciudades �nicas
+                // Extraer ciudades únicas
                 ciudadesDisponibles = sucursales
                     .Select(s => s.Ciudad)
                     .Where(c => !string.IsNullOrEmpty(c))
@@ -388,7 +397,7 @@
 
                 if (!sucursales.Any())
                 {
-                    successMessage = "No hay sucursales registradas. �Crea la primera!";
+                    successMessage = "No hay sucursales registradas. ¡Crea la primera!";
                 }
             }
             else
@@ -493,5 +502,13 @@
             sucursalAEliminar = null;
             StateHasChanged();
         }
+    }
+
+    private async Task AbrirMapaSucursal(SucursalDto sucursal)
+    {
+        if (!sucursal.TieneCoordenadas) return;
+        
+        var url = GoogleMapsService.ObtenerUrlGoogleMaps(sucursal.Latitud, sucursal.Longitud);
+        await JSRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 }

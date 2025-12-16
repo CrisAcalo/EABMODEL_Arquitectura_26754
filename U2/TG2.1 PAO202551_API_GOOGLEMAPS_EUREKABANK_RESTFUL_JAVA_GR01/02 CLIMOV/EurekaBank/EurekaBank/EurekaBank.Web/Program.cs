@@ -44,6 +44,31 @@ builder.Services.AddSingleton<SoapReportService>();
 builder.Services.AddSingleton<RestReportService>();
 builder.Services.AddSingleton<IReportService, ReportServiceDispatcher>();
 
+// Sucursal Services (solo REST)
+builder.Services.AddSingleton<RestSucursalService>();
+builder.Services.AddSingleton<ISucursalService>(serviceProvider =>
+{
+    var sucursalService = serviceProvider.GetRequiredService<RestSucursalService>();
+    var apiManager = serviceProvider.GetRequiredService<ApiServiceManager>();
+    
+    // Configurar el target inicial
+    sucursalService.SetTarget(apiManager.CurrentPlatform);
+    
+    // Suscribirse a cambios de plataforma
+    apiManager.PropertyChanged += (sender, e) =>
+    {
+        if (e.PropertyName == nameof(ApiServiceManager.CurrentPlatform))
+        {
+            sucursalService.SetTarget(apiManager.CurrentPlatform);
+        }
+    };
+    
+    return sucursalService;
+});
+
+// Google Maps Service
+builder.Services.AddSingleton<IGoogleMapsService, GoogleMapsService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

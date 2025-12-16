@@ -41,18 +41,36 @@
                                 Reportes
                             </NavLink>
                         </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="sucursales" Match="NavLinkMatch.All" @onclick="closeMobileMenu">
+                                <span class="me-1">🏢</span>
+                                Sucursales
+                            </NavLink>
+                        </li>
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="sucursales/ruta" @onclick="closeMobileMenu">
+                                <span class="me-1">🗺️</span>
+                                Rutas
+                            </NavLink>
+                        </li>
                     </ul>
                 }
                 else
                 {
-                    <!-- Espacio vacío para usuarios no logueados -->
                     <div class="navbar-nav me-auto"></div>
                 }
 
                 <!-- API Selectors and User Info - SIEMPRE VISIBLES -->
                 <div class="navbar-nav ms-auto d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 gap-lg-3">
-                    <!-- API Selectors -->
-                    <div class="d-flex flex-column flex-lg-row gap-2 w-100 w-lg-auto">
+                    <!-- API Selector Combinado -->
+                    <select class="form-select form-select-sm"
+                            @bind="SelectedApiCombination"
+                            @bind:after="OnApiCombinationChanged" style="min-width: 120px;">
+                        <option value="rest-java">REST Java</option>
+                        <option value="rest-dotnet">REST .NET</option>
+                    </select>
+
+                   @*  <div class="d-flex flex-column flex-lg-row gap-2 w-100 w-lg-auto">
                         <div class="d-flex align-items-center gap-2">
                             <label class="text-white small d-lg-none mb-0">Protocolo:</label>
                             <select class="form-select form-select-sm" @bind="ApiManager.CurrentProtocol" style="min-width: 80px;">
@@ -67,7 +85,7 @@
                                 <option value="@ApiPlatform.DotNet">.NET</option>
                             </select>
                         </div>
-                    </div>
+                    </div> *@
 
                     @if (SessionManager.IsLoggedIn)
                     {
@@ -186,13 +204,62 @@
 </script>
 
 @code {
+    // Propiedad para el selector combinado
+    private string SelectedApiCombination { get; set; } = "soap-java";
+
     protected override void OnInitialized()
     {
         // Usar InvokeAsync para asegurar que las actualizaciones de UI ocurran en el thread correcto
         ApiManager.PropertyChanged += async (s, e) => await InvokeAsync(StateHasChanged);
         SessionManager.PropertyChanged += async (s, e) => await InvokeAsync(StateHasChanged);
         
+        // Inicializar la combinación basada en los valores actuales
+        UpdateSelectedCombination();
+        
         base.OnInitialized();
+    }
+
+    // 1. El método NO recibe argumentos
+    private void OnApiCombinationChanged()
+    {
+        // NO necesitas leer e.Value ni asignar la variable manualmente.
+        // Al entrar aquí, 'SelectedApiCombination' YA tiene el valor nuevo.
+
+        switch (SelectedApiCombination)
+        {
+            case "rest-java":
+                ApiManager.CurrentProtocol = ApiProtocol.Rest;
+                ApiManager.CurrentPlatform = ApiPlatform.Java;
+                break;
+            case "rest-dotnet":
+                ApiManager.CurrentProtocol = ApiProtocol.Rest;
+                ApiManager.CurrentPlatform = ApiPlatform.DotNet;
+                break;
+        }
+
+        // Normalmente Blazor actualiza la UI automáticamente al terminar el evento,
+        // pero si ApiManager es estático o externo, dejar esto está bien.
+        StateHasChanged();
+    }
+
+    private void UpdateSelectedCombination()
+    {
+        // Determinar la combinación actual basada en el ApiManager
+        if (ApiManager.CurrentProtocol == ApiProtocol.Soap && ApiManager.CurrentPlatform == ApiPlatform.Java)
+        {
+            SelectedApiCombination = "soap-java";
+        }
+        else if (ApiManager.CurrentProtocol == ApiProtocol.Rest && ApiManager.CurrentPlatform == ApiPlatform.DotNet)
+        {
+            SelectedApiCombination = "rest-dotnet";
+        }
+        else
+        {
+            // Por defecto, establecer SOAP Java si hay una combinación no válida
+            SelectedApiCombination = "soap-java";
+            ApiManager.CurrentProtocol = ApiProtocol.Soap;
+            ApiManager.CurrentPlatform = ApiPlatform.Java;
+        }
     }
 
     private void Logout()

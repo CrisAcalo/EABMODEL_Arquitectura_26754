@@ -1,4 +1,4 @@
-@page "/sucursales/{codigo:int}/editar"
+﻿@page "/sucursales/{codigo:int}/editar"
 @inject ISucursalService SucursalService
 @inject NavigationManager Navigation
 
@@ -10,12 +10,12 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="/home" class="text-decoration-none">
-                    <span class="me-1">??</span>Inicio
+                    <span class="me-1">🏠</span>Inicio
                 </a>
             </li>
             <li class="breadcrumb-item">
                 <a href="/sucursales" class="text-decoration-none">
-                    <span class="me-1">??</span>Sucursales
+                    <span class="me-1">🏢</span>Sucursales
                 </a>
             </li>
             <li class="breadcrumb-item">
@@ -24,7 +24,7 @@
                 </a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-                <span class="me-1">??</span>Editar
+                <span class="me-1">✏️</span>Editar
             </li>
         </ol>
     </nav>
@@ -36,7 +36,7 @@
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Cargando...</span>
             </div>
-            <p class="mt-3 text-muted">Cargando informaci�n de la sucursal...</p>
+            <p class="mt-3 text-muted">Cargando información de la sucursal...</p>
         </div>
     }
 
@@ -48,13 +48,13 @@
                 <div class="card card-responsive text-center">
                     <div class="card-body py-5">
                         <div class="mb-4">
-                            <span style="font-size: 4rem;">?</span>
+                            <span style="font-size: 4rem;">❌</span>
                         </div>
                         <h3 class="text-danger mb-3">Error al Cargar</h3>
                         <p class="text-muted mb-4">@errorMessage</p>
                         <div class="d-flex gap-2 justify-content-center">
                             <button class="btn btn-outline-primary btn-responsive" @onclick="CargarSucursal">
-                                <span class="me-1">??</span>
+                                <span class="me-1">🔄</span>
                                 Intentar de Nuevo
                             </button>
                             <button class="btn btn-secondary btn-responsive" @onclick="Regresar">
@@ -77,17 +77,17 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <h1 class="text-responsive-lg mb-2">
-                            <span class="me-2">??</span>
+                            <span class="me-2">✏️</span>
                             Editar Sucursal
                         </h1>
                         <p class="text-muted mb-0">
-                            <span class="me-1">??</span>
-                            @sucursalOriginal.Nombre - C�digo: <strong>@Codigo</strong>
+                            <span class="me-1">🏢</span>
+                            @sucursalOriginal.Nombre - Código: <strong>@Codigo</strong>
                         </p>
                     </div>
                     <div>
                         <button class="btn btn-outline-secondary btn-responsive" @onclick="Regresar">
-                            <span class="me-1">?</span>
+                            <span class="me-1">←</span>
                             Regresar
                         </button>
                     </div>
@@ -99,7 +99,7 @@
         @if (!string.IsNullOrEmpty(errorMessage))
         {
             <div class="alert alert-danger alert-dismissible fade show animate-fade-in" role="alert">
-                <span class="me-2">?</span>
+                <span class="me-2">❌</span>
                 <strong>Error:</strong> @errorMessage
                 <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
             </div>
@@ -111,36 +111,36 @@
                 <div class="card card-responsive">
                     <div class="card-header bg-warning text-dark">
                         <h5 class="mb-0">
-                            <span class="me-2">??</span>
-                            Modificar Informaci�n
+                            <span class="me-2">📝</span>
+                            Modificar Información
                         </h5>
                     </div>
                     <div class="card-body">
                         <EditForm Model="sucursalEditada" OnValidSubmit="ActualizarSucursal">
                             <DataAnnotationsValidator />
                             
-                            <!-- Informaci�n B�sica -->
+                            <!-- Información Básica -->
                             <div class="mb-4">
                                 <h6 class="text-primary mb-3">
-                                    <span class="me-2">??</span>
-                                    Informaci�n B�sica
+                                    <span class="me-2">ℹ️</span>
+                                    Información Básica
                                 </h6>
                                 
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <label for="nombre" class="form-label">
-                                            <span class="me-1">??</span>
+                                            <span class="me-1">🏢</span>
                                             Nombre de la Sucursal
                                         </label>
                                         <InputText id="nombre" 
                                                  class="form-control input-responsive" 
                                                  @bind-Value="sucursalEditada.Nombre" 
-                                                 placeholder="Ej: Matriz, Norte, Centro Hist�rico" />
+                                                 placeholder="Ej: Matriz, Norte, Centro Histórico" />
                                         <ValidationMessage For="() => sucursalEditada.Nombre" class="text-danger small" />
                                         @if (!string.IsNullOrEmpty(sucursalOriginal.Nombre) && sucursalEditada.Nombre != sucursalOriginal.Nombre)
                                         {
                                             <div class="form-text text-info">
-                                                <span class="me-1">??</span>
+                                                <span class="me-1">📝</span>
                                                 Original: <strong>@sucursalOriginal.Nombre</strong>
                                             </div>
                                         }
@@ -148,7 +148,7 @@
 
                                     <div class="col-12">
                                         <label for="ciudad" class="form-label">
-                                            <span class="me-1">???</span>
+                                            <span class="me-1">🏙️</span>
                                             Ciudad
                                         </label>
                                         <InputText id="ciudad" 
@@ -159,7 +159,7 @@
                                         @if (!string.IsNullOrEmpty(sucursalOriginal.Ciudad) && sucursalEditada.Ciudad != sucursalOriginal.Ciudad)
                                         {
                                             <div class="form-text text-info">
-                                                <span class="me-1">??</span>
+                                                <span class="me-1">📝</span>
                                                 Original: <strong>@sucursalOriginal.Ciudad</strong>
                                             </div>
                                         }
@@ -167,8 +167,8 @@
 
                                     <div class="col-12">
                                         <label for="direccion" class="form-label">
-                                            <span class="me-1">??</span>
-                                            Direcci�n
+                                            <span class="me-1">📍</span>
+                                            Dirección
                                         </label>
                                         <InputTextArea id="direccion" 
                                                      class="form-control input-responsive" 
@@ -179,7 +179,7 @@
                                         @if (!string.IsNullOrEmpty(sucursalOriginal.Direccion) && sucursalEditada.Direccion != sucursalOriginal.Direccion)
                                         {
                                             <div class="form-text text-info">
-                                                <span class="me-1">??</span>
+                                                <span class="me-1">📝</span>
                                                 Original: <strong>@sucursalOriginal.Direccion</strong>
                                             </div>
                                         }
@@ -190,14 +190,14 @@
                             <!-- Coordenadas -->
                             <div class="mb-4">
                                 <h6 class="text-primary mb-3">
-                                    <span class="me-2">???</span>
-                                    Ubicaci�n GPS
+                                    <span class="me-2">🗺️</span>
+                                    Ubicación GPS
                                 </h6>
                                 
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label for="latitud" class="form-label">
-                                            <span class="me-1">??</span>
+                                            <span class="me-1">📀</span>
                                             Latitud
                                         </label>
                                         <InputNumber id="latitud" 
@@ -209,7 +209,7 @@
                                         @if (sucursalEditada.Latitud != sucursalOriginal.Latitud)
                                         {
                                             <div class="form-text text-info">
-                                                <span class="me-1">??</span>
+                                                <span class="me-1">📝</span>
                                                 Original: <strong>@sucursalOriginal.Latitud.ToString("F8")</strong>
                                             </div>
                                         }
@@ -217,7 +217,7 @@
 
                                     <div class="col-md-6">
                                         <label for="longitud" class="form-label">
-                                            <span class="me-1">??</span>
+                                            <span class="me-1">📀</span>
                                             Longitud
                                         </label>
                                         <InputNumber id="longitud" 
@@ -229,34 +229,34 @@
                                         @if (sucursalEditada.Longitud != sucursalOriginal.Longitud)
                                         {
                                             <div class="form-text text-info">
-                                                <span class="me-1">??</span>
+                                                <span class="me-1">📝</span>
                                                 Original: <strong>@sucursalOriginal.Longitud.ToString("F8")</strong>
                                             </div>
                                         }
                                     </div>
                                 </div>
 
-                                <!-- Enlaces �tiles -->
+                                <!-- Enlaces útiles -->
                                 <div class="mt-3">
                                     <div class="d-flex gap-2 flex-wrap">
                                         @if (sucursalOriginal.TieneCoordenadas)
                                         {
                                             <button type="button" class="btn btn-sm btn-outline-info" @onclick="AbrirEnGoogleMaps">
-                                                <span class="me-1">???</span>
-                                                Ver Ubicaci�n Actual
+                                                <span class="me-1">🗺️</span>
+                                                Ver Ubicación Actual
                                             </button>
                                         }
                                         <button type="button" class="btn btn-sm btn-outline-secondary" @onclick="RestaurarCoordenadas">
-                                            <span class="me-1">?</span>
+                                            <span class="me-1">↶</span>
                                             Restaurar Originales
                                         </button>
                                     </div>
                                 </div>
 
-                                <!-- Informaci�n de coordenadas -->
+                                <!-- Información de coordenadas -->
                                 <div class="alert alert-info mt-3">
-                                    <span class="me-2">??</span>
-                                    <strong>Tip:</strong> Deja los campos vac�os si no deseas cambiar las coordenadas actuales.
+                                    <span class="me-2">💡</span>
+                                    <strong>Tip:</strong> Deja los campos vacíos si no deseas cambiar las coordenadas actuales.
                                 </div>
                             </div>
 
@@ -265,7 +265,7 @@
                             {
                                 <div class="mb-4">
                                     <h6 class="text-success mb-3">
-                                        <span class="me-2">??</span>
+                                        <span class="me-2">📋</span>
                                         Resumen de Cambios
                                     </h6>
                                     
@@ -274,36 +274,36 @@
                                             @if (!string.IsNullOrEmpty(sucursalEditada.Nombre) && sucursalEditada.Nombre != sucursalOriginal.Nombre)
                                             {
                                                 <li>
-                                                    <span class="me-2">??</span>
-                                                    <strong>Nombre:</strong> @sucursalOriginal.Nombre ? @sucursalEditada.Nombre
+                                                    <span class="me-2">🏢</span>
+                                                    <strong>Nombre:</strong> @sucursalOriginal.Nombre → @sucursalEditada.Nombre
                                                 </li>
                                             }
                                             @if (!string.IsNullOrEmpty(sucursalEditada.Ciudad) && sucursalEditada.Ciudad != sucursalOriginal.Ciudad)
                                             {
                                                 <li>
-                                                    <span class="me-2">???</span>
-                                                    <strong>Ciudad:</strong> @sucursalOriginal.Ciudad ? @sucursalEditada.Ciudad
+                                                    <span class="me-2">🏙️</span>
+                                                    <strong>Ciudad:</strong> @sucursalOriginal.Ciudad → @sucursalEditada.Ciudad
                                                 </li>
                                             }
                                             @if (!string.IsNullOrEmpty(sucursalEditada.Direccion) && sucursalEditada.Direccion != sucursalOriginal.Direccion)
                                             {
                                                 <li>
-                                                    <span class="me-2">??</span>
-                                                    <strong>Direcci�n:</strong> @sucursalOriginal.Direccion ? @sucursalEditada.Direccion
+                                                    <span class="me-2">📍</span>
+                                                    <strong>Dirección:</strong> @sucursalOriginal.Direccion → @sucursalEditada.Direccion
                                                 </li>
                                             }
                                             @if (sucursalEditada.Latitud.HasValue && sucursalEditada.Latitud != sucursalOriginal.Latitud)
                                             {
                                                 <li>
-                                                    <span class="me-2">??</span>
-                                                    <strong>Latitud:</strong> @sucursalOriginal.Latitud.ToString("F8") ? @sucursalEditada.Latitud.Value.ToString("F8")
+                                                    <span class="me-2">📀</span>
+                                                    <strong>Latitud:</strong> @sucursalOriginal.Latitud.ToString("F8") → @sucursalEditada.Latitud.Value.ToString("F8")
                                                 </li>
                                             }
                                             @if (sucursalEditada.Longitud.HasValue && sucursalEditada.Longitud != sucursalOriginal.Longitud)
                                             {
                                                 <li>
-                                                    <span class="me-2">??</span>
-                                                    <strong>Longitud:</strong> @sucursalOriginal.Longitud.ToString("F8") ? @sucursalEditada.Longitud.Value.ToString("F8")
+                                                    <span class="me-2">📀</span>
+                                                    <strong>Longitud:</strong> @sucursalOriginal.Longitud.ToString("F8") → @sucursalEditada.Longitud.Value.ToString("F8")
                                                 </li>
                                             }
                                         </ul>
@@ -315,11 +315,11 @@
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex gap-2">
                                     <button type="button" class="btn btn-outline-secondary btn-responsive" @onclick="Regresar">
-                                        <span class="me-1">?</span>
+                                        <span class="me-1">❌</span>
                                         Cancelar
                                     </button>
                                     <button type="button" class="btn btn-outline-info btn-responsive" @onclick="RestaurarTodo">
-                                        <span class="me-1">?</span>
+                                        <span class="me-1">↶</span>
                                         Restaurar Todo
                                     </button>
                                 </div>
@@ -332,7 +332,7 @@
                                     }
                                     else
                                     {
-                                        <span class="me-1">??</span>
+                                        <span class="me-1">💾</span>
                                         <span>Guardar Cambios</span>
                                     }
                                 </button>
@@ -429,7 +429,7 @@
             
             if (response.Exitoso)
             {
-                // Navegar de vuelta con mensaje de �xito
+                // Navegar de vuelta con mensaje de éxito
                 Navigation.NavigateTo($"/sucursales/{Codigo}?success=updated");
             }
             else

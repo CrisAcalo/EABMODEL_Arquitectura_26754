@@ -18,7 +18,12 @@ namespace EurekaBank.Core.Services.Implementations
             return !string.IsNullOrEmpty(_apiKey) && _apiKey != "TU_API_KEY_AQUI";
         }
 
-        public string ObtenerMapaEstatico(decimal latitud, decimal longitud, int zoom = 15, string tamaño = "400x300")
+        public string ObtenerApiKey()
+        {
+            return _apiKey ?? string.Empty;
+        }
+
+        public string ObtenerMapaEstatico(decimal latitud, decimal longitud, int zoom = 15, string tamao = "400x300")
         {
             if (!TieneApiKeyConfigurada())
             {
@@ -31,7 +36,7 @@ namespace EurekaBank.Core.Services.Implementations
             return $"https://maps.googleapis.com/maps/api/staticmap?" +
                    $"center={lat},{lng}" +
                    $"&zoom={zoom}" +
-                   $"&size={tamaño}" +
+                   $"&size={tamao}" +
                    $"&markers=color:red%7Clabel:S%7C{lat},{lng}" +
                    $"&key={_apiKey}";
         }
@@ -52,7 +57,7 @@ namespace EurekaBank.Core.Services.Implementations
             return $"https://www.google.com/maps/dir/?api=1&destination={lat},{lng}";
         }
 
-        public string ObtenerStreetView(decimal latitud, decimal longitud, string tamaño = "400x300")
+        public string ObtenerStreetView(decimal latitud, decimal longitud, string tamao = "400x300")
         {
             if (!TieneApiKeyConfigurada())
             {
@@ -63,7 +68,7 @@ namespace EurekaBank.Core.Services.Implementations
             var lng = longitud.ToString("F6", CultureInfo.InvariantCulture);
 
             return $"https://maps.googleapis.com/maps/api/streetview?" +
-                   $"size={tamaño}" +
+                   $"size={tamao}" +
                    $"location={lat},{lng}" +
                    $"heading=151.78" +
                    $"&pitch=-0.76" +

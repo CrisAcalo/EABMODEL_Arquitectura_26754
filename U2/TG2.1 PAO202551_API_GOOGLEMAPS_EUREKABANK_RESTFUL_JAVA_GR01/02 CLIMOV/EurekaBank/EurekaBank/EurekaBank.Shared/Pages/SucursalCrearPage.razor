@@ -1,4 +1,4 @@
-@page "/sucursales/crear"
+﻿@page "/sucursales/crear"
 @inject ISucursalService SucursalService
 @inject NavigationManager Navigation
 
@@ -10,16 +10,16 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="/home" class="text-decoration-none">
-                    <span class="me-1">??</span>Inicio
+                    <span class="me-1">🏠</span>Inicio
                 </a>
             </li>
             <li class="breadcrumb-item">
                 <a href="/sucursales" class="text-decoration-none">
-                    <span class="me-1">??</span>Sucursales
+                    <span class="me-1">🏢</span>Sucursales
                 </a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-                <span class="me-1">?</span>Crear
+                <span class="me-1">➕</span>Crear
             </li>
         </ol>
     </nav>
@@ -30,14 +30,14 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <h1 class="text-responsive-lg mb-2">
-                        <span class="me-2">?</span>
+                        <span class="me-2">➕</span>
                         Nueva Sucursal
                     </h1>
                     <p class="text-muted mb-0">Complete los datos para registrar una nueva sucursal</p>
                 </div>
                 <div>
                     <button class="btn btn-outline-secondary btn-responsive" @onclick="Regresar">
-                        <span class="me-1">?</span>
+                        <span class="me-1">←</span>
                         Regresar
                     </button>
                 </div>
@@ -49,7 +49,7 @@
     @if (!string.IsNullOrEmpty(errorMessage))
     {
         <div class="alert alert-danger alert-dismissible fade show animate-fade-in" role="alert">
-            <span class="me-2">?</span>
+            <span class="me-2">❌</span>
             <strong>Error:</strong> @errorMessage
             <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
         </div>
@@ -61,37 +61,37 @@
             <div class="card card-responsive">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">
-                        <span class="me-2">??</span>
-                        Informaci�n de la Sucursal
+                        <span class="me-2">📝</span>
+                        Información de la Sucursal
                     </h5>
                 </div>
                 <div class="card-body">
                     <EditForm Model="nuevaSucursal" OnValidSubmit="CrearSucursal">
                         <DataAnnotationsValidator />
                         
-                        <!-- Informaci�n B�sica -->
+                        <!-- Información Básica -->
                         <div class="mb-4">
                             <h6 class="text-primary mb-3">
-                                <span class="me-2">??</span>
-                                Informaci�n B�sica
+                                <span class="me-2">ℹ️</span>
+                                Información Básica
                             </h6>
                             
                             <div class="row g-3">
                                 <div class="col-12">
                                     <label for="nombre" class="form-label">
-                                        <span class="me-1">??</span>
+                                        <span class="me-1">🏢</span>
                                         Nombre de la Sucursal *
                                     </label>
                                     <InputText id="nombre" 
                                              class="form-control input-responsive" 
                                              @bind-Value="nuevaSucursal.Nombre" 
-                                             placeholder="Ej: Matriz, Norte, Centro Hist�rico" />
+                                             placeholder="Ej: Matriz, Norte, Centro Histórico" />
                                     <ValidationMessage For="() => nuevaSucursal.Nombre" class="text-danger small" />
                                 </div>
 
                                 <div class="col-12">
                                     <label for="ciudad" class="form-label">
-                                        <span class="me-1">???</span>
+                                        <span class="me-1">🏙️</span>
                                         Ciudad *
                                     </label>
                                     <InputText id="ciudad" 
@@ -103,8 +103,8 @@
 
                                 <div class="col-12">
                                     <label for="direccion" class="form-label">
-                                        <span class="me-1">??</span>
-                                        Direcci�n *
+                                        <span class="me-1">📍</span>
+                                        Dirección *
                                     </label>
                                     <InputTextArea id="direccion" 
                                                  class="form-control input-responsive" 
@@ -119,14 +119,14 @@
                         <!-- Coordenadas -->
                         <div class="mb-4">
                             <h6 class="text-primary mb-3">
-                                <span class="me-2">???</span>
-                                Ubicaci�n GPS
+                                <span class="me-2">🗺️</span>
+                                Ubicación GPS
                             </h6>
                             
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label for="latitud" class="form-label">
-                                        <span class="me-1">??</span>
+                                        <span class="me-1">📀</span>
                                         Latitud *
                                     </label>
                                     <InputNumber id="latitud" 
@@ -140,7 +140,7 @@
 
                                 <div class="col-md-6">
                                     <label for="longitud" class="form-label">
-                                        <span class="me-1">??</span>
+                                        <span class="me-1">📀</span>
                                         Longitud *
                                     </label>
                                     <InputNumber id="longitud" 
@@ -154,9 +154,26 @@
                             </div>
 
                             <div class="alert alert-info mt-3">
-                                <span class="me-2">??</span>
-                                <strong>Tip:</strong> Puedes obtener las coordenadas desde Google Maps haciendo clic derecho en la ubicaci�n y seleccionando las coordenadas que aparecen.
+                                <span class="me-2">💡</span>
+                                <strong>Tip:</strong> Puedes obtener las coordenadas desde Google Maps haciendo clic derecho en la ubicación y seleccionando las coordenadas que aparecen.
                             </div>
+
+                            <!-- Vista Previa del Mapa -->
+                            @if (nuevaSucursal.Latitud != 0 && nuevaSucursal.Longitud != 0)
+                            {
+                                <div class="mt-3">
+                                    <h6 class="text-success mb-3">
+                                        <span class="me-2">🗺️</span>
+                                        Vista Previa del Mapa
+                                    </h6>
+                                    <GoogleMapComponent Latitud="@nuevaSucursal.Latitud"
+                                                       Longitud="@nuevaSucursal.Longitud"
+                                                       Ancho="350"
+                                                       Alto="200"
+                                                       Zoom="16"
+                                                       CssClass="border" />
+                                </div>
+                            }
                         </div>
 
                         <!-- Vista Previa -->
@@ -164,27 +181,27 @@
                         {
                             <div class="mb-4">
                                 <h6 class="text-success mb-3">
-                                    <span class="me-2">???</span>
+                                    <span class="me-2">👁️</span>
                                     Vista Previa
                                 </h6>
                                 
                                 <div class="alert alert-light border">
                                     <div class="d-flex align-items-start">
                                         <div class="me-3">
-                                            <span style="font-size: 2rem;">??</span>
+                                            <span style="font-size: 2rem;">🏢</span>
                                         </div>
                                         <div class="flex-grow-1">
                                             <h6 class="mb-1">@nuevaSucursal.Nombre</h6>
                                             <p class="text-muted mb-1">
-                                                <span class="me-1">???</span>@nuevaSucursal.Ciudad
+                                                <span class="me-1">🏙️</span>@nuevaSucursal.Ciudad
                                             </p>
                                             <p class="text-muted mb-2">
-                                                <span class="me-1">??</span>@ObtenerDireccionCompleta()
+                                                <span class="me-1">📍</span>@ObtenerDireccionCompleta()
                                             </p>
                                             @if (nuevaSucursal.Latitud != 0 && nuevaSucursal.Longitud != 0)
                                             {
                                                 <small class="text-success">
-                                                    <span class="me-1">??</span>
+                                                    <span class="me-1">📍</span>
                                                     Coordenadas: @nuevaSucursal.Latitud.ToString("F8"), @nuevaSucursal.Longitud.ToString("F8")
                                                 </small>
                                             }
@@ -197,7 +214,7 @@
                         <!-- Botones -->
                         <div class="d-flex justify-content-between">
                             <button type="button" class="btn btn-outline-secondary btn-responsive" @onclick="Regresar">
-                                <span class="me-1">?</span>
+                                <span class="me-1">❌</span>
                                 Cancelar
                             </button>
                             
@@ -209,7 +226,7 @@
                                 }
                                 else
                                 {
-                                    <span class="me-1">??</span>
+                                    <span class="me-1">💾</span>
                                     <span>Crear Sucursal</span>
                                 }
                             </button>
@@ -261,7 +278,7 @@
             
             if (response.Exitoso)
             {
-                // Navegar de vuelta a la lista con mensaje de �xito
+                // Navegar de vuelta a la lista con mensaje de éxito
                 Navigation.NavigateTo("/sucursales?success=created");
             }
             else

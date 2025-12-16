@@ -59,6 +59,32 @@ namespace EurekaBank
             builder.Services.AddSingleton<SoapReportService>();
             builder.Services.AddSingleton<RestReportService>();
             builder.Services.AddSingleton<IReportService, ReportServiceDispatcher>();
+            
+            // Sucursal Services (solo REST)
+            builder.Services.AddSingleton<RestSucursalService>();
+            builder.Services.AddSingleton<ISucursalService>(serviceProvider =>
+            {
+                var sucursalService = serviceProvider.GetRequiredService<RestSucursalService>();
+                var apiManager = serviceProvider.GetRequiredService<Core.Managers.ApiServiceManager>();
+                
+                // Configurar el target inicial
+                sucursalService.SetTarget(apiManager.CurrentPlatform);
+                
+                // Suscribirse a cambios de plataforma
+                apiManager.PropertyChanged += (sender, e) =>
+                {
+                    if (e.PropertyName == nameof(Core.Managers.ApiServiceManager.CurrentPlatform))
+                    {
+                        sucursalService.SetTarget(apiManager.CurrentPlatform);
+                    }
+                };
+                
+                return sucursalService;
+            });
+
+            // Google Maps Service
+            builder.Services.AddSingleton<IGoogleMapsService, GoogleMapsService>();
+            
             // 3. ¡EL CAMBIO CLAVE! Registramos el Despachador como la implementación
             //    por defecto para IAuthenticationService. El contenedor de DI le pasará
             //    automáticamente las 3 dependencias que necesita (el manager y los 2 servicios).

@@ -1,0 +1,364 @@
+﻿@using EurekaBank.Core.Services.Abstractions
+@using System.Text.Json
+@implements IAsyncDisposable
+@inject IGoogleMapsService GoogleMapsService
+@inject IJSRuntime JSRuntime
+
+<div class="google-maps-container @CssClass">
+    @if (!GoogleMapsService.TieneApiKeyConfigurada())
+    {
+        <div class="alert alert-warning">
+            <span class="me-2">⚠️</span>
+            <strong>API Key no configurada</strong> - Configure su API Key de Google Maps para ver el mapa.
+        </div>
+    }
+    else if (Latitud == 0 && Longitud == 0)
+    {
+        <div class="alert alert-info">
+            <span class="me-2">📍</span>
+            <strong>Sin coordenadas</strong> - Esta ubicación no tiene coordenadas GPS registradas.
+        </div>
+    }
+    else
+    {
+        <!-- Map and Overlay Wrapper -->
+        <div class="map-wrapper shadow-sm" style="width: 100%; height: @(Alto)px; position: relative;">
+            <div id="@_mapId" style="width: 100%; height: 100%;"></div>
+            
+            <div class="map-controls">
+                <button type="button" class="btn btn-primary shadow" @onclick="() => CalcularRuta(null, null)">
+                    <span class="me-1">🚗</span>
+                    Cómo llegar
+                </button>
+            </div>
+        </div>
+        
+        <!-- Status Messages -->
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <div class="alert alert-danger mt-3">
+                <span class="me-2">❌</span> @_errorMessage
+            </div>
+        }
+        
+        <!-- Directions Panel -->
+        @if (_routeInfo != null)
+        {
+            <div class="directions-panel card mt-3 shadow-sm animate-fade-in">
+                <div class="card-header bg-light">
+                     <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="mb-0">
+                            <span class="me-2">🗺️</span>
+                            Ruta (@_routeInfo.Distance - @_routeInfo.Duration)
+                        </h6>
+                    </div>
+                    
+                    <!-- Voice Controls -->
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-outline-secondary btn-sm" @onclick="Restart" title="Reiniciar">
+                            <span>⏮️</span>
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" @onclick="PreviousStep" disabled="@(!CanGoPrevious)" title="Anterior">
+                             <span>⏪</span>
+                        </button>
+                        
+                        @if (_isPlaying)
+                        {
+                            <button class="btn btn-danger btn-sm" @onclick="Pause" title="Pausar">
+                                <span>⏸️ Pausar</span>
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-success btn-sm" @onclick="Play" title="Reproducir">
+                                <span>▶️ Reproducir</span>
+                            </button>
+                        }
+
+                        <button class="btn btn-outline-secondary btn-sm" @onclick="NextStep" disabled="@(!CanGoNext)" title="Siguiente">
+                             <span>⏩</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush" style="max-height: 300px; overflow-y: auto;">
+                        @for (int i = 0; i < _routeInfo.Steps.Count; i++)
+                        {
+                            var step = _routeInfo.Steps[i];
+                            var isActive = i == _currentStepIndex;
+                            var activeClass = isActive ? "list-group-item-primary border-start border-4 border-primary" : "";
+                            
+                            <div class="list-group-item @activeClass" @onclick="() => JumpToStep(i)" style="cursor: pointer;">
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex align-items-start">
+                                        @if (isActive)
+                                        {
+                                             <span class="me-2 text-primary">▶️</span>
+                                        }
+                                        <span class="mb-1">@((MarkupString)step.Instruction)</span>
+                                    </div>
+                                    <small class="text-muted text-nowrap ms-2">@step.Distance</small>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public decimal Latitud { get; set; }
+    [Parameter] public decimal Longitud { get; set; }
+    [Parameter] public int Zoom { get; set; } = 15;
+    [Parameter] public int Ancho { get; set; } = 400; 
+    [Parameter] public int Alto { get; set; } = 450; 
+    [Parameter] public string CssClass { get; set; } = string.Empty;
+
+    private string _mapId = $"map-{Guid.NewGuid()}";
+    private string _errorMessage = string.Empty;
+    private IJSObjectReference? _module;
+    private DotNetObjectReference<GoogleMapComponent>? _dotNetHelper;
+    private bool _mapInitialized = false;
+    private RouteInfo? _routeInfo;
+    
+    // Voice Control State
+    private bool _isPlaying = false;
+    private int _currentStepIndex = -1;
+
+    private bool CanGoPrevious => _currentStepIndex > 0;
+    private bool CanGoNext => _routeInfo != null && _currentStepIndex < _routeInfo.Steps.Count - 1;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && GoogleMapsService.TieneApiKeyConfigurada() && (Latitud != 0 || Longitud != 0))
+        {
+            try 
+            {
+                _dotNetHelper = DotNetObjectReference.Create(this);
+                _module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/EurekaBank.Shared/js/google-maps.js");
+                await JSRuntime.InvokeVoidAsync("GoogleMapsInterop.loadScript", GoogleMapsService.ObtenerApiKey());
+                await JSRuntime.InvokeVoidAsync("GoogleMapsInterop.initializeMap", _mapId, Latitud, Longitud, Zoom);
+                _mapInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                _errorMessage = "Error cargando el mapa: " + ex.Message;
+                StateHasChanged();
+            }
+        }
+    }
+
+    public async Task CalcularRuta(decimal? originLat = null, decimal? originLng = null)
+    {
+        if (!_mapInitialized || _module == null) return;
+        
+        try 
+        {
+            _errorMessage = string.Empty;
+            _routeInfo = null;
+            _currentStepIndex = -1;
+            _isPlaying = false;
+            StateHasChanged();
+            
+            // Invoke JS with or without origin
+            string jsonResult;
+            if (originLat.HasValue && originLng.HasValue)
+            {
+                jsonResult = await JSRuntime.InvokeAsync<string>("GoogleMapsInterop.calculateRoute", Latitud, Longitud, originLat.Value, originLng.Value);
+            }
+            else
+            {
+                jsonResult = await JSRuntime.InvokeAsync<string>("GoogleMapsInterop.calculateRoute", Latitud, Longitud);
+            }
+            
+            if (!string.IsNullOrEmpty(jsonResult))
+            {
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                _routeInfo = JsonSerializer.Deserialize<RouteInfo>(jsonResult, options);
+                
+                // Add initial summary step
+                if (_routeInfo != null)
+                {
+                     var summaryStep = new RouteStep 
+                     { 
+                        Instruction = $"Ruta calculada. Distancia: {_routeInfo.Distance}. Tiempo: {_routeInfo.Duration}.", 
+                        Distance = _routeInfo.Distance 
+                     };
+                     _routeInfo.Steps.Insert(0, summaryStep);
+                     _currentStepIndex = 0; // Ready at start
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = "Error calculando ruta: " + ex.Message;
+        }
+        StateHasChanged();
+    }
+
+    private async Task Play()
+    {
+        if (_routeInfo == null || _module == null) return;
+        
+        _isPlaying = true;
+        if (_currentStepIndex < 0) _currentStepIndex = 0;
+        
+        await SpeakCurrentStep();
+    }
+    
+    private async Task Pause()
+    {
+        if (_module == null) return;
+        _isPlaying = false;
+        await JSRuntime.InvokeVoidAsync("GoogleMapsInterop.stopSpeaking");
+    }
+    
+    private async Task Restart()
+    {
+        await Pause();
+        _currentStepIndex = 0;
+        await Play();
+    }
+    
+    private async Task NextStep()
+    {
+        if (CanGoNext)
+        {
+            _currentStepIndex++;
+            await SpeakCurrentStep(); // Will auto-play even if paused, logic can vary
+            _isPlaying = true; // Assume manual interaction resumes play
+        }
+    }
+    
+    private async Task PreviousStep()
+    {
+        if (CanGoPrevious)
+        {
+             _currentStepIndex--;
+             await SpeakCurrentStep();
+             _isPlaying = true;
+        }
+    }
+    
+    private async Task JumpToStep(int index)
+    {
+        if (index >= 0 && index < _routeInfo?.Steps.Count)
+        {
+            _currentStepIndex = index;
+            await SpeakCurrentStep();
+            _isPlaying = true;
+        }
+    }
+
+    private async Task SpeakCurrentStep()
+    {
+        if (_routeInfo == null || _currentStepIndex < 0 || _currentStepIndex >= _routeInfo.Steps.Count || _module == null) return;
+        
+        var step = _routeInfo.Steps[_currentStepIndex];
+        var cleanInstruction = System.Text.RegularExpressions.Regex.Replace(step.Instruction, "<.*?>", string.Empty);
+        
+        // Pass dotNetHelper to get callback when done
+        await JSRuntime.InvokeVoidAsync("GoogleMapsInterop.speakText", cleanInstruction, _dotNetHelper);
+        StateHasChanged();
+    }
+
+    [JSInvokable]
+    public async Task OnSpeechEnded()
+    {
+        if (_isPlaying && CanGoNext)
+        {
+            _currentStepIndex++;
+            StateHasChanged();
+            // Small delay for natural flow
+            await Task.Delay(500); 
+            if (_isPlaying) // Check again in case paused during delay
+            {
+                await SpeakCurrentStep();
+            }
+        }
+        else if (_isPlaying && !CanGoNext)
+        {
+            _isPlaying = false;
+            StateHasChanged();
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            try {
+                await Pause();
+                await _module.DisposeAsync();
+            } catch {}
+        }
+        
+        _dotNetHelper?.Dispose();
+    }
+
+    // Inner classes
+    public class RouteInfo
+    {
+        public string Distance { get; set; } = "";
+        public string Duration { get; set; } = "";
+        public string StartAddress { get; set; } = "";
+        public string EndAddress { get; set; } = "";
+        public List<RouteStep> Steps { get; set; } = new();
+    }
+
+    public class RouteStep
+    {
+        public string Instruction { get; set; } = "";
+        public string Distance { get; set; } = "";
+        public string Duration { get; set; } = "";
+    }
+}
+
+<style>
+    .google-maps-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .map-wrapper {
+        border-radius: 0.75rem;
+        overflow: hidden;
+        background-color: #f0f0f0;
+    }
+
+    .map-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+    }
+
+    .directions-panel {
+        max-height: 500px;
+        border: none;
+        border-radius: 0.75rem;
+    }
+    
+    .list-group-item {
+        transition: background-color 0.2s, border-left-width 0.2s;
+        border-left: 4px solid transparent;
+    }
+    
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
