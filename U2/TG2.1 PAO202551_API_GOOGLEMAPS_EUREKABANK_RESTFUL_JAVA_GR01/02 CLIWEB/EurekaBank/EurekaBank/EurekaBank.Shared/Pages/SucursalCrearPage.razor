@@ -1,0 +1,287 @@
+@page "/sucursales/crear"
+@inject ISucursalService SucursalService
+@inject NavigationManager Navigation
+
+<PageTitle>Crear Sucursal - EurekaBank</PageTitle>
+
+<div class="container-responsive">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/home" class="text-decoration-none">
+                    <span class="me-1">??</span>Inicio
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/sucursales" class="text-decoration-none">
+                    <span class="me-1">??</span>Sucursales
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <span class="me-1">?</span>Crear
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="text-responsive-lg mb-2">
+                        <span class="me-2">?</span>
+                        Nueva Sucursal
+                    </h1>
+                    <p class="text-muted mb-0">Complete los datos para registrar una nueva sucursal</p>
+                </div>
+                <div>
+                    <button class="btn btn-outline-secondary btn-responsive" @onclick="Regresar">
+                        <span class="me-1">?</span>
+                        Regresar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Messages -->
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show animate-fade-in" role="alert">
+            <span class="me-2">?</span>
+            <strong>Error:</strong> @errorMessage
+            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+        </div>
+    }
+
+    <!-- Form -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8 col-xl-6">
+            <div class="card card-responsive">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <span class="me-2">??</span>
+                        Información de la Sucursal
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="nuevaSucursal" OnValidSubmit="CrearSucursal">
+                        <DataAnnotationsValidator />
+                        
+                        <!-- Información Básica -->
+                        <div class="mb-4">
+                            <h6 class="text-primary mb-3">
+                                <span class="me-2">??</span>
+                                Información Básica
+                            </h6>
+                            
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="nombre" class="form-label">
+                                        <span class="me-1">??</span>
+                                        Nombre de la Sucursal *
+                                    </label>
+                                    <InputText id="nombre" 
+                                             class="form-control input-responsive" 
+                                             @bind-Value="nuevaSucursal.Nombre" 
+                                             placeholder="Ej: Matriz, Norte, Centro Histórico" />
+                                    <ValidationMessage For="() => nuevaSucursal.Nombre" class="text-danger small" />
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="ciudad" class="form-label">
+                                        <span class="me-1">???</span>
+                                        Ciudad *
+                                    </label>
+                                    <InputText id="ciudad" 
+                                             class="form-control input-responsive" 
+                                             @bind-Value="nuevaSucursal.Ciudad" 
+                                             placeholder="Ej: Quito, Guayaquil, Cuenca" />
+                                    <ValidationMessage For="() => nuevaSucursal.Ciudad" class="text-danger small" />
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="direccion" class="form-label">
+                                        <span class="me-1">??</span>
+                                        Dirección *
+                                    </label>
+                                    <InputTextArea id="direccion" 
+                                                 class="form-control input-responsive" 
+                                                 @bind-Value="nuevaSucursal.Direccion" 
+                                                 rows="2"
+                                                 placeholder="Ej: Av. Amazonas N24-03 y Colon" />
+                                    <ValidationMessage For="() => nuevaSucursal.Direccion" class="text-danger small" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coordenadas -->
+                        <div class="mb-4">
+                            <h6 class="text-primary mb-3">
+                                <span class="me-2">???</span>
+                                Ubicación GPS
+                            </h6>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="latitud" class="form-label">
+                                        <span class="me-1">??</span>
+                                        Latitud *
+                                    </label>
+                                    <InputNumber id="latitud" 
+                                               class="form-control input-responsive" 
+                                               @bind-Value="nuevaSucursal.Latitud" 
+                                               step="0.00000001"
+                                               placeholder="Ej: -0.18070000" />
+                                    <ValidationMessage For="() => nuevaSucursal.Latitud" class="text-danger small" />
+                                    <div class="form-text">Coordenada de latitud (Norte/Sur)</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="longitud" class="form-label">
+                                        <span class="me-1">??</span>
+                                        Longitud *
+                                    </label>
+                                    <InputNumber id="longitud" 
+                                               class="form-control input-responsive" 
+                                               @bind-Value="nuevaSucursal.Longitud" 
+                                               step="0.00000001"
+                                               placeholder="Ej: -78.46780000" />
+                                    <ValidationMessage For="() => nuevaSucursal.Longitud" class="text-danger small" />
+                                    <div class="form-text">Coordenada de longitud (Este/Oeste)</div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info mt-3">
+                                <span class="me-2">??</span>
+                                <strong>Tip:</strong> Puedes obtener las coordenadas desde Google Maps haciendo clic derecho en la ubicación y seleccionando las coordenadas que aparecen.
+                            </div>
+                        </div>
+
+                        <!-- Vista Previa -->
+                        @if (MostrarVistaPrevia())
+                        {
+                            <div class="mb-4">
+                                <h6 class="text-success mb-3">
+                                    <span class="me-2">???</span>
+                                    Vista Previa
+                                </h6>
+                                
+                                <div class="alert alert-light border">
+                                    <div class="d-flex align-items-start">
+                                        <div class="me-3">
+                                            <span style="font-size: 2rem;">??</span>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">@nuevaSucursal.Nombre</h6>
+                                            <p class="text-muted mb-1">
+                                                <span class="me-1">???</span>@nuevaSucursal.Ciudad
+                                            </p>
+                                            <p class="text-muted mb-2">
+                                                <span class="me-1">??</span>@ObtenerDireccionCompleta()
+                                            </p>
+                                            @if (nuevaSucursal.Latitud != 0 && nuevaSucursal.Longitud != 0)
+                                            {
+                                                <small class="text-success">
+                                                    <span class="me-1">??</span>
+                                                    Coordenadas: @nuevaSucursal.Latitud.ToString("F8"), @nuevaSucursal.Longitud.ToString("F8")
+                                                </small>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-outline-secondary btn-responsive" @onclick="Regresar">
+                                <span class="me-1">?</span>
+                                Cancelar
+                            </button>
+                            
+                            <button type="submit" class="btn btn-primary btn-responsive" disabled="@isCreating">
+                                @if (isCreating)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                    <span>Creando...</span>
+                                }
+                                else
+                                {
+                                    <span class="me-1">??</span>
+                                    <span>Crear Sucursal</span>
+                                }
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private CreateSucursalRequest nuevaSucursal = new();
+    private bool isCreating = false;
+    private string errorMessage = string.Empty;
+
+    private bool MostrarVistaPrevia()
+    {
+        return !string.IsNullOrWhiteSpace(nuevaSucursal.Nombre) || 
+               !string.IsNullOrWhiteSpace(nuevaSucursal.Ciudad) || 
+               !string.IsNullOrWhiteSpace(nuevaSucursal.Direccion) ||
+               nuevaSucursal.Latitud != 0 || 
+               nuevaSucursal.Longitud != 0;
+    }
+
+    private string ObtenerDireccionCompleta()
+    {
+        if (string.IsNullOrWhiteSpace(nuevaSucursal.Direccion) && string.IsNullOrWhiteSpace(nuevaSucursal.Ciudad))
+            return string.Empty;
+        
+        if (string.IsNullOrWhiteSpace(nuevaSucursal.Ciudad))
+            return nuevaSucursal.Direccion;
+            
+        if (string.IsNullOrWhiteSpace(nuevaSucursal.Direccion))
+            return nuevaSucursal.Ciudad;
+            
+        return $"{nuevaSucursal.Direccion}, {nuevaSucursal.Ciudad}";
+    }
+
+    private async Task CrearSucursal()
+    {
+        try
+        {
+            isCreating = true;
+            errorMessage = string.Empty;
+            StateHasChanged();
+
+            var response = await SucursalService.CrearSucursalAsync(nuevaSucursal);
+            
+            if (response.Exitoso)
+            {
+                // Navegar de vuelta a la lista con mensaje de éxito
+                Navigation.NavigateTo("/sucursales?success=created");
+            }
+            else
+            {
+                errorMessage = response.Mensaje ?? "Error al crear la sucursal";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error inesperado: {ex.Message}";
+        }
+        finally
+        {
+            isCreating = false;
+            StateHasChanged();
+        }
+    }
+
+    private void Regresar()
+    {
+        Navigation.NavigateTo("/sucursales");
+    }
+}

@@ -1,0 +1,499 @@
+@page "/sucursales/{codigo:int}/editar"
+@inject ISucursalService SucursalService
+@inject NavigationManager Navigation
+
+<PageTitle>Editar Sucursal - EurekaBank</PageTitle>
+
+<div class="container-responsive">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/home" class="text-decoration-none">
+                    <span class="me-1">??</span>Inicio
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/sucursales" class="text-decoration-none">
+                    <span class="me-1">??</span>Sucursales
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/sucursales/@Codigo" class="text-decoration-none">
+                    <span class="me-1">#@Codigo</span>
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <span class="me-1">??</span>Editar
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Loading State -->
+    @if (isLoadingData)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-3 text-muted">Cargando información de la sucursal...</p>
+        </div>
+    }
+
+    <!-- Error Loading State -->
+    @if (!isLoadingData && sucursalOriginal == null)
+    {
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card card-responsive text-center">
+                    <div class="card-body py-5">
+                        <div class="mb-4">
+                            <span style="font-size: 4rem;">?</span>
+                        </div>
+                        <h3 class="text-danger mb-3">Error al Cargar</h3>
+                        <p class="text-muted mb-4">@errorMessage</p>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <button class="btn btn-outline-primary btn-responsive" @onclick="CargarSucursal">
+                                <span class="me-1">??</span>
+                                Intentar de Nuevo
+                            </button>
+                            <button class="btn btn-secondary btn-responsive" @onclick="Regresar">
+                                <span class="me-1">?</span>
+                                Regresar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Form -->
+    @if (!isLoadingData && sucursalOriginal != null)
+    {
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h1 class="text-responsive-lg mb-2">
+                            <span class="me-2">??</span>
+                            Editar Sucursal
+                        </h1>
+                        <p class="text-muted mb-0">
+                            <span class="me-1">??</span>
+                            @sucursalOriginal.Nombre - Código: <strong>@Codigo</strong>
+                        </p>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-secondary btn-responsive" @onclick="Regresar">
+                            <span class="me-1">?</span>
+                            Regresar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Messages -->
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger alert-dismissible fade show animate-fade-in" role="alert">
+                <span class="me-2">?</span>
+                <strong>Error:</strong> @errorMessage
+                <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+            </div>
+        }
+
+        <!-- Form -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8 col-xl-6">
+                <div class="card card-responsive">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">
+                            <span class="me-2">??</span>
+                            Modificar Información
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <EditForm Model="sucursalEditada" OnValidSubmit="ActualizarSucursal">
+                            <DataAnnotationsValidator />
+                            
+                            <!-- Información Básica -->
+                            <div class="mb-4">
+                                <h6 class="text-primary mb-3">
+                                    <span class="me-2">??</span>
+                                    Información Básica
+                                </h6>
+                                
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="nombre" class="form-label">
+                                            <span class="me-1">??</span>
+                                            Nombre de la Sucursal
+                                        </label>
+                                        <InputText id="nombre" 
+                                                 class="form-control input-responsive" 
+                                                 @bind-Value="sucursalEditada.Nombre" 
+                                                 placeholder="Ej: Matriz, Norte, Centro Histórico" />
+                                        <ValidationMessage For="() => sucursalEditada.Nombre" class="text-danger small" />
+                                        @if (!string.IsNullOrEmpty(sucursalOriginal.Nombre) && sucursalEditada.Nombre != sucursalOriginal.Nombre)
+                                        {
+                                            <div class="form-text text-info">
+                                                <span class="me-1">??</span>
+                                                Original: <strong>@sucursalOriginal.Nombre</strong>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="ciudad" class="form-label">
+                                            <span class="me-1">???</span>
+                                            Ciudad
+                                        </label>
+                                        <InputText id="ciudad" 
+                                                 class="form-control input-responsive" 
+                                                 @bind-Value="sucursalEditada.Ciudad" 
+                                                 placeholder="Ej: Quito, Guayaquil, Cuenca" />
+                                        <ValidationMessage For="() => sucursalEditada.Ciudad" class="text-danger small" />
+                                        @if (!string.IsNullOrEmpty(sucursalOriginal.Ciudad) && sucursalEditada.Ciudad != sucursalOriginal.Ciudad)
+                                        {
+                                            <div class="form-text text-info">
+                                                <span class="me-1">??</span>
+                                                Original: <strong>@sucursalOriginal.Ciudad</strong>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="direccion" class="form-label">
+                                            <span class="me-1">??</span>
+                                            Dirección
+                                        </label>
+                                        <InputTextArea id="direccion" 
+                                                     class="form-control input-responsive" 
+                                                     @bind-Value="sucursalEditada.Direccion" 
+                                                     rows="2"
+                                                     placeholder="Ej: Av. Amazonas N24-03 y Colon" />
+                                        <ValidationMessage For="() => sucursalEditada.Direccion" class="text-danger small" />
+                                        @if (!string.IsNullOrEmpty(sucursalOriginal.Direccion) && sucursalEditada.Direccion != sucursalOriginal.Direccion)
+                                        {
+                                            <div class="form-text text-info">
+                                                <span class="me-1">??</span>
+                                                Original: <strong>@sucursalOriginal.Direccion</strong>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Coordenadas -->
+                            <div class="mb-4">
+                                <h6 class="text-primary mb-3">
+                                    <span class="me-2">???</span>
+                                    Ubicación GPS
+                                </h6>
+                                
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="latitud" class="form-label">
+                                            <span class="me-1">??</span>
+                                            Latitud
+                                        </label>
+                                        <InputNumber id="latitud" 
+                                                   class="form-control input-responsive" 
+                                                   @bind-Value="sucursalEditada.Latitud" 
+                                                   step="0.00000001"
+                                                   placeholder="Ej: -0.18070000" />
+                                        <ValidationMessage For="() => sucursalEditada.Latitud" class="text-danger small" />
+                                        @if (sucursalEditada.Latitud != sucursalOriginal.Latitud)
+                                        {
+                                            <div class="form-text text-info">
+                                                <span class="me-1">??</span>
+                                                Original: <strong>@sucursalOriginal.Latitud.ToString("F8")</strong>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="longitud" class="form-label">
+                                            <span class="me-1">??</span>
+                                            Longitud
+                                        </label>
+                                        <InputNumber id="longitud" 
+                                                   class="form-control input-responsive" 
+                                                   @bind-Value="sucursalEditada.Longitud" 
+                                                   step="0.00000001"
+                                                   placeholder="Ej: -78.46780000" />
+                                        <ValidationMessage For="() => sucursalEditada.Longitud" class="text-danger small" />
+                                        @if (sucursalEditada.Longitud != sucursalOriginal.Longitud)
+                                        {
+                                            <div class="form-text text-info">
+                                                <span class="me-1">??</span>
+                                                Original: <strong>@sucursalOriginal.Longitud.ToString("F8")</strong>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <!-- Enlaces útiles -->
+                                <div class="mt-3">
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        @if (sucursalOriginal.TieneCoordenadas)
+                                        {
+                                            <button type="button" class="btn btn-sm btn-outline-info" @onclick="AbrirEnGoogleMaps">
+                                                <span class="me-1">???</span>
+                                                Ver Ubicación Actual
+                                            </button>
+                                        }
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" @onclick="RestaurarCoordenadas">
+                                            <span class="me-1">?</span>
+                                            Restaurar Originales
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Información de coordenadas -->
+                                <div class="alert alert-info mt-3">
+                                    <span class="me-2">??</span>
+                                    <strong>Tip:</strong> Deja los campos vacíos si no deseas cambiar las coordenadas actuales.
+                                </div>
+                            </div>
+
+                            <!-- Resumen de Cambios -->
+                            @if (TieneCambios())
+                            {
+                                <div class="mb-4">
+                                    <h6 class="text-success mb-3">
+                                        <span class="me-2">??</span>
+                                        Resumen de Cambios
+                                    </h6>
+                                    
+                                    <div class="alert alert-light border">
+                                        <ul class="mb-0 list-unstyled">
+                                            @if (!string.IsNullOrEmpty(sucursalEditada.Nombre) && sucursalEditada.Nombre != sucursalOriginal.Nombre)
+                                            {
+                                                <li>
+                                                    <span class="me-2">??</span>
+                                                    <strong>Nombre:</strong> @sucursalOriginal.Nombre ? @sucursalEditada.Nombre
+                                                </li>
+                                            }
+                                            @if (!string.IsNullOrEmpty(sucursalEditada.Ciudad) && sucursalEditada.Ciudad != sucursalOriginal.Ciudad)
+                                            {
+                                                <li>
+                                                    <span class="me-2">???</span>
+                                                    <strong>Ciudad:</strong> @sucursalOriginal.Ciudad ? @sucursalEditada.Ciudad
+                                                </li>
+                                            }
+                                            @if (!string.IsNullOrEmpty(sucursalEditada.Direccion) && sucursalEditada.Direccion != sucursalOriginal.Direccion)
+                                            {
+                                                <li>
+                                                    <span class="me-2">??</span>
+                                                    <strong>Dirección:</strong> @sucursalOriginal.Direccion ? @sucursalEditada.Direccion
+                                                </li>
+                                            }
+                                            @if (sucursalEditada.Latitud.HasValue && sucursalEditada.Latitud != sucursalOriginal.Latitud)
+                                            {
+                                                <li>
+                                                    <span class="me-2">??</span>
+                                                    <strong>Latitud:</strong> @sucursalOriginal.Latitud.ToString("F8") ? @sucursalEditada.Latitud.Value.ToString("F8")
+                                                </li>
+                                            }
+                                            @if (sucursalEditada.Longitud.HasValue && sucursalEditada.Longitud != sucursalOriginal.Longitud)
+                                            {
+                                                <li>
+                                                    <span class="me-2">??</span>
+                                                    <strong>Longitud:</strong> @sucursalOriginal.Longitud.ToString("F8") ? @sucursalEditada.Longitud.Value.ToString("F8")
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Botones -->
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-outline-secondary btn-responsive" @onclick="Regresar">
+                                        <span class="me-1">?</span>
+                                        Cancelar
+                                    </button>
+                                    <button type="button" class="btn btn-outline-info btn-responsive" @onclick="RestaurarTodo">
+                                        <span class="me-1">?</span>
+                                        Restaurar Todo
+                                    </button>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-warning btn-responsive" disabled="@(isUpdating || !TieneCambios())">
+                                    @if (isUpdating)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                        <span>Actualizando...</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="me-1">??</span>
+                                        <span>Guardar Cambios</span>
+                                    }
+                                </button>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int Codigo { get; set; }
+    
+    private SucursalDto? sucursalOriginal;
+    private UpdateSucursalRequest sucursalEditada = new();
+    private bool isLoadingData = true;
+    private bool isUpdating = false;
+    private string errorMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarSucursal();
+    }
+
+    private async Task CargarSucursal()
+    {
+        try
+        {
+            isLoadingData = true;
+            errorMessage = string.Empty;
+            StateHasChanged();
+
+            var response = await SucursalService.ObtenerSucursalAsync(Codigo);
+            
+            if (response.Exitoso && response.Datos != null)
+            {
+                sucursalOriginal = response.Datos;
+                
+                // Inicializar form con datos actuales
+                sucursalEditada = new UpdateSucursalRequest
+                {
+                    Nombre = sucursalOriginal.Nombre,
+                    Ciudad = sucursalOriginal.Ciudad,
+                    Direccion = sucursalOriginal.Direccion,
+                    Latitud = sucursalOriginal.Latitud,
+                    Longitud = sucursalOriginal.Longitud
+                };
+            }
+            else
+            {
+                errorMessage = response.Mensaje ?? "Sucursal no encontrada";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error inesperado: {ex.Message}";
+        }
+        finally
+        {
+            isLoadingData = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ActualizarSucursal()
+    {
+        try
+        {
+            isUpdating = true;
+            errorMessage = string.Empty;
+            StateHasChanged();
+
+            // Crear request solo con campos modificados
+            var updateRequest = new UpdateSucursalRequest();
+            
+            if (!string.IsNullOrEmpty(sucursalEditada.Nombre) && sucursalEditada.Nombre != sucursalOriginal.Nombre)
+                updateRequest.Nombre = sucursalEditada.Nombre;
+            
+            if (!string.IsNullOrEmpty(sucursalEditada.Ciudad) && sucursalEditada.Ciudad != sucursalOriginal.Ciudad)
+                updateRequest.Ciudad = sucursalEditada.Ciudad;
+            
+            if (!string.IsNullOrEmpty(sucursalEditada.Direccion) && sucursalEditada.Direccion != sucursalOriginal.Direccion)
+                updateRequest.Direccion = sucursalEditada.Direccion;
+            
+            if (sucursalEditada.Latitud.HasValue && sucursalEditada.Latitud != sucursalOriginal.Latitud)
+                updateRequest.Latitud = sucursalEditada.Latitud;
+            
+            if (sucursalEditada.Longitud.HasValue && sucursalEditada.Longitud != sucursalOriginal.Longitud)
+                updateRequest.Longitud = sucursalEditada.Longitud;
+
+            var response = await SucursalService.ActualizarSucursalAsync(Codigo, updateRequest);
+            
+            if (response.Exitoso)
+            {
+                // Navegar de vuelta con mensaje de éxito
+                Navigation.NavigateTo($"/sucursales/{Codigo}?success=updated");
+            }
+            else
+            {
+                errorMessage = response.Mensaje ?? "Error al actualizar la sucursal";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error inesperado: {ex.Message}";
+        }
+        finally
+        {
+            isUpdating = false;
+            StateHasChanged();
+        }
+    }
+
+    private bool TieneCambios()
+    {
+        if (sucursalOriginal == null) return false;
+        
+        return (!string.IsNullOrEmpty(sucursalEditada.Nombre) && sucursalEditada.Nombre != sucursalOriginal.Nombre) ||
+               (!string.IsNullOrEmpty(sucursalEditada.Ciudad) && sucursalEditada.Ciudad != sucursalOriginal.Ciudad) ||
+               (!string.IsNullOrEmpty(sucursalEditada.Direccion) && sucursalEditada.Direccion != sucursalOriginal.Direccion) ||
+               (sucursalEditada.Latitud.HasValue && sucursalEditada.Latitud != sucursalOriginal.Latitud) ||
+               (sucursalEditada.Longitud.HasValue && sucursalEditada.Longitud != sucursalOriginal.Longitud);
+    }
+
+    private void RestaurarTodo()
+    {
+        if (sucursalOriginal != null)
+        {
+            sucursalEditada = new UpdateSucursalRequest
+            {
+                Nombre = sucursalOriginal.Nombre,
+                Ciudad = sucursalOriginal.Ciudad,
+                Direccion = sucursalOriginal.Direccion,
+                Latitud = sucursalOriginal.Latitud,
+                Longitud = sucursalOriginal.Longitud
+            };
+        }
+    }
+
+    private void RestaurarCoordenadas()
+    {
+        if (sucursalOriginal != null)
+        {
+            sucursalEditada.Latitud = sucursalOriginal.Latitud;
+            sucursalEditada.Longitud = sucursalOriginal.Longitud;
+        }
+    }
+
+    private void AbrirEnGoogleMaps()
+    {
+        if (sucursalOriginal?.TieneCoordenadas == true)
+        {
+            var url = $"https://www.google.com/maps?q={sucursalOriginal.Latitud},{sucursalOriginal.Longitud}";
+            Navigation.NavigateTo(url, true);
+        }
+    }
+
+    private void Regresar()
+    {
+        Navigation.NavigateTo($"/sucursales/{Codigo}");
+    }
+}
