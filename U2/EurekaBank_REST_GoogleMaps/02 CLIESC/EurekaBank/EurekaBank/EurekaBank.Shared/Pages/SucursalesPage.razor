@@ -1,0 +1,497 @@
+@page "/sucursales"
+@inject ISucursalService SucursalService
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Sucursales - EurekaBank</PageTitle>
+
+<div class="container-responsive">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="text-responsive-lg mb-2">
+                        <span class="me-2">??</span>
+                        Gestión de Sucursales
+                    </h1>
+                    <p class="text-muted mb-0">Administra las oficinas y ubicaciones del banco</p>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-responsive" @onclick="CrearSucursal">
+                        <span class="me-1">?</span>
+                        Nueva Sucursal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card card-responsive">
+                <div class="card-body">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-6">
+                            <label class="form-label">?? Buscar sucursal</label>
+                            <input type="text" class="form-control input-responsive" @bind="filtroNombre" 
+                                   @onkeyup="FiltrarSucursales" placeholder="Buscar por nombre o ciudad...">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">??? Filtrar por ciudad</label>
+                            <select class="form-select input-responsive" @bind="filtroCiudad" @onchange="FiltrarSucursales">
+                                <option value="">Todas las ciudades</option>
+                                @foreach (var ciudad in ciudadesDisponibles)
+                                {
+                                    <option value="@ciudad">@ciudad</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-outline-secondary btn-responsive w-100" @onclick="LimpiarFiltros">
+                                <span class="me-1">???</span>
+                                Limpiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-3 text-muted">Cargando sucursales...</p>
+        </div>
+    }
+
+    <!-- Error State -->
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show animate-fade-in" role="alert">
+            <span class="me-2">?</span>
+            <strong>Error:</strong> @errorMessage
+            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+        </div>
+    }
+
+    <!-- Success State -->
+    @if (!string.IsNullOrEmpty(successMessage))
+    {
+        <div class="alert alert-success alert-dismissible fade show animate-fade-in" role="alert">
+            <span class="me-2">?</span>
+            <strong>Éxito:</strong> @successMessage
+            <button type="button" class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+        </div>
+    }
+
+    <!-- Sucursales Grid -->
+    @if (!isLoading && sucursalesFiltradas?.Any() == true)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-responsive">
+                    <div class="card-header bg-light">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <span class="me-2">??</span>
+                                Sucursales (@sucursalesFiltradas.Count)
+                            </h5>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-outline-primary" @onclick="ToggleVista">
+                                    @if (vistaTabla)
+                                    {
+                                        <span class="me-1">??</span>
+                                        <span>Vista Tarjetas</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="me-1">??</span>
+                                        <span>Vista Tabla</span>
+                                    }
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" @onclick="CargarSucursales">
+                                    <span class="me-1">??</span>
+                                    Actualizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        @if (vistaTabla)
+                        {
+                            <!-- Vista Tabla -->
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Ciudad</th>
+                                            <th>Dirección</th>
+                                            <th>Cuentas</th>
+                                            <th>Coordenadas</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var sucursal in sucursalesFiltradas)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <span class="badge bg-primary">@sucursal.Codigo</span>
+                                                </td>
+                                                <td>
+                                                    <strong>@sucursal.Nombre</strong>
+                                                </td>
+                                                <td>
+                                                    <span class="me-1">???</span>@sucursal.Ciudad
+                                                </td>
+                                                <td>
+                                                    <small class="text-muted">@sucursal.DireccionCompleta</small>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-info">@sucursal.ContadorCuentas</span>
+                                                </td>
+                                                <td>
+                                                    @if (sucursal.TieneCoordenadas)
+                                                    {
+                                                        <span class="text-success" title="@sucursal.Latitud, @sucursal.Longitud">
+                                                            <span class="me-1">??</span>Sí
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">
+                                                            <span class="me-1">??</span>No
+                                                        </span>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button class="btn btn-outline-info" 
+                                                                @onclick="() => VerSucursal(sucursal.Codigo)"
+                                                                title="Ver detalles">
+                                                            <span>???</span>
+                                                        </button>
+                                                        <button class="btn btn-outline-warning" 
+                                                                @onclick="() => EditarSucursal(sucursal.Codigo)"
+                                                                title="Editar">
+                                                            <span>??</span>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger" 
+                                                                @onclick="() => ConfirmarEliminar(sucursal)"
+                                                                title="Eliminar">
+                                                            <span>???</span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- Vista Tarjetas -->
+                            <div class="p-3">
+                                <div class="row g-3">
+                                    @foreach (var sucursal in sucursalesFiltradas)
+                                    {
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="card h-100 shadow-sm">
+                                                <div class="card-header bg-primary text-white">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h6 class="mb-0">
+                                                            <span class="me-1">??</span>@sucursal.Nombre
+                                                        </h6>
+                                                        <span class="badge bg-light text-dark">#@sucursal.Codigo</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="mb-3">
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <span class="me-2">???</span>
+                                                            <strong>@sucursal.Ciudad</strong>
+                                                        </div>
+                                                        <div class="d-flex align-items-start">
+                                                            <span class="me-2">??</span>
+                                                            <small class="text-muted">@sucursal.DireccionCompleta</small>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row text-center mb-3">
+                                                        <div class="col-6">
+                                                            <div class="border-end">
+                                                                <div class="text-primary fw-bold">@sucursal.ContadorCuentas</div>
+                                                                <small class="text-muted">Cuentas</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="text-@(sucursal.TieneCoordenadas ? "success" : "muted") fw-bold">
+                                                                @(sucursal.TieneCoordenadas ? "?" : "?")
+                                                            </div>
+                                                            <small class="text-muted">GPS</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer bg-transparent">
+                                                    <div class="d-flex justify-content-between">
+                                                        <button class="btn btn-sm btn-outline-info" 
+                                                                @onclick="() => VerSucursal(sucursal.Codigo)">
+                                                            <span class="me-1">???</span>Ver
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-warning" 
+                                                                @onclick="() => EditarSucursal(sucursal.Codigo)">
+                                                            <span class="me-1">??</span>Editar
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-danger" 
+                                                                @onclick="() => ConfirmarEliminar(sucursal)">
+                                                            <span class="me-1">???</span>Eliminar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading && (sucursales == null || !sucursales.Any()))
+    {
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <span style="font-size: 4rem;">??</span>
+            </div>
+            <h3 class="text-muted">No hay sucursales registradas</h3>
+            <p class="text-muted mb-4">Comienza creando tu primera sucursal</p>
+            <button class="btn btn-primary btn-lg btn-responsive" @onclick="CrearSucursal">
+                <span class="me-2">?</span>
+                Crear Primera Sucursal
+            </button>
+        </div>
+    }
+
+    <!-- No Results State -->
+    @if (!isLoading && sucursales?.Any() == true && sucursalesFiltradas?.Any() != true)
+    {
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <span style="font-size: 4rem;">??</span>
+            </div>
+            <h3 class="text-muted">No se encontraron resultados</h3>
+            <p class="text-muted mb-4">Intenta ajustar tus criterios de búsqueda</p>
+            <button class="btn btn-outline-primary btn-responsive" @onclick="LimpiarFiltros">
+                <span class="me-2">???</span>
+                Limpiar Filtros
+            </button>
+        </div>
+    }
+</div>
+
+<!-- Modal de Confirmación de Eliminación -->
+@if (sucursalAEliminar != null)
+{
+    <div class="modal fade show" style="display: block; background: rgba(0,0,0,0.5);" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span class="me-2">??</span>
+                        Confirmar Eliminación
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas eliminar la sucursal <strong>@sucursalAEliminar.Nombre</strong>?</p>
+                    <div class="alert alert-warning">
+                        <span class="me-2">??</span>
+                        Esta acción no se puede deshacer.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CancelarEliminar">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" @onclick="EliminarSucursal" disabled="@isDeleting">
+                        @if (isDeleting)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                        }
+                        <span class="me-1">???</span>
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    // Estado de la página
+    private List<SucursalDto> sucursales = new();
+    private List<SucursalDto> sucursalesFiltradas = new();
+    private List<string> ciudadesDisponibles = new();
+    private bool isLoading = true;
+    private bool isDeleting = false;
+    private bool vistaTabla = true;
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+
+    // Filtros
+    private string filtroNombre = string.Empty;
+    private string filtroCiudad = string.Empty;
+
+    // Modal de eliminación
+    private SucursalDto? sucursalAEliminar = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarSucursales();
+    }
+
+    private async Task CargarSucursales()
+    {
+        try
+        {
+            isLoading = true;
+            errorMessage = string.Empty;
+            StateHasChanged();
+
+            var response = await SucursalService.ObtenerSucursalesAsync();
+            
+            if (response.Exitoso)
+            {
+                sucursales = response.Datos ?? new List<SucursalDto>();
+                sucursalesFiltradas = new List<SucursalDto>(sucursales);
+                
+                // Extraer ciudades únicas
+                ciudadesDisponibles = sucursales
+                    .Select(s => s.Ciudad)
+                    .Where(c => !string.IsNullOrEmpty(c))
+                    .Distinct()
+                    .OrderBy(c => c)
+                    .ToList();
+
+                if (!sucursales.Any())
+                {
+                    successMessage = "No hay sucursales registradas. ¡Crea la primera!";
+                }
+            }
+            else
+            {
+                errorMessage = response.Mensaje ?? "Error al cargar las sucursales";
+                sucursales = new List<SucursalDto>();
+                sucursalesFiltradas = new List<SucursalDto>();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error inesperado: {ex.Message}";
+            sucursales = new List<SucursalDto>();
+            sucursalesFiltradas = new List<SucursalDto>();
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void FiltrarSucursales()
+    {
+        sucursalesFiltradas = sucursales.Where(s =>
+            (string.IsNullOrEmpty(filtroNombre) || 
+             s.Nombre.Contains(filtroNombre, StringComparison.OrdinalIgnoreCase) ||
+             s.Ciudad.Contains(filtroNombre, StringComparison.OrdinalIgnoreCase) ||
+             s.Direccion.Contains(filtroNombre, StringComparison.OrdinalIgnoreCase)) &&
+            (string.IsNullOrEmpty(filtroCiudad) || s.Ciudad.Equals(filtroCiudad, StringComparison.OrdinalIgnoreCase))
+        ).ToList();
+        
+        StateHasChanged();
+    }
+
+    private void LimpiarFiltros()
+    {
+        filtroNombre = string.Empty;
+        filtroCiudad = string.Empty;
+        FiltrarSucursales();
+    }
+
+    private void ToggleVista()
+    {
+        vistaTabla = !vistaTabla;
+    }
+
+    private void CrearSucursal()
+    {
+        Navigation.NavigateTo("/sucursales/crear");
+    }
+
+    private void VerSucursal(int codigo)
+    {
+        Navigation.NavigateTo($"/sucursales/{codigo}");
+    }
+
+    private void EditarSucursal(int codigo)
+    {
+        Navigation.NavigateTo($"/sucursales/{codigo}/editar");
+    }
+
+    private void ConfirmarEliminar(SucursalDto sucursal)
+    {
+        sucursalAEliminar = sucursal;
+    }
+
+    private void CancelarEliminar()
+    {
+        sucursalAEliminar = null;
+    }
+
+    private async Task EliminarSucursal()
+    {
+        if (sucursalAEliminar == null) return;
+
+        try
+        {
+            isDeleting = true;
+            StateHasChanged();
+
+            var response = await SucursalService.EliminarSucursalAsync(sucursalAEliminar.Codigo);
+            
+            if (response.Exitoso)
+            {
+                successMessage = $"Sucursal '{sucursalAEliminar.Nombre}' eliminada exitosamente";
+                sucursalAEliminar = null;
+                await CargarSucursales();
+            }
+            else
+            {
+                errorMessage = response.Mensaje ?? "Error al eliminar la sucursal";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error inesperado al eliminar: {ex.Message}";
+        }
+        finally
+        {
+            isDeleting = false;
+            sucursalAEliminar = null;
+            StateHasChanged();
+        }
+    }
+}
