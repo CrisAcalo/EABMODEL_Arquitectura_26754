@@ -2,8 +2,8 @@ import requests
 import json
 
 
-access_token = 'NjE2ZTZjMTEtMWE3My00ZGYxLTgzMmItNTlmZTdjYWE2Y2U4OGViOWU4ZWEtYzVl_PE93_a3359ccd-0b0c-4e93-9577-9c245673a2c2' 
-room_id = 'your_room_id'
+access_token = 'NTlmNDM3MDYtYWFiMC00ZmQ0LWJhYTItYmJiYzUwNTBjMmQyMGVkN2Q3ZGYtZDhj_PE93_a3359ccd-0b0c-4e93-9577-9c245673a2c2' 
+room_id = 'Y2lzY29zcGFyazovL3VybjpURUFNOmV1LWNlbnRyYWwtMV9rL1JPT00vZWQwMmE1YTAtZGI0Ny0xMWYwLWFmNzEtOGRmMzllZjI3YTI4'
 url = 'https://webexapis.com/v1/memberships'
 headers = {
     'Authorization': 'Bearer {}'.format(access_token),
