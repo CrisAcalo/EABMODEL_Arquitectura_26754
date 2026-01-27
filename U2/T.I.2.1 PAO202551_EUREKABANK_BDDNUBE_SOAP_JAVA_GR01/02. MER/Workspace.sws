@@ -10,7 +10,17 @@
 		<Model Expanded="Yes" ID="{51801648-829C-4405-B099-27D86DF219E9}" Loaded="No" Name="Diagramas_Casos_De_Uso" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="../01. UML/03. DIAGRAMAS/01. CASOS DE USO/Diagramas_Casos_De_Uso/Diagramas_Casos_De_Uso.prj"/>
 		<Model Expanded="Yes" ID="{FA10F7A6-DBD9-4338-8971-FE5ABD8254C1}" Loaded="No" Name="Arquitectura" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="../01. UML/03. DIAGRAMAS/05. ARQUITECTURA/Arquitectura/Arquitectura.prj"/>
 		<Model Expanded="Yes" ID="{FA10F7A6-DBD9-4338-8971-FE5ABD8254C1}" Loaded="No" Name="Arquitectura" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="../01. UML/03. DIAGRAMAS/05. ARQUITECTURA/Arquitectura/Arquitectura.prj"/>
-		<Model Expanded="Yes" ID="{72AB72AC-01B3-4664-A809-E5A943CDBC4E}" Name="Modelo Conceptual EUREKABANK" Selected="Yes" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="01. MODELO CONCEPTUAL/Modelo Conceptual EUREKABANK.cdm"/>
+		<Model Expanded="Yes" ID="{72AB72AC-01B3-4664-A809-E5A943CDBC4E}" Loaded="No" Name="Modelo Conceptual EUREKABANK" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="01. MODELO CONCEPTUAL/Modelo Conceptual EUREKABANK.cdm"/>
+		<Model Expanded="Yes" ID="{B3CB243B-0F65-48E3-8A06-6EF4ED9BF4DE}" Loaded="No" Name="Arquitectura_Comercializadora" Type="{5215C79E-A9A1-4738-A627-36DA432EFE29}" URL="../../PROYECTO/01. UML/03. DIAGRAMAS/05. ARQUITECTURA/Arquitectura_Comercializadora.eam"/>
+		<Model Expanded="Yes" ID="{BE001986-22B1-44B7-96BD-DC1E886BC4A0}" Loaded="No" Name="DS_Generar_Reporte" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../01. UML/03. DIAGRAMAS/03. SECUENCIA/DS_Generar_Reporte.oom"/>
+		<Model Expanded="Yes" ID="{F2136E9C-C3BF-4B1D-A3A7-09D393A92414}" Loaded="No" Name="Clases_general" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../../PROYECTO/01. UML/03. DIAGRAMAS/04. CLASES/Clases_general.oom"/>
+		<Model ID="{B4D6BDF4-A3FB-40DA-8C34-1F51FA6EC250}" Loaded="No" Name="Sistema Comercializadora" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../../PROYECTO/01. UML/03. DIAGRAMAS/04. CLASES/Sistema Comercializadora.oom"/>
+		<Model Expanded="Yes" ID="{CB3D49D2-D074-493D-8E14-DA2B924DAE79}" Loaded="No" Name="ObjectOrientedModel_2" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../../PROYECTO/01. UML/03. DIAGRAMAS/03. SECUENCIA/ObjectOrientedModel_2.oom"/>
+		<Model ID="{19139805-60A3-4F62-A145-E78971AA4EC9}" Loaded="No" Name="Actividades - Proceso Facturación" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../../PROYECTO/01. UML/03. DIAGRAMAS/02. ACTIVIDAD/Actividades - Proceso Facturación.oom"/>
+		<Model Expanded="Yes" ID="{7E227A6B-4A79-49A9-AD85-C0411E955721}" Loaded="No" Name="ObjectOrientedModel_8" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../../PROYECTO/01. UML/03. DIAGRAMAS/03. SECUENCIA/Sencuencia para calcular total.oom"/>
+		<Model Expanded="Yes" ID="{35E3C582-DCE5-4AD0-BEF6-4484BD3D34A8}" Loaded="No" Name="ObjectOrientedModel_9" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../../PROYECTO/01. UML/03. DIAGRAMAS/03. SECUENCIA/ObjectOrientedModel_9.oom"/>
+		<Model Expanded="Yes" ID="{B3CB243B-0F65-48E3-8A06-6EF4ED9BF4DE}" Loaded="No" Name="Arquitectura_Comercializadora" Type="{5215C79E-A9A1-4738-A627-36DA432EFE29}" URL="../../PROYECTO/01. UML/03. DIAGRAMAS/05. ARQUITECTURA/Arquitectura_Comercializadora.eam"/>
+		<Model Expanded="Yes" ID="{51801648-829C-4405-B099-27D86DF219E9}" Name="EUREKABANK_BPMN_BDDNUBE_SOAP_JAVA_GR01" Type="{FF4B6538-9856-42CF-B9B9-304ED370CEAA}" URL="../../../U3/TG3.1 PAO202551_TALLER_BPM_EUREKABANK_SOAP_JAVA_GR01/EUREKABANK_BPMN_BDDNUBE_SOAP_JAVA_GR01.prj"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>
