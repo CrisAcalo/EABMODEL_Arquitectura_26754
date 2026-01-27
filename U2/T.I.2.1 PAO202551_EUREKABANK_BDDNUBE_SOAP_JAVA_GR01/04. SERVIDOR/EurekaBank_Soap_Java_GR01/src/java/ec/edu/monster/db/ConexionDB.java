@@ -14,6 +14,7 @@ public class ConexionDB {
 
     // Parámetros de conexión MySQL
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    //private static final String URL = "jdbc:mysql://127.0.0.1:3306/eurekabank?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String URL = "jdbc:mysql://gondola.proxy.rlwy.net:19405/eurekabank?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USUARIO = "root";
     private static final String CLAVE = "TKENYVxDLiPgAGDZtAkcRybgquqwTLuX";
