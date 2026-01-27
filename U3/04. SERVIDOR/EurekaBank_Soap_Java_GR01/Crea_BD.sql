@@ -100,7 +100,7 @@ CREATE TABLE cliente (
 	vch_cliepaterno      VARCHAR(25) NOT NULL,
 	vch_cliematerno      VARCHAR(25) NOT NULL,
 	vch_clienombre       VARCHAR(30) NOT NULL,
-	chr_cliedni          CHAR(8) NOT NULL,
+	chr_cliedni          CHAR(10) NOT NULL,
 	vch_clieciudad       VARCHAR(30) NOT NULL,
 	vch_cliedireccion    VARCHAR(50) NOT NULL,
 	vch_clietelefono     VARCHAR(20) NULL,
@@ -286,6 +286,13 @@ CREATE TABLE contador (
 	CONSTRAINT PK_contador
 		PRIMARY KEY (vch_conttabla)
 ) ENGINE = INNODB ;
+
+-- Datos iniciales de contadores
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Empleado', 0, 4);
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Cliente', 0, 5);
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Cuenta', 0, 8);
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Movimiento', 0, 8);
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Sucursal', 0, 3);
 
 
 -- Crear el usuario para acceso desde cualquier host ('%')

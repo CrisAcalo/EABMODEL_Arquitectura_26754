@@ -1,17 +1,37 @@
 package ec.edu.monster.models.dto;
 
+import ec.edu.monster.models.Cliente;
+import ec.edu.monster.models.Cuenta;
+import ec.edu.monster.models.Empleado;
+import ec.edu.monster.models.Moneda;
+import ec.edu.monster.models.Sucursal;
+import ec.edu.monster.models.Ventanilla;
+import ec.edu.monster.models.Bloqueo;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * DTO estándar para respuestas de servicios SOAP
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlSeeAlso({DepositoResultDTO.class, RetiroResultDTO.class, TransferenciaResultDTO.class})
+@XmlSeeAlso({
+        DepositoResultDTO.class,
+        RetiroResultDTO.class,
+        TransferenciaResultDTO.class,
+        Empleado.class,
+        Cliente.class,
+        Cuenta.class,
+        Moneda.class,
+        Sucursal.class,
+        Ventanilla.class,
+        Bloqueo.class,
+        ArrayList.class
+})
 public class RespuestaDTO implements Serializable {
 
     private boolean exitoso;

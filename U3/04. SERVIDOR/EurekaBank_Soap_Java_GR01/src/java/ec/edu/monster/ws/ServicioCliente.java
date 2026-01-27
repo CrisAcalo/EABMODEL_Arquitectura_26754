@@ -23,20 +23,13 @@ public class ServicioCliente {
      * Obtiene todos los clientes
      */
     @WebMethod(operationName = "listarClientes")
-    public RespuestaDTO listarClientes() {
-        RespuestaDTO respuesta = new RespuestaDTO();
+    public List<Cliente> listarClientes() {
         try {
-            List<Cliente> clientes = clienteDAO.obtenerTodos();
-            respuesta.setExitoso(true);
-            respuesta.setMensaje("Clientes obtenidos correctamente");
-            respuesta.setDatos(clientes);
+            return clienteDAO.obtenerTodos();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error al listar clientes", e);
-            respuesta.setExitoso(false);
-            respuesta.setMensaje("Error al obtener clientes: " + e.getMessage());
-            respuesta.setCodigoError("CLI001");
+            return new java.util.ArrayList<>();
         }
-        return respuesta;
     }
 
     /**
@@ -113,6 +106,11 @@ public class ServicioCliente {
                 respuesta.setMensaje("Ya existe un cliente con el DNI: " + cliente.getDni());
                 respuesta.setCodigoError("CLI005");
                 return respuesta;
+            }
+
+            // Generar código automático si no tiene
+            if (cliente.getCodigo() == null || cliente.getCodigo().isEmpty()) {
+                cliente.setCodigo(clienteDAO.generarCodigoCliente());
             }
 
             clienteDAO.insertar(cliente);

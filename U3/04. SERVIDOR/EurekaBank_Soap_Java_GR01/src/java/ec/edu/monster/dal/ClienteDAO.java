@@ -22,8 +22,8 @@ public class ClienteDAO {
         List<Cliente> clientes = new ArrayList<>();
 
         try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 clientes.add(mapearCliente(rs));
@@ -42,7 +42,7 @@ public class ClienteDAO {
                 + "FROM cliente WHERE chr_cliecodigo = ?";
 
         try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, codigo);
             ResultSet rs = ps.executeQuery();
@@ -63,7 +63,7 @@ public class ClienteDAO {
                 + "FROM cliente WHERE chr_cliedni = ?";
 
         try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, dni);
             ResultSet rs = ps.executeQuery();
@@ -76,6 +76,32 @@ public class ClienteDAO {
     }
 
     /**
+     * Genera el siguiente código de cliente e incrementa el contador
+     */
+    public String generarCodigoCliente() throws SQLException {
+        String sqlUpdate = "UPDATE contador SET int_contitem = int_contitem + 1 "
+                + "WHERE vch_conttabla = 'Cliente'";
+        String sqlSelect = "SELECT LPAD(int_contitem, int_contlongitud, '0') AS codigo "
+                + "FROM contador WHERE vch_conttabla = 'Cliente'";
+
+        try (Connection conn = ConexionDB.getConnection()) {
+            // Primero incrementar el contador
+            try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate)) {
+                psUpdate.executeUpdate();
+            }
+
+            // Luego obtener el código generado
+            try (PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
+                    ResultSet rs = psSelect.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("codigo");
+                }
+            }
+            return "00001";
+        }
+    }
+
+    /**
      * Inserta un nuevo cliente
      */
     public void insertar(Cliente cliente) throws SQLException {
@@ -84,7 +110,7 @@ public class ClienteDAO {
                 + "vch_clietelefono, vch_clieemail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, cliente.getCodigo());
             ps.setString(2, cliente.getPaterno());
@@ -110,7 +136,7 @@ public class ClienteDAO {
                 + "WHERE chr_cliecodigo = ?";
 
         try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, cliente.getPaterno());
             ps.setString(2, cliente.getMaterno());
@@ -133,7 +159,7 @@ public class ClienteDAO {
         String sql = "DELETE FROM cliente WHERE chr_cliecodigo = ?";
 
         try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, codigo);
             ps.executeUpdate();

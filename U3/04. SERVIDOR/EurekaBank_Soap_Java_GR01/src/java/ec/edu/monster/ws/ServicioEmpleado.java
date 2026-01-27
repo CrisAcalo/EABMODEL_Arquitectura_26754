@@ -25,20 +25,13 @@ public class ServicioEmpleado {
      * Lista todos los empleados
      */
     @WebMethod(operationName = "listarEmpleados")
-    public RespuestaDTO listarEmpleados() {
-        RespuestaDTO respuesta = new RespuestaDTO();
+    public List<Empleado> listarEmpleados() {
         try {
-            List<Empleado> empleados = empleadoDAO.obtenerTodos();
-            respuesta.setExitoso(true);
-            respuesta.setMensaje("Empleados obtenidos correctamente");
-            respuesta.setDatos(empleados);
+            return empleadoDAO.obtenerTodos();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error al listar empleados", e);
-            respuesta.setExitoso(false);
-            respuesta.setMensaje("Error al obtener empleados: " + e.getMessage());
-            respuesta.setCodigoError("EMP001");
+            return new java.util.ArrayList<>();
         }
-        return respuesta;
     }
 
     /**

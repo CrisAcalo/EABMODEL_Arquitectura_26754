@@ -190,18 +190,26 @@ public class EmpleadoDAO {
     }
 
     /**
-     * Genera el siguiente código de empleado
+     * Genera el siguiente código de empleado e incrementa el contador
      */
     public String generarCodigoEmpleado() throws SQLException {
-        String sql = "SELECT LPAD(int_contitem + 1, int_contlongitud, '0') AS codigo "
+        String sqlSelect = "SELECT LPAD(int_contitem, int_contlongitud, '0') AS codigo "
                 + "FROM contador WHERE vch_conttabla = 'Empleado'";
+        String sqlUpdate = "UPDATE contador SET int_contitem = int_contitem + 1 "
+                + "WHERE vch_conttabla = 'Empleado'";
 
-        try (Connection conn = ConexionDB.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = ConexionDB.getConnection()) {
+            // Primero incrementar el contador
+            try (PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate)) {
+                psUpdate.executeUpdate();
+            }
 
-            if (rs.next()) {
-                return rs.getString("codigo");
+            // Luego obtener el código generado
+            try (PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
+                    ResultSet rs = psSelect.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("codigo");
+                }
             }
             return "0001";
         }
