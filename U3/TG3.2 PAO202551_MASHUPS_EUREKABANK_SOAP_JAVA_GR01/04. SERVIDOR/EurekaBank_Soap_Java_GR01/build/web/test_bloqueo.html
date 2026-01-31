@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Bloqueo WebSocket</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .container { display: flex; gap: 20px; }
+        .panel { border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: 45%; }
+        #log { background: #f0f0f0; height: 300px; overflow-y: scroll; border: 1px solid #999; padding: 5px; }
+        .bloqueado { color: red; font-weight: bold; }
+        .libre { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Prueba de Monitor de Ventanillas (WebSocket)</h1>
+    
+    <div class="container">
+        <div class="panel">
+            <h3>Controles (Simular Cajero)</h3>
+            <label>Cuenta:</label>
+            <input type="text" id="cuenta" value="00200001"><br><br>
+            <label>Ventanilla:</label>
+            <input type="text" id="ventanilla" value="V001"><br><br>
+            
+            <button onclick="bloquear()">🔴 BLOQUEAR</button>
+            <button onclick="liberar()">🟢 LIBERAR</button>
+            
+            <hr>
+            <p><small>Abre esta página en múltiples pestañas para ver la sincronización en tiempo real.</small></p>
+        </div>
+        
+        <div class="panel">
+            <h3>Estado en Tiempo Real</h3>
+            <div id="log"></div>
+        </div>
+    </div>
+
+    <script>
+        // Ajusta la URL si es necesario
+        var wsUri = "ws://" + document.location.host + document.location.pathname.substring(0, document.location.pathname.indexOf("/", 1)) + "/ws/bloqueo";
+        var websocket = new WebSocket(wsUri);
+        var logDiv = document.getElementById("log");
+
+        websocket.onopen = function(evt) {
+            logWithColor("CONECTADO al servidor", "blue");
+        };
+
+        websocket.onmessage = function(evt) {
+            var msg = JSON.parse(evt.data);
+            if (msg.tipo === "ESTADO_CUENTA") {
+                if (msg.estado === "BLOQUEADO") {
+                    logWithColor("🔒 Cuenta " + msg.cuenta + " BLOQUEADA por " + msg.ventanilla, "red");
+                } else {
+                    logWithColor("🔓 Cuenta " + msg.cuenta + " LIBERADA", "green");
+                }
+            } else {
+                logWithColor("Mensaje: " + evt.data, "black");
+            }
+        };
+
+        websocket.onerror = function(evt) {
+            logWithColor("ERROR: " + evt.data, "red");
+        };
+        
+        websocket.onclose = function(evt) {
+             logWithColor("DESCONECTADO", "gray");
+        };
+
+        function bloquear() {
+            var cuenta = document.getElementById("cuenta").value;
+            var ventanilla = document.getElementById("ventanilla").value;
+            var json = JSON.stringify({
+                accion: "BLOQUEAR",
+                cuenta: cuenta,
+                ventanilla: ventanilla
+            });
+            websocket.send(json);
+        }
+
+        function liberar() {
+            var cuenta = document.getElementById("cuenta").value;
+            var ventanilla = document.getElementById("ventanilla").value;
+            var json = JSON.stringify({
+                accion: "LIBERAR",
+                cuenta: cuenta,
+                ventanilla: ventanilla
+            });
+            websocket.send(json);
+        }
+
+        function logWithColor(message, color) {
+            var p = document.createElement("div");
+            p.style.color = color;
+            p.innerHTML = new Date().toLocaleTimeString() + " - " + message;
+            logDiv.prepend(p);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+@page "/operaciones"
+@using CLIEurekabank.Shared.Services
+@using CLIEurekabank.Shared.Services.Wrappers
+@using CLIEurekabank.Shared.Components.Icons
+@inject TransaccionService TransaccionService
+@inject BloqueoService BloqueoService
+@inject AppState AppState
+@implements IAsyncDisposable
+
+<PageTitle>EurekaBank - Operaciones</PageTitle>
+
+<h4 class="mb-4" style="color: var(--eb-navy);">
+    <SvgIcon Path="@IconPaths.Cash" Size="24" Class="me-2" />
+    Operaciones Bancarias
+</h4>
+
+<div class="row">
+    <!-- Tipo de Operación -->
+    <div class="col-12 mb-4">
+        <div class="btn-group w-100" role="group">
+            <button class="btn @(tipoOperacion == "deposito" ? "btn-eb-primary" : "btn-outline-secondary")" 
+                    @onclick='() => tipoOperacion = "deposito"'>
+                <SvgIcon Path="@IconPaths.ArrowDown" Size="18" Class="me-1" />
+                Depósito
+            </button>
+            <button class="btn @(tipoOperacion == "retiro" ? "btn-eb-primary" : "btn-outline-secondary")" 
+                    @onclick='() => tipoOperacion = "retiro"'>
+                <SvgIcon Path="@IconPaths.ArrowUp" Size="18" Class="me-1" />
+                Retiro
+            </button>
+            <button class="btn @(tipoOperacion == "transferencia" ? "btn-eb-primary" : "btn-outline-secondary")" 
+                    @onclick='() => tipoOperacion = "transferencia"'>
+                <SvgIcon Path="@IconPaths.SwitchHorizontal" Size="18" Class="me-1" />
+                Transferencia
+            </button>
+        </div>
+    </div>
+
+    <!-- Formulario -->
+    <div class="col-md-8">
+        <div class="card-eb">
+            <div class="card-eb-header d-flex justify-content-between align-items-center">
+                <span>
+                    @switch(tipoOperacion)
+                    {
+                        case "deposito": <span>Realizar Depósito</span> break;
+                        case "retiro": <span>Realizar Retiro</span> break;
+                        case "transferencia": <span>Realizar Transferencia</span> break;
+                    }
+                </span>
+                
+                @if (IsCuentaBloqueada)
+                {
+                    <span class="badge bg-danger">
+                        <i class="bi bi-lock-fill me-1"></i> CUENTA BLOQUEADA
+                    </span>
+                }
+                else if (IsMiBloqueo)
+                {
+                    <span class="badge bg-warning text-dark">
+                        <i class="bi bi-shield-lock-fill me-1"></i> RESERVADA (MÍO)
+                    </span>
+                }
+                else if (!string.IsNullOrEmpty(codigoCuenta))
+                {
+                    <span class="badge bg-success">
+                        <i class="bi bi-unlock-fill me-1"></i> DISPONIBLE
+                    </span>
+                }
+            </div>
+            
+            <div class="p-4" style="@(IsCuentaBloqueada ? "border: 2px solid red; opacity: 0.8;" : "")">
+                @if (!string.IsNullOrEmpty(mensaje))
+                {
+                    <div class="alert @(operacionExitosa ? "alert-success" : "alert-danger") py-2">
+                        @mensaje
+                    </div>
+                }
+
+                @if (IsCuentaBloqueada)
+                {
+                    <div class="alert alert-warning">
+                        <strong>Atención:</strong> La cuenta @codigoCuenta está siendo utilizada por la ventanilla @VentanillaBloqueadora.
+                        Espere a que finalice la operación.
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <label class="form-label">Cuenta @(tipoOperacion == "transferencia" ? "Origen" : "")</label>
+                    <input type="text" class="form-control" 
+                           value="@codigoCuenta" 
+                           @onchange="HandleCuentaChanged" 
+                           placeholder="001-001-0001" />
+                </div>
+
+                @if (tipoOperacion == "transferencia")
+                {
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label class="form-label mb-0">Cuenta Destino</label>
+                            @if (IsCuentaDestinoBloqueada)
+                            {
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-lock-fill me-1"></i> BLOQUEADA (@VentanillaBloqueadoraDestino)
+                                </span>
+                            }
+                            else if (IsMiBloqueoDestino)
+                            {
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-shield-lock-fill me-1"></i> RESERVADA (MÍO)
+                                </span>
+                            }
+                            else if (!string.IsNullOrEmpty(cuentaDestino))
+                            {
+                                <span class="badge bg-success">
+                                    <i class="bi bi-unlock-fill me-1"></i> DISPONIBLE
+                                </span>
+                            }
+                        </div>
+                        <input type="text" class="form-control" 
+                               value="@cuentaDestino" 
+                               @onchange="HandleCuentaDestinoChanged"
+                               placeholder="001-001-0002" />
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <label class="form-label">Monto</label>
+                    <div class="input-group">
+                        <span class="input-group-text">S/</span>
+                        <input type="number" class="form-control" @bind="monto" step="0.01" min="0" />
+                    </div>
+                </div>
+
+                @if (tipoOperacion != "deposito")
+                {
+                    <div class="mb-4">
+                        <label class="form-label">Clave de Cuenta</label>
+                        <input type="password" class="form-control" @bind="claveCuenta" />
+                    </div>
+                }
+
+                <button class="btn btn-eb-primary w-100 py-2" @onclick="RealizarOperacion" disabled="@(isLoading || IsCuentaBloqueada)">
+                    @if (isLoading)
+                    {
+                        <span class="spinner-border spinner-border-sm me-2"></span>
+                        <span>Procesando...</span>
+                    }
+                    else
+                    {
+                        <SvgIcon Path="@IconPaths.CheckCircle" Size="18" Class="me-2" />
+                        <span>Confirmar Operación</span>
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumen -->
+    <div class="col-md-4">
+        <div class="card-eb">
+            <div class="card-eb-header">Resumen</div>
+            <div class="p-3">
+                <table class="table table-borderless table-sm mb-0">
+                    <tr>
+                        <td class="text-muted">Tipo:</td>
+                        <td class="text-capitalize fw-bold">@tipoOperacion</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Cuenta:</td>
+                        <td>@(string.IsNullOrEmpty(codigoCuenta) ? "-" : codigoCuenta)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Estado:</td>
+                        <td>
+                            @if (IsCuentaBloqueada)
+                            {
+                                <span class="text-danger fw-bold">BLOQUEADA</span>
+                            }
+                            else if (IsMiBloqueo)
+                            {
+                                <span class="text-warning fw-bold">RESERVADA</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">DISPONIBLE</span>
+                            }
+                        </td>
+                    </tr>
+                    @if (tipoOperacion == "transferencia")
+                    {
+                        <tr>
+                            <td class="text-muted">Destino:</td>
+                            <td>@(string.IsNullOrEmpty(cuentaDestino) ? "-" : cuentaDestino)</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td class="text-muted">Monto:</td>
+                        <td class="fw-bold" style="color: var(--eb-primary);">S/ @monto.ToString("N2")</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Cajero:</td>
+                        <td>@AppState.NombreEmpleado (@CodigoVentanilla)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string tipoOperacion = "deposito";
+    private string codigoCuenta = "";
+    private string cuentaAnterior = ""; 
+    
+    private string cuentaDestino = "";
+    private string cuentaDestinoAnterior = "";
+
+    private decimal monto = 0;
+    private string claveCuenta = "";
+    
+    private string mensaje = "";
+    private bool operacionExitosa = false;
+    private bool isLoading = false;
+
+    // Estado de bloqueo - Origen
+    private string VentanillaBloqueadora = "";
+    private bool IsCuentaBloqueada => !string.IsNullOrEmpty(VentanillaBloqueadora) && VentanillaBloqueadora != CodigoVentanilla;
+    private bool IsMiBloqueo => !string.IsNullOrEmpty(VentanillaBloqueadora) && VentanillaBloqueadora == CodigoVentanilla;
+
+    // Estado de bloqueo - Destino
+    private string VentanillaBloqueadoraDestino = "";
+    private bool IsCuentaDestinoBloqueada => !string.IsNullOrEmpty(VentanillaBloqueadoraDestino) && VentanillaBloqueadoraDestino != CodigoVentanilla;
+    private bool IsMiBloqueoDestino => !string.IsNullOrEmpty(VentanillaBloqueadoraDestino) && VentanillaBloqueadoraDestino == CodigoVentanilla;
+
+    private string CodigoEmpleado => AppState.CodigoEmpleado;
+    private string CodigoVentanilla 
+    {
+        get 
+        {
+            var v = AppState.EmpleadoActual?.CodigoVentanilla;
+            return !string.IsNullOrEmpty(v) ? v : "V01";
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        BloqueoService.OnEstadoCuentaChanged += HandleEstadoChanged;
+        await BloqueoService.ConnectAsync();
+        
+        CheckCacheFor(codigoCuenta, ref VentanillaBloqueadora);
+        CheckCacheFor(cuentaDestino, ref VentanillaBloqueadoraDestino);
+    }
+
+    private void CheckCacheFor(string cuenta, ref string ventanillaBloq)
+    {
+        if (!string.IsNullOrEmpty(cuenta)) 
+        {
+             var estadoCache = BloqueoService.GetEstadoCuenta(cuenta);
+             if (estadoCache != null && estadoCache.Estado == "BLOQUEADO")
+             {
+                 ventanillaBloq = estadoCache.Ventanilla;
+                 StateHasChanged();
+             }
+        }
+    }
+
+    private void HandleEstadoChanged(EstadoCuentaMensaje estado)
+    {
+        bool changed = false;
+
+        // Verificar Cuenta Origen
+        if (estado.Cuenta == codigoCuenta)
+        {
+            if (estado.Estado == "BLOQUEADO") VentanillaBloqueadora = estado.Ventanilla;
+            else VentanillaBloqueadora = "";
+            changed = true;
+        }
+
+        // Verificar Cuenta Destino
+        if (estado.Cuenta == cuentaDestino)
+        {
+            if (estado.Estado == "BLOQUEADO") VentanillaBloqueadoraDestino = estado.Ventanilla;
+            else VentanillaBloqueadoraDestino = "";
+            changed = true;
+        }
+
+        if (changed) InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleCuentaChanged(ChangeEventArgs e)
+    {
+        string nuevaCuenta = e.Value?.ToString() ?? "";
+        if (!string.IsNullOrEmpty(cuentaAnterior) && cuentaAnterior != nuevaCuenta)
+        {
+             await BloqueoService.LiberarCuentaAsync(cuentaAnterior, CodigoVentanilla);
+             VentanillaBloqueadora = "";
+        }
+        codigoCuenta = nuevaCuenta;
+        cuentaAnterior = nuevaCuenta;
+        
+        if (!string.IsNullOrEmpty(codigoCuenta))
+        {
+            await BloqueoService.BloquearCuentaAsync(codigoCuenta, CodigoVentanilla);
+        }
+    }
+
+    private async Task HandleCuentaDestinoChanged(ChangeEventArgs e)
+    {
+        string nuevaCuenta = e.Value?.ToString() ?? "";
+        if (!string.IsNullOrEmpty(cuentaDestinoAnterior) && cuentaDestinoAnterior != nuevaCuenta)
+        {
+             await BloqueoService.LiberarCuentaAsync(cuentaDestinoAnterior, CodigoVentanilla);
+             VentanillaBloqueadoraDestino = "";
+        }
+        cuentaDestino = nuevaCuenta;
+        cuentaDestinoAnterior = nuevaCuenta;
+        
+        if (!string.IsNullOrEmpty(cuentaDestino))
+        {
+            await BloqueoService.BloquearCuentaAsync(cuentaDestino, CodigoVentanilla);
+        }
+    }
+
+    private async Task RealizarOperacion()
+    {
+        if (string.IsNullOrWhiteSpace(codigoCuenta) || monto <= 0)
+        {
+            mensaje = "Ingrese la cuenta y un monto válido";
+            operacionExitosa = false;
+            return;
+        }
+
+        if (IsCuentaBloqueada)
+        {
+            mensaje = $"La cuenta origen está bloqueada por {VentanillaBloqueadora}";
+            operacionExitosa = false;
+            return;
+        }
+
+        if (tipoOperacion == "transferencia")
+        {
+             if (string.IsNullOrWhiteSpace(cuentaDestino))
+             {
+                mensaje = "Ingrese la cuenta destino";
+                operacionExitosa = false;
+                return;
+             }
+             if (IsCuentaDestinoBloqueada)
+             {
+                mensaje = $"La cuenta destino está bloqueada por {VentanillaBloqueadoraDestino}";
+                operacionExitosa = false;
+                return;
+             }
+             if (codigoCuenta == cuentaDestino)
+             {
+                 mensaje = "La cuenta orgien y destino no pueden ser iguales";
+                 operacionExitosa = false;
+                 return;
+             }
+        }
+
+        isLoading = true;
+        mensaje = "";
+        StateHasChanged();
+
+        // Re-asegurar bloqueos propios
+        if (!IsMiBloqueo) await BloqueoService.BloquearCuentaAsync(codigoCuenta, CodigoVentanilla);
+        if (tipoOperacion == "transferencia" && !IsMiBloqueoDestino) 
+            await BloqueoService.BloquearCuentaAsync(cuentaDestino, CodigoVentanilla);
+
+        TransaccionResultado resultado;
+        
+        try 
+        {
+            switch (tipoOperacion)
+            {
+                case "deposito":
+                    resultado = await TransaccionService.RealizarDepositoAsync(codigoCuenta, monto, claveCuenta, CodigoEmpleado);
+                    break;
+                case "retiro":
+                    resultado = await TransaccionService.RealizarRetiroAsync(codigoCuenta, monto, claveCuenta, CodigoEmpleado);
+                    break;
+                case "transferencia":
+                    resultado = await TransaccionService.RealizarTransferenciaAsync(codigoCuenta, cuentaDestino, monto, claveCuenta, CodigoEmpleado);
+                    break;
+                default:
+                    resultado = new TransaccionResultado { Success = false, Message = "Tipo de operación no válida" };
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            resultado = new TransaccionResultado { Success = false, Message = $"Error: {ex.Message}" };
+        }
+        finally
+        {
+            // Liberar AMBAS cuentas
+            await BloqueoService.LiberarCuentaAsync(codigoCuenta, CodigoVentanilla);
+            VentanillaBloqueadora = "";
+            
+            if (!string.IsNullOrEmpty(cuentaDestino))
+            {
+                await BloqueoService.LiberarCuentaAsync(cuentaDestino, CodigoVentanilla);
+                VentanillaBloqueadoraDestino = "";
+            }
+        }
+
+        mensaje = resultado.Message;
+        operacionExitosa = resultado.Success;
+        
+        if (operacionExitosa)
+        {
+            monto = 0;
+            claveCuenta = "";
+        }
+
+        isLoading = false;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        BloqueoService.OnEstadoCuentaChanged -= HandleEstadoChanged;
+        
+        if (!string.IsNullOrEmpty(codigoCuenta))
+             await BloqueoService.LiberarCuentaAsync(codigoCuenta, CodigoVentanilla);
+             
+        if (!string.IsNullOrEmpty(cuentaDestino))
+             await BloqueoService.LiberarCuentaAsync(cuentaDestino, CodigoVentanilla);
+    }
+}

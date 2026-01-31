@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CLIEurekabank/CLIEurekabank.Shared/CLIEurekabank.Shared.csproj" />
+  <Project Path="CLIEurekabank/CLIEurekabank.Web/CLIEurekabank.Web.csproj" />
+  <Project Path="CLIEurekabank/CLIEurekabank/CLIEurekabank.csproj" />
+</Solution>
