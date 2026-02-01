@@ -67,7 +67,7 @@ CREATE TABLE empleado (
 	vch_emplciudad       VARCHAR(30) NOT NULL,
 	vch_empldireccion    VARCHAR(50) NULL,
 	vch_emplusuario      VARCHAR(15) NOT NULL,
-	vch_emplclave        VARCHAR(15) NOT NULL,
+	vch_emplclave        VARCHAR(64) NOT NULL,
 	CONSTRAINT PK_empleado PRIMARY KEY (chr_emplcodigo),
 	CONSTRAINT U_empleado_vch_emplusuario UNIQUE (vch_emplusuario)
 ) ENGINE = INNODB ;
@@ -100,7 +100,7 @@ CREATE TABLE cliente (
 	vch_cliepaterno      VARCHAR(25) NOT NULL,
 	vch_cliematerno      VARCHAR(25) NOT NULL,
 	vch_clienombre       VARCHAR(30) NOT NULL,
-	chr_cliedni          CHAR(8) NOT NULL,
+	chr_cliedni          CHAR(10) NOT NULL,
 	vch_clieciudad       VARCHAR(30) NOT NULL,
 	vch_cliedireccion    VARCHAR(50) NOT NULL,
 	vch_clietelefono     VARCHAR(20) NULL,
@@ -238,6 +238,45 @@ CREATE TABLE cargomantenimiento (
 		REFERENCES moneda (chr_monecodigo)
 		ON DELETE RESTRICT
 		ON UPDATE RESTRICT
+	) ENGINE = INNODB ;
+
+-- Tabla de ventanillas (cajeros)
+CREATE TABLE ventanilla (
+	chr_ventcodigo       CHAR(4) NOT NULL,
+	vch_ventnombre       VARCHAR(30) NOT NULL,
+	chr_emplcodigo       CHAR(4) NULL,
+	vch_ventestado       VARCHAR(15) DEFAULT 'ACTIVO' NOT NULL,
+	CONSTRAINT PK_ventanilla PRIMARY KEY (chr_ventcodigo),
+	CONSTRAINT chk_ventanilla_estado 
+		CHECK (vch_ventestado IN ('ACTIVO', 'INACTIVO')),
+	KEY idx_ventanilla01 (chr_emplcodigo),
+	CONSTRAINT fk_ventanilla_empleado
+		FOREIGN KEY (chr_emplcodigo)
+		REFERENCES empleado (chr_emplcodigo)
+		ON DELETE SET NULL
+		ON UPDATE RESTRICT
+) ENGINE = INNODB ;
+
+-- Tabla de bloqueos de cuenta (para concurrencia)
+CREATE TABLE bloqueo_cuenta (
+	chr_cuencodigo       CHAR(8) NOT NULL,
+	chr_ventcodigo       CHAR(4) NOT NULL,
+	dtt_bloqueo_inicio   DATETIME NOT NULL,
+	dtt_bloqueo_expira   DATETIME NOT NULL,
+	vch_bloqueo_estado   VARCHAR(15) DEFAULT 'ACTIVO' NOT NULL,
+	CONSTRAINT PK_bloqueo_cuenta PRIMARY KEY (chr_cuencodigo),
+	CONSTRAINT chk_bloqueo_estado 
+		CHECK (vch_bloqueo_estado IN ('ACTIVO', 'LIBERADO', 'EXPIRADO')),
+	CONSTRAINT fk_bloqueo_cuenta
+		FOREIGN KEY (chr_cuencodigo)
+		REFERENCES cuenta (chr_cuencodigo)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT,
+	CONSTRAINT fk_bloqueo_ventanilla
+		FOREIGN KEY (chr_ventcodigo)
+		REFERENCES ventanilla (chr_ventcodigo)
+		ON DELETE CASCADE
+		ON UPDATE RESTRICT
 ) ENGINE = INNODB ;
 
 CREATE TABLE contador (
@@ -247,6 +286,29 @@ CREATE TABLE contador (
 	CONSTRAINT PK_contador
 		PRIMARY KEY (vch_conttabla)
 ) ENGINE = INNODB ;
+
+-- Datos de Moneda
+INSERT INTO moneda (chr_monecodigo, vch_monedescripcion) VALUES ('01', 'Soles');
+INSERT INTO moneda (chr_monecodigo, vch_monedescripcion) VALUES ('02', 'Dólares');
+
+-- Datos de Tipo de Movimiento
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('001', 'Apertura de Cuenta', 'INGRESO', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('002', 'Cancelación de Cuenta', 'SALIDA', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('003', 'Depósito', 'INGRESO', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('004', 'Retiro', 'SALIDA', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('005', 'Interés', 'INGRESO', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('006', 'Mantenimiento', 'SALIDA', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('007', 'ITF', 'SALIDA', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('008', 'Transferencia (Ingreso)', 'INGRESO', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('009', 'Transferencia (Salida)', 'SALIDA', 'ACTIVO');
+INSERT INTO tipomovimiento (chr_tipocodigo, vch_tipodescripcion, vch_tipoaccion, vch_tipoestado) VALUES ('010', 'Cargo por Movimiento', 'SALIDA', 'ACTIVO');
+
+-- Datos iniciales de contadores
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Empleado', 0, 4);
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Cliente', 0, 5);
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Cuenta', 0, 8);
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Movimiento', 0, 8);
+INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Sucursal', 0, 3);
 
 
 -- Crear el usuario para acceso desde cualquier host ('%')
