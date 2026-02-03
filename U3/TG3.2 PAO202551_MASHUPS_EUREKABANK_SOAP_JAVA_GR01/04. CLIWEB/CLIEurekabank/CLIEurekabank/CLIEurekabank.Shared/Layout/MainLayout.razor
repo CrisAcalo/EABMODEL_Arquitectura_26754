@@ -1,0 +1,177 @@
+﻿@inherits LayoutComponentBase
+@using CLIEurekabank.Shared.Components.Icons
+@using CLIEurekabank.Shared.Services
+@inject AppState AppState
+@inject NavigationManager NavManager
+@implements IDisposable
+
+<div class="app-layout">
+    <!-- Overlay para cerrar sidebar en móvil -->
+    <div class="sidebar-overlay @(isSidebarOpen ? "show" : "")" @onclick="ToggleSidebar"></div>
+
+    <div class="sidebar @(isSidebarOpen ? "open" : "")">
+        <div class="sidebar-brand">
+            <SvgIcon Path="@IconPaths.CreditCard" Size="28" />
+            <span>EurekaBank</span>
+        </div>
+
+        <nav class="flex-grow-1">
+            <NavLink href="/" Match="NavLinkMatch.All" class="nav-link" @onclick="CloseSidebar">
+                <SvgIcon Path="@IconPaths.Home" Size="20" />
+                <span>Dashboard</span>
+            </NavLink>
+            <NavLink href="/clientes" class="nav-link" @onclick="CloseSidebar">
+                <SvgIcon Path="@IconPaths.Users" Size="20" />
+                <span>Clientes</span>
+            </NavLink>
+            <NavLink href="/cuentas" class="nav-link" @onclick="CloseSidebar">
+                <SvgIcon Path="@IconPaths.CreditCard" Size="20" />
+                <span>Cuentas</span>
+            </NavLink>
+            <NavLink href="/operaciones" class="nav-link" @onclick="CloseSidebar">
+                <SvgIcon Path="@IconPaths.Cash" Size="20" />
+                <span>Operaciones</span>
+            </NavLink>
+            <NavLink href="/reportes" class="nav-link" @onclick="CloseSidebar">
+                <SvgIcon Path="@IconPaths.ChartBar" Size="20" />
+                <span>Reportes</span>
+            </NavLink>
+        </nav>
+
+        <div class="mt-auto">
+            <button @onclick="HandleLogout" class="nav-link w-100 border-0 bg-transparent text-start" style="color: var(--eb-danger-light);">
+                <SvgIcon Path="@IconPaths.Logout" Size="20" />
+                <span>Cerrar Sesión</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="d-flex align-items-center gap-3">
+                <!-- Botón Menú Móvil -->
+                <button class="btn btn-link p-0 d-mobile-block text-dark" @onclick="ToggleSidebar">
+                     <SvgIcon Path="@IconPaths.Menu" Size="24" />
+                </button>
+                
+                <div>
+                    <small class="text-muted d-none d-md-inline">Sucursal</small>
+                    <div class="d-md-none fw-bold" style="color: var(--eb-navy); font-size: 0.9rem;">
+                         @GetSucursalShort()
+                    </div>
+                     <strong class="d-none d-md-inline" style="color: var(--eb-navy);">@GetSucursalInfo()</strong>
+                </div>
+            </div>
+            
+            <div class="d-flex align-items-center gap-3">
+                <div class="text-end d-none d-md-block">
+                    <small class="text-muted">Cajero</small><br />
+                    <strong>@GetEmpleadoNombre()</strong>
+                </div>
+                <!-- Versión Móvil: Solo iniciales -->
+                <div class="rounded-circle d-flex align-items-center justify-content-center" 
+                     style="width: 40px; height: 40px; background-color: var(--eb-primary); color: white;"
+                     title="@GetEmpleadoNombre()">
+                    @GetIniciales()
+                </div>
+            </div>
+        </div>
+
+        @Body
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Suscribirse a cambios de autenticación
+        AppState.OnAuthStateChanged += HandleAuthStateChanged;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await CheckAuthenticationAsync();
+        }
+    }
+
+    private async Task CheckAuthenticationAsync()
+    {
+        if (!AppState.IsAuthenticated)
+        {
+            // Usar forceLoad=false para Blazor Hybrid
+            NavManager.NavigateTo("/login", forceLoad: false);
+        }
+        await Task.CompletedTask;
+    }
+
+    private void HandleAuthStateChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void HandleLogout()
+    {
+        AppState.Logout();
+        NavManager.NavigateTo("/login");
+    }
+
+    private string GetEmpleadoNombre()
+    {
+        if (AppState.EmpleadoActual != null)
+        {
+            return AppState.EmpleadoActual.NombreCompleto;
+        }
+        return "Sin usuario";
+    }
+
+    private string GetSucursalInfo()
+    {
+        if (AppState.EmpleadoActual != null)
+        {
+            var sucursal = string.IsNullOrEmpty(AppState.EmpleadoActual.CodigoSucursal) 
+                ? "Matriz" 
+                : $"Sucursal {AppState.EmpleadoActual.CodigoSucursal}";
+            var ventanilla = string.IsNullOrEmpty(AppState.EmpleadoActual.CodigoVentanilla)
+                ? ""
+                : $" - Ventanilla {AppState.EmpleadoActual.CodigoVentanilla}";
+            return $"{sucursal}{ventanilla}";
+        }
+        return "Sin asignar";
+    }
+
+    private string GetIniciales()
+    {
+        if (AppState.EmpleadoActual != null)
+        {
+            var nombre = AppState.EmpleadoActual.Nombre;
+            var paterno = AppState.EmpleadoActual.Paterno;
+            var inicial1 = !string.IsNullOrEmpty(nombre) ? nombre[0].ToString().ToUpper() : "";
+            var inicial2 = !string.IsNullOrEmpty(paterno) ? paterno[0].ToString().ToUpper() : "";
+            return $"{inicial1}{inicial2}";
+        }
+        return "??";
+    }
+
+    private bool isSidebarOpen = false;
+
+    private void ToggleSidebar() => isSidebarOpen = !isSidebarOpen;
+    private void CloseSidebar() => isSidebarOpen = false;
+
+    public void Dispose()
+    {
+        AppState.OnAuthStateChanged -= HandleAuthStateChanged;
+    }
+
+    private string GetSucursalShort()
+    {
+         if (AppState.EmpleadoActual != null)
+         {
+             return !string.IsNullOrEmpty(AppState.EmpleadoActual.CodigoVentanilla) 
+                 ? $"{AppState.EmpleadoActual.CodigoVentanilla}" 
+                 : "MTZ";
+         }
+         return "?";
+    }
+}

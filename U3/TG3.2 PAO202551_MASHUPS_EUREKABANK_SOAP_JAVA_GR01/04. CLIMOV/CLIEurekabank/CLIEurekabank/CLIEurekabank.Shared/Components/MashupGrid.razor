@@ -1,0 +1,193 @@
+@using CLIEurekabank.Shared.Services.Wrappers
+@using CLIEurekabank.Shared.Components.Icons
+@using CLIEurekabank.Shared.Services
+@inject BloqueoService BloqueoService
+@inject CuentaService CuentaService
+@inject ClienteService ClienteService
+@inject AppState AppState
+@implements IAsyncDisposable
+
+<div class="card-eb">
+    <div class="card-eb-header d-flex justify-content-between align-items-center">
+        <span>Monitor de Cuentas (Mashup)</span>
+        <div class="d-flex align-items-center gap-2">
+            <span class="status-badge @(isConnected ? "online" : "offline")">
+                @if (isConnected)
+                {
+                    <SvgIcon Path="@IconPaths.CheckCircle" Size="14" />
+                    <span>Conectado</span>
+                }
+                else
+                {
+                    <SvgIcon Path="@IconPaths.XCircle" Size="14" />
+                    <span>Desconectado</span>
+                }
+            </span>
+            @if (!isConnected)
+            {
+                <button class="btn btn-sm btn-eb-primary" @onclick="ConnectWebSocket">
+                    <SvgIcon Path="@IconPaths.Refresh" Size="16" />
+                </button>
+            }
+        </div>
+    </div>
+    <div class="p-3">
+        <div class="mashup-grid">
+            @foreach (var cuenta in cuentas)
+            {
+                <div class="account-cell @(cuenta.Bloqueada ? "bloqueado" : "libre")" 
+                     @onclick="() => ToggleCuenta(cuenta)"
+                     title="@GetTitle(cuenta)">
+                    <div class="d-flex justify-content-between w-100 mb-2">
+                        <span class="badge bg-light text-dark border">@cuenta.Codigo</span>
+                         @if (cuenta.Bloqueada)
+                        {
+                            <SvgIcon Path="@IconPaths.LockClosed" Size="16" Class="text-danger" />
+                        }
+                        else
+                        {
+                            <SvgIcon Path="@IconPaths.LockOpen" Size="16" Class="text-success" />
+                        }
+                    </div>
+                    
+                    <div class="small fw-bold text-truncate" style="max-width: 100%;">
+                        @(string.IsNullOrEmpty(cuenta.NombrePropietario) ? "Desconocido" : cuenta.NombrePropietario)
+                    </div>
+                    
+                    @if (cuenta.Bloqueada)
+                    {
+                        <div class="mt-1 x-small text-danger fw-bold">
+                            @(cuenta.Ventanilla == VentanillaActual ? "RESERVADA (MÍO)" : $"BLOQ: {cuenta.Ventanilla}")
+                        </div>
+                    }
+                    else 
+                    {
+                        <div class="mt-1 x-small text-success">DISPONIBLE</div>
+                    }
+                </div>
+            }
+        </div>
+        
+        @if (isLoading)
+        {
+            <div class="text-center text-muted py-4">
+                <span class="spinner-border spinner-border-sm mb-2"></span>
+                <p>Cargando cuentas...</p>
+            </div>
+        }
+        else if (!cuentas.Any())
+        {
+            <div class="text-center text-muted py-4">
+                <SvgIcon Path="@IconPaths.CreditCard" Size="48" Class="mb-2" />
+                <p>No hay cuentas activas.</p>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private bool isConnected => BloqueoService.IsConnected;
+    private List<CuentaVisual> cuentas = new();
+    private bool isLoading = true;
+
+    private string VentanillaActual => AppState.EmpleadoActual?.CodigoVentanilla ?? "V01";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarDatos();
+        
+        BloqueoService.OnEstadoCuentaChanged += HandleEstadoChanged;
+        await ConnectWebSocket();
+    }
+
+    private async Task CargarDatos()
+    {
+        isLoading = true;
+        try 
+        {
+            var cuentasTask = CuentaService.ListarCuentasActivasAsync();
+            var clientesTask = ClienteService.ListarClientesAsync();
+
+            await Task.WhenAll(cuentasTask, clientesTask);
+
+            var cuentasDTO = await cuentasTask;
+            var clientesDTO = await clientesTask;
+
+            cuentas = cuentasDTO.Select(c => {
+                var cliente = clientesDTO.FirstOrDefault(cli => cli.Codigo == c.CodigoCliente);
+                var estadoCache = BloqueoService.GetEstadoCuenta(c.Codigo);
+                
+                return new CuentaVisual 
+                { 
+                    Codigo = c.Codigo, 
+                    NombrePropietario = cliente?.NombreCompleto ?? "Sin Propietario",
+                    Bloqueada = estadoCache?.Estado == "BLOQUEADO",
+                    Ventanilla = estadoCache?.Ventanilla ?? ""
+                };
+            }).OrderBy(c => c.Codigo).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error cargando mashup: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task ConnectWebSocket()
+    {
+        await BloqueoService.ConnectAsync();
+        StateHasChanged();
+    }
+
+    private void HandleEstadoChanged(EstadoCuentaMensaje mensaje)
+    {
+        var cuenta = cuentas.FirstOrDefault(c => c.Codigo == mensaje.Cuenta);
+        if (cuenta != null)
+        {
+            cuenta.Bloqueada = mensaje.Estado == "BLOQUEADO";
+            cuenta.Ventanilla = mensaje.Ventanilla ?? "";
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task ToggleCuenta(CuentaVisual cuenta)
+    {
+        // Si está bloqueada por otro, no hacer nada
+        if (cuenta.Bloqueada && cuenta.Ventanilla != VentanillaActual)
+        {
+            return;
+        }
+
+        if (cuenta.Bloqueada)
+        {
+            await BloqueoService.LiberarCuentaAsync(cuenta.Codigo, VentanillaActual);
+        }
+        else
+        {
+            await BloqueoService.BloquearCuentaAsync(cuenta.Codigo, VentanillaActual);
+        }
+    }
+
+    private string GetTitle(CuentaVisual cuenta)
+    {
+        if (!cuenta.Bloqueada) return "Disponible - Click para bloquear";
+        if (cuenta.Ventanilla == VentanillaActual) return "Bloqueada por mí - Click para liberar";
+        return $"Bloqueada por {cuenta.Ventanilla}";
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        BloqueoService.OnEstadoCuentaChanged -= HandleEstadoChanged;
+    }
+
+    private class CuentaVisual
+    {
+        public string Codigo { get; set; } = "";
+        public string NombrePropietario { get; set; } = "";
+        public bool Bloqueada { get; set; }
+        public string Ventanilla { get; set; } = "";
+    }
+}

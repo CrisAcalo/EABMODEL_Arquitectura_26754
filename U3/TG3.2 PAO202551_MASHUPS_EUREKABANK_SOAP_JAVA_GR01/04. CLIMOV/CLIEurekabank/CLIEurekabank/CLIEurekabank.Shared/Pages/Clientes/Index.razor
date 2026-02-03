@@ -1,0 +1,327 @@
+@page "/clientes"
+@using CLIEurekabank.Shared.Services.Wrappers
+@using CLIEurekabank.Shared.Components.Icons
+@inject ClienteService ClienteService
+
+<PageTitle>EurekaBank - Clientes</PageTitle>
+
+<h4 class="mb-4" style="color: var(--eb-navy);">
+    <SvgIcon Path="@IconPaths.Users" Size="24" Class="me-2" />
+    Gestión de Clientes
+</h4>
+
+<!-- Búsqueda y Acciones -->
+<div class="card-eb mb-4">
+    <div class="card-eb-header d-flex justify-content-between align-items-center">
+        <span>Clientes</span>
+        <button class="btn btn-sm btn-eb-primary" @onclick="MostrarFormularioNuevo">
+            <SvgIcon Path="@IconPaths.Plus" Size="16" Class="me-1" />
+            Nuevo Cliente
+        </button>
+    </div>
+    <div class="p-3">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label small text-muted">Buscar por DNI</label>
+                <input type="text" class="form-control" @bind="dniBusqueda" @bind:event="oninput" placeholder="Ingrese DNI" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-eb-primary w-100" @onclick="BuscarPorDni" disabled="@isLoading">
+                    <SvgIcon Path="@IconPaths.Search" Size="18" Class="me-1" />
+                    Buscar
+                </button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-outline-secondary w-100" @onclick="CargarClientes" disabled="@isLoading">
+                    <SvgIcon Path="@IconPaths.Refresh" Size="18" Class="me-1" />
+                    Todos
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mensaje de Operación -->
+@if (!string.IsNullOrEmpty(mensaje))
+{
+    <div class="alert @(operacionExitosa ? "alert-success" : "alert-danger") alert-dismissible py-2 mb-4">
+        @mensaje
+        <button type="button" class="btn-close btn-sm" @onclick="() => mensaje = string.Empty"></button>
+    </div>
+}
+
+<!-- Formulario Modal -->
+@if (mostrarFormulario)
+{
+    <div class="card-eb mb-4 border-primary">
+        <div class="card-eb-header d-flex justify-content-between bg-primary text-white">
+            <span>@(esEdicion ? "Editar Cliente" : "Nuevo Cliente")</span>
+            <button class="btn btn-sm btn-close btn-close-white" @onclick="CerrarFormulario"></button>
+        </div>
+        <div class="p-4">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">DNI <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" @bind="clienteForm.Dni" maxlength="10" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Nombre <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" @bind="clienteForm.Nombre" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Apellido Paterno <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" @bind="clienteForm.Paterno" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Apellido Materno</label>
+                    <input type="text" class="form-control" @bind="clienteForm.Materno" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" @bind="clienteForm.Telefono" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" @bind="clienteForm.Email" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Dirección</label>
+                    <input type="text" class="form-control" @bind="clienteForm.Direccion" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Ciudad <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" @bind="clienteForm.Ciudad" placeholder="Ej: Quito" />
+                </div>
+            </div>
+            <div class="mt-4 d-flex gap-2">
+                <button class="btn btn-eb-primary" @onclick="GuardarCliente" disabled="@isLoading">
+                    @if (isLoading)
+                    {
+                        <span class="spinner-border spinner-border-sm me-1"></span>
+                    }
+                    <SvgIcon Path="@IconPaths.CheckCircle" Size="18" Class="me-1" />
+                    @(esEdicion ? "Actualizar" : "Registrar")
+                </button>
+                <button class="btn btn-outline-secondary" @onclick="CerrarFormulario">Cancelar</button>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Tabla de Clientes -->
+@if (isLoading && !mostrarFormulario)
+{
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary"></div>
+        <p class="text-muted mt-2">Cargando...</p>
+    </div>
+}
+else if (clientes.Any())
+{
+    <div class="card-eb">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Código</th>
+                        <th>DNI</th>
+                        <th>Nombre Completo</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th class="text-center" style="width: 150px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cliente in clientes)
+                    {
+                        <tr>
+                            <td><span class="badge bg-secondary">@cliente.Codigo</span></td>
+                            <td>@cliente.Dni</td>
+                            <td class="fw-bold">@cliente.NombreCompleto</td>
+                            <td>@cliente.Telefono</td>
+                            <td class="text-muted small">@cliente.Email</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-primary me-1" @onclick="() => EditarCliente(cliente)" title="Editar">
+                                    <SvgIcon Path="@IconPaths.DocumentText" Size="16" />
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" @onclick="() => ConfirmarEliminar(cliente)" title="Eliminar">
+                                    <SvgIcon Path="@IconPaths.Close" Size="16" />
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center py-5 text-muted">
+        <SvgIcon Path="@IconPaths.Users" Size="48" />
+        <p class="mt-2">No hay clientes registrados</p>
+    </div>
+}
+
+<!-- Modal Confirmación Eliminar -->
+@if (clienteAEliminar != null)
+{
+    <div class="modal fade show d-block" style="background: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de eliminar al cliente <strong>@clienteAEliminar.NombreCompleto</strong>?</p>
+                    <p class="text-muted small mb-0">DNI: @clienteAEliminar.Dni | Código: @clienteAEliminar.Codigo</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="() => clienteAEliminar = null">Cancelar</button>
+                    <button class="btn btn-danger" @onclick="EliminarCliente" disabled="@isLoading">
+                        @if (isLoading) { <span class="spinner-border spinner-border-sm me-1"></span> }
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<ClienteDTO> clientes = new();
+    private ClienteDTO clienteForm = new();
+    private ClienteDTO? clienteAEliminar;
+    private string dniBusqueda = "";
+    private string mensaje = "";
+    private bool operacionExitosa = false;
+    private bool isLoading = false;
+    private bool mostrarFormulario = false;
+    private bool esEdicion = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarClientes();
+    }
+
+    private async Task CargarClientes()
+    {
+        isLoading = true;
+        StateHasChanged();
+        clientes = await ClienteService.ListarClientesAsync();
+        isLoading = false;
+    }
+
+    private async Task BuscarPorDni()
+    {
+        if (string.IsNullOrWhiteSpace(dniBusqueda)) return;
+        
+        isLoading = true;
+        StateHasChanged();
+        
+        var cliente = await ClienteService.ObtenerClientePorDNIAsync(dniBusqueda.Trim());
+        clientes = cliente != null ? new List<ClienteDTO> { cliente } : new List<ClienteDTO>();
+        
+        if (cliente == null)
+        {
+            mensaje = "Cliente no encontrado";
+            operacionExitosa = false;
+        }
+        
+        isLoading = false;
+    }
+
+    private void MostrarFormularioNuevo()
+    {
+        clienteForm = new ClienteDTO();
+        esEdicion = false;
+        mostrarFormulario = true;
+    }
+
+    private void EditarCliente(ClienteDTO cliente)
+    {
+        clienteForm = new ClienteDTO
+        {
+            Codigo = cliente.Codigo,
+            Dni = cliente.Dni,
+            Nombre = cliente.Nombre,
+            Paterno = cliente.Paterno,
+            Materno = cliente.Materno,
+            Telefono = cliente.Telefono,
+            Email = cliente.Email,
+            Direccion = cliente.Direccion,
+            Ciudad = cliente.Ciudad
+        };
+        esEdicion = true;
+        mostrarFormulario = true;
+    }
+
+    private void CerrarFormulario()
+    {
+        mostrarFormulario = false;
+        clienteForm = new ClienteDTO();
+    }
+
+    private async Task GuardarCliente()
+    {
+        if (string.IsNullOrWhiteSpace(clienteForm.Dni) || 
+            string.IsNullOrWhiteSpace(clienteForm.Nombre) || 
+            string.IsNullOrWhiteSpace(clienteForm.Paterno) ||
+            string.IsNullOrWhiteSpace(clienteForm.Ciudad))
+        {
+            mensaje = "Complete los campos obligatorios (DNI, Nombre, Apellido Paterno, Ciudad)";
+            operacionExitosa = false;
+            return;
+        }
+
+        isLoading = true;
+        StateHasChanged();
+
+        OperacionResultado resultado;
+        if (esEdicion)
+        {
+            resultado = await ClienteService.ActualizarClienteAsync(clienteForm);
+        }
+        else
+        {
+            resultado = await ClienteService.RegistrarClienteAsync(clienteForm);
+        }
+
+        mensaje = resultado.Message;
+        operacionExitosa = resultado.Success;
+
+        if (resultado.Success)
+        {
+            CerrarFormulario();
+            await CargarClientes();
+        }
+
+        isLoading = false;
+    }
+
+    private void ConfirmarEliminar(ClienteDTO cliente)
+    {
+        clienteAEliminar = cliente;
+    }
+
+    private async Task EliminarCliente()
+    {
+        if (clienteAEliminar == null) return;
+
+        isLoading = true;
+        StateHasChanged();
+
+        var resultado = await ClienteService.EliminarClienteAsync(clienteAEliminar.Codigo);
+        mensaje = resultado.Message;
+        operacionExitosa = resultado.Success;
+
+        clienteAEliminar = null;
+
+        if (resultado.Success)
+        {
+            await CargarClientes();
+        }
+
+        isLoading = false;
+    }
+}
