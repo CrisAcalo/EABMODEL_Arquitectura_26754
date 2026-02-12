@@ -259,12 +259,13 @@ CREATE TABLE ventanilla (
 
 -- Tabla de bloqueos de cuenta (para concurrencia)
 CREATE TABLE bloqueo_cuenta (
+	int_bloqueoid        INT NOT NULL AUTO_INCREMENT,
 	chr_cuencodigo       CHAR(8) NOT NULL,
 	chr_ventcodigo       CHAR(4) NOT NULL,
 	dtt_bloqueo_inicio   DATETIME NOT NULL,
 	dtt_bloqueo_expira   DATETIME NOT NULL,
 	vch_bloqueo_estado   VARCHAR(15) DEFAULT 'ACTIVO' NOT NULL,
-	CONSTRAINT PK_bloqueo_cuenta PRIMARY KEY (chr_cuencodigo),
+	CONSTRAINT PK_bloqueo_cuenta PRIMARY KEY (int_bloqueoid),
 	CONSTRAINT chk_bloqueo_estado 
 		CHECK (vch_bloqueo_estado IN ('ACTIVO', 'LIBERADO', 'EXPIRADO')),
 	CONSTRAINT fk_bloqueo_cuenta
@@ -309,6 +310,21 @@ INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Cl
 INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Cuenta', 0, 8);
 INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Movimiento', 0, 8);
 INSERT INTO contador (vch_conttabla, int_contitem, int_contlongitud) VALUES ('Sucursal', 0, 3);
+
+
+-- =====================================================
+-- TABLA: bloqueo_cuenta (Bloqueo pesimista de cuentas)
+-- =====================================================
+CREATE TABLE IF NOT EXISTS bloqueo_cuenta (
+    int_bloqueoid       INT AUTO_INCREMENT PRIMARY KEY,
+    chr_cuencodigo      VARCHAR(8) NOT NULL,
+    chr_ventcodigo      VARCHAR(4) NOT NULL,
+    dtt_bloqueo_inicio  DATETIME NOT NULL,
+    dtt_bloqueo_expira  DATETIME NOT NULL,
+    vch_bloqueo_estado  VARCHAR(15) NOT NULL DEFAULT 'ACTIVO',
+    CONSTRAINT fk_bloqueo_cuenta FOREIGN KEY (chr_cuencodigo) REFERENCES cuenta(chr_cuencodigo),
+    CONSTRAINT fk_bloqueo_ventanilla FOREIGN KEY (chr_ventcodigo) REFERENCES ventanilla(chr_ventcodigo)
+) ENGINE=InnoDB;
 
 
 -- Crear el usuario para acceso desde cualquier host ('%')
