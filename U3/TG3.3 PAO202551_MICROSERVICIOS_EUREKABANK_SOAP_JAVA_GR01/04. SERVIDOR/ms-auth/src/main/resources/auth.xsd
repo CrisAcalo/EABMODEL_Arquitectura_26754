@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:tns="http://monster.edu.ec/ms-auth/ws"
+           targetNamespace="http://monster.edu.ec/ms-auth/ws" 
+           elementFormDefault="qualified">
+
+    <!-- Login Operation -->
+    <xs:element name="loginRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="usuario" type="xs:string"/>
+                <xs:element name="clave" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="loginResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ==================== EMPLEADO OPERATIONS ==================== -->
+    
+    <!-- Registrar Empleado -->
+    <xs:element name="registrarEmpleadoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="empleado" type="tns:empleado"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="registrarEmpleadoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Actualizar Empleado -->
+    <xs:element name="actualizarEmpleadoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="empleado" type="tns:empleado"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="actualizarEmpleadoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Eliminar Empleado -->
+    <xs:element name="eliminarEmpleadoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="eliminarEmpleadoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Obtener Empleado -->
+    <xs:element name="obtenerEmpleadoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obtenerEmpleadoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Listar Empleados -->
+    <xs:element name="listarEmpleadosRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="listarEmpleadosResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="empleados" type="tns:empleado" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Cambiar Clave -->
+    <xs:element name="cambiarClaveRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+                <xs:element name="claveActual" type="xs:string"/>
+                <xs:element name="claveNueva" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cambiarClaveResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- ==================== SUCURSAL OPERATIONS ==================== -->
+
+    <!-- Registrar Sucursal -->
+    <xs:element name="registrarSucursalRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sucursal" type="tns:sucursal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="registrarSucursalResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Listar Sucursales -->
+    <xs:element name="listarSucursalesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="listarSucursalesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sucursales" type="tns:sucursal" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Obtener Sucursal -->
+    <xs:element name="obtenerSucursalRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obtenerSucursalResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Actualizar Sucursal -->
+    <xs:element name="actualizarSucursalRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sucursal" type="tns:sucursal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="actualizarSucursalResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Eliminar Sucursal -->
+    <xs:element name="eliminarSucursalRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="eliminarSucursalResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!-- ==================== VENTANILLA OPERATIONS ==================== -->
+
+    <!-- Listar Ventanillas -->
+    <xs:element name="listarVentanillasRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="listarVentanillasResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ventanillas" type="tns:ventanilla" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Listar Ventanillas Activas -->
+    <xs:element name="listarVentanillasActivasRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="listarVentanillasActivasResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ventanillas" type="tns:ventanilla" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Obtener Ventanilla -->
+    <xs:element name="obtenerVentanillaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obtenerVentanillaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Registrar Ventanilla -->
+    <xs:element name="registrarVentanillaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ventanilla" type="tns:ventanilla"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="registrarVentanillaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Actualizar Ventanilla -->
+    <xs:element name="actualizarVentanillaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ventanilla" type="tns:ventanilla"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="actualizarVentanillaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Eliminar Ventanilla -->
+    <xs:element name="eliminarVentanillaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="eliminarVentanillaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Asignar Empleado -->
+    <xs:element name="asignarEmpleadoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoVentanilla" type="xs:string"/>
+                <xs:element name="codigoEmpleado" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="asignarEmpleadoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- ==================== COMMON TYPES ==================== -->
+
+    <xs:complexType name="respuestaDTO">
+        <xs:sequence>
+            <xs:element name="exitoso" type="xs:boolean"/>
+            <xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+            <xs:element name="codigoError" type="xs:string" minOccurs="0"/>
+            <!-- xsd:anyType permite devolver Empleado u otros objetos -->
+            <xs:element name="datos" type="xs:anyType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="empleado">
+        <xs:sequence>
+            <xs:element name="codigo" type="xs:string"/>
+            <xs:element name="paterno" type="xs:string"/>
+            <xs:element name="materno" type="xs:string"/>
+            <xs:element name="nombre" type="xs:string"/>
+            <xs:element name="ciudad" type="xs:string"/>
+            <xs:element name="direccion" type="xs:string" minOccurs="0"/>
+            <xs:element name="usuario" type="xs:string"/>
+            <xs:element name="clave" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="sucursal">
+        <xs:sequence>
+            <xs:element name="codigo" type="xs:string"/>
+            <xs:element name="nombre" type="xs:string"/>
+            <xs:element name="ciudad" type="xs:string"/>
+            <xs:element name="direccion" type="xs:string" minOccurs="0"/>
+            <xs:element name="contadorCuenta" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ventanilla">
+        <xs:sequence>
+            <xs:element name="codigo" type="xs:string"/>
+            <xs:element name="nombre" type="xs:string"/>
+            <xs:element name="codigoEmpleado" type="xs:string" minOccurs="0"/>
+            <xs:element name="estado" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

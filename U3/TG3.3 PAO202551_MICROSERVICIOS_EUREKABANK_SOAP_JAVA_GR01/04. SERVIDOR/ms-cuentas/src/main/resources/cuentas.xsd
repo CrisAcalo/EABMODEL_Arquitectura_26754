@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:tns="http://monster.edu.ec/ms-cuentas/ws"
+           targetNamespace="http://monster.edu.ec/ms-cuentas/ws" 
+           elementFormDefault="qualified">
+
+    <!-- ==================== COMMON TYPES ==================== -->
+
+    <xs:complexType name="respuestaDTO">
+        <xs:sequence>
+            <xs:element name="exitoso" type="xs:boolean"/>
+            <xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+            <xs:element name="codigoError" type="xs:string" minOccurs="0"/>
+            <xs:element name="datos" type="xs:anyType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cliente">
+        <xs:sequence>
+            <xs:element name="codigo" type="xs:string" minOccurs="0"/>
+            <xs:element name="paterno" type="xs:string"/>
+            <xs:element name="materno" type="xs:string"/>
+            <xs:element name="nombre" type="xs:string"/>
+            <xs:element name="dni" type="xs:string"/>
+            <xs:element name="ciudad" type="xs:string"/>
+            <xs:element name="direccion" type="xs:string"/>
+            <xs:element name="telefono" type="xs:string" minOccurs="0"/>
+            <xs:element name="email" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cuenta">
+        <xs:sequence>
+            <xs:element name="codigo" type="xs:string" minOccurs="0"/>
+            <xs:element name="codigoMoneda" type="xs:string"/>
+            <xs:element name="codigoSucursal" type="xs:string"/>
+            <xs:element name="codigoEmpleadoCreador" type="xs:string"/>
+            <xs:element name="codigoCliente" type="xs:string"/>
+            <xs:element name="saldo" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="fechaCreacion" type="xs:string" minOccurs="0"/>
+            <xs:element name="estado" type="xs:string" minOccurs="0"/>
+            <xs:element name="contadorMovimientos" type="xs:int" minOccurs="0"/>
+            <xs:element name="clave" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="moneda">
+        <xs:sequence>
+            <xs:element name="codigo" type="xs:string"/>
+            <xs:element name="descripcion" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ==================== CLIENTE OPERATIONS ==================== -->
+
+    <xs:element name="listarClientesRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="listarClientesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="clientes" type="tns:cliente" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="obtenerClienteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obtenerClienteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="obtenerClientePorDniRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="dni" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obtenerClientePorDniResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="registrarClienteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cliente" type="tns:cliente"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="registrarClienteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="actualizarClienteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cliente" type="tns:cliente"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="actualizarClienteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="eliminarClienteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="eliminarClienteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ==================== CUENTA OPERATIONS ==================== -->
+
+    <xs:element name="listarCuentasActivasRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="listarCuentasActivasResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cuentas" type="tns:cuenta" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="obtenerCuentaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obtenerCuentaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="obtenerSaldoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoCuenta" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obtenerSaldoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="abrirCuentaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cuenta" type="tns:cuenta"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="abrirCuentaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="cancelarCuentaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoCuenta" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cancelarCuentaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="validarClaveRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoCuenta" type="xs:string"/>
+                <xs:element name="clave" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="validarClaveResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:respuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ==================== MONEDA OPERATIONS ==================== -->
+
+    <xs:element name="listarMonedasRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="listarMonedasResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="monedas" type="tns:moneda" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="obtenerMonedaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigo" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="obtenerMonedaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:moneda" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

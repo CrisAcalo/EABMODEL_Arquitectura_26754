@@ -1,0 +1,117 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://monster.edu.ec/ms-transacciones/ws"
+           targetNamespace="http://monster.edu.ec/ms-transacciones/ws"
+           elementFormDefault="qualified">
+
+    <!-- ======================== -->
+    <!-- Tipos Comunes            -->
+    <!-- ======================== -->
+    <xs:complexType name="RespuestaDTO">
+        <xs:sequence>
+            <xs:element name="exitoso" type="xs:boolean"/>
+            <xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+            <xs:element name="codigoError" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Movimiento">
+        <xs:sequence>
+            <xs:element name="codigoCuenta" type="xs:string"/>
+            <xs:element name="numero" type="xs:int"/>
+            <xs:element name="fecha" type="xs:date" minOccurs="0"/>
+            <xs:element name="codigoEmpleado" type="xs:string"/>
+            <xs:element name="codigoTipo" type="xs:string"/>
+            <xs:element name="importe" type="xs:decimal"/>
+            <xs:element name="cuentaReferencia" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ======================== -->
+    <!-- Deposito                 -->
+    <!-- ======================== -->
+    <xs:element name="realizarDepositoRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoCuenta" type="xs:string"/>
+                <xs:element name="claveCuenta" type="xs:string"/>
+                <xs:element name="importe" type="xs:decimal"/>
+                <xs:element name="codigoEmpleado" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="realizarDepositoResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:RespuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ======================== -->
+    <!-- Retiro                   -->
+    <!-- ======================== -->
+    <xs:element name="realizarRetiroRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoCuenta" type="xs:string"/>
+                <xs:element name="claveCuenta" type="xs:string"/>
+                <xs:element name="importe" type="xs:decimal"/>
+                <xs:element name="codigoEmpleado" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="realizarRetiroResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:RespuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ======================== -->
+    <!-- Transferencia            -->
+    <!-- ======================== -->
+    <xs:element name="realizarTransferenciaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cuentaOrigen" type="xs:string"/>
+                <xs:element name="cuentaDestino" type="xs:string"/>
+                <xs:element name="claveCuentaOrigen" type="xs:string"/>
+                <xs:element name="importe" type="xs:decimal"/>
+                <xs:element name="codigoEmpleado" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="realizarTransferenciaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="return" type="tns:RespuestaDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ======================== -->
+    <!-- Listar Movimientos       -->
+    <!-- ======================== -->
+    <xs:element name="listarMovimientosRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="codigoCuenta" type="xs:string"/>
+                <xs:element name="fechaInicio" type="xs:date" minOccurs="0"/>
+                <xs:element name="fechaFin" type="xs:date" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="listarMovimientosResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="movimiento" type="tns:Movimiento" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
