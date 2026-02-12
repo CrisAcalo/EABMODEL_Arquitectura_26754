@@ -1,0 +1,82 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  # ========================================
+  # ms-auth: Autenticación (SOAP)
+  # ========================================
+  - name: ms-auth-soap
+    url: http://ms-auth:8081/ws
+    routes:
+      - name: auth-route
+        paths:
+          - /api/auth
+        strip_path: true
+        methods:
+          - POST
+          - GET
+
+  # ========================================
+  # ms-cuentas: Gestión de Cuentas (SOAP)
+  # ========================================
+  - name: ms-cuentas-soap
+    url: http://ms-cuentas:8082/ws
+    routes:
+      - name: cuentas-route
+        paths:
+          - /api/cuentas
+        strip_path: true
+        methods:
+          - POST
+          - GET
+
+  # ========================================
+  # ms-transacciones: Transacciones (SOAP)
+  # ========================================
+  - name: ms-transacciones-soap
+    url: http://ms-transacciones:8083/ws
+    routes:
+      - name: transacciones-route
+        paths:
+          - /api/transacciones
+        strip_path: true
+        methods:
+          - POST
+          - GET
+
+  # ========================================
+  # ms-websocket: Bloqueo de Cuentas (WS)
+  # ========================================
+  - name: ms-websocket-service
+    url: http://ms-websocket:8084
+    routes:
+      - name: websocket-route
+        paths:
+          - /api/ws
+        strip_path: true
+        protocols:
+          - http
+          - https
+
+plugins:
+  - name: cors
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+        - POST
+        - OPTIONS
+      headers:
+        - Accept
+        - Accept-Version
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - X-Auth-Token
+        - SOAPAction
+      exposed_headers:
+        - X-Auth-Token
+      credentials: true
+      max_age: 3600

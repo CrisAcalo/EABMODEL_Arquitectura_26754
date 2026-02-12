@@ -1,0 +1,115 @@
+version: '3.8'
+
+services:
+  # Database
+  db:
+    image: mysql:8.0
+    container_name: eurekabank_db
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: eurekabank
+      MYSQL_USER: eureka
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./Servidor/Crea_BD.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - eureka-network
+
+  # Microservice: Authentication
+  ms-auth:
+    build: ./microservicios/ms-auth
+    container_name: ms-auth
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://eurekabank_db:3306/eurekabank?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=eureka
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - eureka-network
+
+  # Microservice: Accounts (Cuentas)
+  ms-cuentas:
+    build: ./microservicios/ms-cuentas
+    container_name: ms-cuentas
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://eurekabank_db:3306/eurekabank?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=eureka
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - eureka-network
+
+  # Microservice: Transactions (Transacciones)
+  ms-transacciones:
+    build: ./microservicios/ms-transacciones
+    container_name: ms-transacciones
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://eurekabank_db:3306/eurekabank?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=eureka
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - eureka-network
+
+  # Microservice: WebSocket (Bloqueo de Cuentas)
+  ms-websocket:
+    build: ./microservicios/ms-websocket
+    container_name: ms-websocket
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://eurekabank_db:3306/eurekabank?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=eureka
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - eureka-network
+
+  # API Gateway
+  kong:
+    image: kong:latest
+    container_name: kong-gateway
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+      KONG_ADMIN_GUI_URL: http://localhost:8002
+      KONG_ADMIN_GUI_LISTEN: 0.0.0.0:8002
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8002:8002"
+      - "8444:8444"
+    volumes:
+      - ./config/kong.yml:/usr/local/kong/declarative/kong.yml
+    networks:
+      - eureka-network
+
+networks:
+  eureka-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
